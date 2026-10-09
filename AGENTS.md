@@ -28,6 +28,7 @@
 | [docs/inventario-imagenes.csv](docs/inventario-imagenes.csv) | Todas las imágenes de contenido de /legacy con su alt actual y las páginas donde se usan |
 | [docs/checklist-publicacion.md](docs/checklist-publicacion.md) | Comprobaciones antes y después de publicar, Search Console, copia de seguridad y vuelta atrás |
 | [docs/preguntas-cliente.md](docs/preguntas-cliente.md) | Mensaje único al cliente con todas las preguntas pendientes y el registro de respuestas |
+| [docs/decisiones.md](docs/decisiones.md) | **Registro detallado de decisiones** (fecha, origen, qué se decide y qué documentos cambian). El resumen sigue en la sección 11 de este archivo |
 
 ---
 
@@ -250,7 +251,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── CLAUDE.md            ← solo contiene "@AGENTS.md"
 ├── README.md
 ├── .gitignore
-├── .gitattributes       ← /legacy se guarda byte a byte (salvo la clave eliminada, §7); formatos binarios marcados
+├── .gitattributes       ← /legacy se guarda byte a byte; formatos binarios marcados
 ├── build.js             ← generador (Node ≥ 18, sin dependencias npm)            [A]
 ├── legacy/              ← copia de la web actual. VERSIONADA. SOLO LECTURA, NUNCA se edita
 │   ├── com/brototermic.com/   (incluye contacto.html, oviedo/ y sitemap.xml)
@@ -282,7 +283,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ### Reglas de la estructura
 
 - **`/legacy` está versionada en git** (se añadió en un commit propio) para que las dos personas trabajen con los mismos datos aunque la web antigua desaparezca. Solo lectura. El [anexo 13.4](#134-cómo-se-descargó-legacy) explica cómo se descargó.
-  - **Excepción a la regla «byte a byte» (2026-10-09):** la API key de Google Maps se sustituyó por el texto `[CLAVE_ELIMINADA]` en los 3 archivos donde aparecía (`contacto/contacto.html` del `.com`, `oviedo/contacto/contacto.html` y `contacto/contacto.html` del `.es`). Es el **único** cambio respecto a lo descargado (−22 bytes por archivo; el resto, idéntico). Se rehízo el historial para que la clave no quede en ningún commit. La *site key* de reCAPTCHA se conserva: es pública por diseño y no da acceso a nada.
+  - **Sin excepciones:** `/legacy` se guarda tal como se descargó, incluida la API key de Google Maps (ver §10). La reescritura del historial para quitarla se descartó el 2026-10-09 ([docs/decisiones.md](docs/decisiones.md)).
 - **`data/categorias/<archivo>.json`**: el nombre es el del `.html` sin extensión. Así, `resistencias-tipo-cartucho.json` genera `/resistencias-tipo-cartucho.html`, y ninguna URL puede cambiar.
 - **`/docs`** tiene dos usos, porque la URL pública de los PDF es `/docs/<nombre>.pdf`. `build.js` copia a `/dist/docs/` **solo los `.pdf`**, con su nombre exacto. Los `.md` y `.csv` son planificación y no se publican.
 - **`/dist`** es lo que se sube al servidor: los `.html` (en la raíz, `/contacto/` y `/oviedo/`), `/assets/`, `/images/`, `/docs/*.pdf`, `sitemap.xml`, `robots.txt` y `.htaccess`.
@@ -345,7 +346,7 @@ Una página está lista cuando cumple todo esto:
 - Inventar datos técnicos.
 - Borrar contenido indexado sin redirección.
 - Subir credenciales al repositorio (FTP, contraseñas, claves de API, `.env`).
-  - La API key de Google Maps que había en `/legacy` se eliminó del repositorio y de su historial (§7). La web antigua la sigue publicando, así que se recomienda al cliente restringirla o revocarla. En `/legacy` solo queda la *site key* de reCAPTCHA, que es pública por diseño; no se reutiliza.
+  - Excepción conocida: `/legacy` contiene, tal como se descargó, la API key de Google Maps (`contacto/contacto.html` del `.com`, de `/oviedo/` y del `.es`) y la *site key* de reCAPTCHA. Son claves de navegador que **ya son públicas** en la web actual; el cliente restringirá o revocará la de Maps ([docs/preguntas-cliente.md](docs/preguntas-cliente.md), pregunta 25). No se reutilizan. **No se reescribe el historial** para quitarlas: ya está en GitHub y la Persona B trabaja sobre él. El escáner de secretos de GitHub puede avisar.
 
 ---
 
@@ -365,8 +366,8 @@ Una página está lista cuando cumple todo esto:
 | 2026-10-09 | **PDF con ñ o espacios:** se mantienen con su nombre y ruta exactos, **sin copias ni canonical**; se enlazan con la URL codificada. Sustituye a la propuesta anterior de copia sin ñ. |
 | 2026-10-09 | **`/legacy` se versiona en git** en un commit propio. |
 | 2026-10-09 | **Imágenes:** la ruta pública es `/images/`, también para las nuevas; desaparece `/assets/img`. |
-| 2026-10-09 | **Git:** email de autor corregido y autoría de los commits iniciales rehecha. |
-| 2026-10-09 | **API key de Google Maps** sustituida por `[CLAVE_ELIMINADA]` en `/legacy` y eliminada del historial (única excepción a «byte a byte», §7). |
+| 2026-10-09 | **Git:** email de autor corregido para los commits nuevos. Los 3 commits iniciales conservan su autoría: **se descarta reescribir el historial** (ya estaba en GitHub y la Persona B trabaja sobre él). Detalle en [docs/decisiones.md](docs/decisiones.md). |
+| 2026-10-09 | **API key de Google Maps:** se queda en `/legacy` y en el historial (ya es pública en la web actual). La restringe o revoca el cliente. Ningún commit nuevo la añade ni la reutiliza. |
 | 2026-10-09 | **Imágenes:** ampliación automática ×2 en lote para todas (`AMPLIAR_X2`); **solo se sirve la versión de 480 px** (desaparece la de 960); retoque manual con IA limitado a 19 imágenes en la fase 1 (hero, inicio y familias); el resto de prioridad alta, en la fase 2. La herramienta y el comando están propuestos y pendientes de visto bueno. |
 | 2026-10-09 | **Formulario:** excepción PHP **aprobada** (un único `enviar.php` en el hosting actual), con validación en el servidor, límite de tamaño y de tipos del adjunto, campo trampa y casilla RGPD (§2). |
 | 2026-10-09 | **Titles con «Vitoria»:** si el title antiguo lo tenía, el nuevo lo conserva (`Producto \| BROTOTERMIC Vitoria`, ≤ 60). Excepción: el inicio (§3.2). |

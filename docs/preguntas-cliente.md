@@ -59,6 +59,10 @@ Empezamos esta semana con la nueva web de BROTOTERMIC. Para no inventar ningún 
 23. ¿Tenéis un **asesor de protección de datos** o un proveedor de textos legales? Hemos quitado de la política de privacidad y de la de cookies lo que ya no aplica (el código de inscripción en la AEPD, que dejó de existir con el RGPD, y las cookies de Facebook, Twitter y Google+, que la web no usa). El resto lo dejamos actualizado, pero conviene que lo revise vuestro asesor antes o justo después de publicar.
 24. La política de privacidad habla de un «grupo BROTOTERMIC». ¿Existe ese grupo o es un texto heredado?
 
+### 8. Seguridad
+
+25. **Clave de Google Maps.** La página de contacto actual (en `brototermic.com`, en `/oviedo/` y en `brototermic.es`) incluye en su código una clave de la API de Google Maps. Es visible para cualquiera que mire el código de la página, y también ha quedado en la copia de la web antigua que guardamos para el proyecto. La web nueva no usa Google Maps incrustado, así que no la necesitará. Os recomendamos entrar en la consola de Google Cloud de la cuenta que la creó y **restringirla** (solo a vuestros dominios y solo a la API de Maps) o, mejor, **revocarla** cuando se publique la web nueva. Si no sabéis qué cuenta es, os ayudamos a localizarla. (Lo mismo, con menos importancia, para la clave de reCAPTCHA del formulario actual: se puede eliminar al publicar.)
+
 Muchas gracias. Con el bloque 1 resuelto podemos empezar hoy mismo; el resto lo iremos completando estos días.
 
 Un saludo,
