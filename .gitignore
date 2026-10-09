@@ -1,0 +1,27 @@
+# Copia de la web antigua (solo lectura, ~87 MB). Ver AGENTS.md, anexo 12.6
+legacy/
+legacy-*.log
+
+# Salida generada por build.js (no se edita a mano)
+dist/*
+!dist/.gitkeep
+
+# Credenciales y configuración local: NUNCA al repositorio
+.env
+.env.*
+*.pem
+*.key
+sftp-config.json
+.ftpconfig
+.vscode/sftp.json
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+*.swp
