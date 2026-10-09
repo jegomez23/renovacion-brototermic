@@ -7,7 +7,8 @@
 
 - [ ] Accesos confirmados: FTP/SFTP del hosting del `.com`, Search Console del `.com` y del `.es`, DNS o hosting del `.es`. Las credenciales se guardan **fuera del repositorio**.
 - [ ] El hosting admite `.htaccess` con `mod_rewrite` y `mod_headers` (comprobado con un archivo de prueba en una carpeta temporal, que luego se borra).
-- [ ] Decisión del formulario aplicada y probada (A-2-03).
+- [ ] Formulario PHP (`/contacto/enviar.php`, excepción aprobada) probado de principio a fin (A-2-03). La versión de PHP del hosting es compatible y sus límites `upload_max_filesize` y `post_max_size` son mayores que `site.formulario.maxAdjuntoMB`.
+- [ ] Docker Desktop instalado en el equipo de la Persona A y el entorno `tools/apache-pruebas/` arranca (`docker compose up -d --build`).
 - [ ] Día y hora de publicación acordados con el cliente, en horario de baja actividad y **nunca un viernes por la tarde**. Las dos personas disponibles durante las 2 horas siguientes.
 
 ## 1. Antes de publicar
@@ -27,7 +28,8 @@
 - [ ] Cada fila `REDIRIGIR` tiene su regla en `.htaccess` y no queda ningún `[POR VERIFICAR]` en `destino_301`.
 - [ ] Los PDF con ñ y con espacios responden 200 con la URL codificada **y** con la codificación Latin-1 (`%F1`), como hoy.
 
-### Redirecciones (probadas en el entorno de pruebas, A-3-03)
+### Redirecciones (probadas en local con Apache en Docker, A-1-10 y A-3-03)
+- [ ] `node build.js --publicar` y, con el `/dist` resultante, `docker compose up -d --build` en `tools/apache-pruebas/` y `bash tools/probar-redirecciones.sh` **sin fallos**. Se pega la salida en el PR. Nunca se sube un `.htaccess` que no haya pasado esta prueba.
 - [ ] Cada fila de `redirecciones.csv` devuelve **un único 301** al destino exacto (sin cadenas: `curl -sIL` muestra 1 salto).
 - [ ] `/index.html` → `/` y `/oviedo/index.html` → `/oviedo/` sin bucle.
 - [ ] `http://`, `www.` y `http://www.` de cualquier URL → `https://brototermic.com/<misma ruta>` en un solo salto.
@@ -53,6 +55,9 @@
 
 ### Formulario
 - [ ] Envío real de prueba con adjunto (PDF y JPG) recibido en el buzón acordado.
+- [ ] **Validación en el servidor**, probada sin el navegador (`curl -F …` directo a `enviar.php`): rechaza un email mal formado, un mensaje vacío, la casilla RGPD sin marcar, un adjunto mayor que el límite y un tipo no permitido (p. ej. un `.exe` renombrado a `.pdf`, que `finfo` debe detectar).
+- [ ] Un nombre o un email con salto de línea no inyecta cabeceras en el correo.
+- [ ] `enviar.php` no muestra errores de PHP al usuario y no contiene credenciales; el adjunto no queda guardado en el servidor.
 - [ ] El honeypot bloquea el envío si se rellena; la casilla RGPD es obligatoria.
 - [ ] Mensajes de error y de éxito accesibles y en español.
 

@@ -16,7 +16,7 @@
 | Legal y mapa web | ✔ (referencia) | — | — | ✔ | — |
 
 - **«Completo»** = el objeto con todas sus propiedades. **«Referencia»** = un nodo mínimo `{"@type": "Organization", "@id": …, "name": …, "url": …}`, para que cada página tenga su editor sin repetir todos los datos.
-- **Nota sobre el inicio:** AGENTS.md pedía BreadcrumbList en todas las páginas. En el inicio no se incluye, porque una miga de un solo elemento no aporta nada y Google recomienda al menos dos. Es la única excepción.
+- **Nota sobre el inicio (aprobada el 2026-10-09):** el inicio no lleva BreadcrumbList, porque una miga de un solo elemento no aporta nada y Google recomienda al menos dos. Es la única página sin migas.
 
 ## 2. Identificadores (`@id`)
 

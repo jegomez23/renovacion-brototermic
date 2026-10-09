@@ -213,7 +213,7 @@ Reglas comunes:
 | `controltemperatura-indicadores-de-procesos` | `controltemperatura-reles-estado-solido` | Relés de potencia para los controladores |
 | `controldenivel-sensores-conductivos` | `controldenivel-reles-de-nivel` | «Necesitan conectarse a un relé de nivel» |
 | `controldenivel-reles-de-nivel` | `controldenivel-sensores-conductivos` | Ídem |
-| `controldenivel-sensores-de-presion` | `presionhumedad-sensores-de-presion` | Mismo nombre y distinto uso: aclarar al usuario y a Google cuál es cuál |
+| `controldenivel-sensores-de-presion` | `presionhumedad-sensores-de-presion` | Mismo nombre y distinto uso. Desde el 2026-10-09 se diferencian en title y H1: «Sensores de nivel por presión» y «Sensores de presión industriales». Los rótulos del menú siguen siendo «Sensores de presión» (la familia ya da el contexto). |
 | `presionhumedad-sensores-de-presion` | `controldenivel-sensores-de-presion` | Ídem |
 | `presionhumedad-sondas-de-humedad` | `controltemperatura-dataloggers` | Log-Tag HAXO-8 registra temperatura y humedad |
 | `resistencias-*` | `resistencias-especiales-a-medida` | Fabricación a medida dentro de la familia |

@@ -1,4 +1,5 @@
 # /legacy es una copia de la web antigua: se guarda byte a byte, sin convertir fines de línea
+# (única excepción: la API key de Google Maps, sustituida por [CLAVE_ELIMINADA]; ver AGENTS.md §7)
 legacy/** -text
 
 # Binarios: nunca se tratan como texto
@@ -13,3 +14,7 @@ legacy/** -text
 *.woff2 binary
 *.ttf   binary
 *.eot   binary
+
+# Scripts y configuración que se ejecutan en bash o dentro de Linux (Docker): siempre LF
+*.sh                         text eol=lf
+tools/apache-pruebas/**      text eol=lf

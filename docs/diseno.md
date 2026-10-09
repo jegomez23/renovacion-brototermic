@@ -172,7 +172,7 @@ Cada componente tiene su descripción, sus variantes y su comportamiento en móv
 
 ### 3.13 Formulario
 - **Campos:** nombre*, empresa, email*, teléfono, mensaje* (rellenado con el producto si se llega desde un «Pedir presupuesto»), adjunto (plano o foto: tipos y tamaño máximo según `site.formulario`), casilla RGPD* (sin marcar, con enlace a `/privacidad.html`), **campo trampa** oculto por CSS (no `type=hidden`), con `tabindex="-1"` y `autocomplete="off"`.
-- **Comportamiento:** etiquetas `<label>` visibles (el placeholder no sustituye a la etiqueta), validación HTML5 más un JS mínimo con mensajes accesibles (`aria-describedby` y foco al primer error) y errores en `#b42318` con icono y texto. El envío se procesa según la decisión pendiente (`site.formulario.accion`). Al enviarse, la página de confirmación o el mensaje dice qué pasará y en qué plazo (plazo [POR VERIFICAR con el cliente]).
+- **Comportamiento:** etiquetas `<label>` visibles (el placeholder no sustituye a la etiqueta), validación HTML5 más un JS mínimo con mensajes accesibles (`aria-describedby` y foco al primer error) y errores en `#b42318` con icono y texto. El envío se procesa con `enviar.php` en el hosting (`site.formulario.accion`; excepción PHP aprobada, AGENTS.md §2), que repite todas las validaciones en el servidor, limita el tamaño y los tipos del adjunto y descarta en silencio los envíos con el campo trampa relleno. Sin JS, el formulario hace un POST normal y funciona igual. Al enviarse, la página de confirmación o el mensaje dice qué pasará y en qué plazo (plazo [POR VERIFICAR con el cliente]).
 - **Móvil:** 1 columna. En escritorio, nombre y empresa, y email y teléfono, en 2 columnas.
 
 ### 3.14 Pie

@@ -1,0 +1,12 @@
+# Uso (desde tools/apache-pruebas/):  docker compose up -d --build
+# Sirve ../../dist en http://localhost:8080 y https://localhost:8443
+services:
+  apache:
+    build: .
+    container_name: brototermic-apache-pruebas
+    ports:
+      - "8080:80"
+      - "8443:443"
+    volumes:
+      # Solo lectura: la prueba nunca modifica /dist
+      - ../../dist:/usr/local/apache2/htdocs:ro

@@ -167,11 +167,13 @@ La lista no es exhaustiva: quien migre cada página revisa la ortografía de tod
 | 13 | Pie de todas las páginas | «© 2014» | © + año actual (lo genera `build.js`) |
 | 14 | contacto/contacto.html y contacto.html | «03011 Oviedo» | «33011 Oviedo» |
 | 15 | contacto, privacidad | «Ptr. Ortiz de Urbina, n. 7» | «C/ Pintor Mauro Ortiz de Urbina, 7 bajo» (dato externo) |
-| 16 | privacidad.html | «…visitar la página web de la Agencia española de Protección de Datos, www.agpd.es» | «…www.aepd.es» (dominio actual de la Agencia) |
-| 17 | privacidad.html y cookies.html | «Código de inscripción en la Agencia Española de Protección de Datos: 2131260399» | Se elimina (la inscripción de ficheros desapareció con el RGPD). **Revisión legal recomendada** [POR VERIFICAR con el asesor del cliente]. |
-| 18 | cookies.html | Cookies para compartir en «Facebook, Twitter o Google+» y apartado «Cookies de terceros» | Reescribir según las cookies reales de la web nueva: ninguna de terceros si no hay analítica, mapas incrustados ni reCAPTCHA. Si es así, no hace falta banner de cookies. [POR VERIFICAR: si el cliente quiere analítica] |
-| 19 | privacidad.html | Menciones al «grupo BROTOTERMIC» y a «empresas del grupo» | Mantener mientras el cliente no diga lo contrario; confirmar si existe tal grupo [POR VERIFICAR] |
-| 20 | Formulario (privacidad) | El texto legal actual no describe el adjunto (plano o foto) | Añadir la finalidad «atender tu solicitud de presupuesto», la conservación y el tratamiento de los archivos adjuntos [POR VERIFICAR revisión legal] |
+| 16 | privacidad.html | «…visitar la página web de la Agencia española de Protección de Datos, www.agpd.es» | «…www.aepd.es» (dominio actual de la Agencia). **[REVISIÓN CLIENTE]** |
+| 17 | privacidad.html y cookies.html | «Código de inscripción en la Agencia Española de Protección de Datos: 2131260399» | **Se elimina** (la inscripción de ficheros desapareció con el RGPD). Decidido el 2026-10-09. |
+| 18 | cookies.html | Cookies para compartir en «Facebook, Twitter o Google+» y apartado «Cookies de terceros» | **Se eliminan** las cookies de redes sociales y de terceros que la web no usa (decidido el 2026-10-09). La política describe solo las cookies reales de la web nueva: ninguna de terceros si no hay analítica, mapas incrustados ni reCAPTCHA, y en ese caso no hace falta banner. Si el cliente quiere analítica, se añade (pendiente 10 de AGENTS.md §12). |
+| 19 | privacidad.html | Menciones al «grupo BROTOTERMIC» y a «empresas del grupo» | Se mantienen mientras el cliente no diga lo contrario. **[REVISIÓN CLIENTE]**: confirmar si existe tal grupo. |
+| 20 | Formulario (privacidad) | El texto legal actual no describe el adjunto (plano o foto) | Añadir la finalidad «atender tu solicitud de presupuesto», la conservación y el tratamiento de los archivos adjuntos **[REVISIÓN CLIENTE]** |
+
+El resto de los textos de privacidad y cookies se publica con la redacción propuesta y queda marcado **[REVISIÓN CLIENTE]** para que lo revise el asesor del cliente (convención en AGENTS.md: comentario HTML en `/content`, aviso en `build.js`, no bloquea).
 
 ## 5. Orden de trabajo del contenido
 

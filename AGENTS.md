@@ -7,6 +7,7 @@
 > Convenciones de marcado:
 > - **[POR VERIFICAR]**: dato o decisión que no se ha podido comprobar en `/legacy` (copia de la web actual) ni en los catálogos PDF. **No se publica** hasta que alguien lo confirme y quite la marca.
 > - **(dato externo, confirmar con cliente)**: dato que ha dado el cliente pero no aparece en `/legacy`. **Se usa** en la web, y queda anotado en `data/site.json → pendientes` hasta que el cliente lo confirme (decisión del 2026-10-09).
+> - **[REVISIÓN CLIENTE]**: texto legal que **se publica** con la redacción propuesta, pero que el cliente o su asesor deben revisar. En `/content` va dentro de un comentario HTML (`<!-- [REVISIÓN CLIENTE] motivo -->`) para que no se vea en la página; `build.js` lo lista como aviso y **no bloquea** la publicación (decisión del 2026-10-09).
 >
 > Última revisión: 2026-10-09.
 
@@ -21,7 +22,7 @@
 | [docs/diseno.md](docs/diseno.md) | Tokens (color con contrastes, tipografía, espaciado, radios, sombras, puntos de corte), componentes y wireframes de cada plantilla |
 | [docs/plan-contenido.md](docs/plan-contenido.md) | Plantilla de intro con ejemplo real, **prompt estándar para IA**, lista de erratas y textos desactualizados con su propuesta |
 | [docs/schema.md](docs/schema.md) | JSON-LD de cada tipo de página: campos y de dónde sale cada dato |
-| [docs/plan-imagenes.csv](docs/plan-imagenes.csv) | Qué hacer con cada imagen (CONVERTIR / RETOCAR_IA / SUSTITUIR / ELIMINAR), prioridad y alt propuesto |
+| [docs/plan-imagenes.csv](docs/plan-imagenes.csv) | Qué hacer con cada imagen (AMPLIAR_X2 / CONVERTIR / SUSTITUIR / ELIMINAR), si lleva retoque manual (fase 1 / fase 2), prioridad y alt propuesto |
 | [docs/redirecciones.csv](docs/redirecciones.csv) | Las 18 reglas 301 (validadas: sin cadenas ni bucles) |
 | [docs/inventario-urls.csv](docs/inventario-urls.csv) | **Control de la migración:** cada URL antigua o nueva con su estado (MANTENER / REDIRIGIR / NUEVA) y destino |
 | [docs/inventario-imagenes.csv](docs/inventario-imagenes.csv) | Todas las imágenes de contenido de /legacy con su alt actual y las páginas donde se usan |
@@ -111,7 +112,14 @@ El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/a
 
 - **Renovación completa** con diseño moderno, minimalista y profesional, 100 % responsive y *mobile-first*.
 - **Lo que se sube al servidor es SOLO HTML + CSS + JavaScript vanilla** (más `.htaccess`, PDF, imágenes y fuentes). Sin CMS, sin frameworks (nada de React, Vue, Tailwind ni Bootstrap) y sin dependencias en el navegador: ni CDN, ni Google Fonts remotas, ni jQuery, ni scripts de terceros.
-  - Única excepción posible: el procesado del formulario. Si el cliente elige procesarlo en su hosting, habrá **un único script PHP** de envío. Esa excepción se aprueba y se anota aquí antes de escribirlo ([POR VERIFICAR], sección 12).
+  - **Única excepción, APROBADA el 2026-10-09: el formulario se procesa con un único script PHP en el hosting actual** (`src/contacto/enviar.php` → `/contacto/enviar.php`). El hosting ya ejecuta PHP (el formulario actual usa `contacto/bat/rd-mailform.php`). Requisitos del script:
+    - **Validación en el servidor** de todos los campos, aunque el navegador ya los valide (nombre, email y mensaje obligatorios; email con formato válido; longitudes máximas). Nunca se confía en lo que llega del navegador.
+    - **Adjunto:** límite de tamaño (`site.formulario.maxAdjuntoMB`) y lista blanca de tipos (`site.formulario.tiposAdjunto`), comprobando la extensión **y** el tipo real del archivo (`finfo`), no solo lo que declara el navegador. El adjunto va al email y no se guarda en el servidor.
+    - **Campo trampa antispam** (honeypot): si llega relleno, se responde como si todo fuera bien y no se envía nada.
+    - **Casilla RGPD** obligatoria: sin ella, el envío se rechaza también en el servidor.
+    - Cabeceras de correo saneadas (sin saltos de línea en nombre, email ni asunto, para evitar la inyección de cabeceras), sin mostrar errores de PHP al usuario y sin credenciales en el repositorio (si hace falta SMTP, la configuración vive en el servidor, fuera de `/dist`).
+    - Sin JS funciona igual: el formulario hace un POST normal y el script devuelve una página de éxito o de error. Con JS, solo se mejora la validación en el navegador.
+    - Sin reCAPTCHA ni servicios de terceros.
 - **Generador mínimo `build.js`** (Node ≥ 18, **sin dependencias npm**: solo `fs`, `path` y otros módulos nativos). Combina `/src`, `/data`, `/content`, `/assets`, `/images` y los PDF de `/docs`, y escribe HTML estático en `/dist`.
   - El menú, las migas de pan y **todos los enlaces salen escritos en el HTML final**. Nunca se inyectan con JS en el navegador, porque el SEO depende de ello.
   - El JS del navegador solo mejora la experiencia (abrir y cerrar el menú, validar el formulario). Con JS desactivado, la web se puede navegar entera.
@@ -119,6 +127,7 @@ El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/a
   - `build.js` valida lo descrito en [docs/datos.md](docs/datos.md), apartado 6. `node build.js --publicar` falla si queda algún `[POR VERIFICAR`, `(dato externo` o `_borrador` en `/dist`.
 - **Herramientas auxiliares** en `/tools` (Node sin dependencias o shell): script de importación de /legacy a JSON y pruebas de redirecciones. No se publican.
 - **Hosting:** el actual, que es Apache (cabecera `Server: Apache` comprobada; el formulario actual usa PHP: `contacto/bat/rd-mailform.php`). Las redirecciones van en **`.htaccess`** (fuente: `src/.htaccess`).
+- **Entorno de pruebas del `.htaccess`:** Apache en Docker (imagen oficial `httpd`), en `tools/apache-pruebas/`. Sirve `/dist` con los cuatro hosts (`brototermic.com`, `www.`, `.es` y `www.es`) por HTTP y HTTPS, y `tools/probar-redirecciones.sh` comprueba cada fila de `redirecciones.csv` y cada URL `MANTENER`. **Ningún `.htaccess` se publica sin pasar antes esta prueba.** (Decisión del 2026-10-09.)
 - **Unificación de dominios:** `brototermic.com` es el principal. `www.brototermic.es` y `brototermic.es` redirigen con **301** a `https://brototermic.com/oviedo/` (landing propia de la delegación de Asturias), cada URL a su equivalente (ver [docs/redirecciones.csv](docs/redirecciones.csv)).
 
 ---
@@ -146,7 +155,11 @@ Los valores propuestos de todas las páginas están en [docs/plan-paginas.csv](d
 
 - **Title:** conserva SIEMPRE la keyword principal del title antiguo. Máximo 60 caracteres. Formato: `Producto | Familia | BROTOTERMIC`.
   - Si pasa de 60, o si el nombre del producto ya contiene la familia, se omite la familia: `Producto | BROTOTERMIC`.
+  - **Si el title antiguo contenía «Vitoria», el nuevo lo conserva** con el formato `Producto | BROTOTERMIC Vitoria` (sin la familia), siempre dentro de los 60 caracteres (decisión del 2026-10-09; son 31 páginas). Si no cabe, se acorta el producto, nunca la keyword.
+    - Única excepción: el **inicio**. «Componentes industriales e instrumentación» (42) + « | BROTOTERMIC Vitoria» (22) suman 64, así que se usa `Componentes industriales e instrumentación en Vitoria` (53): conserva la keyword completa y «Vitoria», y la marca la aportan el schema `Organization` y el nombre del sitio en Google.
   - Si el title antiguo es un error de copia-pega, la keyword se toma del H1 antiguo y se marca [POR VERIFICAR GSC]. Casos: `controldenivel-transductores-magneticos`, `controltemperatura-accesorios-sondas`.
+  - **Las dos páginas «Sensores de presión» se diferencian** (decisión del 2026-10-09; las URLs no cambian): `controldenivel-sensores-de-presion.html` → title y H1 «Sensores de nivel por presión»; `presionhumedad-sensores-de-presion.html` → «Sensores de presión industriales».
+  - `node tools/validar-plan.js` comprueba estas reglas sobre `plan-paginas.csv` (longitudes, duplicados, keyword y «Vitoria»). Se pasa cada vez que se toca el CSV.
 - **Meta description:** nueva y **única** por página, de **140 a 155 caracteres**.
 - **Un solo H1 por página.** Los nombres de producto van en **H2**.
 - **Eliminar las metas obsoletas:** `keywords`, `revisit-after`, `distribution`, `robots` con valor `all`, `resource-type`, `owner`, `Author`, `Googlebot`, todas las `DC.*`, `title`/`searchtitle` y el `hreflang` actual.
@@ -179,7 +192,9 @@ Especificación completa en [docs/schema.md](docs/schema.md). Resumen:
   - © 2014 → año actual.
   - «Nuevos Productos 2021» → «Nuevos productos».
   - Las erratas listadas en ese documento.
-  - Las referencias legales obsoletas (código de inscripción en la AEPD, `www.agpd.es`, cookies de redes sociales que no existen), con revisión legal recomendada.
+- **Textos legales** (decisión del 2026-10-09):
+  - **Se eliminan** el código de inscripción en la AEPD (la inscripción de ficheros desapareció con el RGPD) y las cookies de redes sociales y de terceros que la web no usa (Facebook, Twitter, Google+).
+  - **El resto se marca [REVISIÓN CLIENTE]**: `www.agpd.es` → `www.aepd.es`, el «grupo BROTOTERMIC», el tratamiento de los adjuntos del formulario y la revisión general de privacidad y cookies por el asesor del cliente.
 
 ---
 
@@ -187,9 +202,13 @@ Especificación completa en [docs/schema.md](docs/schema.md). Resumen:
 
 - **Ruta pública única: `/images/`**, la misma que hoy (`https://brototermic.com/images/<nombre>.jpg`). En el repositorio viven en la carpeta raíz **`/images/`**, y `build.js` las copia tal cual a `/dist/images/`. **Las imágenes nuevas (WebP, retocadas, de ambiente o logos) también van en `/images/`** (los logos de marca, en `/images/marcas/`).
 - **Se mantienen las imágenes existentes con el mismo nombre base**, también las que tienen ñ o mayúsculas.
-- **Formatos:** `<nombre>.jpg` (respaldo, optimizado; si se ha retocado, es la versión retocada), `<nombre>-480.webp` y `<nombre>-960.webp`, servidos con `<picture>` + `srcset`.
-  - Casi todas las fotos de producto de /legacy miden **260 × 168 px**, así que el 480 y el 960 exigen ampliarlas (acción RETOCAR_IA).
-  - Si no da tiempo, se publica temporalmente el WebP al tamaño original (ver el plan de recorte en [docs/tareas.md](docs/tareas.md)).
+- **Formatos: solo se sirve la versión de 480 px** (decisión del 2026-10-09): `<nombre>.jpg` (respaldo, optimizado, 480 px de ancho; si se ha ampliado o retocado, es esa versión) y `<nombre>-480.webp`, servidos con `<picture>` (`<source type="image/webp">` + `<img>` JPG). **No hay versión de 960.**
+  - Las imágenes que ya miden 480 px o más (slides, `broto-fabricacion`, `Tabla-fabricacion`) no se amplían: solo se convierten (CONVERTIR).
+- **Ampliación automática ×2 en lote para todas** las fotos pequeñas (casi todas miden **260 × 168 px**; acción `AMPLIAR_X2` en [docs/plan-imagenes.csv](docs/plan-imagenes.csv)): se procesan todas con el mismo comando y los mismos ajustes, sin retoque a mano.
+  - **Herramienta propuesta: Real-ESRGAN (`realesrgan-ncnn-vulkan`)**, binario portable para Windows, sin Python ni instalación, con el modelo `realesrgan-x4plus` (fotografía real). Más ImageMagick para reducir a 480 px y codificar el JPG y el WebP. Comando y ajustes: [docs/tareas.md](docs/tareas.md), tarea B-1-05. **Pendiente del visto bueno del responsable antes de ejecutarlo** (sección 12).
+  - Control: cada imagen ampliada se compara con la original. Si la ampliación cambia la forma, un rótulo o un texto del producto, se descarta y se usa la original reducida o ampliada sin IA (Lanczos).
+- **Retoque manual con IA, limitado a 19 imágenes en la fase 1** (columna `retoque_manual = fase 1`): la fachada de Vitoria, la foto de Oviedo, los 4 slides (hero e imágenes de familia) y la primera imagen de cada categoría de prioridad alta y de cada directa (las de las tarjetas). **El resto de prioridad alta (76) pasa a la fase 2**, después de publicar. Se puede ampliar hasta unas 30 si sobra tiempo.
+- Mientras no haya versión ampliada, se publica la imagen original (`.jpg` de /legacy, sin WebP); `build.js` avisa de cada WebP que falta. La URL de la imagen no cambia, así que sustituirla después no afecta al SEO.
 - Todas las `<img>` llevan **`width` y `height`**, **`loading="lazy"` excepto la imagen principal (hero)**, que lleva `fetchpriority="high"`, y un **`alt` descriptivo real** (qué producto es y qué se ve), sin «BROTOTERMIC, S.L.». Los alts propuestos están en [docs/plan-imagenes.csv](docs/plan-imagenes.csv) y se revisan con la imagen delante.
 - **IA solo para RETOCAR** (fondo, nitidez, ampliación). **Nunca para inventar un producto** ni cambiar su forma, sus rótulos o su color. Las imágenes de ambiente o de portada sí pueden generarse, siempre que no muestren un producto concreto como si fuera del catálogo.
 - **Logo y logos de marcas en SVG cuando sea posible.** En /legacy no hay ningún SVG: el logo es `images/logo.png` (385 × 89, para fondo oscuro). El SVG se ha pedido al cliente.
@@ -217,7 +236,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 - **Tipografía:** Lora autoalojada (WOFF2, **solo 400 y 700**, en `/assets/fonts/`) para los títulos; el texto, con la pila de fuentes del sistema.
 - **Estilo:** moderno, limpio, industrial y técnico. Mucho espacio en blanco, jerarquía clara y fotografía de producto sobre fondo neutro.
 - **Componentes:** cabecera con megamenú (acordeón en móvil), hero, tarjeta de familia, tarjeta de producto, tabla de especificaciones, botón primario y secundario, migas de pan, CTA de presupuesto, bloque de marcas, bloque de sedes, formulario y pie.
-- **Formulario:** nombre, empresa, email, teléfono, mensaje, adjunto (plano o foto), casilla RGPD y campo trampa antispam. Cómo se procesa: [POR VERIFICAR] (sección 12).
+- **Formulario:** nombre, empresa, email, teléfono, mensaje, adjunto (plano o foto), casilla RGPD y campo trampa antispam. Se procesa con PHP en el hosting actual (excepción aprobada, sección 2).
 - **Rendimiento:** Lighthouse en móvil ≥ 90, LCP < 2,5 s, **una sola hoja CSS**, JS con **`defer`** y ninguna petición a terceros.
 - **Accesibilidad:** contraste AA, navegable con teclado y foco visible, HTML semántico y zonas táctiles de al menos 44 px.
 
@@ -231,7 +250,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── CLAUDE.md            ← solo contiene "@AGENTS.md"
 ├── README.md
 ├── .gitignore
-├── .gitattributes       ← /legacy se guarda byte a byte; formatos binarios marcados
+├── .gitattributes       ← /legacy se guarda byte a byte (salvo la clave eliminada, §7); formatos binarios marcados
 ├── build.js             ← generador (Node ≥ 18, sin dependencias npm)            [A]
 ├── legacy/              ← copia de la web actual. VERSIONADA. SOLO LECTURA, NUNCA se edita
 │   ├── com/brototermic.com/   (incluye contacto.html, oviedo/ y sitemap.xml)
@@ -239,8 +258,13 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── src/                                                                        [A]
 │   ├── templates/       ← inicio, familia, categoria, servicio, contacto, sede, legal
 │   ├── partials/        ← head, cabecera (megamenú), migas, cta-presupuesto, pie, schema
+│   ├── contacto/enviar.php ← único script PHP: procesa el formulario (excepción aprobada, §2)
 │   └── .htaccess        ← redirecciones y configuración Apache (se copia a /dist)
-├── tools/               ← importar-legacy.js, probar-redirecciones.sh (no se publican) [A]
+├── tools/               ← no se publican                                       [A]
+│   ├── validar-plan.js  ← comprueba plan-paginas.csv (title, meta, keyword, «Vitoria»)
+│   ├── importar-legacy.js
+│   ├── probar-redirecciones.sh
+│   └── apache-pruebas/  ← Apache en Docker (imagen httpd) para probar el .htaccess en local
 ├── data/                                                                       [B]
 │   ├── site.json        ← empresa, sedes, marcas, catálogos, formulario
 │   ├── familias.json    ← familias, categorías y orden del megamenú
@@ -258,6 +282,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ### Reglas de la estructura
 
 - **`/legacy` está versionada en git** (se añadió en un commit propio) para que las dos personas trabajen con los mismos datos aunque la web antigua desaparezca. Solo lectura. El [anexo 13.4](#134-cómo-se-descargó-legacy) explica cómo se descargó.
+  - **Excepción a la regla «byte a byte» (2026-10-09):** la API key de Google Maps se sustituyó por el texto `[CLAVE_ELIMINADA]` en los 3 archivos donde aparecía (`contacto/contacto.html` del `.com`, `oviedo/contacto/contacto.html` y `contacto/contacto.html` del `.es`). Es el **único** cambio respecto a lo descargado (−22 bytes por archivo; el resto, idéntico). Se rehízo el historial para que la clave no quede en ningún commit. La *site key* de reCAPTCHA se conserva: es pública por diseño y no da acceso a nada.
 - **`data/categorias/<archivo>.json`**: el nombre es el del `.html` sin extensión. Así, `resistencias-tipo-cartucho.json` genera `/resistencias-tipo-cartucho.html`, y ninguna URL puede cambiar.
 - **`/docs`** tiene dos usos, porque la URL pública de los PDF es `/docs/<nombre>.pdf`. `build.js` copia a `/dist/docs/` **solo los `.pdf`**, con su nombre exacto. Los `.md` y `.csv` son planificación y no se publican.
 - **`/dist`** es lo que se sube al servidor: los `.html` (en la raíz, `/contacto/` y `/oviedo/`), `/assets/`, `/images/`, `/docs/*.pdf`, `sitemap.xml`, `robots.txt` y `.htaccess`.
@@ -305,7 +330,7 @@ Una página está lista cuando cumple todo esto:
 - [ ] Mantiene su URL (misma ruta y nombre de archivo; `MANTENER` o `NUEVA` en el inventario).
 - [ ] Tiene title, meta y H1 revisados (sección 3.2 y `plan-paginas.csv`).
 - [ ] Conserva **todos** sus productos (`num_productos` de `plan-paginas.csv`).
-- [ ] Las imágenes están optimizadas (WebP 480/960 + JPG) y tienen `alt` real, `width` y `height`.
+- [ ] Las imágenes están optimizadas (JPG + WebP 480) y tienen `alt` real, `width` y `height`.
 - [ ] El schema es válido.
 - [ ] Se ve bien a **360 px, 768 px y 1280 px**.
 - [ ] No tiene enlaces rotos.
@@ -320,7 +345,7 @@ Una página está lista cuando cumple todo esto:
 - Inventar datos técnicos.
 - Borrar contenido indexado sin redirección.
 - Subir credenciales al repositorio (FTP, contraseñas, claves de API, `.env`).
-  - Excepción conocida: `/legacy` contiene, tal como se descargó, la API key de Google Maps (`contacto/contacto.html` del `.com`, de `/oviedo/` y del `.es`) y la *site key* de reCAPTCHA. Son claves de navegador que ya son públicas en la web actual. No se reutilizan, y se recomienda al cliente restringirlas o revocarlas. Si el repositorio se sube a GitHub, su escáner de secretos puede avisar.
+  - La API key de Google Maps que había en `/legacy` se eliminó del repositorio y de su historial (§7). La web antigua la sigue publicando, así que se recomienda al cliente restringirla o revocarla. En `/legacy` solo queda la *site key* de reCAPTCHA, que es pública por diseño; no se reutiliza.
 
 ---
 
@@ -340,6 +365,15 @@ Una página está lista cuando cumple todo esto:
 | 2026-10-09 | **PDF con ñ o espacios:** se mantienen con su nombre y ruta exactos, **sin copias ni canonical**; se enlazan con la URL codificada. Sustituye a la propuesta anterior de copia sin ñ. |
 | 2026-10-09 | **`/legacy` se versiona en git** en un commit propio. |
 | 2026-10-09 | **Imágenes:** la ruta pública es `/images/`, también para las nuevas; desaparece `/assets/img`. |
+| 2026-10-09 | **Git:** email de autor corregido y autoría de los commits iniciales rehecha. |
+| 2026-10-09 | **API key de Google Maps** sustituida por `[CLAVE_ELIMINADA]` en `/legacy` y eliminada del historial (única excepción a «byte a byte», §7). |
+| 2026-10-09 | **Imágenes:** ampliación automática ×2 en lote para todas (`AMPLIAR_X2`); **solo se sirve la versión de 480 px** (desaparece la de 960); retoque manual con IA limitado a 19 imágenes en la fase 1 (hero, inicio y familias); el resto de prioridad alta, en la fase 2. La herramienta y el comando están propuestos y pendientes de visto bueno. |
+| 2026-10-09 | **Formulario:** excepción PHP **aprobada** (un único `enviar.php` en el hosting actual), con validación en el servidor, límite de tamaño y de tipos del adjunto, campo trampa y casilla RGPD (§2). |
+| 2026-10-09 | **Titles con «Vitoria»:** si el title antiguo lo tenía, el nuevo lo conserva (`Producto \| BROTOTERMIC Vitoria`, ≤ 60). Excepción: el inicio (§3.2). |
+| 2026-10-09 | **«Sensores de presión»:** title y H1 diferenciados: «Sensores de nivel por presión» (control de nivel) y «Sensores de presión industriales» (presión y humedad). URLs sin cambios. |
+| 2026-10-09 | **Textos legales:** se eliminan el código de inscripción en la AEPD y las cookies de redes sociales que no se usan; el resto se marca [REVISIÓN CLIENTE] (§4). |
+| 2026-10-09 | **Entorno de pruebas del `.htaccess`:** Apache en Docker (imagen `httpd`) en `tools/apache-pruebas/`. |
+| 2026-10-09 | **BreadcrumbList** en todas las páginas **excepto el inicio**: aprobado. |
 
 ---
 
@@ -349,18 +383,21 @@ Las preguntas al cliente están redactadas en [docs/preguntas-cliente.md](docs/p
 
 1. Accesos a **FTP**, **Search Console** (de los dos dominios) y **DNS/hosting del `.es`**.
 2. Si la **delegación de Oviedo sigue activa**, sus horarios y los de Vitoria, y la ubicación exacta de las dos sedes.
-3. **Formulario:** cómo se procesa (PHP en el hosting, que exigiría aprobar la excepción de la sección 2, o un servicio externo sin scripts de terceros), a qué email llega, tamaño máximo del adjunto y plazo de respuesta.
+3. **Formulario** (el procesado con PHP ya está decidido): a qué email llega, tamaño máximo del adjunto (se propone 10 MB; depende también del límite de PHP del hosting), si se aceptan DWG/DXF y plazo de respuesta.
 4. Confirmación de los **datos externos**: 1982 y «C/ Pintor Mauro Ortiz de Urbina, 7 bajo».
 5. **Certificaciones ATEX** vigentes de cada producto (94/9/CE o 2014/34/UE).
 6. Qué productos de «Nuevos productos 2021» siguen vigentes y si hay productos descatalogados.
 7. **Catálogo de resistencias vigente:** el del `.es` (`catalogo-resistencias-calefactoras.pdf`) y el del `.com` (`catalogo-Brototermic-resistencias.pdf`) no son idénticos.
 8. **Logo vectorial (SVG)** propio, si el logotipo «BT» de la oficina de Oviedo está vigente, y logos oficiales de las 9 marcas.
-9. **Textos legales:** revisión por el asesor del cliente (referencias obsoletas a la AEPD, cookies y el «grupo BROTOTERMIC»).
+9. **Textos legales [REVISIÓN CLIENTE]:** revisión por el asesor del cliente de lo que no se ha eliminado (`www.aepd.es`, el «grupo BROTOTERMIC», el tratamiento de los adjuntos y la revisión general).
 10. Si se quiere **analítica**. Sin ella, y sin mapas incrustados ni reCAPTCHA, la web no necesita banner de cookies.
 11. Keywords marcadas [POR VERIFICAR GSC] en `plan-paginas.csv` (inicio, contacto, empresa, `/oviedo/`, transductores magnéticos, accesorios para sondas).
 12. Qué **provincias limítrofes** se atienden desde Vitoria (para `areaServed`).
 13. **Propuestas de diseño pendientes de aprobar:** página 404 propia y el «Cómo llegar» con un enlace a Google Maps en lugar de un iframe (por rendimiento y cookies).
-14. Entorno de pruebas para el `.htaccess`: un subdominio del hosting o Apache local.
+14. **Ampliación de imágenes:** visto bueno a la herramienta y al comando propuestos (Real-ESRGAN + ImageMagick, [docs/tareas.md](docs/tareas.md), B-1-05) antes de ejecutar el lote.
+15. **Hero del inicio con solo 480 px:** `slide-1` mide 910 px y en escritorio se mostrará ampliada. Propuesta: en el hero (y solo ahí) servir además el JPG original de 910 px. Pendiente de aprobar.
+16. **Title del inicio sin «BROTOTERMIC»** (no cabe con «Vitoria» en 60 caracteres, §3.2): aprobar o elegir otra variante.
+17. **Docker:** no está instalado en el equipo de la Persona A. Hace falta instalar Docker Desktop para usar `tools/apache-pruebas/`.
 
 ---
 

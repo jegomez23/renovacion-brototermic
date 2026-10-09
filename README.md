@@ -16,6 +16,8 @@ Renovación de la web de **BROTOTERMIC, S.L.** (brototermic.com): resistencias e
 ```bash
 node build.js              # genera /dist (pendiente de crear: tarea A-1-01)
 node build.js --publicar   # igual, pero falla si queda algo [POR VERIFICAR] o algún borrador
+node tools/validar-plan.js # comprueba title, meta y keywords de docs/plan-paginas.csv
+bash tools/probar-redirecciones.sh   # prueba el .htaccess en el Apache de Docker (ver tools/apache-pruebas/)
 ```
 
 Lo que se publica en el hosting (Apache) es el contenido de `/dist`.

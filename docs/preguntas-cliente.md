@@ -30,7 +30,7 @@ Empezamos esta semana con la nueva web de BROTOTERMIC. Para no inventar ningún 
 ### 3. Formulario de presupuesto
 
 8. **¿A qué email deben llegar** las peticiones de presupuesto? ¿A uno solo o según la sede (Vitoria: info@, Oviedo: brototermic@)?
-9. El formulario actual funciona con un programa en el propio hosting. ¿Os llegan bien hoy los mensajes de la web? ¿Os parece bien que el nuevo funcione también desde vuestro hosting (sin servicios externos), o preferís otra opción?
+9. El nuevo formulario funcionará, como el actual, desde vuestro propio hosting (sin servicios externos). ¿Os llegan bien hoy los mensajes de la web? ¿Sabéis si el hosting tiene algún límite de envío de correo?
 10. El nuevo formulario permitirá **adjuntar un plano o una foto**. ¿Qué tamaño máximo os parece razonable (proponemos 10 MB)? ¿Recibís planos en DWG o DXF, además de PDF e imágenes?
 11. ¿En qué plazo soléis responder a una petición? Lo indicaremos en el mensaje de confirmación («Te responderemos en…»).
 12. ¿Queréis medir las visitas (Google Analytics u otra herramienta)? Hoy la web no tiene ninguna. Si no queréis, la web nueva no necesitará el aviso de cookies.
@@ -56,7 +56,7 @@ Empezamos esta semana con la nueva web de BROTOTERMIC. Para no inventar ningún 
 
 ### 7. Textos legales
 
-23. ¿Tenéis un **asesor de protección de datos** o un proveedor de textos legales? La política de privacidad y la de cookies actuales tienen referencias antiguas (un código de inscripción en la AEPD que ya no existe y cookies de Facebook, Twitter y Google+). Hay que actualizarlas, y conviene que las revise vuestro asesor.
+23. ¿Tenéis un **asesor de protección de datos** o un proveedor de textos legales? Hemos quitado de la política de privacidad y de la de cookies lo que ya no aplica (el código de inscripción en la AEPD, que dejó de existir con el RGPD, y las cookies de Facebook, Twitter y Google+, que la web no usa). El resto lo dejamos actualizado, pero conviene que lo revise vuestro asesor antes o justo después de publicar.
 24. La política de privacidad habla de un «grupo BROTOTERMIC». ¿Existe ese grupo o es un texto heredado?
 
 Muchas gracias. Con el bloque 1 resuelto podemos empezar hoy mismo; el resto lo iremos completando estos días.

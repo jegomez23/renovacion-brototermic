@@ -9,9 +9,10 @@
 - Archivos JSON en **UTF-8 sin BOM**, indentados con 2 espacios, sin comentarios (JSON estándar).
 - Los nombres de campo van en minúsculas, en español y en camelCase (`nombreCorto`).
 - **Rutas:** siempre absolutas desde la raíz pública (`/images/…`, `/docs/…`, `/resistencias-inmersion.html`).
-- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. `build.js` busca `/images/<img>-480.webp`, `/images/<img>-960.webp` y `/images/<img>.jpg`. Si falta alguno, avisa; si falta el `.jpg`, da error.
+- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. `build.js` busca `/images/<img>.jpg` y `/images/<img>-480.webp` (**solo se sirve la versión de 480 px**; no hay 960: decisión del 2026-10-09). Si falta el `.webp`, avisa y pinta solo el JPG; si falta el `.jpg`, da error.
 - **Textos con formato (`texto`, `intro`, `cuerpo`):** fragmento HTML con estas etiquetas permitidas: `p`, `strong`, `em`, `br`, `a`, `ul`, `ol`, `li`, `sup`, `sub`, `table`, `thead`, `tbody`, `tr`, `th`, `td`, `caption`. Nada de `style`, `class`, `h1`–`h6` ni `img` (los títulos e imágenes los pone la plantilla). `build.js` avisa si encuentra otra etiqueta.
 - **[POR VERIFICAR]:** si un texto contiene `[POR VERIFICAR` o `(dato externo`, `build.js` lo avisa en el modo normal y **falla** en el modo de publicación (`node build.js --publicar`).
+- **[REVISIÓN CLIENTE]:** solo en los textos legales de `/content`, dentro de un comentario HTML (`<!-- [REVISIÓN CLIENTE] motivo -->`). `build.js` quita los comentarios del HTML final, lista cada marca como aviso y **no bloquea** la publicación.
 - «Quién» indica quién rellena el campo: **A** (técnica) o **B** (contenido). Si un campo está vacío, **B** lo pide a **A** o al revés; nadie lo inventa.
 
 ## 1. `data/site.json`
@@ -73,9 +74,9 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 
 | Campo | Tipo | Oblig. | Ejemplo | Quién |
 |---|---|---|---|---|
-| `accion` | string | sí | `"/contacto/enviar.php"` [POR VERIFICAR: depende de cómo se procese el envío] | A |
-| `maxAdjuntoMB` | number | sí | `10` [POR VERIFICAR con el hosting] | A |
-| `tiposAdjunto` | string[] | sí | `[".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]` | A |
+| `accion` | string | sí | `"/contacto/enviar.php"` (PHP en el hosting: excepción aprobada el 2026-10-09, AGENTS.md §2) | A |
+| `maxAdjuntoMB` | number | sí | `10` [POR VERIFICAR con el cliente y con los límites de PHP del hosting]. `enviar.php` aplica el mismo límite en el servidor. | A |
+| `tiposAdjunto` | string[] | sí | `[".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]`. Lista blanca: `enviar.php` comprueba la extensión y el tipo real del archivo (`finfo`). DWG/DXF, pendiente de confirmar con el cliente. | A |
 
 ## 2. `data/familias.json`
 
@@ -201,6 +202,6 @@ h1: Nuestra historia
 1. Todas las páginas del `plan-paginas.csv` existen en `/dist` y no hay ninguna más (salvo `404.html` si se aprueba).
 2. Title ≤ 60 caracteres, meta de 140 a 155, title y meta únicos, un solo H1 por página.
 3. Cada `archivo` de `familias.json` tiene su JSON en `data/categorias/` y viceversa.
-4. Toda `img` existe en `/images/` (`.jpg` obligatorio; los `.webp` dan aviso si faltan).
+4. Toda `img` existe en `/images/` (`.jpg` obligatorio; el `-480.webp` da aviso si falta).
 5. Todo enlace interno apunta a una página de `/dist` o a un PDF de `/docs`.
 6. Ninguna página publicada contiene `[POR VERIFICAR`, `(dato externo` ni `_borrador: true` (solo en modo `--publicar`).
