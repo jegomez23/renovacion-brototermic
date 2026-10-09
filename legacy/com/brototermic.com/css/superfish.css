@@ -1,0 +1,109 @@
+.sf-menu {
+	font-size:0;
+	line-height:0;
+	padding:0;
+	z-index:99;
+	position:relative;
+	text-align:center
+	
+
+}
+nav{
+	position:relative;float:right
+}
+
+.sf-menu > li {
+	position:relative;
+	display:inline-block;margin:0 0 0 1px
+	
+}
+
+.sf-menu > li:first-child{background:none;}
+.sf-menu  li a{
+	text-transform:uppercase;
+	-webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;	
+ 	font-family: 'Lora', serif;
+	font-weight:bold;   
+	
+}
+
+
+.sf-menu > li > a {	
+	display:inline-block;	color:#d3e6f7;
+	font-size:18px;
+	line-height:22px;
+	position:relative;
+	text-decoration:none !important;
+	padding:103px 13px 41px 12px;
+    background:url(../images/tail-item-hover.gif) repeat-x 0 -166px ;
+    text-shadow:0 3px 4px rgba(0,0,0,0.2);
+	}	
+
+
+.sf-menu > li.current >a , .sf-menu > li > a:hover, .sf-menu > li.sfHover > a{
+	background:url(../images/tail-item-hover.gif) repeat-x 0 0;
+	font-family: Lora, serif;
+}
+
+.sf-menu ul {
+	background:url(../images/tail-menu-ul.gif) repeat-x  0 0 #004b9a;
+	position:absolute;
+	top:-999em;
+	left:0;
+	display:none;
+	margin:0;
+	width:210px;
+	-moz-box-shadow: 0 3px 5px 3px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 5px 3px rgba(0,0,0,0.1);
+	box-shadow: 0 3px 5px 3px rgba(0,0,0,0.1);
+	padding-top: 17px;
+	padding-right: 0;
+	padding-bottom: 14px;
+	padding-left: 0;
+}
+.sf-menu ul ul{background:url(../images/tail-ul-ul.gif) repeat-x 0 0 #004b9a}
+
+.sf-menu li:hover ul, .sf-menu li.sfHover ul {
+	top:166px;
+	left:0px;
+	z-index:20 !important;
+}
+.sf-menu li:hover li ul, ul.sf-menu li.sfHover li ul {
+	top:-999em
+}
+.sf-menu li li {
+	position:relative;
+	float:none;	
+	display:block;
+	margin:0 0 6px
+
+}
+
+
+.sf-menu li li a {
+	color:#fff;
+	font-size:11px;
+	line-height:20px;
+	display:block;
+	position:relative;
+	text-decoration:none !important;
+	text-align:left;
+	padding: 7px 0 2px 19px
+
+}
+
+
+
+.sf-menu > li ul li a:hover , .sf-menu > li > ul > li.sfHover > a{
+	background:#48daf4;
+	font-family: Lora, serif;
+
+}
+
+.sf-menu li li:hover ul, ul.sf-menu li li.sfHover ul {
+	left:168px;
+	top:-17px;
+}

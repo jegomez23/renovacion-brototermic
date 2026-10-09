@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://brototermic.com/</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>1</priority>
+    </url>
+    
+     <url>
+        <loc>https://brototermic.com/oviedo/</loc>
+        <lastmod>2022-06-15</lastmod>
+        <!--<changefreq>weekly</changefreq>-->
+		<changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://brototermic.com/oviedo/docs/catalogo-instrumentacion.pdf</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://brototermic.com/oviedo/docs/catalogo-resistencias-calefactoras.pdf</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://brototermic.com/fabricaciones-a-medida.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/nuevos-productos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/docs/catalogo-instrumentacion.pdf</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/fabricaciones-a-medida.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/nuevos-productos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/empresa.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-inmersion.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-calentamientoaire.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-flexibles.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-infrarrojos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-tipo-cartucho.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-tipo-abrazadera.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-planas.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-calefaccion-industrial.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-atex.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+	
+		<url>
+        <loc>https://brototermic.com/resistencias-especiales-a-medida.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/resistencias-mantas-calefactoras.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-sondastemperatura.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-convertidores.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-cables-compensacion.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-indicadores-de-procesos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-videoregistradores.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-dataloggers.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-panelespc-software.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-accesorios-sondas.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-sensores-infrarrojos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-termometros.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-termostatos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-equipos-de-medicion.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controltemperatura-reles-estado-solido.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/presionhumedad-sondas-de-humedad.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/presionhumedad-sensores-de-presion.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-niveles-de-flotador.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-interruptores-magneticos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-interruptores-magneticos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-sensores-conductivos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-sensores-capacitivos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-transductores-magneticos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-sensores-de-presion.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-sensores-de-ultrasonidos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/controldenivel-niveles-rotativos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <lochttps://brototermic.com/controldenivel-reles-de-nivel.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/ventilacion.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/equipos-perifericos.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/equiposderefrigeracion-refrigeradores-chillers.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/hornos-industriales.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/contacto/contacto.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/privacidad.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/cookies.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+	<url>
+        <loc>https://brototermic.com/mapa-web.html</loc>
+        <lastmod>2022-06-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+	
+</urlset> 

@@ -1,0 +1,212 @@
+﻿<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <title>Componentes Industriales|BROTOTERMIC Vitoria</title>
+  <meta charset="utf-8">
+  
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/search.css">
+  <link rel="stylesheet" href="css/google-map.css">
+  <link rel="stylesheet" href="css/mailform.css">
+
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery-migrate-1.2.1.js"></script>
+
+  <!-- reCAPTCHA v2 -->
+  <script src="https://www.google.com/recaptcha/api.js?hl=es" async defer></script>
+  <!-- fin reCAPTCHA -->
+
+  <!--[if lt IE 9]>
+  <html class="lt-ie9">
+  <div style=' clear: both; text-align:center; position: relative;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/..">
+      <img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."/>
+    </a>
+  </div>
+  <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+  <script src='js/device.min.js'></script>
+
+  <style type="text/css">
+    #mapa { height: 400px; }
+  </style>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnGLuza6w6-03eQmtCi6TXFyQlp2EMAKg"></script>
+    <script type="text/javascript">
+    function initialize() {
+     var marcadores = [
+        ['Componentes Industriales|BROTOTERMIC Vitoria', 42.849668,-2.685874]
+      ];
+      var map = new google.maps.Map(document.getElementById('mapa'), {
+        zoom: 15,
+        center: new google.maps.LatLng(42.849668,-2.685874),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      var infowindow = new google.maps.InfoWindow();
+      var marker, i;
+      for (i = 0; i < marcadores.length; i++) {  
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
+          map: map
+        });
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(marcadores[i][0]);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
+      }
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+<body>
+<div class="page">
+  <!--========================================================
+                            HEADER
+  =========================================================-->
+  <header>
+    <div id="stuck_container" class="stuck_container">
+      <div class="container-fluid">
+        <div class="brand">
+          <h1 class="brand_name">
+            <a href="../index.html"> Componentes Industriales|BROTOTERMIC Vitoria</a>
+          </h1>
+        </div>
+
+        <nav class="nav">
+          <ul class="sf-menu" data-type="navbar">
+            <li><a href="../index.html" ><span>Inicio</span></a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  </header>
+  <!--========================================================
+                            CONTENT
+  =========================================================-->
+  <main>
+    <section class="map">
+      <div id="mapa"></div>
+    </section>
+
+    <section class="well2">
+      <div class="container text-sm-center">
+        <div class="row">
+          <div class="col-md-4 col-sm-12 col-xs-12 ">
+            <h2 class="">
+              Dirección
+            </h2>
+            <p class="offs1">
+              Ponemos a tu disposición nuestros datos de dirección y teléfonos,
+        además de un formulario por si deseas realizar alguna consulta.
+            </p>
+      <p><strong>Registrándome en este formulario, confirmo que he leído y acepto los Términos y Condiciones de privacidad.<strong></p>
+      <p>
+      </p>
+            <div class="contact-info contact-info__mod">
+      <dt>BROTOTERMIC | Sede central en Vitoria</dt></br>
+      <address class="h4">Ptr. Ortiz de Urbina, n. 7
+      01008 Vitoria - Gasteiz
+      Álava - Araba </address><br>
+      
+      <dt>BROTOTERMIC | Delegación en Asturias</dt></br>
+      <address class="h4">Llano Ponte, nº8 - Bajo
+      03011 Oviedo
+      Asturias</address>
+              <dl class="freephone">
+      <dt>  Teléfono: 945 223 331 | Sede central en Vitoria</dt></br>
+      <dt>  Teléfono: 629 462 642 | Delegación de Asturias</dt></br>
+              </dl></br>
+              
+              <dl class="email">
+                <dt>E-mail: </dt></br>
+                <dd><a href="mailto:info@brototermic.com">info@brototermic.com</a></dd><br>
+        <dd><a href="mailto:brototermic@brototermic.com">brototermic@brototermic.com</a></dd><br>
+              </dl>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-sm-12 col-xs-12">
+            <h2 class="text-xs-center">
+              Formulario de contacto
+            </h2>
+
+            <!-- RD Mailform -->
+            <form class='mailform rd-mailform' method="post" action="bat/rd-mailform.php">
+              <!-- RD Mailform Type -->
+              <input type="hidden" name="form-type" value="contact"/>
+              <!-- END RD Mailform Type -->
+              <fieldset>
+                <label data-add-placeholder>
+                  <input type="text"
+                         name="name"
+                         placeholder="Nombre*:"
+                         data-constraints="@LettersOnly @NotEmpty"/>
+                </label>
+
+                <label data-add-placeholder>
+                  <input type="text"
+                         name="email"
+                         placeholder="Email*:"
+                         data-constraints="@Email @NotEmpty"/>
+                </label>
+
+                <label data-add-placeholder>
+                  <input type="text"
+                         name="phone"
+                         placeholder="Teléfono*:"
+                         data-constraints="@Phone"/>
+                </label>
+
+                <label class="textarea" data-add-placeholder>
+                   <textarea name="message" placeholder="Comentario/Petición*:"
+                             data-constraints="@NotEmpty"></textarea>
+                </label>
+
+                <!-- reCAPTCHA dentro del formulario -->
+                <br>
+                <div class="g-recaptcha" data-sitekey="6Les1xMsAAAAAC1mMCCGYHkh1QEz1it97Fk-4yi0
+"></div>
+                <!-- fin reCAPTCHA -->
+
+                <div class="mfControls">
+                  <span class="req">
+                      Campos obligatorios*
+                  </span>
+                  <button class="btn btn-primary btn-md" type="submit">Enviar formulario</button>
+                  <!--<button class="btn btn-dark" type="reset"><span>Reset</span></button>-->
+                </div>
+                <div class="mfInfo"></div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!--========================================================
+                            FOOTER
+  =========================================================-->
+  <footer>
+    <section  class="rights">
+      <div class="container">
+        <p>
+          &#169; <span id="copyright-year"></span> Componentes Industriales|BROTOTERMIC Vitoria | 
+          <a href="../privacidad.html" title="Componentes Industriales|BROTOTERMIC Vitoria">Política de Privacidad | </a>
+      <a href="../cookies.html" title="Componentes Industriales|BROTOTERMIC Vitoria">Cookies </a>
+          
+          <!-- {%FOOTER_LINK} -->
+        </p>
+      </div>
+    </section>
+  </footer>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>

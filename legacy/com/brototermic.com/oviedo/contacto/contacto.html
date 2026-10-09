@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <title>Componentes Industriales|BROTOTERMIC Oviedo</title>
+  <meta charset="utf-8">
+	
+	<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="css/grid.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/search.css">
+  <link rel="stylesheet" href="css/google-map.css">
+  <link rel="stylesheet" href="css/mailform.css">
+
+  <script src="js/jquery.js"></script>
+  <script src="js/jquery-migrate-1.2.1.js"></script>
+
+  <!--[if lt IE 9]>
+  <html class="lt-ie9">
+  <div style=' clear: both; text-align:center; position: relative;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/..">
+      <img src="images/ie8-panel/warning_bar_0000_us.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today."/>
+    </a>
+  </div>
+  <script src="js/html5shiv.js"></script>
+  <![endif]-->
+
+  <script src='js/device.min.js'></script>
+  <style type="text/css">
+    #mapa { height: 400px; }
+  </style>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnGLuza6w6-03eQmtCi6TXFyQlp2EMAKg"></script>
+    <script type="text/javascript">
+    function initialize() {
+     var marcadores = [
+        ['Componentes Industriales|BROTOTERMIC Oviedo', 43.367693,-5.847025]
+      ];
+      var map = new google.maps.Map(document.getElementById('mapa'), {
+        zoom: 15,
+        center: new google.maps.LatLng(43.367693,-5.847025),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      });
+      var infowindow = new google.maps.InfoWindow();
+      var marker, i;
+      for (i = 0; i < marcadores.length; i++) {  
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(marcadores[i][1], marcadores[i][2]),
+          map: map
+        });
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(marcadores[i][0]);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
+      }
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+<body>
+<div class="page">
+  <!--========================================================
+                            HEADER
+  =========================================================-->
+  <header>
+    <div id="stuck_container" class="stuck_container">
+      <div class="container-fluid">
+        <div class="brand">
+          <h1 class="brand_name">
+            <a href="../index.html"> Componentes Industriales|BROTOTERMIC Oviedo</a>
+          </h1>
+        </div>
+
+        <nav class="nav">
+          <ul class="sf-menu" data-type="navbar">
+            <li><a href="../index.html" ><span>Inicio</span></a></li>
+              
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  </header>
+  <!--========================================================
+                            CONTENT
+  =========================================================-->
+  <main>
+    <section class="map">
+   <!--   <div id="mapa"></div> -->
+   <div id="mapa"></div>
+	<!-- <div class="map">
+    <iframe style="width: 100%;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3039.3693984289202!2d-3.781751984351925!3d40.37850486588683!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd418857361226ed%3A0x5e72e7268814ffd8!2sCalle%20de%20Oliva%20de%20Plasencia%2C%201%2C%2028044%20Madrid!5e0!3m2!1ses!2ses!4v1626249157758!5m2!1ses!2ses" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+	</div> -->
+    </section>
+
+    <section class="well2">
+      <div class="container text-sm-center">
+        <div class="row">
+          <div class="col-md-4 col-sm-12 col-xs-12 ">
+            <h2 class="">
+              Dirección
+            </h1>
+            <p class="offs1">
+              Ponemos a tu disposición nuestros datos de dirección y teléfonos,
+			  además de un formulario por si deseas realizar alguna consulta.
+            </p>
+			<p><strong>Registrándome en este formulario, confirmo que he leído y acepto los Términos y Condiciones de privacidad.<strong></p>
+			<p>
+			</p>
+            <div class="contact-info contact-info__mod">
+			<dt>BROTOTERMIC | Sede central en Vitoria</dt></br>
+			<address class="h4">Ptr. Ortiz de Urbina, n. 7
+			01008 Vitoria - Gasteiz
+			Álava - Araba </address><br>
+			
+			<dt>BROTOTERMIC | Delegación en Asturias</dt></br>
+			<address class="h4">Llano Ponte, nº8 - Bajo
+			33011 Oviedo
+			Asturias</address>
+              <dl class="freephone">
+
+              </dl></br>
+              
+              <dl class="email">
+                <dt>E-mail: </dt></br>
+                <dd><a href="mailto:info@brototermic.com">info@brototermic.com</a></dd><br>
+				<dd><a href="mailto:brototermic@brototermic.com">brototermic@brototermic.com</a></dd><br>
+              </dl>
+            </div>
+          </div>
+
+          <div class="col-md-8 col-sm-12 col-xs-12">
+            <h2 class="text-xs-center">
+              Formulario de contacto
+            </h1>
+
+            <!-- RD Mailform -->
+            <form class='mailform rd-mailform' method="post" action="bat/rd-mailform.php">
+              <!-- RD Mailform Type -->
+              <input type="hidden" name="form-type" value="contact"/>
+              <!-- END RD Mailform Type -->
+              <fieldset>
+                <label data-add-placeholder>
+                  <input type="text"
+                         name="name"
+                         placeholder="Nombre*:"
+                         data-constraints="@LettersOnly @NotEmpty"/>
+                </label>
+
+                <label data-add-placeholder>
+                  <input type="text"
+                         name="email"
+                         placeholder="Email*:"
+                         data-constraints="@Email @NotEmpty"/>
+                </label>
+
+                <label data-add-placeholder>
+                  <input type="text"
+                         name="phone"
+                         placeholder="Teléfono*:"
+                         data-constraints="@Phone"/>
+                </label>
+
+                <label class="textarea" data-add-placeholder>
+                   <textarea name="message" placeholder="Comentario/Petición*:"
+                             data-constraints="@NotEmpty"></textarea>
+                </label>
+
+                <div class="mfControls">
+                  <span class="req">
+                      Campos obligatorios*
+                  </span>
+                  <button class="btn btn-primary btn-md" type="submit">Enviar formulario</button>
+                  <!--<button class="btn btn-dark" type="reset"><span>Reset</span></button>-->
+                </div>
+                <div class="mfInfo"></div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <!--========================================================
+                            FOOTER
+  =========================================================-->
+  <footer>
+    <section  class="rights">
+      <div class="container">
+        <p>
+          &#169; <span id="copyright-year"></span> Componentes Industriales|BROTOTERMIC Oviedo | 
+          <a href="../politica-de-privacidad-brototermic-oviedo.html" title="Componentes Industriales|BROTOTERMIC Oviedo">Política de Privacidad | </a>
+		  <a href="../politica-de-cookies-brototermic-oviedo.html" title="Componentes Industriales|BROTOTERMIC Oviedo">Cookies </a>
+		  
+          <!-- {%FOOTER_LINK} -->
+        </p>
+      </div>
+    </section>
+  </footer>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
