@@ -14,8 +14,10 @@ Renovación de la web de **BROTOTERMIC, S.L.** (brototermic.com): resistencias e
 ## Uso
 
 ```bash
-node build.js              # genera /dist (pendiente de crear: tarea A-1-01)
-node build.js --publicar   # igual, pero falla si queda algo [POR VERIFICAR] o algún borrador
+node build.js                      # modo piloto: genera /dist y avisa de lo pendiente
+node build.js --modo=publicacion   # falla si queda algo pendiente (borradores, [POR VERIFICAR], páginas o enlaces sin generar)
+node tools/servir.js               # sirve /dist en http://localhost:8000
+node tools/capturas.js             # capturas y comprobaciones a 320, 360, 768 y 1280 px
 node tools/validar-plan.js # comprueba title, meta y keywords de docs/plan-paginas.csv
 bash tools/probar-redirecciones.sh   # prueba el .htaccess en el Apache de Docker (ver tools/apache-pruebas/)
 ```

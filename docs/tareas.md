@@ -25,7 +25,7 @@ Mientras se espera la aprobación, solo se adelanta trabajo que no depende del f
 | **B-1-02** | `data/site.json` completo según [datos.md](datos.md) §1 (sedes, marcas, catálogos, `pendientes`) | `data/site.json` | — | JSON válido | Todos los campos obligatorios; 1982 y la dirección de Vitoria en `pendientes`; CP de Oviedo 33011 | ✔ |
 | **B-1-03** RC | `data/familias.json` completo: 8 entradas y las 35 categorías con `menu` y `resumen`; `title`, `meta` y `h1` de las 4 familias copiados de `plan-paginas.csv` | `data/familias.json` | — | JSON válido | El megamenú del piloto se genera completo (sus enlaces a páginas aún no generadas son esperados) | ✔ |
 | **B-1-04** | Copiar los 8 PDF del `.com` desde `/legacy` a `/docs` con su **nombre exacto** (incluidos la ñ y los espacios) | `docs/*.pdf` | — | 8 PDF | Nombres idénticos a /legacy; MD5 iguales | ✔ |
-| **B-1-05** RC | Imágenes del piloto: las 14 de `resistencias-inmersion`, con la **ampliación automática ×2 en lote** (`AMPLIAR_X2`, comando abajo) → `/images/<nombre>.jpg` (480 px) + `<nombre>-480.webp`. **No se ejecuta hasta el visto bueno del responsable a la herramienta y al comando.** Mientras tanto, el piloto se genera con los JPG originales de /legacy. | `images/brototermic-*.jpg` y `.webp` | Visto bueno al comando | 28 archivos | Mismo nombre base que /legacy; producto sin alterar (comparado con el original); WebP 480 ≤ 40 KB como objetivo | ✔ |
+| **B-1-05** RC | Imágenes del piloto: las 14 de `resistencias-inmersion` se usan **originales, a su tamaño real** (sin ampliar). **Retoque manual solo de 3** con dominante de color (`industriaalimentaria`, `calefactores`, `liquidos-noagresivos`), y únicamente en **fondo e iluminación**. Documentar la herramienta usada. | `images/brototermic-*.jpg` | — | 3 JPG retocados | Mismo nombre y medidas que /legacy; producto sin alterar (comparado con el original) | ✔ |
 | **A-1-04** RC | Partials: `head` (meta, canonical, preload de fuente, CSS), `cabecera` (megamenú + acordeón desde `familias.json`), `migas`, `cta-presupuesto`, `pie` (desde `site.json`), `schema` | `src/partials/*` | A-1-01, B-1-02, B-1-03 (mientras tanto, con datos de prueba) | Partials | Menú y enlaces escritos en el HTML (comprobado con JS desactivado) | ✖ |
 | **A-1-05** RC | Plantilla `categoria` y sus componentes: índice de productos, tarjeta de producto, tabla y lista de specs, CTA, categorías hermanas | `src/templates/categoria.html`, `assets/css/style.css` | A-1-03, A-1-04 | Plantilla | Nombres de producto en H2, un solo H1, anclas únicas | ✖ |
 | **A-1-06** | JS: megamenú y acordeón (teclado, Esc, `aria-expanded`) y relleno del producto en el formulario | `assets/js/menu.js` | A-1-04 | JS con `defer` | Navegable con teclado; sin JS, todo visible | ✖ |
@@ -42,14 +42,14 @@ Mientras se espera la aprobación, solo se adelanta trabajo que no depende del f
 |---|---|---|---|---|---|---|
 | **A-2-01** RC | Ejecutar el importador para las **38 categorías restantes** (incluidas las 4 directas), a primera hora | `data/categorias/*.json` | HITO-1, A-1-02 | 38 borradores con `_borrador: true` | Cada JSON tiene el mismo número de productos que `num_productos` en `plan-paginas.csv` | ✖ |
 | A-2-02 | Plantillas `familia` e `inicio` (hero, tarjeta de familia, bloque de marcas, bloque de sedes) | `src/templates/familia.html`, `inicio.html` | HITO-1 | Plantillas | Validadas en 360/768/1280 px | ✔ |
-| A-2-03 | Plantilla `contacto` + formulario (campos, honeypot, RGPD, validación accesible) + **`enviar.php`** (excepción PHP aprobada: validación en el servidor, límite de tamaño y lista blanca de tipos del adjunto comprobada con `finfo`, honeypot, RGPD obligatoria, cabeceras saneadas; ver AGENTS.md §2) | `src/templates/contacto.html`, `src/contacto/enviar.php`, `assets/js/formulario.js` | HITO-1; email de destino y tamaño máximo (cliente) | Formulario | Envío probado de principio a fin con adjunto (PDF y JPG), rechazo de un tipo no permitido, de un archivo demasiado grande, sin RGPD y con el honeypot relleno; error y éxito accesibles, también sin JS | ✔ |
+| A-2-03 | Plantilla `contacto` + formulario (campos, honeypot, RGPD, validación accesible) + script de envío: el `rd-mailform.php` actual con los mismos nombres de campo, o **`enviar.php`** si no admite el adjunto (excepción PHP aprobada: validación en el servidor, límite de tamaño y lista blanca de tipos del adjunto comprobada con `finfo`, honeypot, RGPD obligatoria, cabeceras saneadas; ver AGENTS.md §2) | `src/templates/contacto.html`, `src/contacto/enviar.php`, `assets/js/formulario.js` | HITO-1; email de destino y tamaño máximo (cliente) | Formulario | Envío probado de principio a fin con adjunto (PDF y JPG), rechazo de un tipo no permitido, de un archivo demasiado grande, sin RGPD y con el honeypot relleno; error y éxito accesibles, también sin JS | ✔ |
 | A-2-04 | Plantillas `servicio`, `sede` y `legal` | `src/templates/*.html` | HITO-1 | Plantillas | Wireframes de [diseno.md](diseno.md) §4 | ✔ |
 | A-2-05 | Schema completo ([schema.md](schema.md)), `sitemap.xml` (solo URLs MANTENER/NUEVA) y `robots.txt` | `src/partials/schema.html`, `build.js` | A-1-04 | Archivos generados | 0 errores en el validador para cada plantilla; el sitemap tiene 52 páginas + 8 PDF | ✔ |
 | **B-2-01** RC | Resistencias (10 categorías): revisar borradores, erratas, alts, intros, metas y title | `data/categorias/resistencias-*.json` | A-2-01 | 10 JSON sin `_borrador` | Definición de terminado por página | ✖ |
 | **B-2-02** RC | Control de temperatura (13 categorías): igual que B-2-01 | `data/categorias/controltemperatura-*.json` | A-2-01 | 13 JSON | Ídem | ✖ |
 | B-2-03 | Intros y resúmenes de las 4 familias | `data/familias.json` | HITO-1 | Intros | 120-200 palabras, prompt estándar | ✔ |
 | B-2-04 | Textos de inicio, fabricaciones a medida y contacto (con los cambios de [plan-contenido.md](plan-contenido.md) §4) | `content/inicio.html`, `fabricaciones-a-medida.html`, `contacto.html` | HITO-1 | 3 fragmentos | Sin superlativos; datos externos en `pendientes` | ✔ |
-| B-2-05 | **Lote completo de ampliación ×2** (las 277 `AMPLIAR_X2`, con el mismo comando que el piloto) + las 6 CONVERTIR + el **retoque manual de la fase 1** (19 imágenes con `retoque_manual = fase 1`: fachada, Oviedo, slides y tarjetas de familia) | `images/` | Comando aprobado y formato aprobado en HITO-1 | JPG + WebP 480 | Mismas reglas que el piloto; las 19 de la fase 1 comparadas con su original | ✔ |
+| B-2-05 | Copiar a `/images/` las imágenes originales de las páginas de prioridad alta (acción ORIGINAL, sin tocar) y las CONVERTIR; preparar el **hero `slide-1` a 910 px** (`slide-1.jpg` optimizado + `slide-1.webp`) | `images/` | Formato aprobado en HITO-1 | JPG (+ WebP del hero) | Mismo nombre que /legacy; el hero a 910 px | ✔ |
 
 ## Día 3: resto de páginas, QA y publicación
 
@@ -58,7 +58,7 @@ Mientras se espera la aprobación, solo se adelanta trabajo que no depende del f
 | **B-3-01** RC | Control de nivel (9) y presión y humedad (2) | `data/categorias/controldenivel-*.json`, `presionhumedad-*.json` | A-2-01 | 11 JSON | Definición de terminado | ✖ |
 | **B-3-02** RC | Las 4 directas (ventilación, periféricos, chillers, hornos) | `data/categorias/*.json` | A-2-01 | 4 JSON | Ídem | ✖ |
 | B-3-03 | Empresa, nuevos productos, `/oviedo/`, privacidad y cookies (textos desactualizados de plan-contenido §4) | `content/*.html` | HITO-1 | 5 fragmentos | Revisión legal anotada como pendiente si no ha llegado | ✔ |
-| B-3-04 | Revisión visual del lote (comparar cada ampliada con su original y descartar las que alteren el producto). El retoque manual del resto de prioridad alta (76, `fase 2`) se hace **después de publicar** | `images/` | B-2-05 | Lista de descartes | Ninguna imagen publicada cambia la forma, los rótulos o el color del producto | ✔ |
+| B-3-04 | Imágenes de prioridad media y baja: copiar los originales y revisar cada alt con la imagen delante | `images/`, `data/categorias/*.json` | — | Alts revisados | Ningún alt copiado de otra imagen (caso RE92) | ✔ |
 | A-3-01 | Mapa web generado desde `familias.json` + página 404 (si se aprueba: ver AGENTS.md §12, Pendientes) | `build.js`, `content/mapa-web.html` | A-2-04 | Páginas | El mapa enlaza las 52 páginas | ✔ |
 | **A-3-02** RC | Modo `node build.js --publicar`: validación completa (las 52 páginas, sin borradores ni `[POR VERIFICAR`, cada URL MANTENER del inventario existe en `/dist`) | `build.js` | B-2-01, B-2-02, B-3-01, B-3-02 | Build limpio | Termina sin errores | ✖ |
 | A-3-03 | Prueba real de `.htaccess` en el **Apache en Docker** de A-1-10 (y, si el hosting lo ofrece, también en un subdominio de pruebas): un `curl` por fila de `redirecciones.csv` y por URL MANTENER | `tools/probar-redirecciones.sh` | A-1-09 | Informe | Todas las filas devuelven un único 301 al destino; las MANTENER, 200 | ✔ |
@@ -75,42 +75,19 @@ A-1-01 → A-1-04 → A-1-05 → A-1-08 → HITO-1 → A-2-01 (importar 38) → 
 
 - **El tramo más largo es la revisión de las 38 categorías por la Persona B** (unos 250 productos y 38 intros). El importador (A-1-02) existe para recortarlo: B revisa en lugar de transcribir.
 - **Dependencias externas que pueden parar la ruta:** acceso FTP y copia de seguridad (bloquean A-3-05) y la decisión sobre el formulario (bloquea A-2-03, y contacto es una página que hay que mantener).
-- **Riesgo paralelo:** las imágenes. El lote ×2 es automático (minutos, no días) y el retoque manual se limita a 19 en la fase 1; el resto pasa a la fase 2, así que no están en la ruta crítica.
+- **Riesgo paralelo:** casi ninguno con las imágenes desde el HITO-1: se usan los originales y solo se retocan 3.
 
 ## Si no da tiempo: qué se recorta y en qué orden
 
 Se recorta de arriba abajo, solo lo necesario:
 
-1. **Lote de ampliación ×2 y retoque de la fase 1:** si no da tiempo, se publican las imágenes originales de /legacy (JPG de 260 px optimizado, sin WebP) y se sustituyen después. La URL de la imagen no cambia, así que no afecta al SEO.
+1. **Retoque de las 3 fotos con dominante de color:** si no da tiempo, se publican los originales y se sustituyen después (la URL no cambia).
 2. **Página 404 personalizada:** se queda la de Apache.
 3. **Intros de las categorías de prioridad baja (12):** se publican sin intro y se añade en los 7 días siguientes. Los productos, el title, la meta y el H1 sí van completos.
 4. **Enlaces cruzados (`relacionadas`) y lateral sticky** de la plantilla de categoría.
 5. **Logos SVG en el bloque de marcas:** se muestran los nombres en texto.
 6. **`nuevos-productos.html`:** se publica con el texto de /legacy y las erratas corregidas, sin reescribir.
 
-**Nunca se recorta:** las 52 URLs, las 18 reglas de redirección, title, meta y H1 únicos, todos los productos, canonical, sitemap, robots, el formulario funcionando, los enlaces `tel:`, el contraste AA y la copia de seguridad.
-
-## Ampliación de imágenes en lote (propuesta, pendiente de visto bueno)
-
-**Herramienta:** [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN) en su versión **`realesrgan-ncnn-vulkan`** (v0.2.5.0, binario portable para Windows: no necesita Python ni instalación, usa la GPU por Vulkan) con el modelo **`realesrgan-x4plus`**, pensado para fotografía real (no para dibujos). Para reducir a 480 px y codificar JPG y WebP, **ImageMagick 7** (`winget install ImageMagick.ImageMagick`). Alternativa con interfaz gráfica: **Upscayl**, que usa el mismo motor y los mismos modelos.
-
-**Por qué ×4 y luego reducir:** `realesrgan-x4plus` es un modelo nativo ×4, y pedirle `-s 2` no es fiable. Se amplía ×4 (260 → 1040 px) y se reduce con Lanczos a 480 px, lo que equivale a la ampliación ×2 pedida (×1,85 sobre los 260 px originales) y queda más nítido que una ×2 directa. Solo se sirve la de 480.
-
-```bash
-# Carpeta de trabajo FUERA del repo; las originales se copian desde legacy/com/brototermic.com/images/
-# (lista: filas de docs/plan-imagenes.csv con accion = AMPLIAR_X2)
-realesrgan-ncnn-vulkan.exe -i trabajo/originales -o trabajo/x4 -n realesrgan-x4plus -s 4 -f png
-
-# Reducir a 480 px de ancho y codificar con el mismo nombre base (se ejecuta desde la raíz del repo)
-for f in trabajo/x4/*.png; do
-  n=$(basename "$f" .png)
-  magick "$f" -filter Lanczos -resize 480x -strip -quality 82 -sampling-factor 4:2:0 -interlace JPEG "images/$n.jpg"
-  magick "$f" -filter Lanczos -resize 480x -strip -quality 78 -define webp:method=6 "images/$n-480.webp"
-done
-```
-
-- Se prueba primero con las 14 del piloto (B-1-05). Si el resultado se aprueba en el HITO-1, se lanza el lote completo con los mismos ajustes (B-2-05).
-- **Control obligatorio:** cada imagen ampliada se compara con la original. Si cambia la forma, un rótulo, un texto o el color del producto, se descarta y se usa la original ampliada sin IA: `magick original.jpg -filter Lanczos -resize 480x …`.
-- Las imágenes con ñ en el nombre (`brototermic-convertidor-señal.jpg`) conservan el nombre exacto.
+**Nunca se recorta:** las 52 URLs, las 17 reglas de redirección y la regla 404 del `.es`, title, meta y H1 únicos, todos los productos, canonical, sitemap, robots, el formulario funcionando, los enlaces `tel:`, el contraste AA y la copia de seguridad.
 
 **Último recurso:** retrasar la publicación. La web antigua sigue funcionando mientras tanto, y no se conoce ninguna fecha límite externa [POR VERIFICAR con el cliente].

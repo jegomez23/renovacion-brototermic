@@ -45,6 +45,9 @@ const avisos = [];
 
 if (filas.length !== 52) errores.push(`Hay ${filas.length} páginas; deben ser 52.`);
 
+// Páginas que no conservan «Vitoria» por una decisión registrada (docs/decisiones.md)
+const EXCEPCIONES_VITORIA = new Set(['index.html']);
+
 // Columnas que no pueden repetirse entre páginas
 const UNICAS = ['archivo', 'title_nuevo_propuesto', 'meta_nueva_propuesta', 'h1_propuesto'];
 const vistos = Object.fromEntries(UNICAS.map(c => [c, new Map()]));
@@ -67,7 +70,8 @@ for (const f of filas) {
   if (lm < 140 || lm > 155) errores.push(`${id}: meta de ${lm} caracteres (140-155).`);
 
   // Regla del 2026-10-09: si el title antiguo contenía «Vitoria», el nuevo lo conserva
-  if (/vitoria/i.test(f.title_antiguo)) {
+  // (excepción aprobada en el HITO-1: el inicio, porque con «Vitoria» no cabe en 60 caracteres)
+  if (/vitoria/i.test(f.title_antiguo) && !EXCEPCIONES_VITORIA.has(id)) {
     if (!/Vitoria/.test(t)) errores.push(`${id}: el title antiguo contenía «Vitoria» y el nuevo no: «${t}»`);
     else if (!/\| BROTOTERMIC Vitoria$/.test(t)) avisos.push(`${id}: conserva «Vitoria», pero no con el formato «Producto | BROTOTERMIC Vitoria»: «${t}»`);
   }

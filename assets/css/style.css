@@ -118,13 +118,9 @@ a {
 /* En hover el subrayado se engrosa y pasa a cian; el texto NO cambia a cian (diseno.md §2.1) */
 a:hover { text-decoration-thickness: 2px; text-decoration-color: var(--color-acento); }
 
-/* Foco visible: azul sobre fondo claro, cian sobre fondo oscuro (cabecera y pie) */
+/* Foco visible: azul sobre fondo claro, cian sobre fondo oscuro (franja de la cabecera y pie) */
 :focus-visible { outline: 3px solid var(--color-primario); outline-offset: 2px; }
 .cabecera__franja :focus-visible,
-.cabecera__logo:focus-visible,
-.cabecera__tel:focus-visible,
-.cabecera__menu:focus-visible,
-.cabecera__presupuesto:focus-visible,
 .pie :focus-visible { outline-color: var(--color-acento-2); }
 main:focus { outline: none; } /* main recibe el foco del enlace «Saltar al contenido» */
 
@@ -194,17 +190,19 @@ main:focus { outline: none; } /* main recibe el foco del enlace «Saltar al cont
 .boton--primario:hover { background: var(--color-primario-oscuro); color: var(--color-blanco); }
 .boton--secundario { border-color: var(--color-primario); background: transparent; color: var(--color-primario); }
 .boton--secundario:hover { background: var(--color-fondo-destacado); }
-/* Sobre fondo oscuro (cabecera): fondo blanco y texto azul */
+/* Sobre fondo oscuro (pie): fondo blanco y texto azul */
 .boton--claro { background: var(--color-blanco); color: var(--color-primario); }
 .boton--claro:hover { background: var(--color-fondo-destacado); color: var(--color-primario); }
 
 /* ---------- 6. Cabecera, menú y megamenú ---------- */
+/* Barra blanca con el logo para fondo claro y franja fina #004c9a (decisión del HITO-1) */
 .cabecera {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--color-primario);
-  color: var(--color-blanco);
+  border-bottom: 1px solid var(--color-borde);
+  background: var(--color-fondo);
+  color: var(--color-texto);
 }
 .cabecera__franja { display: none; } /* en móvil sus datos van al final del menú */
 .cabecera__barra {
@@ -228,12 +226,12 @@ main:focus { outline: none; } /* main recibe el foco del enlace «Saltar al cont
   border: 0;
   border-radius: var(--radio-s);
   background: none;
-  color: var(--color-blanco);
+  color: var(--color-primario);
   font: 600 1rem/1 var(--fuente-texto);
   text-decoration: none;
   cursor: pointer;
 }
-.cabecera__tel:hover, .cabecera__menu:hover { background: rgba(255, 255, 255, 0.12); }
+.cabecera__tel:hover, .cabecera__menu:hover { background: var(--color-fondo-destacado); }
 .cabecera__tel-texto { /* en móvil y tableta, solo el icono */
   position: absolute;
   width: 1px;
@@ -381,7 +379,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 /* --- Tableta y escritorio (≥ 768 px): barra horizontal y megamenú desplegable --- */
 @media (min-width: 768px) {
   html:not(.js) .cabecera { position: sticky; }
-  .cabecera__franja { display: block; border-bottom: 1px solid var(--color-acento); font-size: var(--texto-pequeno); }
+  .cabecera__franja { display: block; background: var(--color-primario); color: var(--color-blanco); font-size: var(--texto-pequeno); }
   .cabecera__contacto {
     display: flex;
     justify-content: flex-end;
@@ -421,12 +419,11 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
     min-height: 44px;
     padding: var(--esp-2) var(--esp-3);
     border-radius: var(--radio-s);
-    color: var(--color-blanco);
+    color: var(--color-primario-oscuro);
     font-size: 1rem;
   }
-  .menu__boton:hover, .menu__enlace:hover, .menu__boton[aria-expanded="true"] { background: rgba(255, 255, 255, 0.12); }
-  .menu__enlace[aria-current="page"] { color: var(--color-blanco); text-decoration: none; box-shadow: inset 0 -3px 0 var(--color-acento); }
-  .menu__boton:focus-visible, .menu__enlace:focus-visible { outline-color: var(--color-acento-2); }
+  .menu__boton:hover, .menu__enlace:hover, .menu__boton[aria-expanded="true"] { background: var(--color-fondo-destacado); }
+  .menu__enlace[aria-current="page"] { color: var(--color-primario); text-decoration: none; box-shadow: inset 0 -3px 0 var(--color-acento); }
 
   /* Panel: a todo el ancho bajo la cabecera */
   .megamenu,

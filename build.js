@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 // build.js — generador estático de brototermic.com
 //
-//   node build.js              genera /dist (avisa de lo pendiente)
-//   node build.js --publicar   igual, pero FALLA si queda algo pendiente (borradores, [POR VERIFICAR…)
+//   node build.js                      modo «piloto» (por defecto): genera /dist y AVISA de lo pendiente
+//   node build.js --modo=publicacion   modo «publicacion»: lo pendiente es ERROR (alias: --publicar)
+//
+// Pendiente = borradores, marcas sin resolver ([POR VERIFICAR, (dato externo), páginas del plan que aún
+// no se generan y enlaces a esas páginas. En piloto es normal; en publicación, nada de eso puede quedar.
 //
 // Node ≥ 18 y sin dependencias npm: solo módulos nativos (fs, path, crypto).
 // Contrato de datos: docs/datos.md · Reglas: AGENTS.md
@@ -14,13 +17,19 @@ const crypto = require('crypto');
 
 const RAIZ = __dirname;
 const DIST = path.join(RAIZ, 'dist');
-const PUBLICAR = process.argv.includes('--publicar');
+const argModo = process.argv.find(a => a.startsWith('--modo='));
+const MODO = process.argv.includes('--publicar') ? 'publicacion' : argModo ? argModo.slice(7) : 'piloto';
+if (!['piloto', 'publicacion'].includes(MODO)) {
+  console.error(`ERROR  modo desconocido «${MODO}»: usa --modo=piloto o --modo=publicacion`);
+  process.exit(1);
+}
+const PUBLICAR = MODO === 'publicacion';
 
 // =====================================================================
 // 1. Avisos y errores
 // =====================================================================
 // Un AVISO no para el build (algo pendiente o mejorable). Un ERROR sí: el /dist no sería válido.
-// Con --publicar, lo pendiente (borradores, marcas sin resolver, páginas que faltan) pasa a ERROR.
+// En modo publicación, lo pendiente (borradores, marcas sin resolver, páginas y enlaces que faltan) pasa a ERROR.
 const avisos = [];
 const errores = [];
 const aviso = m => avisos.push(m);
@@ -281,19 +290,17 @@ if (sinJson.length) pendiente(`${sinJson.length} de ${categorias.size} categorí
 // =====================================================================
 // 5. Imágenes
 // =====================================================================
-const webpQueFaltan = [];
+// Imágenes originales a su tamaño real (AGENTS.md §5): <nombre>.jpg obligatorio y <nombre>.webp opcional
 function imagen(nombre, contexto) {
   if (!nombre) return null;
   const jpg = path.join(RAIZ, 'images', `${nombre}.jpg`);
   if (!fs.existsSync(jpg)) { error(`${contexto}: no existe images/${nombre}.jpg`); return null; }
   const medidas = medidasImagen(jpg);
   if (!medidas) { error(`${contexto}: no se pueden leer las medidas de images/${nombre}.jpg`); return null; }
-  // Solo se sirve la versión de 480 px (AGENTS.md §5): <nombre>.jpg + <nombre>-480.webp
-  const tieneWebp = fs.existsSync(path.join(RAIZ, 'images', `${nombre}-480.webp`));
-  if (!tieneWebp) webpQueFaltan.push(nombre);
+  const tieneWebp = fs.existsSync(path.join(RAIZ, 'images', `${nombre}.webp`));
   return {
     src: urlPublica(`/images/${nombre}.jpg`),
-    webp: tieneWebp ? urlPublica(`/images/${nombre}-480.webp`) : null,
+    webp: tieneWebp ? urlPublica(`/images/${nombre}.webp`) : null,
     ancho: medidas.ancho,
     alto: medidas.alto,
   };
@@ -306,9 +313,20 @@ const recursos = {
   css: `/assets/css/style.css?v=${hashArchivo(path.join(RAIZ, 'assets/css/style.css'))}`,
   js: `/assets/js/menu.js?v=${hashArchivo(path.join(RAIZ, 'assets/js/menu.js'))}`,
 };
-const logoRuta = path.join(RAIZ, site.logo.replace(/^\//, ''));
-if (!fs.existsSync(logoRuta)) throw new ErrorFatal(`site.json → logo: no existe ${site.logo}`);
-const logo = { src: urlPublica(site.logo), ...medidasImagen(logoRuta) };
+// Dos logos: para fondo claro (cabecera blanca) y el original para fondo oscuro (pie)
+function logoDe(campo) {
+  const ruta = site[campo];
+  if (!ruta || !fs.existsSync(path.join(RAIZ, ruta.replace(/^\//, '')))) throw new ErrorFatal(`site.json → ${campo}: no existe ${ruta}`);
+  return { src: urlPublica(ruta), ...medidasImagen(path.join(RAIZ, ruta.replace(/^\//, ''))) };
+}
+const logo = logoDe('logo');
+const logoFondoOscuro = logoDe('logoFondoOscuro');
+
+// Contrato del formulario (datos.md §1): compatible con rd-mailform.php y sin envío real hasta tener el hosting
+const formulario = site.formulario || {};
+if (typeof formulario.accion !== 'string' || !formulario.accion.startsWith('/')) error('site.json → formulario.accion: falta la URL de envío (ruta absoluta)');
+if (typeof formulario.envioActivo !== 'boolean') error('site.json → formulario.envioActivo: debe ser true o false');
+if (formulario.envioActivo === false) pendiente('site.json → formulario.envioActivo es false: el formulario no enviará nada hasta tener acceso al hosting.');
 const vitoria = site.sedes.find(s => s.id === 'vitoria');
 const urlFamilia = fam => `/${fam.archivo}.html`;
 const verTodas = fam => `Ver todas las categorías de ${fam.nombre.toLowerCase()}`;
@@ -367,6 +385,7 @@ function modeloMenu(rutaActual) {
     telefonoPrincipal: vitoria.telefono,
     email: vitoria.email,
     logo,
+    logoFondoOscuro,
   };
 }
 
@@ -616,11 +635,13 @@ function main() {
   // Resumen
   const faltan = plan.filter(f => !generadas.has(rutaPublica(f.archivo)));
   if (faltan.length) pendiente(`Generadas ${generadas.size} de ${plan.length} páginas del plan; faltan ${faltan.length}.`);
-  if (enlacesPendientes.size) aviso(`${enlacesPendientes.size} enlaces internos apuntan a páginas del plan que aún no se generan (esperado mientras se construye la web).`);
-  if (webpQueFaltan.length) aviso(`${webpQueFaltan.length} imágenes sin versión -480.webp (se sirve solo el JPG): ${webpQueFaltan.join(', ')}`);
+  if (enlacesPendientes.size) {
+    pendiente(`${enlacesPendientes.size} enlaces internos apuntan a páginas del plan que aún no se generan` +
+      (PUBLICAR ? `: ${[...enlacesPendientes].join(', ')}` : ' (normal en modo piloto).'));
+  }
   for (const p of site.pendientes || []) aviso(`Dato externo pendiente de confirmar por el cliente: site.${p}`);
 
-  console.log(`build.js ${PUBLICAR ? '--publicar ' : ''}→ /dist: ${generadas.size} página(s), ${nAssets} archivos de /assets, ${nImagenes} imágenes, ${nPdf} PDF.`);
+  console.log(`build.js (modo ${MODO}) → /dist: ${generadas.size} página(s), ${nAssets} archivos de /assets, ${nImagenes} imágenes, ${nPdf} PDF.`);
   for (const a of avisos) console.log(`  AVISO  ${a}`);
   for (const e of errores) console.log(`  ERROR  ${e}`);
   if (errores.length) {

@@ -7,7 +7,7 @@
 
 - [ ] Accesos confirmados: FTP/SFTP del hosting del `.com`, Search Console del `.com` y del `.es`, DNS o hosting del `.es`. Las credenciales se guardan **fuera del repositorio**.
 - [ ] El hosting admite `.htaccess` con `mod_rewrite` y `mod_headers` (comprobado con un archivo de prueba en una carpeta temporal, que luego se borra).
-- [ ] Formulario PHP (`/contacto/enviar.php`, excepción aprobada) probado de principio a fin (A-2-03). La versión de PHP del hosting es compatible y sus límites `upload_max_filesize` y `post_max_size` son mayores que `site.formulario.maxAdjuntoMB`.
+- [ ] Formulario PHP (`rd-mailform.php` o `enviar.php`, el que indique `site.formulario.accion`) probado de principio a fin (A-2-03). La versión de PHP del hosting es compatible y sus límites `upload_max_filesize` y `post_max_size` son mayores que `site.formulario.maxAdjuntoMB`.
 - [ ] Docker Desktop instalado en el equipo de la Persona A y el entorno `tools/apache-pruebas/` arranca (`docker compose up -d --build`).
 - [ ] Día y hora de publicación acordados con el cliente, en horario de baja actividad y **nunca un viernes por la tarde**. Las dos personas disponibles durante las 2 horas siguientes.
 
@@ -33,7 +33,7 @@
 - [ ] Cada fila de `redirecciones.csv` devuelve **un único 301** al destino exacto (sin cadenas: `curl -sIL` muestra 1 salto).
 - [ ] `/index.html` → `/` y `/oviedo/index.html` → `/oviedo/` sin bucle.
 - [ ] `http://`, `www.` y `http://www.` de cualquier URL → `https://brototermic.com/<misma ruta>` en un solo salto.
-- [ ] Una URL inexistente devuelve **404** (no 200 ni redirección a la portada).
+- [ ] Una URL inexistente devuelve **404** (no 200 ni redirección a la portada), también en el `.es`: solo sus 7 URLs conocidas redirigen.
 
 ### Etiquetas y SEO en la página
 - [ ] Cada página tiene un **canonical absoluto** a `https://brototermic.com/…` (sin www, sin `index.html`, sin parámetros).
@@ -48,16 +48,17 @@
 - [ ] **Lighthouse móvil ≥ 90** (rendimiento, accesibilidad, buenas prácticas y SEO) y **LCP < 2,5 s** en una página de cada plantilla.
 - [ ] Una sola hoja CSS; JS con `defer`; ninguna petición a dominios de terceros (comprobado en la pestaña Red).
 - [ ] Contraste AA y navegación completa con teclado (menú, acordeón y formulario) en inicio, categoría y contacto.
-- [ ] Visualización correcta a 360, 768 y 1280 px de una página de cada plantilla.
+- [ ] Visualización correcta a 320, 360, 768 y 1280 px de una página de cada plantilla (`node tools/capturas.js`).
 - [ ] **0 enlaces rotos** internos (comprobado por script sobre `/dist`).
 - [ ] Todos los enlaces de teléfono usan `tel:+34…`; no queda ningún `callto:`.
 - [ ] Todas las imágenes tienen `alt` real, `width` y `height`, y `loading="lazy"` excepto el hero.
 
 ### Formulario
+- [ ] `site.formulario.envioActivo` está en `true` solo después de comprobar en el hosting qué script procesa el envío (`rd-mailform.php` o `enviar.php`) y que admite el adjunto.
 - [ ] Envío real de prueba con adjunto (PDF y JPG) recibido en el buzón acordado.
-- [ ] **Validación en el servidor**, probada sin el navegador (`curl -F …` directo a `enviar.php`): rechaza un email mal formado, un mensaje vacío, la casilla RGPD sin marcar, un adjunto mayor que el límite y un tipo no permitido (p. ej. un `.exe` renombrado a `.pdf`, que `finfo` debe detectar).
+- [ ] **Validación en el servidor**, probada sin el navegador (`curl -F …` directo al script de envío): rechaza un email mal formado, un mensaje vacío, la casilla RGPD sin marcar, un adjunto mayor que el límite y un tipo no permitido (p. ej. un `.exe` renombrado a `.pdf`, que `finfo` debe detectar).
 - [ ] Un nombre o un email con salto de línea no inyecta cabeceras en el correo.
-- [ ] `enviar.php` no muestra errores de PHP al usuario y no contiene credenciales; el adjunto no queda guardado en el servidor.
+- [ ] El script de envío no muestra errores de PHP al usuario y no contiene credenciales; el adjunto no queda guardado en el servidor.
 - [ ] El honeypot bloquea el envío si se rellena; la casilla RGPD es obligatoria.
 - [ ] Mensajes de error y de éxito accesibles y en español.
 

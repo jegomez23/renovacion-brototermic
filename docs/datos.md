@@ -9,7 +9,7 @@
 - Archivos JSON en **UTF-8 sin BOM**, indentados con 2 espacios, sin comentarios (JSON estándar).
 - Los nombres de campo van en minúsculas, en español y en camelCase (`nombreCorto`).
 - **Rutas:** siempre absolutas desde la raíz pública (`/images/…`, `/docs/…`, `/resistencias-inmersion.html`).
-- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. `build.js` busca `/images/<img>.jpg` y `/images/<img>-480.webp` (**solo se sirve la versión de 480 px**; no hay 960: decisión del 2026-10-09). Si falta el `.webp`, avisa y pinta solo el JPG; si falta el `.jpg`, da error.
+- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. `build.js` busca `/images/<img>.jpg` (obligatorio: si falta, da error) y, opcionalmente, `/images/<img>.webp` con las mismas medidas (si existe, lo sirve con `<picture>`). Se usan las imágenes **originales a su tamaño real**, sin ampliar (decisión del HITO-1).
 - **Textos con formato (`texto`, `intro`, `cuerpo`):** fragmento HTML con estas etiquetas permitidas: `p`, `strong`, `em`, `br`, `a`, `ul`, `ol`, `li`, `sup`, `sub`, `table`, `thead`, `tbody`, `tr`, `th`, `td`, `caption`. Nada de `style`, `class`, `h1`–`h6` ni `img` (los títulos e imágenes los pone la plantilla). `build.js` avisa si encuentra otra etiqueta.
 - **[POR VERIFICAR]:** si un texto contiene `[POR VERIFICAR` o `(dato externo`, `build.js` lo avisa en el modo normal y **falla** en el modo de publicación (`node build.js --publicar`).
 - **[REVISIÓN CLIENTE]:** solo en los textos legales de `/content`, dentro de un comentario HTML (`<!-- [REVISIÓN CLIENTE] motivo -->`). `build.js` quita los comentarios del HTML final, lista cada marca como aviso y **no bloquea** la publicación.
@@ -28,7 +28,8 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | `fundacion` | number | sí | `1982` | B |
 | `host` | string | sí | `"https://brototermic.com"` (sin barra final, sin www) | A |
 | `idioma` | string | sí | `"es-ES"` | A |
-| `logo` | string | sí | `"/images/logo.png"`: ruta del logo de la cabecera y del pie (fondo oscuro). Se cambia por el SVG cuando llegue. `build.js` lee sus medidas. | B |
+| `logo` | string | sí | `"/images/logo-claro.png"`: logo de la **cabecera** (fondo blanco). Provisional hasta el SVG. `build.js` lee sus medidas. | B |
+| `logoFondoOscuro` | string | sí | `"/images/logo.png"`: logo original, para el **pie** (fondo `#1d356c`). | B |
 | `pendientes` | string[] | sí | `["fundacion", "sedes.vitoria.direccion"]`: datos externos que se usan pero falta que el cliente los confirme. `build.js` los lista como aviso en cada ejecución; **no bloquean** la publicación (decisión del 2026-10-09). Vacío = todo confirmado. | B |
 | `sedes` | objeto[] | sí | ver tabla siguiente (exactamente 2: `vitoria` y `oviedo`) | B |
 | `marcas` | objeto[] | sí | ver tabla de marcas | B |
@@ -71,13 +72,28 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | `pdf` | string | sí | `"/docs/catalogo-instrumentacion.pdf"` | B |
 | `familias` | string[] | sí | `["controltemperatura", "controldenivel", "presionhumedad"]`: familias donde se enlaza | B |
 
-`formulario`:
+`formulario` (decisión del 2026-10-09, revisión de Codex: **compatible con el `rd-mailform.php` actual**):
 
 | Campo | Tipo | Oblig. | Ejemplo | Quién |
 |---|---|---|---|---|
-| `accion` | string | sí | `"/contacto/enviar.php"` (PHP en el hosting: excepción aprobada el 2026-10-09, AGENTS.md §2) | A |
-| `maxAdjuntoMB` | number | sí | `10` [POR VERIFICAR con el cliente y con los límites de PHP del hosting]. `enviar.php` aplica el mismo límite en el servidor. | A |
-| `tiposAdjunto` | string[] | sí | `[".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]`. Lista blanca: `enviar.php` comprueba la extensión y el tipo real del archivo (`finfo`). DWG/DXF, pendiente de confirmar con el cliente. | A |
+| `accion` | string | sí | `"/contacto/bat/rd-mailform.php"`: URL de envío. Hoy es la del formulario actual; si el hosting no admite adjuntos con ese script, se cambia por `"/contacto/enviar.php"` (excepción PHP aprobada) sin tocar la plantilla. | A |
+| `envioActivo` | boolean | sí | `false` **hasta tener acceso al hosting** y probar el envío. Con `false`, el formulario se pinta pero no envía nada: el botón y un aviso remiten al teléfono y al email. | A |
+| `maxAdjuntoMB` | number | sí | `10` [POR VERIFICAR con el cliente y con los límites de PHP del hosting]. El script de envío aplica el mismo límite en el servidor. | A |
+| `tiposAdjunto` | string[] | sí | `[".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]`. Lista blanca: el script comprueba la extensión y el tipo real del archivo (`finfo`). DWG/DXF, pendiente de confirmar con el cliente. | A |
+
+**Nombres de los campos que envía el formulario** (atributo `name`; los 5 primeros son los que ya espera `rd-mailform.php`):
+
+| `name` | Campo | Oblig. | Nota |
+|---|---|---|---|
+| `form-type` | oculto | sí | Valor `contact`, como el formulario actual |
+| `name` | Nombre | sí | |
+| `email` | Email | sí | |
+| `phone` | Teléfono | no | |
+| `message` | Mensaje | sí | Se rellena con el producto si se llega desde «Pedir presupuesto» (`?producto=`) |
+| `empresa` | Empresa | no | Nuevo |
+| `adjunto` | Plano o foto | no | Nuevo. Exige `enctype="multipart/form-data"` |
+| `rgpd` | Casilla de privacidad | sí | Nuevo. Valor `si`; el script la exige también en el servidor |
+| `web` | Campo trampa | — | Nuevo. Oculto por CSS; si llega relleno, el envío se descarta |
 
 ## 2. `data/familias.json`
 
@@ -203,6 +219,6 @@ h1: Nuestra historia
 1. Todas las páginas del `plan-paginas.csv` existen en `/dist` y no hay ninguna más (salvo `404.html` si se aprueba).
 2. Title ≤ 60 caracteres, meta de 140 a 155, title y meta únicos, un solo H1 por página.
 3. Cada `archivo` de `familias.json` tiene su JSON en `data/categorias/` y viceversa.
-4. Toda `img` existe en `/images/` (`.jpg` obligatorio; el `-480.webp` da aviso si falta).
+4. Toda `img` existe en `/images/` (`.jpg` obligatorio; el `.webp` es opcional).
 5. Todo enlace interno apunta a una página de `/dist` o a un PDF de `/docs`.
 6. Ninguna página publicada contiene `[POR VERIFICAR`, `(dato externo` ni `_borrador: true` (solo en modo `--publicar`).

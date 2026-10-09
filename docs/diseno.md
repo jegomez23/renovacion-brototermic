@@ -16,7 +16,7 @@
 
 | Token | Hex | Uso permitido | Prohibido |
 |---|---|---|---|
-| `--color-primario` | `#004c9a` | Fondo de botones primarios y de la cabecera, enlaces, iconos funcionales y bordes de foco sobre fondo claro | — |
+| `--color-primario` | `#004c9a` | Fondo de botones primarios y de la franja superior de la cabecera, enlaces, iconos funcionales y bordes de foco sobre fondo claro | — |
 | `--color-primario-oscuro` | `#1d356c` | Hover de botones primarios, textos destacados (H1, H2, cifras), fondo del pie | — |
 | `--color-acento` | `#36afe0` | **Solo acentos:** líneas decorativas, iconos decorativos, subrayado o borde en hover y estados activos | Texto sobre blanco (2,51:1) · fondo de botón con texto blanco |
 | `--color-acento-2` | `#2dccf0` | **Solo acentos:** igual que el anterior; además, anillo de foco sobre fondos oscuros | Texto sobre blanco (1,91:1) · fondo de botón con texto blanco (1,91:1) |
@@ -103,7 +103,7 @@ Longitud de línea del texto corrido: **máximo 70 caracteres** (≈ 40 rem).
 
 | Nombre | Desde | Comportamiento clave |
 |---|---|---|
-| base | 360 px (ancho mínimo de prueba) | 1 columna, menú en acordeón, tablas con scroll horizontal o apiladas |
+| base | 320 px (ancho mínimo de prueba; 360 px el habitual) | 1 columna, menú en acordeón, tablas con scroll horizontal o apiladas |
 | `md` | 768 px | 2 columnas en rejillas, megamenú de 2 columnas, migas completas |
 | `lg` | 1280 px | 3-4 columnas, megamenú de 4 columnas, lateral de categorías hermanas |
 
@@ -112,8 +112,8 @@ Longitud de línea del texto corrido: **máximo 70 caracteres** (≈ 40 rem).
 Cada componente tiene su descripción, sus variantes y su comportamiento en móvil. Ninguno depende de JS para mostrar contenido o enlaces.
 
 ### 3.1 Cabecera
-- **Descripción:** franja superior fina (fondo `#004c9a`, separada de la barra por una línea de acento `#36afe0`) con los teléfonos de las dos sedes y el email. Debajo, la barra principal, también en `#004c9a`, con el logo (en blanco o en su versión para fondo oscuro), la navegación y el botón «Pedir presupuesto». En escritorio es *sticky* (`top: env(safe-area-inset-top)`) y se compacta al hacer scroll.
-- **Variantes:** normal y compacta (al hacer scroll, sin la franja superior).
+- **Descripción (HITO-1, 2026-10-09):** franja superior fina en `#004c9a` (≥ 768 px) con los teléfonos de las dos sedes y el email en blanco. Debajo, la **barra principal en blanco** con el logo para fondo claro (provisional: `images/logo-claro.png`, hasta que llegue el SVG), la navegación en `#1d356c` y el botón primario «Pedir presupuesto». Separación con la página: borde inferior `#dadada`. Es *sticky* en todos los anchos.
+- **Variantes:** una (la compacta al hacer scroll queda para más adelante).
 - **Móvil:** solo logo, icono de teléfono (`tel:` a Vitoria) e icono de menú (`<button aria-expanded aria-controls>`). La franja superior desaparece y sus datos pasan al final del panel del menú.
 
 ### 3.2 Megamenú (≥ 768 px)
@@ -128,6 +128,7 @@ Cada componente tiene su descripción, sus variantes y su comportamiento en móv
 ### 3.4 Hero
 - **Descripción:** solo en el inicio, en `/oviedo/` y en las familias. Lleva el H1, una frase de valor (de /legacy o de `content/`), 2 botones («Pedir presupuesto» como primario y «Ver productos» como secundario) y una imagen (en el inicio, `slide-1`, el calefactor ATEX con brida).
 - **Variantes:** `inicio` (imagen grande a la derecha en escritorio), `familia` (imagen pequeña, más bajo) y `sede` (foto real de la delegación).
+- **Imagen del hero del inicio:** `slide-1` a **910 px**, su tamaño real (`<picture>` con `slide-1.webp` y `slide-1.jpg` de respaldo). Es la única imagen que se sirve a más de 480 px (HITO-1).
 - **Móvil:** el texto va primero y la imagen debajo, con proporción fija. La imagen del hero no lleva `loading="lazy"` y lleva `fetchpriority="high"`.
 
 ### 3.5 Tarjeta de familia
@@ -148,7 +149,7 @@ Cada componente tiene su descripción, sus variantes y su comportamiento en móv
 ### 3.8 Botón
 - **Primario:** fondo `#004c9a`, texto blanco (8,40:1) y radio de 4 px. Hover: fondo `#1d356c`. Foco: anillo `#004c9a` (o `#2dccf0` sobre fondo oscuro).
 - **Secundario:** fondo transparente, borde de 2 px y texto `#004c9a`. Hover: fondo `#dae9f9`.
-- **Sobre fondo oscuro (cabecera, pie):** fondo blanco y texto `#004c9a`, o borde blanco y texto blanco.
+- **Sobre fondo oscuro (pie):** fondo blanco y texto `#004c9a`, o borde blanco y texto blanco.
 - **Prohibido:** fondo `#36afe0` o `#2dccf0` con texto blanco.
 - **Tamaño:** 44 px de alto mínimo, con 16-24 px de padding horizontal. En móvil, los botones de una CTA ocupan el ancho completo.
 
@@ -184,7 +185,8 @@ Cada componente tiene su descripción, sus variantes y su comportamiento en móv
 - **Sin JS:** no aparece (viene con `hidden` y el JS lo muestra). Todos los enlaces siguen en el HTML.
 
 ### Ajustes del piloto sobre esta especificación
-- **Marco de la foto de producto en blanco** con borde `#dadada`, no en `#f1f1f1`: las fotos de /legacy tienen fondo blanco y con gris se vería un recuadro. La foto no se amplía con CSS (se muestra a su tamaño real dentro del marco 4:3). Revisar cuando lleguen las imágenes de 480 px retocadas.
+- **Marco de la foto de producto en blanco** con borde `#dadada`, no en `#f1f1f1`: las fotos de /legacy tienen fondo blanco y con gris se vería un recuadro. La foto no se amplía con CSS: se muestra a su tamaño real dentro del marco 4:3 (`contain`). **Aprobado en el HITO-1**, igual que el buscador.
+- **Accesibilidad del menú:** sigue el patrón *Disclosure Navigation Menu* del W3C (APG): «Productos», ☰ y cada familia del acordeón son `<button>` con `aria-expanded` y `aria-controls`; los enlaces son enlaces normales (sin `role="menu"` ni `menuitem`); Esc cierra el panel abierto y devuelve el foco a su botón; el foco nunca queda atrapado. `prefers-reduced-motion: reduce` anula las transiciones y el scroll suave.
 - **«Ver todas»** en el megamenú, con un texto oculto para los lectores de pantalla («Ver todas las categorías de …»), para no ocupar dos líneas por columna.
 - **Migas:** se muestran completas también en móvil (caben a 360 px); el recorte a «‹ Volver a …» queda para cuando una miga no quepa.
 - **Cabecera fija también en móvil** (64 px), para que el panel del menú se abra siempre bajo ella. Sin JS no es fija.

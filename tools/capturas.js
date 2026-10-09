@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Capturas y comprobaciones de una página a 360, 768 y 1280 px con el Chrome instalado (sin dependencias:
+// Capturas y comprobaciones de una página a 320, 360, 768 y 1280 px con el Chrome instalado (sin dependencias:
 // usa el protocolo DevTools con el WebSocket nativo de Node ≥ 22).
 //
 //   node tools/servir.js                      (en otra terminal)
@@ -102,7 +102,7 @@ async function main() {
   };
 
   const resumen = [];
-  for (const [w, h] of [[360, 780], [768, 1024], [1280, 800]]) {
+  for (const [w, h] of [[320, 640], [360, 780], [768, 1024], [1280, 800]]) {
     ancho = w;
     await enviar('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 1, mobile: w < 768 });
     await enviar('Emulation.setTouchEmulationEnabled', { enabled: w < 1280 });
