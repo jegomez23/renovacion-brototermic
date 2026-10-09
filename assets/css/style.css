@@ -710,3 +710,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   .producto { break-inside: avoid; }
   a { color: inherit; text-decoration: none; }
 }
+
+/* Imágenes del texto general de una categoría (p. ej. el programa de fabricación de las resistencias a medida) */
+.cuerpo__imagen { margin: var(--esp-5) 0; }
+.cuerpo__imagen img { border: 1px solid var(--color-borde); border-radius: var(--radio-m); }

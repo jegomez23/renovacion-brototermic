@@ -1,0 +1,57 @@
+{
+  "title": "Dataloggers | BROTOTERMIC Vitoria",
+  "meta": "Dataloggers Log-Tag de temperatura y humedad con hasta 8.000 puntos de medición, interfaz LTI y datalogger USB OM-EL. Consulta modelos y pide presupuesto.",
+  "h1": "Dataloggers",
+  "intro": "",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Log-Tag TRIX-8",
+      "modelo": null,
+      "texto": "<p>Registrador económico con sensor de temperatura integrado<br>Margen de temperatura -40°C … +85°C <br>8.000 puntos de medición.<br>Vida útil de la batería de hasta 3 años.<br>Formato: 86mmx54.5mmx8.6mm.<br>Software gratuito</p>",
+      "specs": [],
+      "img": "brototermic-logtag-trix8",
+      "alt": "Log-Tag TRIX-8",
+      "pdf": null
+    },
+    {
+      "nombre": "Log-Tag HAXO-8",
+      "modelo": null,
+      "texto": "<p>Registrador económico con sensor de temperatura y humedad integrado.<br>Margen de temperatura -40°C … +85°C.<br>Margen de humedad 0 … 100%.<br>8.000 puntos de medición.<br>Vida útil de la batería de hasta 3 años.<br>Formato: 86mmx54.5mmx8.6mm.<br>Software gratuito.</p>",
+      "specs": [],
+      "img": "brototermic-logtag-haxo8",
+      "alt": "Log-Tag HAXO-8",
+      "pdf": null
+    },
+    {
+      "nombre": "Log-Tag TREX-8",
+      "modelo": null,
+      "texto": "<p>Datalogger para el registro de temperatura con sensor externo.<br>Margen de temperatura -40°C … +99°C. Precisión de hasta ±0,5°C.<br>8.000 puntos de medición. <br>Intervalo de medición mínimo de 30 segundos. <br>Vida útil de la batería de hasta 3 años.<br>A escoger entre sensor de temperatura externo de 1,5 ó 3,0m de longitud de PTFE y acero inoxidable 316 (apto para usos alimenticios) con contacto de oro.</p>",
+      "specs": [],
+      "img": "brototermic-logtag-trex8",
+      "alt": "Log-Tag TREX-8",
+      "pdf": null
+    },
+    {
+      "nombre": "Interface LTI para Log-Tag",
+      "modelo": null,
+      "texto": "<p>Interface con conexión USB para la sincronización con todos los todos los modelos de datalogger Logtag Recorders.<br>La interfaz se conecta a la interfaz USB (o también a la conexión serial) de su ordenador y puede posicionarse permanentemente en su lugar de trabajo. <br>En menos de 5 segundos es posible consultar el contenido completo del registrador, guardarlo automáticamente y generar una gráfica.</p>",
+      "specs": [],
+      "img": "brototermic-interface-logtag",
+      "alt": "Interface LTI para Log-Tag",
+      "pdf": null
+    },
+    {
+      "nombre": "Datalogger USB OM-EL",
+      "modelo": null,
+      "texto": "<p>Registrador de datos para temperatura con pantalla LCD.<br>Rango de medición de -35 a 80 °C (-31 a 176 °F).<br>Interfaz USB para configuración y descarga de datos.<br>Umbrales de alarma programables por el usuario.<br>Indicación de estado mediante LED rojo, verde y naranja.<br>Registro inmediato, con retraso y pulsar–para iniciar.<br>Pila interna de litio de repuesto con software de control para Windows® incluido.</p>",
+      "specs": [],
+      "img": "brototermic-datalogger-usb",
+      "alt": "Datalogger USB OM-EL",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

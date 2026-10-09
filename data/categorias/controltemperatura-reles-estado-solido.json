@@ -1,0 +1,48 @@
+{
+  "title": "Relés estado sólido | BROTOTERMIC Vitoria",
+  "meta": "Relés de estado sólido de las gamas Celpac, Celpac2G y Okpac, y relés estáticos de corriente continua para control de potencia. Pide presupuesto.",
+  "h1": "Relés de estado sólido",
+  "intro": "",
+  "cuerpo": "<p>Se llama relé de estado sólido a un circuito híbrido, normalmente compuesto por un optoacoplador que aísla la entrada, un circuito de disparo, que detecta el paso por cero de la corriente de línea y un triac o dispositivo similar que actúa de interruptor de potencia. Este dispositivo es usado generalmente para aplicaciones donde se presenta un uso continuo de los contactos del relé, que en comparación con un relé convencional generaría un serio desgaste mecánico, además de poder conmutar altos amperajes que en el caso del relé electromecánico destruirían en poco tiempo los contactos. Estos relés permiten una velocidad de conmutación muy superior a la de los relés electromecánicos.</p>",
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Gama Celpac",
+      "modelo": null,
+      "texto": "<p>Montaje y desmontaje sobre carril DIN sin herramientas o montaje en fondo de armario mediante tornillos. <br>Anchura 22,5 y 45mm. LED verde de visualización en la entrada. Inmunidad muy elevada: protección en tensión en la entrada y en la salida Tecnología TMS2 con un tiempo de vida muy elevado. Producto IP20.<br>Modelos disponibles: monofásicos, bifásicos, trifásicos. Consultar</p>",
+      "specs": [],
+      "img": "brototermic-gama-celpac",
+      "alt": "Gama Celpac",
+      "pdf": null
+    },
+    {
+      "nombre": "Gama Celpac2G",
+      "modelo": null,
+      "texto": "<p>Solución económica y de pequeño volumen. Con un ancho de 22,5mm solamente, tienen un mínimo volumen de montaje.<br>Tiempo de montaje reducido y cableado simplísimo. Mantenimiento limitado, larga duración de vida de los productos. Amplia zona de tensión de control: 3-32VDC con corriente de control regulada. LED de visualización en la entrada de color amarillo. Protección contra sobre tensiones en la entrada integrada. Protección IP20. Múltiples modelos, consultar.</p>",
+      "specs": [],
+      "img": "brototermic-gama-celpac2g",
+      "alt": "Gama Celpac2G",
+      "pdf": null
+    },
+    {
+      "nombre": "Gama Okpac",
+      "modelo": null,
+      "texto": "<p>Relés adaptados a cualquier tipo de carga, tiempo de vida aún más elevada Tensión conmutable de 24 a 690VAC (con tensión de pico 600V-1200V-1600V). Larga gama de entrada AC-DC con entrada regulada.<br>LED de visualización. Conexión por tornillo hasta 50mm2. Conexiones múltiples, sencillas y rápidas. Tapas de protección IP20. Fijación sobre base metálica y no plástica. Bornes de mando desenchufables. Diagnóstico del estado de la carga, de la red y del relé. Múltiples modelos: Gama SO7, Gama SO8, Gama SO9, Gama SOR</p>",
+      "specs": [],
+      "img": "brototermic-gama-okpac",
+      "alt": "Gama Okpac",
+      "pdf": null
+    },
+    {
+      "nombre": "Relés estáticos corriente continua",
+      "modelo": null,
+      "texto": "<p>Los relés de estado sólido para conmutación de cargas en corriente continua (DC) están disponibles en tres tecnologías diferentes: Mosfet: Con la última generación en Mosfet SSRs combinada con un alto rendimiento, un muy bajo tiempo de conmutación (50 microsegundos) y un precio altamente competitivo. Bipolar: Tecnología preferente cuando las corrientes de conmutación son bajas. IGBT: Para aplicaciones de alto voltaje y baja disipación de potencia.<br>Múltiples modelos: consultar.</p>",
+      "specs": [],
+      "img": "brototermic-reles-estaticos",
+      "alt": "Relés estáticos corriente continua",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

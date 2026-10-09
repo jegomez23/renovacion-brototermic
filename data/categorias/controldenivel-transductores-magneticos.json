@@ -1,0 +1,30 @@
+{
+  "title": "Transductores magnéticos | BROTOTERMIC Vitoria",
+  "meta": "Transductores magnéticos de nivel TMN 300 en inoxidable para una lectura continua del nivel de líquido, para sistemas de 2, 3 o 4 hilos. Presupuesto.",
+  "h1": "Transductores magnéticos",
+  "intro": "",
+  "cuerpo": "<p>Se utilizan para obtener una lectura continua del nivel de líquido. Cuando el flotador sube o baja debido a la acción del líquido, se activan o desactivan respectivamente una sucesión de contactos reed que generan una salida proporcional a la altura del nivel.<br>Un único modelo permita la conexión en sistemas de 2, 3 o 4 hilos.</p>",
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "TMN 300 TB INOX",
+      "modelo": null,
+      "texto": "<p>Conexión a proceso: Tapón roscado. 2\" G. Inox AISI316 (1.4401).<br>Longitud: 150..2500 mm.<br>Flotador: Cilíndrico ø52x52 mm. Inox AISI316 (1.4401).<br>Temperatura de trabajo: -20..+100 ºC.<br>Presión: 30 kg/cm²<br>Conexión eléctrica: Caja de conexiones. PBT.<br>Rango de salida: 4..20 mA, (también versión salida resistiva).<br>Distancia entre contactos: 10 mm. Opcional 5 mm.<br>Tensión de alimentación: VCA, VCC.<br>Protección: IP67<br>. Otros materiales disponibles, como PVC, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-tmn300tb-inox",
+      "alt": "TMN 300 TB INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "TMN 300 DB INOX",
+      "modelo": null,
+      "texto": "<p>Conexión a proceso: Brida DIN. DN 50. Inox AISI316 (otras bridas disponibles).<br>Longitud: 150..2500 mm.<br>Flotador: Cilíndrico ø52x52 mm. Inox AISI316 (1.4401).<br>Temperatura de trabajo: -20..+100 ºC.<br>Presión: 30 kg/cm².<br>Conexión eléctrica: Caja de conexiones. PBT.<br>Rango de salida: 4..20 mA (también versión salida resistiva).<br>Distancia entre contactos: 10 mm. Opcional 5 mm.<br>Tensión de alimentación: VCA, VCC.<br>Protección: IP67.<br>Otros materiales disponibles, como PVC, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-tmn300db-inox",
+      "alt": "TMN 300 DB INOX",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

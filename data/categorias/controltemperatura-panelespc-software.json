@@ -1,0 +1,30 @@
+{
+  "title": "Paneles PC y software | BROTOTERMIC Vitoria",
+  "meta": "Paneles PC de aluminio con y sin pantalla táctil, de 6,4 a 30 pulgadas, y software Datacare de adquisición de datos para procesos. Solicita presupuesto.",
+  "h1": "Paneles PC y software",
+  "intro": "",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Panel PC",
+      "modelo": null,
+      "texto": "<p>Paneles PC con y sin pantalla táctil, están disponibles desde 6,4 hasta 30\", con todas las variedades para su montaje. Construidos en robusto aluminio y testados con las más rigurosas pruebas antichoque, antivibración e inmunidad al agua.<br>Procesadores con velocidades hasta 2,4 GHZ.<br>Pantallas TFT y la doble tarjeta de red Ethernet (independientes).<br>Hasta cuatro puertos USB y 1 Gb de memoria RAM.<br>Pantallas de alta luminosidad para visualización en exteriores y discos duros hasta 80 Gb.<br>Ranuras PCI accesibles, están disponibles modelos con lector o grabador de DVD incorporado.</p>",
+      "specs": [],
+      "img": "brototermic-panel-pc",
+      "alt": "Panel PC",
+      "pdf": null
+    },
+    {
+      "nombre": "Software adquisición datos Datacare",
+      "modelo": null,
+      "texto": "<p>Basado en un sistema Scada. Es una aplicación sencilla. Permite visualizar todas las lecturas en planta a tiempo real, registros numéricos y gráficos.<br>Registro y supervisión de alarmas y hasta permite la opción de envío directo de mail en caso de alarma.<br>Sistema abierto, permite ajustar al máximo tanto el entorno como las posibilidades de la aplicación, ajustándonos así a las especificaciones explícitas del cliente.<br>Práctico código de colores facilita la visión y el estado de las alarmas.<br>Opcionalmente puede integrar un módulo para el control desde la web.<br>Datacare es una aplicación plenamente compatible con WindowsXP.</p>",
+      "specs": [],
+      "img": "brototermic-datacare",
+      "alt": "Software adquisición datos Datacare",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

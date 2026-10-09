@@ -290,16 +290,17 @@ if (sinJson.length) pendiente(`${sinJson.length} de ${categorias.size} categorí
 // =====================================================================
 // 5. Imágenes
 // =====================================================================
-// Imágenes originales a su tamaño real (AGENTS.md §5): <nombre>.jpg obligatorio y <nombre>.webp opcional
+// Imágenes originales a su tamaño real (AGENTS.md §5): <nombre>.jpg (o .png/.gif si así se llama en /legacy:
+// la extensión forma parte de la URL indexada y no se cambia) y <nombre>.webp opcional
 function imagen(nombre, contexto) {
   if (!nombre) return null;
-  const jpg = path.join(RAIZ, 'images', `${nombre}.jpg`);
-  if (!fs.existsSync(jpg)) { error(`${contexto}: no existe images/${nombre}.jpg`); return null; }
-  const medidas = medidasImagen(jpg);
-  if (!medidas) { error(`${contexto}: no se pueden leer las medidas de images/${nombre}.jpg`); return null; }
+  const ext = ['.jpg', '.png', '.gif'].find(e => fs.existsSync(path.join(RAIZ, 'images', `${nombre}${e}`)));
+  if (!ext) { error(`${contexto}: no existe images/${nombre}.jpg`); return null; }
+  const medidas = medidasImagen(path.join(RAIZ, 'images', `${nombre}${ext}`));
+  if (!medidas) { error(`${contexto}: no se pueden leer las medidas de images/${nombre}${ext}`); return null; }
   const tieneWebp = fs.existsSync(path.join(RAIZ, 'images', `${nombre}.webp`));
   return {
-    src: urlPublica(`/images/${nombre}.jpg`),
+    src: urlPublica(`/images/${nombre}${ext}`),
     webp: tieneWebp ? urlPublica(`/images/${nombre}.webp`) : null,
     ancho: medidas.ancho,
     alto: medidas.alto,
@@ -485,6 +486,8 @@ function modeloCategoria(archivo, { datos, familia }) {
       specsLista: specs.length > 0 && !specsTabla && !p.specsNumeradas,
       specsListaNumerada: specs.length > 0 && !specsTabla && Boolean(p.specsNumeradas),
       pdfUrl: p.pdf ? urlPublica(p.pdf) : null,
+      // Si el texto original ya enlaza el PDF («Ver Ficha Técnica.»), no se añade un segundo enlace igual
+      mostrarPdf: Boolean(p.pdf) && !(p.texto || '').includes(`href="${urlPublica(p.pdf)}"`),
       presupuestoUrl: presupuestoUrl(p.nombre),
     };
   });
@@ -516,6 +519,7 @@ function modeloCategoria(archivo, { datos, familia }) {
     h1: datos.h1,
     intro: datos.intro,
     cuerpo: datos.cuerpo ?? null,
+    imagenesCuerpo: (datos.imagenesCuerpo || []).map(x => ({ ...x, imagen: imagen(x.img, `${ctx} → imagenesCuerpo`) })),
     documentos: (datos.documentos || []).map(d => ({ ...d, url: urlPublica(d.pdf) })),
     productos,
     migas,
@@ -631,6 +635,24 @@ function main() {
   const nPdf = copiarDirectorio(path.join(RAIZ, 'docs'), path.join(DIST, 'docs'), f => f.toLowerCase().endsWith('.pdf'));
   if (fs.existsSync(path.join(RAIZ, 'src', '.htaccess'))) fs.copyFileSync(path.join(RAIZ, 'src', '.htaccess'), path.join(DIST, '.htaccess'));
   else pendiente('src/.htaccess aún no existe (tarea A-1-09): /dist sale sin redirecciones.');
+
+  // sitemap.xml: solo URLs canónicas que existen (páginas generadas + PDF públicos), nunca una URL redirigida
+  const pdfs = fs.readdirSync(path.join(RAIZ, 'docs')).filter(f => f.toLowerCase().endsWith('.pdf')).sort();
+  const urlsSitemap = [...paginas.map(p => p.pagina.canonical), ...pdfs.map(f => `${host}/docs/${f}`)];
+  const xmlEscapar = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  fs.writeFileSync(path.join(DIST, 'sitemap.xml'),
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    urlsSitemap.map(u => `  <url><loc>${xmlEscapar(encodeURI(u))}</loc></url>`).join('\n') + '\n</urlset>\n');
+  fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${host}/sitemap.xml\n`);
+
+  // Auditoría de paridad SEO contra /legacy (tools/auditoria-seo.js): en publicación, cualquier ERROR detiene el build
+  const { auditar } = require('./tools/auditoria-seo.js');
+  const auditoria = auditar({ modo: MODO });
+  for (const f of auditoria.filas.filter(x => x.estado === 'ERROR')) {
+    const fallos = Object.entries(f.checks).filter(([, c]) => c.estado === 'ERROR').map(([k, c]) => `${k}: ${c.texto}`).join('; ');
+    (PUBLICAR ? error : aviso)(`Auditoría SEO ${f.url} → ${fallos} (detalle: node tools/auditoria-seo.js)`);
+  }
+  console.log(`Auditoría SEO: ${auditoria.resumen.OK} OK · ${auditoria.resumen.AVISO} AVISO · ${auditoria.resumen.ERROR} ERROR`);
 
   // Resumen
   const faltan = plan.filter(f => !generadas.has(rutaPublica(f.archivo)));

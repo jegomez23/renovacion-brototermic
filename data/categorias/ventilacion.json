@@ -1,0 +1,48 @@
+{
+  "title": "Ventilación y ventiladores | BROTOTERMIC Vitoria",
+  "meta": "Ventiladores compactos para CA y CC, de 25x25 a 280x280 mm, ventiladores axiales de bajo nivel de ruido, centrífugos y tangenciales. Pide presupuesto.",
+  "h1": "Ventilación",
+  "intro": "",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Ventiladores compactos",
+      "modelo": null,
+      "texto": "<p>Amplia gama de ventiladores compactos para CA y CC.<br>Dimensiones desde 25 × 25 mm hasta 280x280mm.<br>Formato axial, diagonal y centrífugo.<br>Extremadamente planos, gracias al motor integrado que ahorra espacio.</p>",
+      "specs": [],
+      "img": "brototermic-ventiladores-compactos",
+      "alt": "Ventiladores compactos",
+      "pdf": null
+    },
+    {
+      "nombre": "Ventiladores axiales",
+      "modelo": null,
+      "texto": "<p>Ventiladores de reducido calado, bajo nivel de ruido y eficiencia excepcional, especialmente adecuados para el flujo de aire a través de intercambiadores de calor.<br>Tecnología EC de GreenTech, ahorro de energía inteligente.<br>Amplia gama de ventiladores axiales para CA.<br>Dimensiones desde Ø130mm hasta Ø910mm.</p>",
+      "specs": [],
+      "img": "brototermic-ventiladores-axiales",
+      "alt": "Ventiladores axiales",
+      "pdf": null
+    },
+    {
+      "nombre": "Ventiladores centrífugos",
+      "modelo": null,
+      "texto": "<p>Buen rendimiento hidráulico y un bajo nivel de ruido, son ideales para las altas presiones.<br>Modelos con alabes curvados hacia adelante o curvados hacia atrás.<br>Configuraciones de una entrada o doble entrada.<br>Amplia gama de productos disponible en AC y con la tecnología EC de GreenTech, ahorro de energía inteligente.</p>",
+      "specs": [],
+      "img": "brototermic-ventiladores-centrifugos",
+      "alt": "Ventiladores centrífugos",
+      "pdf": null
+    },
+    {
+      "nombre": "Ventiladores tangenciales",
+      "modelo": null,
+      "texto": "<p>Fabricados en diámetros de 30 a 120 mm, con hélices de 50 a 1.200 mm de largo.<br>Generan altas corrientes de aire a contrapresiones relativamente bajas y bajos niveles de ruido.<br>La unidad se puede montar horizontal o verticalmente, con el motor en la parte inferior.<br>Un buen contacto de los conductos y superficies con aire frío, enfriado debido a la anchura ampliada de la superficie de escape.<br>Diseño muy plano.</p>",
+      "specs": [],
+      "img": "brototermic-ventiladores-tangenciales",
+      "alt": "Ventiladores tangenciales",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

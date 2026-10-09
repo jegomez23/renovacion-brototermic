@@ -1,0 +1,86 @@
+{
+  "title": "Resistencias tipo cartucho | BROTOTERMIC Vitoria",
+  "meta": "Resistencias tipo cartucho de alta y baja carga, microwatt, con termopar incorporado y cartuchos expan. Amplio stock y fabricación a medida. Presupuesto.",
+  "h1": "Resistencias tipo cartucho",
+  "intro": "",
+  "cuerpo": "<p>Cartuchos calefactores eléctricos de alta densidad calorífica. Son los indicados para el calentamiento de piezas sólidas y para soportar las más duras condiciones de trabajo: vibraciones, humedad, caída de líquidos, dilataciones frecuentes y donde se requieran temperaturas entre 400 ºC y 750 ºC o temperaturas en un mínimo espacio. Deben ir bien ajustados al taladro en el que van introducidos. Amplio stock y fabricaciones a medida. <a href=\"/docs/Acabados-resistencias-cartucho.pdf\"> ACABADOS DE CARTUCHOS.</a></p>",
+  "documentos": [],
+  "relacionadas": [
+    "controltemperatura-sondastemperatura",
+    "resistencias-especiales-a-medida"
+  ],
+  "productos": [
+    {
+      "nombre": "Cartucho alta carga",
+      "modelo": null,
+      "texto": "<p>Alta carga de watios. El hilo conductor está enrollado en espiral sobre un cuerpo cerámico duro al cual se le introduce el cable conductor sin ningún empalme (ocasionalmente se puede producir un empalme en el exterior del cartucho) se introducen discos y cabezales cerámicos con el objeto de su aislamiento y protección.<br>Todo ello recubierto con óxido de magnesio puro de granulometría controlada para asegurar el lleno completo del cartucho. Más tarde un proceso de compactación y otro de rectificado de la superficie hasta calibrar a la medida deseada.</p>",
+      "specs": [
+        "1. Base soldada por Tig estanca hasta una presión 60 kg/cm2.",
+        "2. Acero inox AISI 304/ 316/321/ INCOLOY",
+        "3. Disco cerámico de aislamiento.",
+        "4. Óxido de magnesio puro de granulometría controlada.",
+        "5. Hilo calefactor níquel-cromo 80/20 punto de fusión 1400ºC",
+        "6. Núcleo cerámico.",
+        "7. Cabezal cerámico duro.",
+        "8. Cable conductor.",
+        "9. Pasta dura refractaria."
+      ],
+      "img": "brototermic-cartuchosaltacarga",
+      "alt": "Cartuchos de alta carga",
+      "pdf": null
+    },
+    {
+      "nombre": "Cartucho baja carga",
+      "modelo": null,
+      "texto": "<p>Baja carga de watios, se inserta una pieza cerámica de dureza elevada. El hilo calefactor níquel-cromo se encuentra en el interior de la pieza cerámica. Finalmente, todo se recubre con óxido de magnesio de granulometría controlada para que cubra todo el interior de la resistencia. Con esto obtenemos una perfecta conductividad entre el hilo calefactor y la masa a calentar.</p>",
+      "specs": [
+        "1. Base soldada por Tig estanca hasta una presión 60 kg/cm2.",
+        "2. Acero inox. AISI 304/ 316/ 321",
+        "3. Disco cerámico de aislamiento.",
+        "4. Óxido de magnesio puro de granulometría controlada.",
+        "5. Hilo calefactor níquel-cromo 80/20 punto de fusión 1400 ºC",
+        "6. Núcleo cerámico.",
+        "7. Cabezal cerámico duro.",
+        "8. Cable conductor.",
+        "9. Pasta dura refractaria."
+      ],
+      "img": "brototermic-cartuchosbajacarga",
+      "alt": "Cartuchos de baja carga",
+      "pdf": null
+    },
+    {
+      "nombre": "Microwatt",
+      "modelo": null,
+      "texto": "<p>Calefactor unipolar con un hilo aislado de masa y el otro a tierra soldado en el fondo. Se puede fabricar a partir de diámetro 4, con un voltaje máximo de 48 V.</p>",
+      "specs": [
+        "1. Base soldada por Tig estanca hasta una presión 60 kg/cm2..",
+        "2. Acero inox.304 calibrado.",
+        "3. Óxido de magnesio puro de granulometría controlada.",
+        "4. Hilo calefactor níquel-cromo 80/20 punto de fusión 1400ºC.",
+        "5. Cable conductor."
+      ],
+      "img": "brototermic-cartuchosmicrowatt",
+      "alt": "Microwatt",
+      "pdf": null
+    },
+    {
+      "nombre": "Cartuchos con termopar",
+      "modelo": null,
+      "texto": "<p>Los cartuchos se pueden construir con sonda incorporada, en cualquier punto del cartucho a petición del cliente. Las ventajas de incorporar sondas son innumerables por ejemplo alarga la vida del cartucho considerablemente, precisión de temperatura localizada, ahorro energético, donde no se pueda alojar una sonda convencional por problemas de espacio.</p>",
+      "specs": [],
+      "img": "brototermic-microwatt",
+      "alt": "Cartuchos con termopar",
+      "pdf": null
+    },
+    {
+      "nombre": "Cartuchos expan",
+      "modelo": null,
+      "texto": "<p>Consiste en un cartucho comprimido de alto rendimiento, con la máxima calidad en materiales, con la particularidad de ser capaz de expandirse por si solo, gracias a la forma de horquilla tensionada en un punto que le permiten la expansión y retracción del cartucho.<br>Las Resistencias de cartucho expansible solucionan los dos grandes problemas que tienen los cartuchos convencionales comprimidos de alta carga, la durabilidad por deficiente ajuste y la extracción por buen ajuste, mejorando la precisión térmica con cientos de acabados y terminaciones para todo tipo de industria.</p>",
+      "specs": [],
+      "img": "brototermic-cartuchosexpan",
+      "alt": "Cartuchos con expan",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

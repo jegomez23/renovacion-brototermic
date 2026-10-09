@@ -1,0 +1,77 @@
+{
+  "title": "Sensores conductivos | BROTOTERMIC Vitoria",
+  "meta": "Electrodos y porta-electrodos conductivos para controlar el nivel de líquidos conductivos en depósitos pequeños y pozos profundos. Pide presupuesto.",
+  "h1": "Sensores conductivos",
+  "intro": "",
+  "cuerpo": "<p>Porta-electrodos compactos y electrodos de uso exclusivo en líquidos conductivos. Se utilizan para controlar puntos de nivel independientes o combinados entre ellos, tanto en depósitos pequeños como en pozos profundos. Necesitan conectarse a un relé de nivel para líquidos conductivos.<br>El número de electrodos se determina por la función del relé escogido. Los electrodos pueden cortarse para ajustar el punto de nivel deseado.<br><strong> Fabricaciones a medida.</strong></p>",
+  "documentos": [],
+  "relacionadas": [
+    "controldenivel-reles-de-nivel"
+  ],
+  "productos": [
+    {
+      "nombre": "Electrodos NR 1 ½",
+      "modelo": null,
+      "texto": "<p>Conjunto de electrodos para el control de nivel en líquidos conductores.<br>Electrodo: Inox, Opcional Titanio.<br>Conexión a proceso: Tapón roscado PVC 1\"1/2.<br>Conexión eléctrica: Conector DIN43650.<br>Temperatura máxima: +70 ºC.<br>Presión: 5 kg/cm² (a 20ºC).<br>Protección: IP65. Máximo 4 electrodos.<br>Posibilidad de recubrimiento de polieolefina (NRI).<br>Necesitan conectarse a un relé de líquidos conductivos Disibeint.</p>",
+      "specs": [],
+      "img": "brototermic-electrodos-nr1",
+      "alt": "Electrodos NR 1 ½",
+      "pdf": null
+    },
+    {
+      "nombre": "Electrodos NRA 1 1/2",
+      "modelo": null,
+      "texto": "<p>Conjunto de electrodos para el control de nivel en líquidos conductores enteflonado. Puede usarse con productos alimentarios y farmacéuticos.<br>Electrodo: Inox, Opcional Titanio.<br>Conexión a proceso: Tapón roscado PTFE 1\"1/2.<br>Conexión eléctrica: Conector DIN43650.<br>Temperatura máxima: +100 ºC.<br>Presión: 1 kg/cm² (a 20ºC).<br>Protección: IP66.<br>Máximo 4 electrodos.<br>Posibilidad de recubrimiento de PTFE (NRAI).</p>",
+      "specs": [],
+      "img": "brototermic-electrodos-nra",
+      "alt": "Electrodos NRA 1 1/2",
+      "pdf": null
+    },
+    {
+      "nombre": "Electrodo NTBI",
+      "modelo": null,
+      "texto": "<p>Nivel de electrodos para uso en alimentación y farmacia, en líquidos conductores.<br>Conexión a proceso: Tapón roscado. 1/4\", 1/2\", 3/4\" o 1\" G.<br>Material: Inox AISI316 (1.4401). Opcional electrodo titanio.<br>Conexión eléctrica: Caja de conexiones INOX.<br>Temperatura máxima: +100 ºC.<br>Presión: Atmosférica.<br>Protección: IP67.<br>Máximo 2 electrodos.</p>",
+      "specs": [],
+      "img": "brototermic-electrodos-ntbi",
+      "alt": "Electrodo NTBI",
+      "pdf": null
+    },
+    {
+      "nombre": "Electrodo NT",
+      "modelo": null,
+      "texto": "<p>Electrodo para puntos de nivel independientes, dimensiones reducidas.<br>Conexión a proceso: Racor 1/4\" G. Inox AISI316 (1.4401).<br>Longitud electrodo: 500mm. Cortar a la altura deseada.<br>Conexión eléctrica: Terminal a tornillo.<br>Temperatura: +140 ºC.<br>Presión: 5 kg/cm²</p>",
+      "specs": [],
+      "img": "brototermic-electrodos-nt",
+      "alt": "Electrodo NT",
+      "pdf": null
+    },
+    {
+      "nombre": "Electrodo NS",
+      "modelo": null,
+      "texto": "<p>Electrodo conductivo para pozos y depósitos.<br>Conexión a proceso: suspendido por cable (no suministrado).<br>Conexión eléctrica: Terminal a tornillo.<br>Longitud:100mm.<br>Temperatura máxima: +70 ºC.<br>Presión: Atmosférica.</p>",
+      "specs": [],
+      "img": "brototermic-electrodos-ns",
+      "alt": "Electrodo NS",
+      "pdf": null
+    },
+    {
+      "nombre": "Electrodo NP",
+      "modelo": null,
+      "texto": "<p>Sensor de electrodos para detección de inundaciones.<br>Uso en sótanos, oficinas, lavanderías, galerías de servicio, etc.<br>Conexión a proceso: Mediante tornillos.<br>Conexión eléctrica: Cable PVC (5 m).<br>Temperatura máxima: +70ºC.<br>Presión: Atmosférica.<br>Protección: IP68.</p>",
+      "specs": [],
+      "img": "brototermic-electrodos-np",
+      "alt": "Electrodo NP",
+      "pdf": null
+    },
+    {
+      "nombre": "Electrodo NCPS DB INOX",
+      "modelo": null,
+      "texto": "<p>Conjunto de electrodos para el control de nivel en líquidos conductores. Aplicable a todo tipo de depósitos, con presión y Tª, abiertos y cerrados. El electrodo común es la conexión a proceso.<br>Conexión a proceso: Brida. DN25. Inox AISI316 (1.4401)<br>Conexión eléctrica: Caja de conexiones PBT.<br>Temperatura máxima: +100 ºC<br>Presión: 5 kg/cm² (a 20 ºC)<br>Protección: IP66<br>Máximo 3 electrodos<br>Otros modelos de bridas posibles y materiales. PVC, recubrimientos de PTFE.</p>",
+      "specs": [],
+      "img": "brototermic-electrodos-ncps-db",
+      "alt": "Electrodo NCPS DB INOX",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

@@ -25,7 +25,10 @@
     </details>
     {{/if}}
 
-    {{#if pagina.cuerpo}}<div class="cuerpo">{{{pagina.cuerpo}}}</div>{{/if}}
+    {{#if pagina.cuerpo}}<div class="cuerpo">{{{pagina.cuerpo}}}
+      {{#each pagina.imagenesCuerpo}}{{#if imagen}}<figure class="cuerpo__imagen"><picture>{{#if imagen.webp}}<source type="image/webp" srcset="{{imagen.webp}}">{{/if}}<img src="{{imagen.src}}" width="{{imagen.ancho}}" height="{{imagen.alto}}" alt="{{alt}}" loading="lazy" decoding="async"></picture></figure>{{/if}}
+      {{/each}}
+    </div>{{/if}}
 
     <div class="categoria">
       <div class="categoria__productos">

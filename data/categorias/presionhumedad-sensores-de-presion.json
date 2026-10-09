@@ -1,0 +1,77 @@
+{
+  "title": "Sensores de presión industriales | BROTOTERMIC Vitoria",
+  "meta": "Sensores de presión industriales: transmisores TPSP y TPSM con sensor cerámico y salida 4-20 mA o 0-10 V, y detectores de presión PA y PN. Presupuesto.",
+  "h1": "Sensores de presión industriales",
+  "intro": "",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [
+    "controldenivel-sensores-de-presion"
+  ],
+  "productos": [
+    {
+      "nombre": "Transmisor TPSP22",
+      "modelo": null,
+      "texto": "<p>Aplicación general. Reducidas dimensiones.<br>Sensor: cerámico de óxido de aluminio.<br>Conexión a proceso: Rosca 1/2\" BSP. <br>Inox AISI316L (1.4404).<br>Conexión eléctrica: Conector DIN43650.<br>Señal de salida normalizada: 4-20mA, 0-10V.<br>Gamas: 1..250 bar.<br>Temperatura: 0..+80 ºC.<br>Protección: IP65</p>",
+      "specs": [],
+      "img": "brototermic-transmisor-tpsp22",
+      "alt": "Transmisor TPSP22",
+      "pdf": null
+    },
+    {
+      "nombre": "Transmisor TPSP41",
+      "modelo": null,
+      "texto": "<p>Aplicación general<br>Sensor: cerámico de óxido de aluminio.<br>Conexión a proceso: Rosca 1/4\", 3/8\", 1/2\" BSP o NPT. Inox AISI316 (1.4401)<br>Conexión eléctrica: Conector DIN43650.<br>Señal de salida normalizada: 4-20mA, 0-10V.<br>Gamas: 0,25..250 bar.<br>Temperatura: 0..+80 ºC.<br>Protección: IP65.</p>",
+      "specs": [],
+      "img": "brototermic-transmisor-tpsp41",
+      "alt": "Transmisor TPSP41",
+      "pdf": null
+    },
+    {
+      "nombre": "Transmisor TPSP42",
+      "modelo": null,
+      "texto": "<p>Para el control en tuberías de ramales, arquetas de distribución, etc.<br>Adecuado en ambientes con alto grado de humedad o exteriores.<br>Conexión a proceso: Rosca 1/2\" BSP o NPT. Inox AISI316 (1.4401).<br>Conexión eléctrica: Cable con doble sellado, tubo atm y tutor trenzado.<br>Señal de salida normalizada: 4-20mA, 0-10V. <br>Gamas: 0,25..250 bar.<br>Temperatura: -5..+90 ºC.<br>Protección: IP68</p>",
+      "specs": [],
+      "img": "brototermic-transmisor-tpsp42",
+      "alt": "Transmisor TPSP42",
+      "pdf": null
+    },
+    {
+      "nombre": "Transmisor TPSP 32",
+      "modelo": null,
+      "texto": "<p>Específico para bajas presiones.<br>Membrana aflorante.<br>Sensor: cerámico de óxido de aluminio.<br>Conexión a proceso: Rosca 1\"¼ BSP. Inox AISI316 (1.4401).<br>Conexión eléctrica: Conector DIN43650.<br>Señal de salida normalizada: 4-20mA, 0-10V.<br>Gamas: 50..200 mBar.<br>Temperatura: -5..+90 ºC.<br>Protección: IP65.</p>",
+      "specs": [],
+      "img": "brototermic-transmisor-tpsp32",
+      "alt": "Transmisor TPSP 32",
+      "pdf": null
+    },
+    {
+      "nombre": "Detector presión PA3060",
+      "modelo": null,
+      "texto": "<p>Sensor electrónico de presión.<br>Conexión por conector M12, contactos dorados.<br>Conexión de proceso: G ¼ I.<br>Señal de salida normalizada: 4-20mA.<br>Escala de la medida: 0...600 bar.</p>",
+      "specs": [],
+      "img": "brototermic-detectorpresion",
+      "alt": "Detector presión PA3060",
+      "pdf": null
+    },
+    {
+      "nombre": "Detector presión PN7160",
+      "modelo": null,
+      "texto": "<p>Detector de presión electrónico.<br>Conector M12<br>Función programable<br>Conexión de proceso: G ¼ I<br>2 salidas OUT1 OUT2 digitales<br>Pantalla alfanumérica de 4 dígitos / indicación variable (rojo y verde)<br>Escala de la medida: 0...600 bar / 0...8700 psi / 0...60 MPa.</p>",
+      "specs": [],
+      "img": "brototermic-detectorpresion-pn7160",
+      "alt": "Detector presión PN7160",
+      "pdf": null
+    },
+    {
+      "nombre": "Transmisor TPSM40",
+      "modelo": null,
+      "texto": "<p>Adecuado para aguas limpias o en líquidos sin impurezas, lectura continua de nivel hidrostático.<br>Aplicación general y pozos.<br>Fabricado en Inox AISI316 (1.4401). ø23 mm.<br>Sensor: cerámico de óxido de aluminio.<br>Conexión a proceso: Suspendido por el cable.<br>Gamas: 0,25..40 bar.<br>Señal de salida normalizada: 4-20mA.<br>Otros modelos para gasoil, líquidos agresivos, bajas presiones…etc.</p>",
+      "specs": [],
+      "img": "brototermic-detectorpresion-tpsm40",
+      "alt": "Transmisor TPSM40",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

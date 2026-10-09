@@ -1,0 +1,77 @@
+{
+  "title": "Resistencias tipo abrazadera | BROTOTERMIC Vitoria",
+  "meta": "Resistencias tipo abrazadera con soporte de mica o de cerámica, con o sin escafandra, y sistemas herméticos de latón e inoxidable. Fabricación a medida.",
+  "h1": "Resistencias tipo abrazadera",
+  "intro": "",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [
+    "resistencias-especiales-a-medida"
+  ],
+  "productos": [
+    {
+      "nombre": "Soporte de mica sin escafandra",
+      "modelo": null,
+      "texto": "<p>Resistencia eléctrica cilíndrica con el cierre al lado de la conexión. En chapa (latón, acero inoxidable) hilo Ni-Cr 80/20, aislante de mica. Tª máxima 350ºC.</p>",
+      "specs": [],
+      "img": "brototermic-soporte-sin-escafandra",
+      "alt": "Soporte de mica",
+      "pdf": null
+    },
+    {
+      "nombre": "Soporte de mica con escafandra",
+      "modelo": null,
+      "texto": "<p>Resistencia eléctrica cilíndrica con escafandra incorporada. Resistencia eléctrica cilíndrica con el cierre al lado de la conexión. En chapa (latón, acero inoxidable) hilo Ni-Cr 80/20, aislante de mica. Tª máxima 450ºC. (5W/cm²). Con distintos tipos de conexión: cajón con cable, con tornillos, con cable, con cazoleta y con prensastopa.</p>",
+      "specs": [],
+      "img": "brototermic-soporte-con-escafandra",
+      "alt": "Soporte de mica",
+      "pdf": null
+    },
+    {
+      "nombre": "Cámara protectora de calor",
+      "modelo": null,
+      "texto": "<p>La CPC es una resistencia con Cámara Protectora de Calor, que permite un ahorro de energía y que el desprendimiento de temperatura hacia el exterior sea menor. En chapa (latón, acero inoxidable) hilo Ni-Cr 80/20, aislante de mica. Tª máxima 450ºC. Cámara de acero inoxidable aislamiento en fibra de vidrio.</p>",
+      "specs": [],
+      "img": "brototermic-camara-protectora",
+      "alt": "Cámara protectora de calor",
+      "pdf": null
+    },
+    {
+      "nombre": "Soporte de cerámica",
+      "modelo": null,
+      "texto": "<p>Resistencia con soporte de piezas refractarias de esteatita, con cargas de hasta 8 W/cm2. Chapa en acero inoxidable. Hilo Ni-Cr 80/20 con punto de fusión 1400ºC. Aislante de esteatita articulada. Tª máxima 900ºC. Enchufe rápido o prensaestopa.</p>",
+      "specs": [],
+      "img": "brototermic-soporte-ceramica",
+      "alt": "Soporte de cerámica",
+      "pdf": null
+    },
+    {
+      "nombre": "Sistema hermético latón",
+      "modelo": null,
+      "texto": "<p>La M-85-A está especialmente diseñada para aquellos lugares en los que es frecuente la caída de materiales que pueden dañar la resistencia. Diversas medidas y potencias en stock. La salida del cable de la resistencia puede ser: radial, axial, tangencial.</p>",
+      "specs": [],
+      "img": "brototermic-sistema-hermetico",
+      "alt": "Sistema hermético latón",
+      "pdf": null
+    },
+    {
+      "nombre": "Sistema hermético inoxidable",
+      "modelo": null,
+      "texto": "<p>La M-85-I está especialmente diseñada para aquellos lugares en los que es frecuente la caída de materiales que pueden dañar la resistencia y para atmósferas corrosivas.. Diversas medidas y potencias en stock. La salida del cable de la resistencia puede ser: radial, axial, tangencial.</p>",
+      "specs": [],
+      "img": "brototermic-hermetico-inoxidable",
+      "alt": "Sistema hermético inoxidable",
+      "pdf": null
+    },
+    {
+      "nombre": "Sistema hermético alta carga",
+      "modelo": null,
+      "texto": "<p>Resistencia de tubo blindada con la salida de los cables por el mismo lado y revestida con una carcasa de acero inoxidable hasta 15 W/cm2. El espesor de la resistencias más la escafandra es de 4mm. Posibilidad de adaptar los grados de salida del tubo calefactor a cada necesidad. Con o sin termopar incorporado.</p>",
+      "specs": [],
+      "img": "brototermic-hermetico-altacarga",
+      "alt": "Sistema hermético",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

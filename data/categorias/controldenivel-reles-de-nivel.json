@@ -1,0 +1,95 @@
+{
+  "title": "Relés de nivel | BROTOTERMIC Vitoria",
+  "meta": "Relés de nivel para líquidos conductivos en depósitos, pozos y estanques: control de máximo y mínimo nivel con distintas sensibilidades. Presupuesto.",
+  "h1": "Relés de nivel",
+  "intro": "",
+  "cuerpo": "<p>Se utilizan para el control de nivel de líquidos conductivos en todo tipo de depósitos, pozos, estanques, etc. Los modelos se diferencian por combinaciones de las siguientes características:<br>- Rango de sensibilidad.<br>- Modalidad de control.<br>- Cantidad y tipo de contactos de salida.</p>",
+  "documentos": [],
+  "relacionadas": [
+    "controldenivel-sensores-conductivos"
+  ],
+  "productos": [
+    {
+      "nombre": "PNSA-DNSA-SNSA",
+      "modelo": null,
+      "texto": "<p>Control de máximo y/o mínimo nivel en líquidos conductores.<br>Aplicación general.<br>Sensibilidad: 10..100Kohms.<br>Tensión/Intensidad (sondas): 24 VCA/4 mA.<br>Formatos:<br>PNSA enchufable base undecal.<br>DNSA rail Din fondo panel.<br>SNSA rail DIN superficial.</p>",
+      "specs": [],
+      "img": "brototermic-pnsa-dnsa-snsa",
+      "alt": "PNSA-DNSA-SNSA",
+      "pdf": null
+    },
+    {
+      "nombre": "PNEA-DNEA",
+      "modelo": null,
+      "texto": "<p>Apropiado para líquidos con alta resistividad: agua destilada, desmineralizada. Control de máximo y/o mínimo nivel. Dos gamas de sensibilidad: 10..100 Kohms / 200 Kohms..4,7 Mohms Tensión/Intensidad (sondas): 24VCA/4mA.<br>Formatos: <br>PNSA enchufable base undecal. <br>DNSA rail Din fondo panel</p>",
+      "specs": [],
+      "img": "brototermic-pnea-dnea",
+      "alt": "PNEA-DNEA",
+      "pdf": null
+    },
+    {
+      "nombre": "PNDA-DNDA",
+      "modelo": null,
+      "texto": "<p>Control automático de nivel de un pozo en función del nivel del depósito<br>Sensibilidad: 10..100 Kohms.<br>Tensión/Intensidad (sondas): 24 VCA/4mA</p>",
+      "specs": [],
+      "img": "brototermic-pnda-dnda",
+      "alt": "PNDA-DNDA",
+      "pdf": null
+    },
+    {
+      "nombre": "PNGA-DNGA",
+      "modelo": null,
+      "texto": "<p>Control de nivel doble. Dos controles de nivel independientes.<br>Contactos NA.<br>Máximo y/o mínimo nivel.<br>Sensibilidad: 10..100 Kohms.<br>Tensión/Intensidad (sondas): 24 VCA/4 mA</p>",
+      "specs": [],
+      "img": "brototermic-pnga-dnga",
+      "alt": "PNGA-DNGA",
+      "pdf": null
+    },
+    {
+      "nombre": "SNDA",
+      "modelo": null,
+      "texto": "<p>Dos controles de nivel independientes, con un relé NA/NC asociado a cada uno de ellos.<br>Contactos NA/NC.<br>Máximo y/o mínimo nivel.<br>Sensibilidad: 10..100 Kohms.<br>Tensión/Intensidad (sondas): 24 VCA/4 Ma.</p>",
+      "specs": [],
+      "img": "brototermic-snda",
+      "alt": "SNDA",
+      "pdf": null
+    },
+    {
+      "nombre": "PNWB",
+      "modelo": null,
+      "texto": "<p>Control alternativo de 2 bombas.<br>Mando por sensor de nivel.<br>Modos trabajo: Paro-Automático-Manual.<br>Sensores con contactos libres de potencial.<br>Son necesarios 3 sensores para realizar la maniobra.</p>",
+      "specs": [],
+      "img": "brototermic-pnwb",
+      "alt": "IMN TP INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "PTBA",
+      "modelo": null,
+      "texto": "<p>Control alternativo de 2 bombas.<br>Mando por tensión de alimentación.<br>Gamas: 0,15..3 S.<br>No necesita sensor. Se intercala en la línea de paro-marcha de la bomba.</p>",
+      "specs": [],
+      "img": "brototermic-ptba",
+      "alt": "PTBA",
+      "pdf": null
+    },
+    {
+      "nombre": "PNAS",
+      "modelo": null,
+      "texto": "<p>Relé amplificador para sensores capacitivos.<br>Control máximo y/o mínimo nivel.<br>Ajuste de sensibilidad en el sensor.<br>Tensión/Intensidad (sondas: 24 VCC/15 mA).</p>",
+      "specs": [],
+      "img": "brototermic-pnas",
+      "alt": "PNAS",
+      "pdf": null
+    },
+    {
+      "nombre": "SNIA-SIN",
+      "modelo": null,
+      "texto": "<p>SNIA es un rele de nivel con 1..5 puntos de control.<br>Se combina con el sensor IMN MPS.<br>Funciones: Llenado, vaciado, set-point.<br>Tres relés NA independientes.<br>Visualización del nivel mediante 5 leds amarillos.<br>Temporización detección/reposición, ajustable 0..30 s</p><p>SIN es un controlador de nivel con 1..80 puntos de control.<br>Se combina con el sensor IMN MPS.<br>Funciones configurables por el usuario.<br>Tres relés NA independientes.<br>Lectura directa en unidades de capacidad o volumen.<br>Temporización 0,01 S..999,9 H.<br>Tres relés de salida configurables.</p>",
+      "specs": [],
+      "img": "brototermic-snia-sin",
+      "alt": "SNIA-SIN",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

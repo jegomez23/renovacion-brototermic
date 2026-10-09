@@ -1,0 +1,75 @@
+{
+  "title": "Sensores infrarrojos y cámaras termográficas | BROTOTERMIC",
+  "meta": "Pirómetros infrarrojos de las series CS y CT, pistola de infrarrojos LASERSIGHT y cámaras termográficas fijas para medir temperatura sin contacto.",
+  "h1": "Sensores de infrarrojos y cámaras termográficas",
+  "intro": "",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Pistola infrarrojos LASERSIGHT",
+      "modelo": null,
+      "texto": "<p>Indicador láser exacto, gracias a 4 punteros láser alineados perfectamente con el detector. Permite cambiar de óptica fácilmente sin cambiar elementos para medir objetos pequeños de hasta 1mm. Ideal para aplicaciones de mantenimiento, calidad, I+D o diseño electrónico.<br>Rango Temperatura: -35..900ºC<br>Resolución Óptica: 75:1<br>Comunicación USB<br>Data logger y termopar de calibración incluido.</p>",
+      "specs": [],
+      "img": "brototermic-pistola-infrarrojos",
+      "alt": "Pistola infrarrojos LASERSIGHT",
+      "pdf": null
+    },
+    {
+      "nombre": "Pirómetro infrarrojos Serie CS",
+      "modelo": null,
+      "texto": "<p>Pirómetro bajo coste, ideal para integrar en maquinaria en todo tipo de industrias como papelera, textil o plástico.<br>Rango Temperatura: -40..1.030ºC<br>Resolución Óptica: 15:1<br>Hasta 80ºC sin refrigerar.<br>Tiempo de Respuesta: 25ms.<br>Salidas: 0-10V, termopar tipo K, alarma, USB</p>",
+      "specs": [],
+      "img": "brototermic-pirometro-infrarrojos",
+      "alt": "Pirómetro infrarrojos Serie CS",
+      "pdf": null
+    },
+    {
+      "nombre": "Pirómetro infrarrojos CS-Micro",
+      "modelo": null,
+      "texto": "<p>Basado en el diseño CS pero con la electrónica integrada en el cable. Existen diferentes versiones con diferentes espectros y sensibilidades para multitud de aplicaciones.<br>Rango Temperatura: -40..1.600ºC.<br>Resolución Óptica hasta 75:1.<br>Hasta 125ºC sin refrigerar.<br>Salidas: 0-10V, 4-20mA, alarma, USB.<br>Bajo Coste.</p>",
+      "specs": [],
+      "img": "brototermic-pirometro-csmicro",
+      "alt": "Pirómetro infrarrojos CS-Micro",
+      "pdf": null
+    },
+    {
+      "nombre": "Pirómetro infrarrojos CS-Laser",
+      "modelo": null,
+      "texto": "<p>Potente óptica, apuntador láser exacto, variables espectros y resoluciones ópticas, facilidad de integración gracias a la alimentación por su lazo de corriente 4-20mA.<br>Rango Temperatura: -30..1600ºC.<br>Resolución Óptica hasta 300:1<br>. Alarma 30V/500mA<br>. Salidas: 4-20mA, alarma, USB</p>",
+      "specs": [],
+      "img": "brototermic-pirometro-cslaser",
+      "alt": "Pirómetro infrarrojos CS-Laser",
+      "pdf": null
+    },
+    {
+      "nombre": "Pirómetro infrarrojos Serie CT-Laser",
+      "modelo": null,
+      "texto": "<p>La serie con electrónica separada, robusto, completo, potente y fiable.<br>Rango Temperatura: -50..2.200ºC.<br>Todos los rangos espectrales.<br>Resolución Óptica hasta 300:1.<br>Indicador láser exacto (doble laser).<br>Gran cantidad de accesorios para alta temperatura.<br>Salidas: 0-10V, 4-20mA, termopar J y K, USB, alarma, RS232, RS485, Ethernet, Profibus.</p>",
+      "specs": [],
+      "img": "brototermic-pirometro-ctlaser",
+      "alt": "Pirómetro infrarrojos Serie CT-Laser",
+      "pdf": null
+    },
+    {
+      "nombre": "Cámara termográfica fija Serie PI",
+      "modelo": null,
+      "texto": "<p>Permiten medir temperaturas exactas en intervalos de 8 milisegundos.<br>Carcasa IP67, combinada con su reducido tamaño permiten instalarla en la mayoría de aplicaciones. Puede usarse como portátil gracias a un notebook, UMPC… Software más potente, capaz de capturar y editar fotos y videos, seguir puntos fríos y calientes, isotermas, múltiples áreas de medida, fijar emisividades por secciones etc.<br>Hasta 900ºC estándar (Opcional hasta 1.500ºC)<br>Entradas y salidas analógicas y digitales para automatización de procesos.<br>Diversas resoluciones y ópticas.</p>",
+      "specs": [],
+      "img": "brototermic-camara-termografica",
+      "alt": "Cámara termográfica fija Serie PI",
+      "pdf": null
+    },
+    {
+      "nombre": "Cámara termográfica Serie EXX",
+      "modelo": null,
+      "texto": "<p>Cámaras portátiles pequeñas y ligeras, concebidas para quienes necesitan la mayor resolución y más prestaciones y para quienes es importante documentar los resultados. Son ideales para el mantenimiento preventivo y la inspección planificada de sistemas eléctricos y mecánicos y para garantizar que funcionan con la máxima eficiencia y seguridad y un consumo de energía mínimo. Diversas resoluciones, sensibilidad térmica ˂0,07 °C a 30 °C, rango espectral de 7,5 a 13 µm.</p>",
+      "specs": [],
+      "img": "brototermic-camara-termografica-exx",
+      "alt": "Cámara termográfica Serie EXX",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

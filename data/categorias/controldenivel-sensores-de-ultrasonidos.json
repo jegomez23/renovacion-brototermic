@@ -1,0 +1,21 @@
+{
+  "title": "Sensores de ultrasonidos | BROTOTERMIC Vitoria",
+  "meta": "Sensor de nivel por ultrasonidos SNU30P-1 con pulsador de autoajuste y salida PNP más 4-20 mA para medir el nivel de producto en depósitos. Presupuesto.",
+  "h1": "Sensores de ultrasonidos",
+  "intro": "",
+  "cuerpo": "<p>El sensor de ultrasonidos emite impulsos hacia el producto que se quiere controlar, que los refleja hacia el sensor. La medición del tiempo que transcurre desde la emisión de las señales hasta su recepción se traduce en la altura del nivel de producto en el interior del depósito.</p>",
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Sensor ultrasonido SNU30P-1",
+      "modelo": null,
+      "texto": "<p>Pulsador de auto-ajuste.<br>Salida: PNP NA/NC + 4-20 mA.<br>Membrana enrasada. ø102 mm. Nitrílico.<br>Alimentación: 10..30 VCC.<br>Temperatura trabajo: -20..+70ºC</p>",
+      "specs": [],
+      "img": "brototermic-sensor-ultrasonido",
+      "alt": "Sensor de ultrasonido SNU30P-1",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

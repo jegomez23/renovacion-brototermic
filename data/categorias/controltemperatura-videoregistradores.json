@@ -1,0 +1,30 @@
+{
+  "title": "Vídeo registradores | BROTOTERMIC Vitoria",
+  "meta": "Vídeo registradores FUJI y OHKURA con pantalla TFT en color, entradas analógicas según modelo y almacenamiento de datos. Consulta y pide presupuesto.",
+  "h1": "Vídeo registradores",
+  "intro": "",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Video registrador FUJI",
+      "modelo": null,
+      "texto": "<p>Formato: 160x144x237mm (Taladro de 137x137 mm). Funcionamiento en tiempo real. Entradas analógicas: 3,6,9,18 según modelo. <br>Pantalla de 5,7\" TFT en color, con resolución de 320 x 240 píxel. Diferentes formas de presentación de los registros. Almacenamiento de datos en tarjeta Compact Flash.<br>Configuración: Mediante teclado o mediante un PC y el software que a tal efecto se facilita. Programa para evaluación y procesado de datos en PC incluido. Posibilidad de procesado de datos mediante Excel.<br>Opciones: E/S digitales, comunicación RS485 Modbus RTU, comunicación Ethernet.</p>",
+      "specs": [],
+      "img": "brototermic-video-fuji",
+      "alt": "Video registrador FUJI",
+      "pdf": null
+    },
+    {
+      "nombre": "Video registrador OHKURA",
+      "modelo": null,
+      "texto": "<p>Formato: 150x144x207mm. Funcionamiento en tiempo real.<br>Entradas analógicas: 3,6,9,12 según modelo. <br>Pantalla de5.7\" TFT color LCD (320 × 240 pixel). <br>Almacenamiento datos tarjeta SD.<br>Comunicación Ethernet. RS-485 opcional. Configuración mediante PC y el software facilitado.</p>",
+      "specs": [],
+      "img": "brototermic-video-ohkura",
+      "alt": "Video registrador OHKURA",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

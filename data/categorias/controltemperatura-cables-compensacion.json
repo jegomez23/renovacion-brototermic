@@ -1,0 +1,39 @@
+{
+  "title": "Cables de compensación para termopares | BROTOTERMIC",
+  "meta": "Cables de compensación para termopares y termorresistencias de 0,25 a 1,3 mm, cables de alta temperatura y libres de halógenos. Amplio stock.",
+  "h1": "Cables de compensación y especiales",
+  "intro": "",
+  "cuerpo": "<p>Disponemos de un amplio stock en cables para termopares y termoresistencia, en secciones desde 0,25 a 1,3 mm, así como todo tipo de cables especiales y para alta temperatura. También podemos suministrar cables libres de halógenos, no propagador de llama, no Propagador de humo etc.</p>",
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Cable compensación termopar",
+      "modelo": null,
+      "texto": "<p>Cables de compensación para todo tipo de termopares J, K, S, R, T, etc.<br>Diversas secciones y aislamientos en:<br>PVC<br>Fibra de vidrio - malla metálica<br>Silicona, MFA, etc.<br>Códigos de colores según normativas IEC o DIN</p>",
+      "specs": [],
+      "img": "brototermic-cabletermopar1",
+      "alt": "Cable compensación termopar",
+      "pdf": null
+    },
+    {
+      "nombre": "Cable termorresistencia",
+      "modelo": null,
+      "texto": "<p>Cables para termorresistencias PT-100, de 2, 3 y 4 hilos.<br>Diversas secciones y aislamientos en:<br>Silicona<br>Teflón<br>Silicona-malla metálica</p>",
+      "specs": [],
+      "img": "brototermic-cabletermoresistencia",
+      "alt": "Cable termorresistencia",
+      "pdf": null
+    },
+    {
+      "nombre": "Cable eléctrico alta temperatura",
+      "modelo": null,
+      "texto": "<p>Cable eléctrico de níquel con recubrimiento de fibra de vidrio. Especial para altas temperaturas. Diversas secciones.</p>",
+      "specs": [],
+      "img": "brototermic-cableelectrico",
+      "alt": "Cable eléctrico alta temperatura",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}
