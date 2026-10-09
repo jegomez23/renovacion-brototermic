@@ -236,7 +236,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 
 - **Tipografía:** Lora autoalojada (WOFF2, **solo 400 y 700**, en `/assets/fonts/`) para los títulos; el texto, con la pila de fuentes del sistema.
 - **Estilo:** moderno, limpio, industrial y técnico. Mucho espacio en blanco, jerarquía clara y fotografía de producto sobre fondo neutro.
-- **Componentes:** cabecera con megamenú (acordeón en móvil), hero, tarjeta de familia, tarjeta de producto, tabla de especificaciones, botón primario y secundario, migas de pan, CTA de presupuesto, bloque de marcas, bloque de sedes, formulario y pie.
+- **Componentes:** cabecera con megamenú (acordeón en móvil) y buscador de categorías, hero, tarjeta de familia, tarjeta de producto, tabla de especificaciones, botón primario y secundario, migas de pan, CTA de presupuesto, bloque de marcas, bloque de sedes, formulario y pie.
 - **Formulario:** nombre, empresa, email, teléfono, mensaje, adjunto (plano o foto), casilla RGPD y campo trampa antispam. Se procesa con PHP en el hosting actual (excepción aprobada, sección 2).
 - **Rendimiento:** Lighthouse en móvil ≥ 90, LCP < 2,5 s, **una sola hoja CSS**, JS con **`defer`** y ninguna petición a terceros.
 - **Accesibilidad:** contraste AA, navegable con teclado y foco visible, HTML semántico y zonas táctiles de al menos 44 px.
@@ -263,6 +263,8 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 │   └── .htaccess        ← redirecciones y configuración Apache (se copia a /dist)
 ├── tools/               ← no se publican                                       [A]
 │   ├── validar-plan.js  ← comprueba plan-paginas.csv (title, meta, keyword, «Vitoria»)
+│   ├── servir.js        ← servidor local de /dist (node tools/servir.js → http://localhost:8000)
+│   ├── capturas.js      ← capturas a 360/768/1280 px y comprobaciones (scroll horizontal, consola, terceros)
 │   ├── importar-legacy.js
 │   ├── probar-redirecciones.sh
 │   └── apache-pruebas/  ← Apache en Docker (imagen httpd) para probar el .htaccess en local

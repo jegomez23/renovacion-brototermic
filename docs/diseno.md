@@ -179,6 +179,16 @@ Cada componente tiene su descripción, sus variantes y su comportamiento en móv
 - **Descripción:** fondo `#1d356c`, texto blanco y `#dae9f9`, en 4 columnas en escritorio: (1) logo, frase («Resistencias eléctricas e instrumentación industrial desde 1982», dato externo) y catálogos PDF; (2) Productos (familias y directas); (3) Empresa (Fabricación a medida, Empresa, Nuevos productos, Contacto, Asturias); (4) las dos sedes. Debajo, una línea con © año actual BROTOTERMIC, S.L., Privacidad, Cookies y Mapa web.
 - **Móvil:** columnas apiladas, sedes primero.
 
+### 3.15 Buscador de categorías (añadido en el piloto, 2026-10-09)
+- **Descripción:** campo «Buscar una categoría» arriba del panel «Productos» (megamenú y acordeón). Filtra al escribir, sin tildes ni mayúsculas, con todas las palabras escritas («resistencias aire»). Busca en el rótulo, el H1 y la keyword de cada categoría (`plan-paginas.csv`), así que «termopar» encuentra «Sondas de temperatura». Las familias sin resultados se ocultan y las que tienen resultados se despliegan (`aria-expanded="true"`). El número de resultados se anuncia con `role="status"`. Si solo queda uno, Intro lleva a él. Esc vacía el campo y un segundo Esc cierra el panel.
+- **Sin JS:** no aparece (viene con `hidden` y el JS lo muestra). Todos los enlaces siguen en el HTML.
+
+### Ajustes del piloto sobre esta especificación
+- **Marco de la foto de producto en blanco** con borde `#dadada`, no en `#f1f1f1`: las fotos de /legacy tienen fondo blanco y con gris se vería un recuadro. La foto no se amplía con CSS (se muestra a su tamaño real dentro del marco 4:3). Revisar cuando lleguen las imágenes de 480 px retocadas.
+- **«Ver todas»** en el megamenú, con un texto oculto para los lectores de pantalla («Ver todas las categorías de …»), para no ocupar dos líneas por columna.
+- **Migas:** se muestran completas también en móvil (caben a 360 px); el recorte a «‹ Volver a …» queda para cuando una miga no quepa.
+- **Cabecera fija también en móvil** (64 px), para que el panel del menú se abra siempre bajo ella. Sin JS no es fija.
+
 ## 4. Estructura de cada plantilla (wireframes en texto)
 
 De arriba abajo. Entre corchetes, el componente.

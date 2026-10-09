@@ -1,0 +1,715 @@
+/* =====================================================================
+   BROTOTERMIC — hoja de estilos ÚNICA (mobile-first)
+   Tokens: docs/diseno.md §2 · Componentes: §3 · Reglas: AGENTS.md §6
+   Estructura: 1 fuentes · 2 tokens · 3 base · 4 utilidades · 5 botones · 6 cabecera y menú
+               7 migas · 8 página de categoría · 9 producto · 10 CTA · 11 pie · 12 movimiento e impresión
+   Puntos de corte: base < 768 px (móvil) · md ≥ 768 px · lg ≥ 1280 px
+   ===================================================================== */
+
+/* ---------- 1. Fuentes: Lora autoalojada, solo 400 y 700, subconjunto latino ---------- */
+@font-face {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/assets/fonts/lora-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Lora";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/assets/fonts/lora-700.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ---------- 2. Tokens ---------- */
+:root {
+  /* Color (hex exactos de /legacy; contrastes en diseno.md §2.1) */
+  --color-primario: #004c9a;          /* botones, enlaces, cabecera · blanco encima 8,40:1 */
+  --color-primario-oscuro: #1d356c;   /* títulos, hover del botón, pie · blanco encima 11,81:1 */
+  --color-acento: #36afe0;            /* SOLO acentos (2,51:1 sobre blanco: nunca texto) */
+  --color-acento-2: #2dccf0;          /* SOLO acentos y foco sobre fondo oscuro */
+  --color-texto: #404751;             /* texto general · 9,38:1 */
+  --color-texto-secundario: #5e5e5e;  /* migas, notas · 6,48:1 */
+  --color-borde-control: #72767c;     /* bordes de inputs · 4,57:1 */
+  --color-borde: #dadada;             /* separadores decorativos */
+  --color-fondo: #ffffff;
+  --color-fondo-alt: #f1f1f1;
+  --color-fondo-destacado: #dae9f9;
+  --color-blanco: #ffffff;
+  --color-error: #b42318;
+
+  /* Tipografía */
+  --fuente-titulos: "Lora", Georgia, "Times New Roman", serif;
+  --fuente-texto: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fuente-mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+  /* Escala fluida: valor a 360 px → valor a 1280 px (clamp evita saltos entre puntos de corte) */
+  --texto-h1: clamp(1.75rem, 1.4565rem + 1.3043vw, 2.5rem);          /* 28 → 40 px */
+  --texto-h2: clamp(1.375rem, 1.2283rem + 0.6522vw, 1.75rem);        /* 22 → 28 px */
+  --texto-h3: clamp(1.125rem, 1.0761rem + 0.2174vw, 1.25rem);        /* 18 → 20 px */
+  --texto-entradilla: clamp(1.0625rem, 1.0136rem + 0.2174vw, 1.1875rem); /* 17 → 19 px */
+  --texto-base: 1rem;
+  --texto-pequeno: 0.875rem;
+
+  /* Espaciado (base 4 px) */
+  --esp-1: 0.25rem;  --esp-2: 0.5rem;  --esp-3: 0.75rem;
+  --esp-4: 1rem;     --esp-5: 1.5rem;  --esp-6: 2rem;
+  --esp-7: 3rem;     --esp-8: 4rem;    --esp-9: 6rem;
+
+  /* Radios y sombras */
+  --radio-s: 4px;
+  --radio-m: 8px;
+  --sombra-1: 0 1px 2px rgba(29, 53, 108, 0.08);
+  --sombra-2: 0 8px 24px rgba(29, 53, 108, 0.12);
+
+  /* Maquetación */
+  --margen-lateral: 1rem;          /* 16 px en móvil, 24 px en md, 32 px en lg */
+  --ancho-contenido: 75rem;        /* 1200 px */
+  --ancho-lectura: 40rem;          /* ≈ 70 caracteres por línea */
+  --separacion-secciones: var(--esp-7);
+  --alto-barra: 4rem;              /* barra de la cabecera */
+  --alto-cabecera: 4rem;           /* cabecera completa (en md suma la franja superior) */
+  --transicion: 150ms ease;
+}
+@media (min-width: 768px) {
+  :root { --margen-lateral: 1.5rem; --alto-barra: 4.5rem; --alto-cabecera: 6.625rem; }
+}
+@media (min-width: 1280px) {
+  :root { --margen-lateral: 2rem; --separacion-secciones: var(--esp-9); }
+}
+
+/* ---------- 3. Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Al saltar a un ancla (#copa-sumergible), el título no queda tapado por la cabecera fija */
+  scroll-padding-top: calc(var(--alto-cabecera) + var(--esp-4));
+}
+body {
+  margin: 0;
+  font-family: var(--fuente-texto);
+  font-size: var(--texto-base);
+  line-height: 1.6;
+  color: var(--color-texto);
+  background: var(--color-fondo);
+  overflow-wrap: break-word;
+}
+img, svg, picture { display: block; max-width: 100%; }
+img { height: auto; }
+[hidden] { display: none !important; }
+
+h1, h2, h3 { margin: 0 0 var(--esp-4); color: var(--color-primario-oscuro); }
+h1, h2 { font-family: var(--fuente-titulos); font-weight: 700; }
+h1 { font-size: var(--texto-h1); line-height: 1.2; }
+h2 { font-size: var(--texto-h2); line-height: 1.25; }
+h3 { font-size: var(--texto-h3); font-weight: 600; line-height: 1.3; }
+p, ul, ol, table, address { margin: 0 0 var(--esp-4); }
+address { font-style: normal; }
+
+a {
+  color: var(--color-primario);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.15em;
+  transition: text-decoration-color var(--transicion);
+}
+/* En hover el subrayado se engrosa y pasa a cian; el texto NO cambia a cian (diseno.md §2.1) */
+a:hover { text-decoration-thickness: 2px; text-decoration-color: var(--color-acento); }
+
+/* Foco visible: azul sobre fondo claro, cian sobre fondo oscuro (cabecera y pie) */
+:focus-visible { outline: 3px solid var(--color-primario); outline-offset: 2px; }
+.cabecera__franja :focus-visible,
+.cabecera__logo:focus-visible,
+.cabecera__tel:focus-visible,
+.cabecera__menu:focus-visible,
+.cabecera__presupuesto:focus-visible,
+.pie :focus-visible { outline-color: var(--color-acento-2); }
+main:focus { outline: none; } /* main recibe el foco del enlace «Saltar al contenido» */
+
+/* ---------- 4. Utilidades ---------- */
+.contenedor {
+  width: 100%;
+  max-width: calc(var(--ancho-contenido) + 2 * var(--margen-lateral));
+  margin-inline: auto;
+  padding-inline: var(--margen-lateral);
+}
+/* Oculto a la vista pero leído por lectores de pantalla */
+.visualmente-oculto {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+.saltar {
+  position: absolute;
+  top: -10rem;
+  left: var(--esp-4);
+  z-index: 100;
+  padding: var(--esp-3) var(--esp-4);
+  border-radius: var(--radio-s);
+  background: var(--color-blanco);
+  color: var(--color-primario);
+  font-weight: 600;
+}
+.saltar:focus { top: var(--esp-2); }
+.icono { flex: none; width: 1.5rem; height: 1.5rem; }
+.icono--flecha { width: 1.25rem; height: 1.25rem; transition: transform var(--transicion); }
+[aria-expanded="true"] > .icono--flecha { transform: rotate(180deg); }
+.etiqueta-pdf {
+  display: inline-block;
+  padding: 0 0.35em;
+  border: 1px solid currentColor;
+  border-radius: var(--radio-s);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  vertical-align: 0.15em;
+}
+
+/* ---------- 5. Botones (44 px de alto mínimo: zona táctil) ---------- */
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: 44px;
+  padding: var(--esp-3) var(--esp-5);
+  border: 2px solid transparent;
+  border-radius: var(--radio-s);
+  font: 600 1rem/1.2 var(--fuente-texto);
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transicion), border-color var(--transicion), color var(--transicion);
+}
+.boton--primario { background: var(--color-primario); color: var(--color-blanco); }
+.boton--primario:hover { background: var(--color-primario-oscuro); color: var(--color-blanco); }
+.boton--secundario { border-color: var(--color-primario); background: transparent; color: var(--color-primario); }
+.boton--secundario:hover { background: var(--color-fondo-destacado); }
+/* Sobre fondo oscuro (cabecera): fondo blanco y texto azul */
+.boton--claro { background: var(--color-blanco); color: var(--color-primario); }
+.boton--claro:hover { background: var(--color-fondo-destacado); color: var(--color-primario); }
+
+/* ---------- 6. Cabecera, menú y megamenú ---------- */
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--color-primario);
+  color: var(--color-blanco);
+}
+.cabecera__franja { display: none; } /* en móvil sus datos van al final del menú */
+.cabecera__barra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-1);
+  min-height: var(--alto-barra);
+}
+.cabecera__logo { margin-right: auto; }
+.cabecera__logo img { width: auto; height: 2.25rem; }
+.cabecera__tel,
+.cabecera__menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--esp-2);
+  border: 0;
+  border-radius: var(--radio-s);
+  background: none;
+  color: var(--color-blanco);
+  font: 600 1rem/1 var(--fuente-texto);
+  text-decoration: none;
+  cursor: pointer;
+}
+.cabecera__tel:hover, .cabecera__menu:hover { background: rgba(255, 255, 255, 0.12); }
+.cabecera__tel-texto { /* en móvil y tableta, solo el icono */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.cabecera__menu .icono--cerrar,
+.cabecera__menu[aria-expanded="true"] .icono--abrir { display: none; }
+.cabecera__menu[aria-expanded="true"] .icono--cerrar { display: block; }
+.cabecera__presupuesto { display: none; }
+
+/* Sin JS: no hay botón ☰ y el menú se ve entero y desplegado bajo la barra (la navegación sigue funcionando).
+   La cabecera deja de ser fija para que el menú largo no tape la página. */
+html:not(.js) .cabecera { position: static; }
+html:not(.js) .cabecera__menu { display: none; }
+
+/* --- Menú: móvil (acordeón) --- */
+.menu {
+  flex-basis: calc(100% + 2 * var(--margen-lateral)); /* sin JS: a todo el ancho, de borde a borde */
+  order: 10;
+  padding: var(--esp-4) var(--margen-lateral) var(--esp-7);
+  margin-inline: calc(-1 * var(--margen-lateral));
+  background: var(--color-fondo);
+  color: var(--color-texto);
+}
+/* Con JS: panel a pantalla completa bajo la cabecera, cerrado hasta pulsar ☰ */
+.js .menu {
+  display: none;
+  position: fixed;
+  inset: var(--alto-barra) 0 0 0;
+  margin: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.js.menu-abierto .menu { display: block; }
+.js.menu-abierto, .js.menu-abierto body { overflow: hidden; } /* bloquea el scroll del fondo */
+
+.menu__presupuesto { width: 100%; margin-bottom: var(--esp-4); }
+.menu__lista { margin: 0; padding: 0; list-style: none; }
+.menu__item { border-bottom: 1px solid var(--color-borde); }
+.menu__boton,
+.menu__enlace {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 48px;
+  padding: var(--esp-3) 0;
+  border: 0;
+  background: none;
+  color: var(--color-primario-oscuro);
+  font: 600 1.0625rem/1.3 var(--fuente-texto);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.menu__enlace[aria-current="page"] { color: var(--color-primario); text-decoration: underline; }
+.menu__telefonos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2) var(--esp-5);
+  margin: var(--esp-5) 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--color-texto-secundario);
+}
+.menu__telefonos a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+
+/* --- Megamenú: contenido común --- */
+.js .megamenu { display: none; }
+.js .menu__boton[aria-expanded="true"] + .megamenu { display: block; }
+.megamenu__interior { padding: 0 0 var(--esp-4); }
+.menu .megamenu__interior.contenedor { padding-inline: 0; }
+.megamenu__grupo { border-top: 1px solid var(--color-borde); }
+.megamenu__grupo--tableta { display: none; }
+.megamenu__titulo {
+  display: block;
+  margin: 0;
+  padding: var(--esp-3) 0;
+  color: var(--color-primario-oscuro);
+  font-weight: 600;
+  text-decoration: none;
+}
+a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: var(--color-acento); }
+.megamenu__plegar { display: none; }
+.megamenu__lista { margin: 0 0 var(--esp-3); padding: 0; list-style: none; }
+.megamenu__lista a {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  min-height: 44px;
+  padding: var(--esp-2) 0 var(--esp-2) var(--esp-4);
+  color: var(--color-texto);
+  text-decoration: none;
+}
+.megamenu__lista a:hover { color: var(--color-primario); text-decoration: underline; text-decoration-color: var(--color-acento); }
+.megamenu__lista a[aria-current="page"] { color: var(--color-primario); font-weight: 600; box-shadow: inset 3px 0 0 var(--color-acento); }
+.megamenu__ver-todas { font-weight: 600; }
+
+/* Buscador de categorías (solo con JS: el HTML lo trae con «hidden») */
+.buscador { padding: var(--esp-3) 0 var(--esp-4); }
+.buscador__etiqueta {
+  display: block;
+  margin-bottom: var(--esp-1);
+  color: var(--color-primario-oscuro);
+  font-size: var(--texto-pequeno);
+  font-weight: 600;
+}
+.buscador__campo {
+  width: 100%;
+  min-height: 44px;
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--color-borde-control);
+  border-radius: var(--radio-s);
+  background: var(--color-blanco);
+  color: var(--color-texto);
+  font: inherit;
+}
+.buscador__estado { min-height: 1.5em; margin: var(--esp-2) 0 0; color: var(--color-texto-secundario); font-size: var(--texto-pequeno); }
+
+@media (max-width: 767px) {
+  .megamenu__grupo--no-movil { display: none; }
+  /* Con JS, cada familia es un botón que despliega su lista (una abierta a la vez) */
+  .js .megamenu__titulo--plegable { display: none; }
+  .js .megamenu__plegar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 48px;
+    padding: var(--esp-3) 0;
+    border: 0;
+    background: none;
+    color: var(--color-primario-oscuro);
+    font: 600 1rem/1.3 var(--fuente-texto);
+    text-align: left;
+    cursor: pointer;
+  }
+  .js .megamenu__plegar + .megamenu__lista { display: none; }
+  .js .megamenu__plegar[aria-expanded="true"] + .megamenu__lista { display: block; }
+}
+
+/* --- Tableta y escritorio (≥ 768 px): barra horizontal y megamenú desplegable --- */
+@media (min-width: 768px) {
+  html:not(.js) .cabecera { position: sticky; }
+  .cabecera__franja { display: block; border-bottom: 1px solid var(--color-acento); font-size: var(--texto-pequeno); }
+  .cabecera__contacto {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--esp-5);
+    min-height: 2rem;
+    margin-block: 0;
+    list-style: none;
+  }
+  .cabecera__contacto a { color: var(--color-blanco); font-weight: 600; text-decoration: none; }
+  .cabecera__contacto a:hover { text-decoration: underline; text-decoration-color: var(--color-acento-2); }
+  .cabecera__barra { flex-wrap: nowrap; gap: var(--esp-2); }
+  .cabecera__logo img { height: 2.75rem; }
+  .cabecera__menu { display: none; }
+  .cabecera__presupuesto { display: inline-flex; margin-left: var(--esp-2); }
+
+  .menu,
+  .js .menu {
+    display: flex;
+    position: static;
+    flex-basis: auto;
+    order: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    background: none;
+    color: inherit;
+  }
+  .menu__presupuesto, .menu__telefonos { display: none; }
+  .menu__lista { display: flex; align-items: center; gap: var(--esp-1); }
+  .menu__item { border: 0; }
+  .menu__item--secundario { display: none; } /* tableta: pasan al panel (grupo «Empresa») */
+  .menu__boton,
+  .menu__enlace {
+    gap: var(--esp-1);
+    width: auto;
+    min-height: 44px;
+    padding: var(--esp-2) var(--esp-3);
+    border-radius: var(--radio-s);
+    color: var(--color-blanco);
+    font-size: 1rem;
+  }
+  .menu__boton:hover, .menu__enlace:hover, .menu__boton[aria-expanded="true"] { background: rgba(255, 255, 255, 0.12); }
+  .menu__enlace[aria-current="page"] { color: var(--color-blanco); text-decoration: none; box-shadow: inset 0 -3px 0 var(--color-acento); }
+  .menu__boton:focus-visible, .menu__enlace:focus-visible { outline-color: var(--color-acento-2); }
+
+  /* Panel: a todo el ancho bajo la cabecera */
+  .megamenu,
+  .js .megamenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: calc(100vh - var(--alto-cabecera));
+    overflow-y: auto;
+    border-top: 3px solid var(--color-acento);
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    box-shadow: var(--sombra-2);
+  }
+  /* Sin JS se abre al pasar el ratón o al llegar con el tabulador; con JS, con aria-expanded */
+  html:not(.js) .menu__item--productos:hover > .megamenu,
+  html:not(.js) .menu__item--productos:focus-within > .megamenu,
+  .js .menu__boton[aria-expanded="true"] + .megamenu { display: block; }
+  .menu .megamenu__interior.contenedor { padding: var(--esp-5) var(--margen-lateral) var(--esp-6); }
+  .buscador { max-width: 26rem; padding-top: 0; }
+  .megamenu__columnas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--esp-6); }
+  .megamenu__grupo { margin-bottom: var(--esp-5); border-top: 0; }
+  .megamenu__grupo--tableta { display: block; }
+  .megamenu__titulo {
+    margin-bottom: var(--esp-2);
+    padding: 0 0 var(--esp-2);
+    border-bottom: 2px solid var(--color-acento);
+    font-family: var(--fuente-titulos);
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
+  .megamenu__lista a { padding-left: 0; }
+  .megamenu__lista a[aria-current="page"] { padding-left: var(--esp-3); }
+}
+
+@media (min-width: 1280px) {
+  .menu__item--secundario { display: block; }
+  .megamenu__grupo--tableta { display: none; }
+  .megamenu__columnas { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .cabecera__tel { padding-inline: var(--esp-3); }
+  .cabecera__tel-texto { position: static; width: auto; height: auto; overflow: visible; clip-path: none; }
+}
+/* Con ratón (no táctil) la lista puede ser más compacta que 44 px por enlace */
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
+  .megamenu__lista a { min-height: 2rem; padding-block: var(--esp-1); }
+}
+
+/* ---------- 7. Migas de pan ---------- */
+.migas { padding-top: var(--esp-4); color: var(--color-texto-secundario); font-size: var(--texto-pequeno); }
+.migas ol { display: flex; flex-wrap: wrap; margin: 0; padding: 0; list-style: none; }
+.migas li + li::before {
+  content: "›";        /* navegadores sin texto alternativo en content */
+  content: "›" / "";   /* separador decorativo: no lo leen los lectores de pantalla */
+  margin-inline: var(--esp-2);
+}
+.migas [aria-current="page"] { color: var(--color-texto); }
+
+/* ---------- 8. Página de categoría ---------- */
+.pagina-cabecera { max-width: 48rem; padding-block: var(--esp-5) var(--esp-6); }
+.entradilla { max-width: var(--ancho-lectura); font-size: var(--texto-entradilla); }
+.pagina-cabecera__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-3) var(--esp-5);
+  margin-top: var(--esp-2);
+}
+.enlace-pdf { display: inline-flex; align-items: center; gap: var(--esp-2); min-height: 44px; font-weight: 600; }
+
+/* Índice de productos: <details> nativo (se pliega sin JS) */
+.indice {
+  margin-bottom: var(--esp-7);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  background: var(--color-fondo-alt);
+}
+.indice__resumen {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  min-height: 48px;
+  padding: var(--esp-3) var(--esp-4);
+  color: var(--color-primario-oscuro);
+  font-weight: 600;
+  cursor: pointer;
+}
+.indice__lista { margin: 0; padding: 0 var(--esp-4) var(--esp-4) var(--esp-7); }
+.indice__lista li { break-inside: avoid; }
+.indice__lista a { display: inline-block; padding-block: 0.625rem; }
+
+.cuerpo { max-width: var(--ancho-lectura); margin-bottom: var(--esp-7); overflow-x: auto; }
+
+.categoria { display: grid; gap: var(--esp-7); }
+.categoria__lateral { display: grid; gap: var(--esp-5); align-content: start; }
+.hermanas { padding: var(--esp-5); border-radius: var(--radio-m); background: var(--color-fondo-alt); }
+.hermanas__titulo { margin-bottom: var(--esp-3); font-size: 1.25rem; }
+.hermanas__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: 0 var(--esp-5);
+  margin: 0 0 var(--esp-3);
+  padding: 0;
+  list-style: none;
+}
+.hermanas__lista a { display: flex; align-items: center; min-height: 44px; color: var(--color-texto); text-decoration: none; }
+.hermanas__lista a:hover { color: var(--color-primario); text-decoration: underline; text-decoration-color: var(--color-acento); }
+.hermanas__lista a[aria-current="page"] { padding-left: var(--esp-3); color: var(--color-primario); font-weight: 600; box-shadow: inset 3px 0 0 var(--color-acento); }
+.hermanas__todas { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.cta-compacta { display: none; } /* solo en el lateral de escritorio */
+
+.relacionadas { margin-top: var(--esp-7); }
+.relacionadas__titulo { font-size: 1.25rem; }
+.relacionadas__lista { display: flex; flex-wrap: wrap; gap: var(--esp-3); margin: 0; padding: 0; list-style: none; }
+.relacionadas__lista a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--esp-2) var(--esp-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  font-weight: 600;
+  text-decoration: none;
+}
+.relacionadas__lista a:hover { border-color: var(--color-acento); background: var(--color-fondo-alt); }
+
+@media (max-width: 767px) {
+  .pagina-cabecera__acciones .boton { width: 100%; }
+}
+@media (min-width: 768px) {
+  .indice__lista { columns: 2; column-gap: var(--esp-7); }
+}
+@media (min-width: 1280px) {
+  .indice__lista { columns: 3; }
+  /* Productos + lateral fijo con las categorías hermanas y la CTA compacta */
+  .categoria { grid-template-columns: minmax(0, 1fr) 17.5rem; align-items: start; gap: var(--esp-8); }
+  .categoria__lateral { position: sticky; top: calc(var(--alto-cabecera) + var(--esp-5)); }
+  .hermanas__lista { grid-template-columns: 1fr; }
+  .cta-compacta {
+    display: block;
+    padding: var(--esp-5);
+    border-radius: var(--radio-m);
+    background: var(--color-fondo-destacado);
+    color: var(--color-primario-oscuro);
+  }
+  .cta-compacta__titulo { margin-bottom: var(--esp-2); font-family: var(--fuente-titulos); font-size: 1.25rem; font-weight: 700; }
+  .cta-compacta .boton { width: 100%; }
+  .cta-compacta__tel { display: flex; align-items: center; justify-content: center; min-height: 44px; margin-top: var(--esp-2); font-weight: 600; }
+}
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
+  .hermanas__lista a { min-height: 2.25rem; }
+}
+
+/* ---------- 9. Tarjeta de producto (una columna: fichas que se leen de arriba abajo) ---------- */
+.producto {
+  display: grid;
+  gap: var(--esp-4) var(--esp-6);
+  padding-block: var(--esp-6);
+  border-top: 1px solid var(--color-borde);
+}
+.producto:first-child { padding-top: 0; border-top: 0; }
+/* Marco 4:3 con la foto entera (contain). Fondo blanco porque las fotos de /legacy lo tienen:
+   con #f1f1f1 se vería un recuadro blanco alrededor de cada foto. La foto no se amplía por CSS. */
+.producto__imagen {
+  display: grid;
+  place-items: center;
+  gap: var(--esp-3);
+  aspect-ratio: 4 / 3;
+  padding: var(--esp-4);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  background: var(--color-blanco);
+}
+.producto__imagen img { width: auto; max-height: 100%; object-fit: contain; }
+.producto__cuerpo:only-child { grid-column: 1 / -1; } /* producto sin imagen */
+.producto__nombre { margin-bottom: var(--esp-2); }
+.producto__modelo {
+  display: inline-block;
+  padding: var(--esp-1) var(--esp-2);
+  border-radius: var(--radio-s);
+  background: var(--color-fondo-destacado);
+  color: var(--color-primario-oscuro);
+  font: 600 var(--texto-pequeno)/1.4 var(--fuente-mono);
+}
+.producto__texto { max-width: var(--ancho-lectura); }
+.producto__texto > :last-child { margin-bottom: 0; }
+.producto__accion { margin: var(--esp-5) 0 0; }
+
+.specs { width: 100%; max-width: var(--ancho-lectura); border-collapse: collapse; font-size: var(--texto-pequeno); }
+.specs caption { padding-bottom: var(--esp-2); color: var(--color-primario-oscuro); font-weight: 600; text-align: left; }
+.specs th, .specs td { padding: var(--esp-2) var(--esp-3); border-bottom: 1px solid var(--color-borde); text-align: left; vertical-align: top; }
+.specs th { width: 40%; background: var(--color-fondo-alt); color: var(--color-primario-oscuro); font-weight: 600; }
+.specs-lista { max-width: var(--ancho-lectura); padding-left: 1.25rem; }
+.specs-lista li + li { margin-top: var(--esp-1); }
+
+@media (max-width: 767px) {
+  .producto__accion .boton { width: 100%; }
+}
+@media (min-width: 768px) {
+  .producto { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: start; }
+}
+
+/* ---------- 10. CTA de presupuesto ---------- */
+.cta {
+  margin-top: var(--separacion-secciones);
+  padding-block: var(--esp-7);
+  background: var(--color-fondo-destacado);
+  color: var(--color-primario-oscuro);
+}
+.cta__interior { display: grid; gap: var(--esp-5); }
+.cta__titulo { margin-bottom: var(--esp-3); }
+.cta__texto p { max-width: var(--ancho-lectura); margin: 0; }
+.cta__acciones { display: flex; flex-direction: column; gap: var(--esp-2); }
+.cta__telefono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3em;
+  min-height: 44px;
+  color: var(--color-primario-oscuro);
+}
+@media (min-width: 768px) {
+  .cta__interior { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--esp-7); }
+}
+
+/* ---------- 11. Pie ---------- */
+.pie { padding-top: var(--esp-7); background: var(--color-primario-oscuro); color: var(--color-fondo-destacado); }
+.pie a { color: var(--color-blanco); }
+.pie a:hover { text-decoration-color: var(--color-acento-2); }
+.pie__columnas { display: grid; gap: var(--esp-6); padding-bottom: var(--esp-6); }
+.pie__columna--sedes { order: -1; } /* en móvil, las sedes primero */
+.pie__logo { display: inline-block; margin-bottom: var(--esp-4); }
+.pie__logo img { width: auto; height: 2.5rem; }
+.pie__titulo {
+  margin-bottom: var(--esp-3);
+  color: var(--color-blanco);
+  font-family: var(--fuente-texto);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.pie__lista { margin: 0; padding: 0; list-style: none; }
+.pie__lista a { display: inline-flex; align-items: center; gap: var(--esp-2); min-height: 44px; }
+.sede + .sede { margin-top: var(--esp-5); }
+.sede__nombre { margin-bottom: var(--esp-2); color: var(--color-blanco); font-size: 1rem; }
+.sede address { margin-bottom: var(--esp-1); line-height: 1.8; }
+.sede__mapa { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+.pie__legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--esp-2) var(--esp-5);
+  padding-block: var(--esp-5);
+  border-top: 1px solid rgba(218, 233, 249, 0.25);
+  font-size: var(--texto-pequeno);
+}
+.pie__legal p { margin: 0; }
+.pie__legal ul { display: flex; flex-wrap: wrap; gap: 0 var(--esp-5); margin: 0; padding: 0; list-style: none; }
+.pie__legal a { display: inline-flex; align-items: center; min-height: 44px; }
+@media (min-width: 768px) {
+  .pie__columnas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pie__columna--sedes { order: 0; }
+}
+@media (min-width: 1280px) {
+  .pie__columnas { grid-template-columns: 1.3fr 1fr 1fr 1.3fr; gap: var(--esp-7); }
+}
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
+  .pie__lista a { min-height: 2rem; }
+}
+
+/* ---------- 12. Movimiento reducido e impresión ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+/* Al imprimir una ficha: solo el contenido, sin menú, laterales ni CTA */
+@media print {
+  .cabecera, .indice, .categoria__lateral, .cta, .producto__accion, .pie__columnas, .saltar { display: none !important; }
+  .pie { padding: 0; background: none; color: #000; }
+  .producto { break-inside: avoid; }
+  a { color: inherit; text-decoration: none; }
+}

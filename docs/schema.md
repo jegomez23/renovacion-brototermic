@@ -27,7 +27,7 @@ Fijos, para que los nodos se enlacen entre páginas:
 | Organization | `{host}/#organizacion` |
 | LocalBusiness Vitoria | `{host}/#sede-vitoria` |
 | LocalBusiness Oviedo | `{host}/oviedo/#sede-oviedo` |
-| WebPage de cada página | `{canonical}#pagina` (opcional; si se usa, `isPartOf` y `publisher` apuntan a la organización) |
+| WebPage de cada página | `{canonical}#pagina`. Lleva `publisher` (la organización), `breadcrumb` (las migas) y `mainEntity` (el ItemList, si hay productos). Sin `isPartOf`: esa propiedad espera un `WebSite`, no una organización (corregido en el piloto, 2026-10-09). |
 
 `{host}` = `site.json → host` (`https://brototermic.com`).
 

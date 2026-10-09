@@ -28,6 +28,7 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | `fundacion` | number | sí | `1982` | B |
 | `host` | string | sí | `"https://brototermic.com"` (sin barra final, sin www) | A |
 | `idioma` | string | sí | `"es-ES"` | A |
+| `logo` | string | sí | `"/images/logo.png"`: ruta del logo de la cabecera y del pie (fondo oscuro). Se cambia por el SVG cuando llegue. `build.js` lee sus medidas. | B |
 | `pendientes` | string[] | sí | `["fundacion", "sedes.vitoria.direccion"]`: datos externos que se usan pero falta que el cliente los confirme. `build.js` los lista como aviso en cada ejecución; **no bloquean** la publicación (decisión del 2026-10-09). Vacío = todo confirmado. | B |
 | `sedes` | objeto[] | sí | ver tabla siguiente (exactamente 2: `vitoria` y `oviedo`) | B |
 | `marcas` | objeto[] | sí | ver tabla de marcas | B |

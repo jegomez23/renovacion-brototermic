@@ -1,0 +1,59 @@
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="cabecera">
+  <div class="cabecera__franja">
+    <ul class="contenedor cabecera__contacto">
+      {{#each menu.sedes}}<li>{{corta}} <a href="tel:{{tel}}">{{telefono}}</a></li>{{/each}}
+      <li><a href="mailto:{{menu.email}}">{{menu.email}}</a></li>
+    </ul>
+  </div>
+  <div class="contenedor cabecera__barra">
+    <a class="cabecera__logo" href="/"><img src="{{menu.logo.src}}" width="{{menu.logo.ancho}}" height="{{menu.logo.alto}}" alt="BROTOTERMIC, ir al inicio"></a>
+    <a class="cabecera__tel" href="tel:{{menu.telPrincipal}}">
+      <svg class="icono" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>
+      <span class="cabecera__tel-texto"><span class="visualmente-oculto">Llamar a Vitoria: </span>{{menu.telefonoPrincipal}}</span>
+    </a>
+    <button class="cabecera__menu" type="button" aria-expanded="false" aria-controls="menu-principal">
+      <svg class="icono icono--abrir" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+      <svg class="icono icono--cerrar" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="m6.4 5 5.6 5.6L17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4-5.6-5.6L6.4 19 5 17.6l5.6-5.6L5 6.4z"/></svg>
+      <span class="visualmente-oculto">Menú</span>
+    </button>
+    <nav class="menu" id="menu-principal" aria-label="Principal">
+      <a class="boton boton--primario menu__presupuesto" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+      <ul class="menu__lista">
+        <li class="menu__item menu__item--productos">
+          <button class="menu__boton" type="button" aria-expanded="false" aria-controls="panel-productos">Productos<svg class="icono icono--flecha" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="m12 15.4-6-6L7.4 8l4.6 4.6L16.6 8 18 9.4z"/></svg></button>
+          <div class="megamenu" id="panel-productos">
+            <div class="contenedor megamenu__interior">
+              {{! El buscador solo funciona con JS: sale oculto y el JS lo muestra }}
+              <div class="buscador" hidden>
+                <label class="buscador__etiqueta" for="buscar-categoria">Buscar una categoría</label>
+                <input class="buscador__campo" id="buscar-categoria" type="search" autocomplete="off" spellcheck="false" placeholder="Ej.: termostatos, cartucho, flotador" aria-describedby="buscador-estado">
+                <p class="buscador__estado" id="buscador-estado" role="status"></p>
+              </div>
+              <div class="megamenu__columnas">
+                {{#each menu.columnas}}<div class="megamenu__columna">
+                  {{#each grupos}}<div class="megamenu__grupo{{clase}}{{#if activa}} megamenu__grupo--activo{{/if}}">
+                    {{#if url}}<a class="megamenu__titulo{{#if plegable}} megamenu__titulo--plegable{{/if}}" href="{{url}}">{{nombre}}</a>{{else}}<p class="megamenu__titulo">{{nombre}}</p>{{/if}}
+                    {{#if plegable}}<button class="megamenu__plegar" type="button" aria-expanded="false" aria-controls="grupo-{{id}}">{{nombre}}<svg class="icono icono--flecha" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="m12 15.4-6-6L7.4 8l4.6 4.6L16.6 8 18 9.4z"/></svg></button>{{/if}}
+                    <ul class="megamenu__lista" id="grupo-{{id}}">
+                      {{#each enlaces}}<li><a href="{{url}}"{{#if actual}} aria-current="page"{{/if}}{{#if verTodas}} class="megamenu__ver-todas"{{/if}}{{#if buscar}} data-buscar="{{buscar}}"{{/if}}>{{texto}}{{#if oculto}}<span class="visualmente-oculto">{{oculto}}</span>{{/if}}{{#if pdf}} <span class="etiqueta-pdf">PDF</span>{{/if}}</a></li>
+                      {{/each}}
+                    </ul>
+                  </div>
+                  {{/each}}
+                </div>
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        </li>
+        {{#each menu.secundarios}}<li class="menu__item {{clase}}"><a class="menu__enlace" href="{{url}}"{{#if actual}} aria-current="page"{{/if}}>{{texto}}</a></li>
+        {{/each}}
+      </ul>
+      <ul class="menu__telefonos">
+        {{#each menu.sedes}}<li>{{corta}} <a href="tel:{{tel}}">{{telefono}}</a></li>{{/each}}
+      </ul>
+    </nav>
+    <a class="boton boton--claro cabecera__presupuesto" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+  </div>
+</header>
