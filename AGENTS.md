@@ -2,9 +2,31 @@
 
 > **Fuente única de verdad del proyecto.** Toda persona o IA (Claude, ChatGPT/Codex u otra) que trabaje en este repositorio debe leer este archivo completo antes de empezar y respetarlo. Si una decisión cambia, se actualiza este archivo **en el mismo commit** que el cambio.
 >
-> Convención: **[POR VERIFICAR]** marca cualquier dato que no se ha podido comprobar en `/legacy` (copia de la web actual) ni en los catálogos PDF. Un dato marcado así **no se publica** hasta que alguien lo confirme y quite la marca. Cuando un dato lo ha dado el cliente pero no aparece en `/legacy`, se indica como *(dato del cliente)*.
+> **AGENTS.md contiene las REGLAS y las DECISIONES. Los PLANES viven en `/docs`** (índice justo debajo). Si un documento de `/docs` contradice este archivo, manda AGENTS.md y el documento se corrige.
 >
-> Última revisión del análisis de `/legacy`: 2026-10-09.
+> Convenciones de marcado:
+> - **[POR VERIFICAR]**: dato o decisión que no se ha podido comprobar en `/legacy` (copia de la web actual) ni en los catálogos PDF. **No se publica** hasta que alguien lo confirme y quite la marca.
+> - **(dato externo, confirmar con cliente)**: dato que ha dado el cliente pero no aparece en `/legacy`. **Se usa** en la web, y queda anotado en `data/site.json → pendientes` hasta que el cliente lo confirme (decisión del 2026-10-09).
+>
+> Última revisión: 2026-10-09.
+
+## Documentos del proyecto (`/docs`)
+
+| Documento | Para qué sirve |
+|---|---|
+| [docs/tareas.md](docs/tareas.md) | **Por dónde empezar:** backlog por día y persona, dependencias, ruta crítica y qué se recorta si no da tiempo |
+| [docs/arquitectura.md](docs/arquitectura.md) | Árbol de la web, megamenú definitivo, migas de pan y reglas de enlazado interno |
+| [docs/plan-paginas.csv](docs/plan-paginas.csv) | Las 52 páginas finales: plantilla, title y meta nuevos, H1, keyword, nº de productos, prioridad, responsable y día |
+| [docs/datos.md](docs/datos.md) | **Contrato entre A y B:** esquema exacto de `site.json`, `familias.json`, `categorias/*.json` y `/content` |
+| [docs/diseno.md](docs/diseno.md) | Tokens (color con contrastes, tipografía, espaciado, radios, sombras, puntos de corte), componentes y wireframes de cada plantilla |
+| [docs/plan-contenido.md](docs/plan-contenido.md) | Plantilla de intro con ejemplo real, **prompt estándar para IA**, lista de erratas y textos desactualizados con su propuesta |
+| [docs/schema.md](docs/schema.md) | JSON-LD de cada tipo de página: campos y de dónde sale cada dato |
+| [docs/plan-imagenes.csv](docs/plan-imagenes.csv) | Qué hacer con cada imagen (CONVERTIR / RETOCAR_IA / SUSTITUIR / ELIMINAR), prioridad y alt propuesto |
+| [docs/redirecciones.csv](docs/redirecciones.csv) | Las 18 reglas 301 (validadas: sin cadenas ni bucles) |
+| [docs/inventario-urls.csv](docs/inventario-urls.csv) | **Control de la migración:** cada URL antigua o nueva con su estado (MANTENER / REDIRIGIR / NUEVA) y destino |
+| [docs/inventario-imagenes.csv](docs/inventario-imagenes.csv) | Todas las imágenes de contenido de /legacy con su alt actual y las páginas donde se usan |
+| [docs/checklist-publicacion.md](docs/checklist-publicacion.md) | Comprobaciones antes y después de publicar, Search Console, copia de seguridad y vuelta atrás |
+| [docs/preguntas-cliente.md](docs/preguntas-cliente.md) | Mensaje único al cliente con todas las preguntas pendientes y el registro de respuestas |
 
 ---
 
@@ -16,12 +38,13 @@
 4. [Contenido](#4-contenido)
 5. [Imágenes](#5-imágenes)
 6. [Diseño](#6-diseño)
-7. [Estructura de carpetas y esquemas de datos](#7-estructura-de-carpetas-y-esquemas-de-datos)
+7. [Estructura de carpetas y datos](#7-estructura-de-carpetas-y-datos)
 8. [Cómo trabajamos](#8-cómo-trabajamos-dos-personas-y-dos-ias)
 9. [Definición de terminado](#9-definición-de-terminado)
 10. [Prohibido](#10-prohibido)
-11. [Pendientes](#11-pendientes-por-verificar)
-12. [Anexos: datos extraídos de /legacy](#12-anexos-datos-extraídos-de-legacy)
+11. [Decisiones tomadas](#11-decisiones-tomadas)
+12. [Pendientes](#12-pendientes-por-verificar)
+13. [Anexos: datos extraídos de /legacy](#13-anexos-datos-extraídos-de-legacy)
 
 ---
 
@@ -32,12 +55,12 @@
 | Dato | Valor | Fuente |
 |---|---|---|
 | Razón social | BROTOTERMIC, S.L. | `/legacy` (todas las páginas) |
-| CIF | B01266303 | `/legacy/com/.../privacidad.html` |
+| CIF | B01266303 | `legacy/com/brototermic.com/privacidad.html` |
 | Registro Mercantil | Álava, tomo 820, libro 0, folio 14, hoja VI-5952 | `privacidad.html` |
 | Nombre de origen | «Comercial Broto» | `empresa.html` |
-| Año de fundación | 1982 | *(dato del cliente)*. En `/legacy` solo aparece «década de los 80», «más de 35 años» y «treinta y cinco años». |
+| Año de fundación | 1982 (dato externo, confirmar con cliente) | En `/legacy` solo aparecen «década de los 80», «más de 35 años» y «treinta y cinco años» |
 | Actividad | Distribuidor B2B de resistencias eléctricas calefactoras e instrumentación industrial (temperatura, nivel, presión, humedad). Además de distribuir, hace **fabricaciones a medida**. | Brief del cliente + `/legacy` |
-| Zona | País Vasco, provincias limítrofes y Asturias | `empresa.html` («País Vasco y provincias limítrofes») + delegación de Oviedo |
+| Zona | País Vasco, provincias limítrofes y Asturias | `empresa.html` + delegación de Oviedo |
 
 ### Público
 
@@ -45,8 +68,8 @@ Departamentos de **mantenimiento, compras y oficina técnica** de empresas indus
 
 ### Objetivo de la web
 
-1. **Generar peticiones de presupuesto** (formulario y teléfono).
-2. **Transmitir confianza técnica**: trayectoria, marcas representadas, catálogos, fabricación a medida.
+1. **Generar peticiones de presupuesto** (formulario con adjunto y teléfono).
+2. **Transmitir confianza técnica**: trayectoria, marcas representadas, catálogos y fabricación a medida.
 
 **NO es un e-commerce:** no hay precios, ni carrito, ni fichas de compra.
 
@@ -54,98 +77,49 @@ Departamentos de **mantenimiento, compras y oficina técnica** de empresas indus
 
 | | Sede central — Vitoria-Gasteiz | Delegación — Oviedo (Asturias) |
 |---|---|---|
-| Dirección | C/ Pintor Mauro Ortiz de Urbina, 7 bajo | Llano Ponte nº 8 bajo |
-| CP y ciudad | 01008 Vitoria-Gasteiz (Álava) | **33011** Oviedo (Asturias) |
+| Dirección | C/ Pintor Mauro Ortiz de Urbina, 7 bajo (dato externo, confirmar con cliente; en `/legacy`: «Pintor Ortiz de Urbina, n. 7») | Llano Ponte nº 8 bajo |
+| CP y ciudad | 01008 Vitoria-Gasteiz (Álava) | **33011** Oviedo (Asturias). La web actual pone 03011 por error en `contacto/contacto.html`. |
 | Teléfono | 945 22 33 31 → `tel:+34945223331` | 629 462 642 → `tel:+34629462642` |
 | Email | info@brototermic.com | brototermic@brototermic.com |
-| Coordenadas (mapa de la web actual) | 42.849668, -2.685874 | 43.367693, -5.847025 |
+| Coordenadas (JS del mapa actual) | 42.849668, -2.685874 [POR VERIFICAR] | 43.367693, -5.847025 [POR VERIFICAR] |
+| Horario | [POR VERIFICAR] | [POR VERIFICAR] |
 
-Notas sobre las direcciones:
-- En `/legacy` la calle de Vitoria aparece como «Pintor Ortiz de Urbina, n. 7» y «Ptr. Ortiz de Urbina, n. 7». Lo de «Mauro» y «bajo» es *(dato del cliente)*.
-- Oviedo: `brototermic.com/contacto/contacto.html` pone **03011** (errata). `www.brototermic.es/contacto/contacto.html` pone **33011**, que es el correcto.
-- Las coordenadas salen del JavaScript de Google Maps de las páginas de contacto. [POR VERIFICAR] antes de usarlas en el schema `geo`. El iframe del mapa de `www.brototermic.es/contacto/contacto.html` apunta a otra ubicación (40.378, -3.781, zona de Madrid): es un error de la web actual y no se reutiliza.
-- [POR VERIFICAR] Si la delegación de Oviedo sigue activa.
+El iframe del mapa de la página de contacto del `.es` apunta a Madrid (40.378, -3.781): es un error. El mapa de Oviedo se corrige con la dirección real (ver la sección 11).
 
 ### Marcas representadas
 
-ElectricFor · Mesel · Disibeint · Sanara · Ebm-Papst · Eliwell · Kuhlmann Electro Heat · Remberg · Amco
+ElectricFor · Mesel · Disibeint · Sanara · Ebm-Papst · Eliwell · Kuhlmann Electro Heat · Remberg · Amco (las 9 están en `brototermic.com/index.html`).
 
-(Las 9 aparecen en `brototermic.com/index.html`. `www.brototermic.es` solo lista las 6 primeras.)
+### Familias de producto
 
-### Familias de producto y subcategorías (de `/legacy`)
+| Familia | Página | Nº de categorías |
+|---|---|---|
+| Resistencias eléctricas | `resistencias-electricas.html` (NUEVA) | 11 |
+| Control de temperatura | `controltemperatura.html` (NUEVA) | 13 |
+| Control de nivel | `controldenivel.html` (NUEVA) | 9 |
+| Presión y humedad | `presionhumedad.html` (NUEVA) | 2 |
+| Ventilación | `ventilacion.html` (familia de una sola página, «directa») | — |
+| Equipos periféricos para plástico | `equipos-perifericos.html` («directa») | — |
+| Refrigeración | `equiposderefrigeracion-refrigeradores-chillers.html` («directa») | — |
+| Hornos industriales | `hornos-industriales.html` («directa») | — |
 
-Cada subcategoría es hoy una página `.html` que **se mantiene con el mismo nombre de archivo**. El texto entre paréntesis es la etiqueta del menú actual.
-
-**Resistencias eléctricas** (en el menú actual la familia no tiene página: `href="#"`)
-- `resistencias-inmersion.html` (Inmersión)
-- `resistencias-calentamientoaire.html` (Calentamiento de aire)
-- `resistencias-flexibles.html` (Flexibles)
-- `resistencias-infrarrojos.html` (Emisores infrarrojos)
-- `resistencias-tipo-cartucho.html` (De cartucho)
-- `resistencias-tipo-abrazadera.html` (De abrazadera)
-- `resistencias-planas.html` (Planas)
-- `resistencias-calefaccion-industrial.html` (Calefacción industrial: aerotermos, convectores, cortinas de aire, pantallas infrarrojos)
-- `resistencias-atex.html` (ATEX)
-- `resistencias-especiales-a-medida.html` (Especiales a medida)
-- `resistencias-mantas-calefactoras.html` (Mantas calefactoras)
-
-**Control de temperatura** (sin página de familia)
-- `controltemperatura-sondastemperatura.html` (Sondas de temperatura)
-- `controltemperatura-convertidores.html` (Convertidores de señal)
-- `controltemperatura-cables-compensacion.html` (Cables de compensación)
-- `controltemperatura-indicadores-de-procesos.html` (Indicadores de procesos)
-- `controltemperatura-videoregistradores.html` (Video-registradores)
-- `controltemperatura-dataloggers.html` (Dataloggers)
-- `controltemperatura-panelespc-software.html` (Paneles PC)
-- `controltemperatura-accesorios-sondas.html` (Accesorios sondas)
-- `controltemperatura-sensores-infrarrojos.html` (Sensores de infrarrojos)
-- `controltemperatura-termometros.html` (Termómetros)
-- `controltemperatura-termostatos.html` (Termostatos)
-- `controltemperatura-equipos-de-medicion.html` (Equipos de medición)
-- `controltemperatura-reles-estado-solido.html` (Relés estado sólido)
-
-**Presión y humedad** (sin página de familia)
-- `presionhumedad-sondas-de-humedad.html` (Sondas de humedad)
-- `presionhumedad-sensores-de-presion.html` (Sensores de presión)
-
-**Control de nivel** (sin página de familia)
-- `controldenivel-niveles-de-flotador.html` (Niveles de boya)
-- `controldenivel-interruptores-magneticos.html` (Interruptores magnéticos)
-- `controldenivel-sensores-conductivos.html` (Sensores conductivos)
-- `controldenivel-sensores-capacitivos.html` (Sensores capacitivos)
-- `controldenivel-transductores-magneticos.html` (Transductores magnéticos)
-- `controldenivel-sensores-de-presion.html` (Sensores de presión)
-- `controldenivel-sensores-de-ultrasonidos.html` (Sensores de ultrasonidos)
-- `controldenivel-niveles-rotativos.html` (Niveles rotativos)
-- `controldenivel-reles-de-nivel.html` (Relés de nivel)
-
-**Ventilación**: `ventilacion.html`, una sola página con ventiladores compactos, axiales, centrífugos y tangenciales.
-
-**Equipos periféricos para plástico**: `equipos-perifericos.html`, una sola página con alimentadores, atemperadores, caudalímetros, deshumidificadores, desincrustadores, dosificadores, mezcladores, filtros magnéticos y secadores. Su meta habla de «maquinaria auxiliar para el sector industrial de la transformación de termoplásticos».
-
-**Refrigeración**: `equiposderefrigeracion-refrigeradores-chillers.html`, refrigeradores/chillers modelos ENR 003, ENR 001 y ENR 038.
-
-**Hornos industriales**: `hornos-industriales.html`, con Horno Mic, Horno Metalar y Horno SM.
-
-**Otras páginas**: `index.html` (inicio), `empresa.html`, `fabricaciones-a-medida.html` (calefactor de inmersión, batería de calentamiento de aire, resistencias abrazaderas, sensores de temperatura, detectores de nivel), `nuevos-productos.html`, `contacto/contacto.html`, `mapa-web.html`, `privacidad.html`, `cookies.html`, y la landing de Asturias `oviedo/`.
-
-El listado completo de productos de cada página está en el [anexo 12.3](#123-productos-por-página).
+El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/arquitectura.md), y los productos de cada página en el [anexo 13.2](#132-productos-por-página). En total hay **266 productos** en /legacy.
 
 ---
 
 ## 2. Objetivo y restricciones técnicas
 
 - **Renovación completa** con diseño moderno, minimalista y profesional, 100 % responsive y *mobile-first*.
-- **Lo que se sube al servidor es SOLO HTML + CSS + JavaScript vanilla.** Sin CMS, sin frameworks (nada de React, Vue, Tailwind ni Bootstrap) y sin dependencias en el navegador: ni CDN, ni Google Fonts remotas, ni jQuery.
-- **Generador mínimo `build.js`** (Node, **sin dependencias npm**: solo módulos nativos como `fs` y `path`). Combina `/src/templates` + `/src/partials` + `/data` + `/content` + `/assets` y escribe HTML estático en `/dist`.
+- **Lo que se sube al servidor es SOLO HTML + CSS + JavaScript vanilla** (más `.htaccess`, PDF, imágenes y fuentes). Sin CMS, sin frameworks (nada de React, Vue, Tailwind ni Bootstrap) y sin dependencias en el navegador: ni CDN, ni Google Fonts remotas, ni jQuery, ni scripts de terceros.
+  - Única excepción posible: el procesado del formulario. Si el cliente elige procesarlo en su hosting, habrá **un único script PHP** de envío. Esa excepción se aprueba y se anota aquí antes de escribirlo ([POR VERIFICAR], sección 12).
+- **Generador mínimo `build.js`** (Node ≥ 18, **sin dependencias npm**: solo `fs`, `path` y otros módulos nativos). Combina `/src`, `/data`, `/content`, `/assets`, `/images` y los PDF de `/docs`, y escribe HTML estático en `/dist`.
   - El menú, las migas de pan y **todos los enlaces salen escritos en el HTML final**. Nunca se inyectan con JS en el navegador, porque el SEO depende de ello.
-  - El JS del navegador solo sirve para mejorar la experiencia (abrir y cerrar el menú, validar el formulario). Con JS desactivado, la web tiene que poder navegarse entera.
+  - El JS del navegador solo mejora la experiencia (abrir y cerrar el menú, validar el formulario). Con JS desactivado, la web se puede navegar entera.
   - Las rutas del HTML generado son **absolutas desde la raíz** (`/assets/css/style.css`, `/images/x.jpg`), porque hay páginas en subcarpetas (`/contacto/`, `/oviedo/`).
-- **Hosting:** el actual, que es Apache: la cabecera `Server: Apache` está comprobada y el formulario actual usa PHP (`contacto/bat/rd-mailform.php`). Las redirecciones van en **`.htaccess`**.
-- **Unificación de dominios:**
-  - `brototermic.com` es el dominio principal.
-  - `www.brototermic.es` (y `brototermic.es`) redirigen con **301** a `https://brototermic.com/oviedo/`, que será la landing propia de la delegación de Asturias. Cada URL del `.es` va a su equivalente: ver `docs/inventario-urls.csv`.
-  - [POR VERIFICAR] Si el `.es` está en el mismo hosting (su `.htaccess`) o hay que redirigirlo desde el DNS o el panel del proveedor.
+  - `build.js` valida lo descrito en [docs/datos.md](docs/datos.md), apartado 6. `node build.js --publicar` falla si queda algún `[POR VERIFICAR`, `(dato externo` o `_borrador` en `/dist`.
+- **Herramientas auxiliares** en `/tools` (Node sin dependencias o shell): script de importación de /legacy a JSON y pruebas de redirecciones. No se publican.
+- **Hosting:** el actual, que es Apache (cabecera `Server: Apache` comprobada; el formulario actual usa PHP: `contacto/bat/rd-mailform.php`). Las redirecciones van en **`.htaccess`** (fuente: `src/.htaccess`).
+- **Unificación de dominios:** `brototermic.com` es el principal. `www.brototermic.es` y `brototermic.es` redirigen con **301** a `https://brototermic.com/oviedo/` (landing propia de la delegación de Asturias), cada URL a su equivalente (ver [docs/redirecciones.csv](docs/redirecciones.csv)).
 
 ---
 
@@ -153,330 +127,154 @@ El listado completo de productos de cada página está en el [anexo 12.3](#123-p
 
 ### 3.1 URLs
 
-- **NO se renombra ni se borra ningún archivo `.html` existente.** Cada página nueva usa EXACTAMENTE el mismo nombre de archivo y la misma ruta que la antigua (p. ej., `/resistencias-tipo-cartucho.html` sigue siendo `/resistencias-tipo-cartucho.html`).
-- Solo cambian las URLs duplicadas, cada una con un **301** a su versión buena:
+- **NO se renombra ni se borra ningún archivo `.html` existente.** Cada página nueva usa EXACTAMENTE el mismo nombre de archivo y la misma ruta que la antigua.
+- **Los PDF se mantienen exactamente con su nombre y su ruta actuales, sin copias.** También los que llevan ñ (`catalogo_cañas_pirometricas_broto-03-02-2015.pdf`) o espacios (`DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf`). En el HTML se enlazan con la URL bien codificada (`ca%C3%B1as`, `%20`). Lo mismo para la imagen `brototermic-convertidor-señal.jpg`.
+- Solo cambian las URLs duplicadas, cada una con su **301** a la versión buena: `/index.html` → `/`, `/contacto.html` → `/contacto/contacto.html`, las páginas antiguas de `/oviedo/` → `/oviedo/` (sus legales → `/privacidad.html` y `/cookies.html`), todo el `.es` → su equivalente en el `.com`, más HTTPS y el host sin www. La lista completa (18 reglas, validadas sin cadenas ni bucles) está en [docs/redirecciones.csv](docs/redirecciones.csv). En la columna `origen`, `*://(www.)dominio` significa «http y https, con y sin www», y `/*` significa «cualquier otra ruta».
+- Reglas del `.htaccess`:
+  - Las reglas específicas van **antes** que las de host y protocolo, y su destino ya es la URL final (`https://brototermic.com/…`). Así ninguna URL encadena dos redirecciones.
+  - `/index.html` y `/oviedo/index.html` se redirigen comprobando `%{THE_REQUEST}`, para no entrar en bucle con `DirectoryIndex`.
+  - Una URL inexistente devuelve 404, nunca una redirección a la portada.
+- **[docs/inventario-urls.csv](docs/inventario-urls.csv) es el control de la migración:** 77 filas (57 MANTENER, 15 REDIRIGIR, 5 NUEVA). Antes de publicar:
+  - cada URL `MANTENER` existe en `/dist`;
+  - cada `REDIRIGIR` tiene su regla, y no queda ningún `[POR VERIFICAR]` en `destino_301`.
 
-| URL antigua | Destino 301 | Estado |
-|---|---|---|
-| `/index.html` | `/` | Decidido |
-| `/contacto.html` | `/contacto/contacto.html` | **[POR VERIFICAR]** en Search Console cuál tiene más tráfico. Provisionalmente se mantiene `/contacto/contacto.html` porque es la que enlaza el menú y la que está en `sitemap.xml`. `/contacto.html` está huérfana: no la enlaza nadie y su formulario no tiene `action`. |
-| `/oviedo/index.html`, `/oviedo/contacto/contacto.html` | `/oviedo/` (nueva landing) | Decidido |
-| `/oviedo/politica-de-privacidad-brototermic-oviedo.html` | `/privacidad.html` | Se redirige a la página equivalente, no a `/oviedo/` |
-| `/oviedo/politica-de-cookies-brototermic-oviedo.html` | `/cookies.html` | Ídem |
-| `/oviedo/docs/*.pdf` | `/docs/` equivalente | Ver CSV |
-| Todas las URLs de `www.brototermic.es` y `brototermic.es` | Su equivalente en `brototermic.com` | Ver CSV |
-| PDF con ñ en el nombre | Se crea una copia sin ñ, que pasa a ser la enlazada. **El original sigue accesible** (no se borra ni se redirige) y se le añade `Link: <…copia…>; rel="canonical"` desde `.htaccess`. | Decidido |
-| Host y protocolo | Una sola versión: HTTPS forzado con **301**. Con o sin www: **[POR VERIFICAR]**. | Ver abajo |
-
-- **Situación actual del host** (comprobado el 2026-10-09): `https://brototermic.com/` y `https://www.brototermic.com/` responden **las dos 200** (contenido duplicado). `http://` redirige a `https://` con un **302** (debería ser 301). `brototermic.es` y `www.brototermic.es` responden las dos 200. El `sitemap.xml` actual usa `https://brototermic.com/` **sin www**, lo que apunta a que la versión preferida es sin www [POR VERIFICAR en Search Console].
-- En el `.htaccess`, las URLs con espacios o ñ se escriben codificadas: `DISPLAYS%20DIGITALES…`, `ca%C3%B1as`. Un mismo archivo responde también con la codificación Latin-1 (`%F1`), y las dos tienen que funcionar.
-- **`docs/inventario-urls.csv` es el control de la migración.** Antes de publicar, cada URL antigua debe estar marcada como `MANTENER` (y existir en `/dist`) o como `REDIRIGIR` (con su destino en `destino_301`). Las URLs que no existían se marcan `NUEVA`. No puede quedar ningún `[POR VERIFICAR]` en la columna `destino_301` el día de publicar.
+  `redirecciones.csv` lleva solo la URL de destino; la duda pendiente, si la hay, va en su columna `motivo`.
 
 ### 3.2 Etiquetas por página
 
-- **Title:** se puede mejorar, pero **conservando SIEMPRE la palabra clave principal del title antiguo** (está en el CSV). Máximo de unos 60 caracteres. Formato: `Producto | Familia | BROTOTERMIC`.
-  - Excepción: si el title antiguo es un error de copia-pega, la palabra clave se toma del H1 antiguo. Casos detectados:
-    - `controldenivel-transductores-magneticos.html` tiene el title de «Sensores de presión». Usar «Transductores magnéticos».
-    - `controltemperatura-accesorios-sondas.html` tiene el title de «Sondas de temperatura». Usar «Accesorios para sondas».
-- **Meta description:** nueva y **única** por página, de **140 a 155 caracteres**. Hoy hay muchas repetidas, vacías (las dos de contacto) o con el mismo texto que el title.
-- **Un solo H1 por página.** Los nombres de producto van en **H2**. (Hoy `nuevos-productos.html` tiene 3 H1 y los productos van en `<div class="txt-1">`).
-- **Eliminar las metas obsoletas:** `keywords`, `revisit-after`, `distribution`, `robots` con valor `all`, `resource-type`, `owner`, `Author`, `Googlebot` redundante y todas las `DC.*` (Dublin Core, `title`, `searchtitle` del `.es`). Tampoco se mantiene el `hreflang` actual, que apunta a `http://www.` y no aporta nada en una web en un solo idioma.
-- **Canonical absoluto** en todas las páginas: `https://<host preferido>/<ruta>`.
-- **`sitemap.xml`** (lo genera `build.js` con todas las URLs `MANTENER`/`NUEVA` que son HTML o PDF) y **`robots.txt`** (hoy da 404 en los dos dominios) con la línea `Sitemap:`.
-- **Enlaces de teléfono con `tel:+34…`, nunca `callto:`** (el `.es` usa `callto:629462642`).
-- **Enlaces de email** con `mailto:`. En `/legacy` hay enlaces rotos del tipo `href="info@brototermic.com"` y `href="www.agpd.es"`, sin protocolo: no se copian.
+Los valores propuestos de todas las páginas están en [docs/plan-paginas.csv](docs/plan-paginas.csv).
+
+- **Title:** conserva SIEMPRE la keyword principal del title antiguo. Máximo 60 caracteres. Formato: `Producto | Familia | BROTOTERMIC`.
+  - Si pasa de 60, o si el nombre del producto ya contiene la familia, se omite la familia: `Producto | BROTOTERMIC`.
+  - Si el title antiguo es un error de copia-pega, la keyword se toma del H1 antiguo y se marca [POR VERIFICAR GSC]. Casos: `controldenivel-transductores-magneticos`, `controltemperatura-accesorios-sondas`.
+- **Meta description:** nueva y **única** por página, de **140 a 155 caracteres**.
+- **Un solo H1 por página.** Los nombres de producto van en **H2**.
+- **Eliminar las metas obsoletas:** `keywords`, `revisit-after`, `distribution`, `robots` con valor `all`, `resource-type`, `owner`, `Author`, `Googlebot`, todas las `DC.*`, `title`/`searchtitle` y el `hreflang` actual.
+- **Canonical absoluto** en todas las páginas: `https://brototermic.com/<ruta>` (sin www, sin `index.html`, sin parámetros).
+- **`sitemap.xml`** (52 páginas + 8 PDF; lo genera `build.js`) y **`robots.txt`** con la línea `Sitemap:`.
+- **Teléfonos con `tel:+34…`, nunca `callto:`. Emails con `mailto:`.** No se copian los enlaces sin protocolo de /legacy (`href="www.agpd.es"`).
 
 ### 3.3 Datos estructurados (JSON-LD)
 
-- **Organization** (en todas las páginas o en el inicio): nombre, `legalName` «BROTOTERMIC, S.L.», `taxID` B01266303, `url`, logo, teléfono, email y `foundingDate` 1982 *(dato del cliente)*.
-- **Dos LocalBusiness**, uno para Vitoria (en inicio y contacto) y otro para Oviedo (en `/oviedo/`), con dirección, teléfono, email y `geo` [POR VERIFICAR coordenadas]. Los horarios no están en `/legacy`: [POR VERIFICAR].
-- **BreadcrumbList** en todas las páginas.
-- **ItemList** con los productos de cada página de categoría (nombre del producto + `url#ancla`).
-- **Nada de `Product` con `offers`**: no hay precios.
-- Todo el schema se valida con la Prueba de resultados enriquecidos o con validator.schema.org antes de dar una página por terminada.
+Especificación completa en [docs/schema.md](docs/schema.md). Resumen:
+- **Organization** completa en el inicio y como referencia en el resto de páginas.
+- **Dos LocalBusiness**: Vitoria en el inicio y en contacto; Oviedo en el inicio, en contacto y en `/oviedo/`.
+- **BreadcrumbList** en todas las páginas **excepto el inicio** (una miga de un solo elemento no aporta nada).
+- **ItemList** de productos en las categorías y de categorías en las familias.
+- **Nada de `Product` ni de `Offer`**: no hay precios.
+- Si un dato no existe, la propiedad se omite. Nunca se rellena con un valor inventado.
 
 ---
 
 ## 4. Contenido
 
-- **Las descripciones de producto existentes SE CONSERVAN.** Solo se corrigen erratas y se mejora el formato (por ejemplo, las especificaciones pasan a tabla o a lista ordenada). **No se reescriben.**
-- **Cada página de categoría lleva una intro NUEVA de 120 a 200 palabras** encima de los productos: aplicaciones, sectores, opción de fabricación a medida y llamada a pedir presupuesto. La intro solo puede mencionar datos técnicos que ya estén en `/legacy` o en los catálogos PDF.
-- **Regla para cualquier IA: está PROHIBIDO inventar especificaciones técnicas** (medidas, IP, temperaturas, potencias, tensiones, certificaciones, homologaciones, materiales, normas). Solo se usan datos presentes en `/legacy` o en los catálogos PDF. Si falta un dato, se deja fuera o se marca [POR VERIFICAR]; no se completa «por lógica».
-- **Idioma:** español de España. Tono técnico, claro y cercano, sin relleno comercial («líderes», «la mejor calidad», etc.) que no aporte información.
-
-### 4.1 Datos que hay que corregir
-
-| Dato | Dónde | Corrección |
-|---|---|---|
-| «más de 35 años», «treinta y cinco años» | `index.html`, `empresa.html` (texto y pie), `www.brototermic.es` y `/oviedo/` (inicio y botón «35 años de experiencia») | Calcular desde 1982 *(dato del cliente)*: en 2026 son 44 años. Preferible una fórmula que no caduque: **«desde 1982»**. |
-| Directiva ATEX **94/9/CE** (derogada; la vigente es **2014/34/UE**) | `resistencias-atex.html` («han de cumplir por obligación con la Directiva Atex 94/9/CE»), `resistencias-mantas-calefactoras.html` («compliance with 94/9/EC», «Atex directive 94/9/EG») | Las frases generales sobre la obligación legal se cambian a 2014/34/UE. **Cuidado:** donde el texto dice que un producto concreto está *certificado* según 94/9/CE, no se cambia la directiva sin comprobarlo en la documentación actual del fabricante [POR VERIFICAR]. Lo mismo para los marcados antiguos «EEx» y las normas EN 50014/EN 50019 (también sustituidas). |
-| CP de Oviedo | `contacto/contacto.html` y `contacto.html` dicen 03011 | **33011** |
-| Año de copyright | Pie de todas las páginas del `.com`: «© 2014» | Año actual, generado por `build.js` |
-| «Nuevos Productos 2021» | H1 de `nuevos-productos.html` | Quitar el año o actualizarlo [POR VERIFICAR con el cliente qué productos siguen siendo nuevos] |
-| `<html lang="es-ES">` / `lang="es"` | Variable | `lang="es-ES"` en todas las páginas |
-
-### 4.2 Erratas encontradas en `/legacy`
-
-| Página | Errata | Corrección |
-|---|---|---|
-| `resistencias-inmersion.html` | «Reistencias con caja conexiones IP-44» | Resistencias |
-| `resistencias-inmersion.html` | «Gama para aguay para aceite» | agua y |
-| `resistencias-tipo-cartucho.html` | «a larga la vida del cartucho» | alarga |
-| `resistencias-tipo-cartucho.html` | «Nikel-Cromo», «Niquel-Cromo», «1400 c.º», «Oxido», «granulometria» | Níquel-cromo, 1400 ºC, Óxido, granulometría |
-| `resistencias-calentamientoaire.html` | «Varias potecias» | potencias |
-| `empresa.html` | «Equipos perféricos», «Estufas y hormos industriales» | periféricos, hornos |
-| `controltemperatura-sondastemperatura.html` | «Temosonda con mango» | Termosonda |
-| `controltemperatura-sondastemperatura.html` | «asilada de masa» | aislada |
-| `controltemperatura-sondastemperatura.html` | «AlSl 316, AlSl 310» (con L minúscula), «lnconel 600», «ArmcoB», «TeflónB» | AISI, Inconel, Armco®, Teflón® (la «B» es un ® mal codificado) |
-| `controltemperatura-termometros.html` | «Termométros» (en title, meta y H1) | Termómetros |
-| `controltemperatura-panelespc-software.html` | «Control de termperatura» (title) | temperatura |
-| `controltemperatura-indicadores-de-procesos.html` | «7segemnetos», «histeresis» | 7 segmentos, histéresis |
-| `controltemperatura-reles-estado-solido.html` | «Mútiples modelos» | Múltiples |
-| `controltemperatura-equipos-de-medicion.html` | «incluído» | incluido |
-| `controltemperatura-termostatos.html` | «interruptor macha-paro» | marcha-paro |
-| `controltemperatura-videoregistradores.html` | La meta incluye «Ventiladores axiales» (copia-pega) | Quitar |
-| `controldenivel-niveles-de-flotador.html` | «no se empela plomo» | emplea |
-| `controldenivel-sensores-de-presion.html` | «Categoria 1/2 D» | Categoría |
-| `equipos-perifericos.html` | «estan provistos», «Punto de rocio», «fibra de vídrio» | están, rocío, vidrio |
-| `nuevos-productos.html` | «Getways DE HubB», archivo «ejemplo-de-aplicacion-iot-didieint.pdf» | Gateways (el nombre del PDF se mantiene: no se renombran URLs) |
-| `www.brototermic.es` / `/oviedo/` | «es un empresa líder» | una empresa |
-| `www.brototermic.es` / `/oviedo/` | Imágenes `brototermic-distribuciones-insdustriales.jpg`, `electticfor-…`, `disibent-…`, `eliwell-Papst-…` | Solo afecta a nombres de archivo internos. Si la imagen se reutiliza, el nombre nuevo se escribe bien. |
-| Varias | Sin tilde: «inmersion», «deposito», «bidon», «estandar», «Modulo», «tuberias», «solido», «presion», «medicion» (en textos visibles) | Con tilde. Ojo: **no** se tocan los nombres de archivo `.html`. |
-
-La lista no es exhaustiva. Al migrar cada página, quien la migre revisa la ortografía del texto que copia.
+- **Las descripciones de producto existentes SE CONSERVAN.** Solo se corrigen erratas y se mejora el formato (especificaciones en tabla o lista). **No se reescriben.**
+- **Cada familia y cada categoría lleva una intro NUEVA de 120 a 200 palabras** encima de los productos, en 4 bloques: qué es y para qué sirve, qué hay en la página, fabricación a medida y llamada a presupuesto. Se redacta con el **prompt estándar** de [docs/plan-contenido.md](docs/plan-contenido.md) y la revisa una persona.
+- **Regla para cualquier IA: está PROHIBIDO inventar especificaciones técnicas** (medidas, IP, temperaturas, potencias, tensiones, certificaciones, homologaciones, materiales, normas, plazos, stock). Solo se usan datos presentes en `/legacy` o en los catálogos PDF. Si falta un dato, se deja fuera o se marca [POR VERIFICAR]; no se completa «por lógica».
+- **Idioma:** español de España. Tono técnico, claro y cercano, **tuteando al lector** (como la web actual). Sin relleno comercial («líderes», «la mejor calidad»…).
+- **Correcciones obligatorias** (detalle y texto propuesto en [docs/plan-contenido.md](docs/plan-contenido.md), apartados 3 y 4):
+  - «más de 35 años» / «treinta y cinco años» → «desde 1982» (dato externo, confirmar con cliente).
+  - **ATEX:** solo se actualizan las menciones **genéricas** a la normativa (la 94/9/CE fue sustituida por la 2014/34/UE). **Ninguna referencia a la certificación de un producto se cambia sin confirmación del cliente.**
+  - CP de Oviedo: 33011.
+  - © 2014 → año actual.
+  - «Nuevos Productos 2021» → «Nuevos productos».
+  - Las erratas listadas en ese documento.
+  - Las referencias legales obsoletas (código de inscripción en la AEPD, `www.agpd.es`, cookies de redes sociales que no existen), con revisión legal recomendada.
 
 ---
 
 ## 5. Imágenes
 
-- **Se mantienen las imágenes existentes.** Las que ya posicionan conservan el **mismo nombre base**. El inventario completo, con el alt actual y las páginas donde se usa cada una, está en `docs/inventario-imagenes.csv`.
-- **Ruta pública:** las imágenes de contenido se publican en **`/images/`** (la misma ruta que hoy, `https://brototermic.com/images/<nombre>.jpg`), para no perder la URL que ya conoce Google Imágenes. En el repo viven en `/assets/img/`, y `build.js` las copia a `/dist/images/`.
-- **Formatos:** WebP en dos anchos (**480 y 960 px**: `<nombre>-480.webp`, `<nombre>-960.webp`) y el **JPG original como respaldo** (`<nombre>.jpg`), con `<picture>` + `srcset`.
-- Todas las `<img>` llevan **`width` y `height`**, **`loading="lazy"` excepto la imagen principal (hero)**, que lleva `fetchpriority="high"`, y un **`alt` descriptivo real** (qué producto es y qué se ve). Nada de alts genéricos con el nombre de la empresa del tipo «… BROTOTERMIC, S.L.», que es lo que hay hoy en casi todas.
-- **IA solo para RETOCAR** (fondo, nitidez, ampliación). **Nunca para inventar un producto** ni cambiar su forma. Las imágenes de ambiente o de portada sí pueden generarse, siempre que no muestren un producto concreto como si fuera del catálogo.
-- **Logo y logos de marcas en SVG cuando sea posible.** En `/legacy` **no hay ningún SVG**: el logo es `images/logo.png` (385×89, para fondo oscuro), con versiones `footer-logo.jpg` (152×36) y `logotipo-brototermic-oviedo.png` en el `.es`. Las marcas están en una sola imagen compuesta (`brototermic-marcas-representadas.jpg`) y en JPG sueltos en el `.es`. [POR VERIFICAR] Pedir el logo vectorial al cliente y los logos oficiales a cada marca.
-- **Nombres de archivo nuevos:** minúsculas, con guiones, sin tildes ni ñ (p. ej., `resistencia-cartucho-alta-carga.jpg`). Las imágenes existentes que ya posicionan conservan su nombre aunque no cumplan la regla. Excepción: `brototermic-convertidor-señal.jpg` lleva ñ; se trata igual que los PDF (copia sin ñ y original accesible).
+- **Ruta pública única: `/images/`**, la misma que hoy (`https://brototermic.com/images/<nombre>.jpg`). En el repositorio viven en la carpeta raíz **`/images/`**, y `build.js` las copia tal cual a `/dist/images/`. **Las imágenes nuevas (WebP, retocadas, de ambiente o logos) también van en `/images/`** (los logos de marca, en `/images/marcas/`).
+- **Se mantienen las imágenes existentes con el mismo nombre base**, también las que tienen ñ o mayúsculas.
+- **Formatos:** `<nombre>.jpg` (respaldo, optimizado; si se ha retocado, es la versión retocada), `<nombre>-480.webp` y `<nombre>-960.webp`, servidos con `<picture>` + `srcset`.
+  - Casi todas las fotos de producto de /legacy miden **260 × 168 px**, así que el 480 y el 960 exigen ampliarlas (acción RETOCAR_IA).
+  - Si no da tiempo, se publica temporalmente el WebP al tamaño original (ver el plan de recorte en [docs/tareas.md](docs/tareas.md)).
+- Todas las `<img>` llevan **`width` y `height`**, **`loading="lazy"` excepto la imagen principal (hero)**, que lleva `fetchpriority="high"`, y un **`alt` descriptivo real** (qué producto es y qué se ve), sin «BROTOTERMIC, S.L.». Los alts propuestos están en [docs/plan-imagenes.csv](docs/plan-imagenes.csv) y se revisan con la imagen delante.
+- **IA solo para RETOCAR** (fondo, nitidez, ampliación). **Nunca para inventar un producto** ni cambiar su forma, sus rótulos o su color. Las imágenes de ambiente o de portada sí pueden generarse, siempre que no muestren un producto concreto como si fuera del catálogo.
+- **Logo y logos de marcas en SVG cuando sea posible.** En /legacy no hay ningún SVG: el logo es `images/logo.png` (385 × 89, para fondo oscuro). El SVG se ha pedido al cliente.
+- **Nombres de archivo nuevos:** minúsculas, con guiones, sin tildes ni ñ.
 
 ---
 
 ## 6. Diseño
 
-### 6.1 Colores corporativos (hex EXACTOS extraídos de `/legacy`)
+Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](docs/diseno.md). Reglas fijas:
 
-Se declaran como variables CSS en `:root` con estos valores, sin «ajustarlos».
+- **Colores** (hex exactos de /legacy; uso cerrado en la sección 11):
 
-```css
-:root {
-  /* Azules corporativos */
-  --color-azul-logo: #1d356c;        /* «Broto» del logo (píxeles de images/logo.png) */
-  --color-azul-corporativo: #004c9a; /* barra «Marcas representadas» (.bar-left, style.css) */
-  --color-azul-menu: #004b9a;        /* fondo de los submenús (superfish.css) */
-  --color-azul-oscuro: #004593;      /* sombra de botones */
-  --color-azul-medio: #0081b8;       /* sombra de títulos */
-  --color-azul-slider: #288dbc;      /* sombra del slider */
-  --color-azul-claro: #36afe0;       /* subtítulos .txt-1, enlaces de email, hover */
-  --color-cian-boton: #2dccf0;       /* fondo de botones .button */
-  --color-cian-boton-hover: #63e8f8; /* hover de botones */
-  --color-cian-menu-hover: #48daf4;  /* hover del menú (superfish.css) */
-  --color-azul-palido: #dae9f9;      /* texto sobre azul corporativo */
-  --color-azul-palido-menu: #d3e6f7; /* texto del menú */
-
-  /* Neutros */
-  --color-titulos: #404751;          /* h1–h6 */
-  --color-texto: #989898;            /* texto base del body (ver nota de contraste) */
-  --color-texto-oscuro: #2c2a33;
-  --color-texto-medio: #5e5e5e;
-  --color-gris-pie: #72767c;         /* texto del pie */
-  --color-fondo-pie: #282b2f;        /* fondo del body/pie */
-  --color-fondo-contenido: #f1f1f1;  /* fondo de la zona de contenido */
-  --color-borde: #dadada;
-  --color-borde-2: #e0e0e0;
-  --color-borde-3: #d0d0d0;
-  --color-blanco: #ffffff;
-}
-```
-
-- El degradado de la cabecera actual es una imagen (`images/tail-bg-header.gif`) que va de **#0096c8** a **#004f9c** (valores muestreados de la imagen, no del CSS).
-- Los colores de `www.brototermic.es` (`#3a5a9f`, `#45b0e3`, `#d61119`, `#1783bc`, `#c9484b`…) son de los iconos de redes sociales y de una plantilla genérica: **no son corporativos**.
-
-**Contraste AA (calculado):** los colores se mantienen exactos, pero cada combinación de texto y fondo tiene que cumplir AA (4,5:1 en texto normal, 3:1 en texto grande ≥ 24 px o ≥ 18,66 px en negrita).
-
-| Combinación | Ratio | Uso permitido |
+| Color | Uso permitido | Prohibido |
 |---|---|---|
-| Blanco sobre `#004c9a` / `#004b9a` | 8,4 | Sí: botones principales, cabecera, bloques destacados |
-| Blanco sobre `#1d356c` | 11,8 | Sí |
-| Blanco sobre `#004593` | 9,2 | Sí |
-| `#404751` sobre blanco / `#f1f1f1` | 9,4 / 8,3 | Sí: títulos y **texto de párrafo** |
-| `#5e5e5e` sobre blanco | 6,5 | Sí: texto secundario |
-| `#dae9f9` sobre `#004c9a` | 6,8 | Sí |
-| `#e0e0e0` sobre `#282b2f` | 10,8 | Sí: texto del pie |
-| `#36afe0` sobre `#282b2f` | 5,7 | Sí: enlaces en el pie |
-| `#1d356c` sobre `#2dccf0` | 6,2 | Sí: texto de botón cian |
-| `#004c9a` sobre `#2dccf0` | 4,4 | Solo texto grande |
-| Blanco sobre `#0081b8` | 4,35 | Solo texto grande |
-| `#72767c` sobre `#282b2f` | 3,1 | Solo texto grande (el pie actual no cumple) |
-| `#989898` sobre blanco | 2,9 | **No como texto** (el texto base actual no cumple AA) |
-| `#36afe0` sobre blanco | 2,5 | **No como texto**: solo decorativo (líneas, iconos, bordes) |
-| Blanco sobre `#2dccf0` | 1,9 | **No** (los botones actuales no cumplen) |
+| `#004c9a` | Color principal: botones, enlaces, cabecera. Texto blanco encima (8,40:1). | — |
+| `#1d356c` | Textos destacados, pie y hover del botón primario (blanco encima: 11,81:1) | — |
+| `#36afe0`, `#2dccf0` | **Solo acentos:** líneas, iconos decorativos, estados en hover, foco sobre fondo oscuro | Texto sobre blanco (2,51:1 y 1,91:1) · fondo de botón con texto blanco |
+| `#404751` | **Texto general** (9,38:1 sobre blanco) | — |
+| `#5e5e5e` | Texto secundario (6,48:1) | — |
+| `#72767c` | Bordes de controles de formulario (4,57:1) | — |
+| `#dadada`, `#f1f1f1`, `#dae9f9`, `#ffffff` | Separadores, fondos alternos y bloques CTA | `#dadada` como borde de un control (1,40:1) |
+| `#989898` | **Eliminado como color de texto** (2,88:1) | Texto |
 
-### 6.2 Tipografías (de `/legacy`)
-
-- `brototermic.com`: **Lora** 400/700 (Google Fonts) para los títulos, el menú y los botones, y **Arial, Helvetica, sans-serif** para el texto.
-- `www.brototermic.es`: Roboto, Sarina, Font Awesome 4.3 y Glyphicons (plantilla Bootstrap). **No se reutilizan.**
-- Para la web nueva, la propuesta es mantener **Lora** en los títulos, autoalojada en WOFF2 (sin llamadas a Google), y una pila de sistema para el texto (`system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif`). [POR VERIFICAR decisión de diseño. Si se aprueba, se añade la carpeta `/assets/fonts` a la estructura de la sección 7.]
-
-### 6.3 Estilo y componentes
-
-- Estilo moderno, limpio, industrial y técnico. Mucho espacio en blanco y una jerarquía clara.
-- Componentes:
-  - **Cabecera con megamenú** (familias → subcategorías). En móvil, **acordeón**. Es HTML real, generado por `build.js` y navegable con teclado.
-  - **Tarjeta de producto** (imagen, nombre en H2, modelo, texto, enlace al PDF si lo hay, botón de presupuesto).
-  - **Tabla de especificaciones.**
-  - **Botón de presupuesto** (CTA principal, siempre visible en las fichas).
-  - **Migas de pan.**
-  - **Pie con los datos de las dos sedes.**
-- **Formulario de contacto / presupuesto:** nombre, empresa, email, teléfono, mensaje, adjunto (plano o foto), casilla RGPD (sin marcar por defecto, con enlace a `/privacidad.html`) y **campo trampa (honeypot)** antispam.
-  - Hoy el formulario de `contacto/contacto.html` hace `POST` a `contacto/bat/rd-mailform.php` (responde 200) y usa Google reCAPTCHA v2.
-  - [POR VERIFICAR] Cómo se procesará el envío: con PHP propio en el hosting o con un servicio externo. Un servicio externo con script en el navegador iría contra la regla de cero dependencias.
-- **Rendimiento:** Lighthouse en móvil **≥ 90**, **LCP < 2,5 s**, **una sola hoja CSS**, JS con **`defer`**. Nada de jQuery (hoy se cargan jQuery 3.2.0 y 1.7.1 a la vez). Los mapas no se cargan con la API de Google Maps (hoy lleva una API key en el HTML): se usa un enlace o un iframe de inserción con `loading="lazy"` [POR VERIFICAR decisión].
-- **Accesibilidad:** contraste AA (tabla 6.1), navegable con teclado (foco visible), HTML semántico (`header`, `nav`, `main`, `footer`, listas, tablas con `<th>`), formularios con `<label>`.
+- **Tipografía:** Lora autoalojada (WOFF2, **solo 400 y 700**, en `/assets/fonts/`) para los títulos; el texto, con la pila de fuentes del sistema.
+- **Estilo:** moderno, limpio, industrial y técnico. Mucho espacio en blanco, jerarquía clara y fotografía de producto sobre fondo neutro.
+- **Componentes:** cabecera con megamenú (acordeón en móvil), hero, tarjeta de familia, tarjeta de producto, tabla de especificaciones, botón primario y secundario, migas de pan, CTA de presupuesto, bloque de marcas, bloque de sedes, formulario y pie.
+- **Formulario:** nombre, empresa, email, teléfono, mensaje, adjunto (plano o foto), casilla RGPD y campo trampa antispam. Cómo se procesa: [POR VERIFICAR] (sección 12).
+- **Rendimiento:** Lighthouse en móvil ≥ 90, LCP < 2,5 s, **una sola hoja CSS**, JS con **`defer`** y ninguna petición a terceros.
+- **Accesibilidad:** contraste AA, navegable con teclado y foco visible, HTML semántico y zonas táctiles de al menos 44 px.
 
 ---
 
-## 7. Estructura de carpetas y esquemas de datos
+## 7. Estructura de carpetas y datos
 
 ```
 /
-├── AGENTS.md            ← este archivo (fuente única de verdad)
+├── AGENTS.md            ← este archivo (reglas y decisiones)
 ├── CLAUDE.md            ← solo contiene "@AGENTS.md"
 ├── README.md
 ├── .gitignore
-├── build.js             ← generador (Node, sin dependencias npm) [aún no creado]
-├── legacy/              ← copia de la web actual. SOLO LECTURA, NUNCA se edita
-│   ├── com/brototermic.com/
+├── .gitattributes       ← /legacy se guarda byte a byte; formatos binarios marcados
+├── build.js             ← generador (Node ≥ 18, sin dependencias npm)            [A]
+├── legacy/              ← copia de la web actual. VERSIONADA. SOLO LECTURA, NUNCA se edita
+│   ├── com/brototermic.com/   (incluye contacto.html, oviedo/ y sitemap.xml)
 │   └── es/www.brototermic.es/
-├── src/
-│   ├── templates/       ← plantillas de página (inicio, categoria, pagina, contacto, oviedo…)
-│   └── partials/        ← trozos comunes (head, cabecera+megamenú, pie, migas, cta, schema)
-├── data/
-│   ├── site.json        ← datos de la empresa, sedes, marcas, host preferido
-│   ├── familias.json    ← familias y orden de sus subcategorías (alimenta el megamenú)
-│   └── categorias/
-│       └── <archivo>.json   ← una por página de categoría (title, meta, h1, intro, productos[])
-├── content/             ← textos SEO largos de páginas que no son de categoría
-├── assets/
-│   ├── css/             ← UNA hoja: style.css
-│   ├── js/              ← JS vanilla (menú, formulario)
-│   └── img/             ← imágenes optimizadas (se publican en /images/)
-├── docs/                ← PDF públicos + documentación del proyecto
-│   ├── inventario-urls.csv
-│   └── inventario-imagenes.csv
-└── dist/                ← salida generada por build.js. NO se edita a mano
+├── src/                                                                        [A]
+│   ├── templates/       ← inicio, familia, categoria, servicio, contacto, sede, legal
+│   ├── partials/        ← head, cabecera (megamenú), migas, cta-presupuesto, pie, schema
+│   └── .htaccess        ← redirecciones y configuración Apache (se copia a /dist)
+├── tools/               ← importar-legacy.js, probar-redirecciones.sh (no se publican) [A]
+├── data/                                                                       [B]
+│   ├── site.json        ← empresa, sedes, marcas, catálogos, formulario
+│   ├── familias.json    ← familias, categorías y orden del megamenú
+│   └── categorias/<archivo>.json   ← 39 archivos: title, meta, h1, intro, productos[]
+├── content/             ← textos largos (fragmentos HTML) de inicio, servicio, sede y legales [B]
+├── assets/                                                                     [A]
+│   ├── css/style.css    ← UNA hoja
+│   ├── js/              ← JS vanilla con defer
+│   └── fonts/           ← Lora 400 y 700 en WOFF2
+├── images/              ← TODAS las imágenes públicas (se publican en /images/)      [B]
+├── docs/                ← PDF públicos (/docs/*.pdf) + planificación del proyecto (no se publica) [B: PDF; ambos: planes]
+└── dist/                ← salida generada por build.js. NO se edita a mano. No está en git
 ```
 
 ### Reglas de la estructura
 
-- **`/legacy`**: solo lectura. Es la referencia para los datos y no se toca. Está en `.gitignore` (pesa unos 87 MB). Para tenerla en local, ver el [anexo 12.6](#126-cómo-regenerar-legacy). [POR VERIFICAR] Si conviene versionarla o compartir un ZIP, porque cuando se publique la web nueva la antigua deja de existir y ya no se podrá volver a descargar.
-- **`/data/categorias/<archivo>.json`**: el nombre del JSON es **el nombre del `.html` sin la extensión**. Así, `data/categorias/resistencias-tipo-cartucho.json` genera `/resistencias-tipo-cartucho.html`. Esto garantiza que no cambie ninguna URL.
-- **`/content`**: fragmentos HTML (`<slug>.html`, sin `<html>` ni `<head>`) con el texto largo de inicio, empresa, fabricaciones a medida, nuevos productos, oviedo y legales. Se usa HTML y no Markdown para no necesitar un conversor (cero dependencias).
-- **`/docs`**: dos usos, porque las URLs públicas de los PDF son `/docs/<nombre>.pdf`.
-  - `build.js` copia a `/dist/docs/` **solo los `.pdf`**, con su nombre exacto.
-  - Los `.csv` y `.md` de documentación del proyecto **no se publican**.
-- **`/dist`**: lo que se sube por FTP. Está en `.gitignore`; se regenera con `node build.js`. Contiene los `.html` (en la raíz, `/contacto/` y `/oviedo/`), `/assets/css/style.css`, `/assets/js/*.js`, `/images/`, `/docs/*.pdf`, `sitemap.xml`, `robots.txt` y `.htaccess`.
+- **`/legacy` está versionada en git** (se añadió en un commit propio) para que las dos personas trabajen con los mismos datos aunque la web antigua desaparezca. Solo lectura. El [anexo 13.4](#134-cómo-se-descargó-legacy) explica cómo se descargó.
+- **`data/categorias/<archivo>.json`**: el nombre es el del `.html` sin extensión. Así, `resistencias-tipo-cartucho.json` genera `/resistencias-tipo-cartucho.html`, y ninguna URL puede cambiar.
+- **`/docs`** tiene dos usos, porque la URL pública de los PDF es `/docs/<nombre>.pdf`. `build.js` copia a `/dist/docs/` **solo los `.pdf`**, con su nombre exacto. Los `.md` y `.csv` son planificación y no se publican.
+- **`/dist`** es lo que se sube al servidor: los `.html` (en la raíz, `/contacto/` y `/oviedo/`), `/assets/`, `/images/`, `/docs/*.pdf`, `sitemap.xml`, `robots.txt` y `.htaccess`.
 
-### Esquemas JSON
+### Datos: resumen del contrato
 
-**`data/site.json`** (orientativo):
-```json
-{
-  "razonSocial": "BROTOTERMIC, S.L.",
-  "cif": "B01266303",
-  "fundacion": 1982,
-  "host": "https://brototermic.com",
-  "sedes": [
-    {
-      "id": "vitoria",
-      "nombre": "Sede central — Vitoria-Gasteiz",
-      "direccion": "C/ Pintor Mauro Ortiz de Urbina, 7 bajo",
-      "cp": "01008",
-      "ciudad": "Vitoria-Gasteiz",
-      "provincia": "Álava",
-      "telefono": "945 22 33 31",
-      "tel": "+34945223331",
-      "email": "info@brototermic.com"
-    },
-    {
-      "id": "oviedo",
-      "nombre": "Delegación — Oviedo",
-      "direccion": "Llano Ponte nº 8 bajo",
-      "cp": "33011",
-      "ciudad": "Oviedo",
-      "provincia": "Asturias",
-      "telefono": "629 462 642",
-      "tel": "+34629462642",
-      "email": "brototermic@brototermic.com"
-    }
-  ],
-  "marcas": ["ElectricFor", "Mesel", "Disibeint", "Sanara", "Ebm-Papst", "Eliwell", "Kuhlmann Electro Heat", "Remberg", "Amco"]
-}
-```
-
-**`data/familias.json`**:
-```json
-[
-  {
-    "id": "resistencias-electricas",
-    "nombre": "Resistencias eléctricas",
-    "categorias": ["resistencias-inmersion", "resistencias-calentamientoaire", "…"]
-  }
-]
-```
-
-**`data/categorias/<archivo>.json`**:
-```json
-{
-  "title": "Resistencias tipo cartucho | Resistencias eléctricas | BROTOTERMIC",
-  "meta": "140–155 caracteres, única…",
-  "h1": "Resistencias tipo cartucho",
-  "intro": "<p>Intro nueva de 120–200 palabras…</p>",
-  "productos": [ /* ver esquema de producto */ ]
-}
-```
-
-**Esquema de un producto** (elemento de `productos[]`). El ejemplo es real y está tomado de `resistencias-tipo-cartucho.html`:
-```json
-{
-  "nombre": "Microwatt",
-  "modelo": null,
-  "texto": "Calefactor unipolar con un hilo aislado de masa y el otro a tierra soldado en el fondo. Se puede fabricar a partir de diámetro 4, con un voltaje máximo de 48 V.",
-  "specs": [
-    "Base soldada por TIG estanca hasta una presión de 60 kg/cm2.",
-    "Acero inox. 304 calibrado.",
-    "Óxido de magnesio puro de granulometría controlada.",
-    "Hilo calefactor níquel-cromo 80/20, punto de fusión 1400 ºC.",
-    "Cable conductor."
-  ],
-  "img": "brototermic-cartuchosmicrowatt",
-  "alt": "Resistencia de cartucho Microwatt con cable conductor de salida",
-  "pdf": "/docs/Acabados-resistencias-cartucho.pdf"
-}
-```
+El esquema exacto (tipos, obligatoriedad, ejemplos y quién rellena cada campo) está en **[docs/datos.md](docs/datos.md)**. Es el contrato entre A y B: A programa contra él y B lo rellena. Esquema de un producto:
 
 | Campo | Tipo | Regla |
 |---|---|---|
-| `nombre` | string | Obligatorio. Se pinta en **H2** y genera el ancla `#slug-del-nombre`. |
-| `modelo` | string \| null | Referencia o modelo tal como aparece en `/legacy` (p. ej., «ENR 003»). `null` si no hay. |
-| `texto` | string | Descripción **original** de `/legacy`, con las erratas corregidas. No se reescribe. |
-| `specs` | array | Dos formas: lista de strings (se pinta como lista ordenada) o lista de objetos `{"campo": "…", "valor": "…"}` (se pinta como tabla). Solo datos de `/legacy` o de los catálogos. `[]` si no hay. |
-| `img` | string | Nombre base **sin extensión** del archivo de `/assets/img`. `build.js` busca `<img>-480.webp`, `<img>-960.webp` y `<img>.jpg`. |
-| `alt` | string | Descripción real de la imagen. Obligatorio si hay `img`. |
-| `pdf` | string \| null | Ruta absoluta del PDF (`/docs/…`) o `null`. |
-
-### Plantillas (propuesta inicial; Persona A puede cambiarla si actualiza esta sección)
-
-- Variables con `{{nombre}}` y partials con `{{> nombre}}`.
-- Partials mínimos: `head`, `cabecera` (con megamenú), `migas`, `cta-presupuesto`, `pie`, `schema`.
-- Plantillas: `inicio`, `categoria`, `pagina` (texto de `/content`), `contacto` y `oviedo`.
+| `nombre` | string | Obligatorio. Va en H2 y genera el ancla. |
+| `modelo` | string \| null | Referencia tal como aparece en /legacy. |
+| `texto` | string (HTML limitado) | Descripción **original** de /legacy, con las erratas corregidas. |
+| `specs` | string[] o `{campo, valor}`[] | Lista o tabla. Solo datos de /legacy o de los catálogos. (`specsNumeradas: true` si la lista remite a números de la imagen). |
+| `img` | string \| null | Nombre base sin extensión de un archivo de `/images/`. |
+| `alt` | string \| null | Descripción real de la imagen. |
+| `pdf` | string \| null | Ruta absoluta del PDF (`/docs/…`). |
 
 ---
 
@@ -484,18 +282,19 @@ Se declaran como variables CSS en `:root` con estos valores, sin «ajustarlos».
 
 | | Persona A (técnica) | Persona B (contenido) |
 |---|---|---|
-| Carpetas | `/src`, `build.js`, `/assets/css`, `/assets/js` | `/data`, `/content`, `/assets/img` |
-| Tareas | SEO técnico (canonical, schema, sitemap, robots), `.htaccess`, rendimiento, accesibilidad, publicación | Textos, intros, migración de productos desde `/legacy`, imágenes optimizadas y alts, `docs/inventario-urls.csv` |
+| Carpetas | `/src`, `build.js`, `/tools`, `/assets` | `/data`, `/content`, `/images`, PDF de `/docs` |
+| Tareas | SEO técnico (canonical, schema, sitemap, robots), `.htaccess`, rendimiento, accesibilidad, publicación | Textos, intros, revisión de productos, imágenes y alts, estado de `plan-paginas.csv` |
 
-- **Ninguna de las dos edita las carpetas de la otra sin avisar.** `AGENTS.md` y `/docs` son compartidos: se avisa antes de tocarlos.
+- **Ninguna de las dos edita las carpetas de la otra sin avisar.** `AGENTS.md` y los planes de `/docs` son compartidos: se avisa antes de tocarlos.
 - **Git:**
   - `main` siempre funciona (`node build.js` termina sin errores).
   - Una rama por tarea: `feat/…`, `content/…`, `fix/…`.
   - Pull request revisada por la otra persona.
-  - Merge 2-3 veces al día para no acumular conflictos.
+  - Merge 2-3 veces al día.
 - **Commits pequeños y en español:** `feat: plantilla de categoría`, `content: intros de resistencias`, `fix: canonical en /oviedo/`.
-- **Toda IA que trabaje en el repo debe leer `AGENTS.md` antes de empezar y respetarlo.** Si una decisión cambia, se actualiza `AGENTS.md` en el mismo commit.
+- **Toda IA que trabaje en el repo debe leer `AGENTS.md` antes de empezar y respetarlo.** Para saber qué hacer: [docs/tareas.md](docs/tareas.md). Para saber cómo son los datos: [docs/datos.md](docs/datos.md). Si una decisión cambia, se actualiza `AGENTS.md` en el mismo commit.
 - Ante la duda, una IA **pregunta o marca [POR VERIFICAR]**; no inventa.
+- **El Día 1 se hace una sola página piloto (`resistencias-inmersion.html`).** Hasta que esté aprobada no se genera ninguna otra.
 
 ---
 
@@ -503,9 +302,9 @@ Se declaran como variables CSS en `:root` con estos valores, sin «ajustarlos».
 
 Una página está lista cuando cumple todo esto:
 
-- [ ] Mantiene su URL (misma ruta y nombre de archivo; `MANTENER` en el CSV).
-- [ ] Tiene title, meta description y H1 revisados (sección 3.2).
-- [ ] Conserva **todos** sus productos (compararla con `/legacy`).
+- [ ] Mantiene su URL (misma ruta y nombre de archivo; `MANTENER` o `NUEVA` en el inventario).
+- [ ] Tiene title, meta y H1 revisados (sección 3.2 y `plan-paginas.csv`).
+- [ ] Conserva **todos** sus productos (`num_productos` de `plan-paginas.csv`).
 - [ ] Las imágenes están optimizadas (WebP 480/960 + JPG) y tienen `alt` real, `width` y `height`.
 - [ ] El schema es válido.
 - [ ] Se ve bien a **360 px, 768 px y 1280 px**.
@@ -515,137 +314,147 @@ Una página está lista cuando cumple todo esto:
 
 ## 10. Prohibido
 
-- Renombrar archivos `.html` existentes.
+- Renombrar archivos `.html` existentes (ni los PDF ni las imágenes indexadas).
 - Editar `/legacy` o `/dist` a mano.
-- Añadir frameworks o librerías (ni en el navegador ni como dependencia npm de `build.js`).
+- Añadir frameworks o librerías (ni en el navegador ni como dependencia npm).
 - Inventar datos técnicos.
 - Borrar contenido indexado sin redirección.
 - Subir credenciales al repositorio (FTP, contraseñas, claves de API, `.env`).
+  - Excepción conocida: `/legacy` contiene, tal como se descargó, la API key de Google Maps (`contacto/contacto.html` del `.com`, de `/oviedo/` y del `.es`) y la *site key* de reCAPTCHA. Son claves de navegador que ya son públicas en la web actual. No se reutilizan, y se recomienda al cliente restringirlas o revocarlas. Si el repositorio se sube a GitHub, su escáner de secretos puede avisar.
 
 ---
 
-## 11. Pendientes [POR VERIFICAR]
+## 11. Decisiones tomadas
 
-1. Accesos a **FTP**, **Search Console** (de los dos dominios) y **DNS del `.es`**.
-2. Si la **delegación de Oviedo sigue activa**.
-3. Cómo se procesará el **formulario** (PHP en el hosting o servicio externo).
-4. **Versión de host preferida** (con o sin www; el `sitemap.xml` actual usa sin www).
-5. Qué contacto se conserva: `/contacto/contacto.html` (propuesta) o `/contacto.html`, según el tráfico en Search Console.
-6. Si `catalogo-resistencias-calefactoras.pdf` (`.es` y `/oviedo/`, 11.485.020 bytes) es el mismo catálogo que `catalogo-Brototermic-resistencias.pdf` (`.com`, 11.489.132 bytes). Los archivos no son idénticos.
-7. **Año de fundación 1982** y dirección exacta «C/ Pintor Mauro Ortiz de Urbina, 7 bajo»: los ha dado el cliente y no aparecen así en `/legacy`.
-8. **Coordenadas** de las dos sedes y **horarios** (para LocalBusiness).
-9. **Logo vectorial (SVG)** y logos oficiales de las marcas.
-10. Qué productos de `nuevos-productos.html` («2021») siguen vigentes.
-11. Si las certificaciones ATEX de cada producto siguen bajo 94/9/CE o ya están bajo 2014/34/UE (documentación del fabricante).
-12. Si se crean **páginas de familia** (hoy las familias del menú tienen `href="#"`). Serían URLs `NUEVA` y habría que añadirlas al CSV.
-13. Tipografía (Lora autoalojada + sistema) y forma de mostrar los mapas.
-14. Cómo se comparte `/legacy` entre las dos personas (ver sección 7).
+| Fecha | Decisión |
+|---|---|
+| 2026-10-09 | **Host canónico:** `https://brototermic.com`, **sin www**, con HTTPS forzado (301). Se revisará si Search Console indica otra cosa. |
+| 2026-10-09 | **Contacto:** se conserva `/contacto/contacto.html`; `/contacto.html` redirige allí con 301. |
+| 2026-10-09 | **Privacidad y cookies del `.es` y de `/oviedo/`:** 301 a `/privacidad.html` y `/cookies.html`. |
+| 2026-10-09 | **4 páginas de familia NUEVAS**, con nombre según el patrón de prefijos actual: `resistencias-electricas.html`, `controltemperatura.html`, `controldenivel.html`, `presionhumedad.html`. Ventilación, equipos periféricos, refrigeración y hornos siguen siendo una sola página («directas»). |
+| 2026-10-09 | **Tipografía:** Lora autoalojada (WOFF2, solo 400 y 700) para los títulos; texto con la pila de fuentes del sistema. |
+| 2026-10-09 | **Colores:** `#004c9a` principal (botones, enlaces, cabecera, texto blanco encima); `#1d356c` textos destacados y pie; `#36afe0` y `#2dccf0` **solo acentos**; texto general **`#404751`** (9,38:1 sobre blanco); se elimina `#989898` para texto. |
+| 2026-10-09 | **Datos externos:** la fundación en 1982 y la dirección completa de Vitoria se usan marcadas como «(dato externo, confirmar con cliente)». |
+| 2026-10-09 | **ATEX:** no se cambia ninguna referencia a la certificación de un producto sin confirmación del cliente; solo se actualizan las menciones genéricas a la normativa. |
+| 2026-10-09 | **Mapa de Oviedo:** se corrige con la dirección real (hoy apunta a Madrid). |
+| 2026-10-09 | **PDF con ñ o espacios:** se mantienen con su nombre y ruta exactos, **sin copias ni canonical**; se enlazan con la URL codificada. Sustituye a la propuesta anterior de copia sin ñ. |
+| 2026-10-09 | **`/legacy` se versiona en git** en un commit propio. |
+| 2026-10-09 | **Imágenes:** la ruta pública es `/images/`, también para las nuevas; desaparece `/assets/img`. |
 
 ---
 
-## 12. Anexos: datos extraídos de /legacy
+## 12. Pendientes [POR VERIFICAR]
 
-### 12.1 Qué contiene /legacy
+Las preguntas al cliente están redactadas en [docs/preguntas-cliente.md](docs/preguntas-cliente.md).
+
+1. Accesos a **FTP**, **Search Console** (de los dos dominios) y **DNS/hosting del `.es`**.
+2. Si la **delegación de Oviedo sigue activa**, sus horarios y los de Vitoria, y la ubicación exacta de las dos sedes.
+3. **Formulario:** cómo se procesa (PHP en el hosting, que exigiría aprobar la excepción de la sección 2, o un servicio externo sin scripts de terceros), a qué email llega, tamaño máximo del adjunto y plazo de respuesta.
+4. Confirmación de los **datos externos**: 1982 y «C/ Pintor Mauro Ortiz de Urbina, 7 bajo».
+5. **Certificaciones ATEX** vigentes de cada producto (94/9/CE o 2014/34/UE).
+6. Qué productos de «Nuevos productos 2021» siguen vigentes y si hay productos descatalogados.
+7. **Catálogo de resistencias vigente:** el del `.es` (`catalogo-resistencias-calefactoras.pdf`) y el del `.com` (`catalogo-Brototermic-resistencias.pdf`) no son idénticos.
+8. **Logo vectorial (SVG)** propio, si el logotipo «BT» de la oficina de Oviedo está vigente, y logos oficiales de las 9 marcas.
+9. **Textos legales:** revisión por el asesor del cliente (referencias obsoletas a la AEPD, cookies y el «grupo BROTOTERMIC»).
+10. Si se quiere **analítica**. Sin ella, y sin mapas incrustados ni reCAPTCHA, la web no necesita banner de cookies.
+11. Keywords marcadas [POR VERIFICAR GSC] en `plan-paginas.csv` (inicio, contacto, empresa, `/oviedo/`, transductores magnéticos, accesorios para sondas).
+12. Qué **provincias limítrofes** se atienden desde Vitoria (para `areaServed`).
+13. **Propuestas de diseño pendientes de aprobar:** página 404 propia y el «Cómo llegar» con un enlace a Google Maps en lugar de un iframe (por rendimiento y cookies).
+14. Entorno de pruebas para el `.htaccess`: un subdominio del hosting o Apache local.
+
+---
+
+## 13. Anexos: datos extraídos de /legacy
+
+### 13.1 Qué contiene /legacy
 
 Descargado con `wget` el 2026-10-09:
-- `legacy/com/brototermic.com/`: todo lo enlazado desde la portada, más lo que estaba publicado pero no enlazado: `contacto.html`, la sección `oviedo/` (copia del `.es`) y `sitemap.xml`.
-- `legacy/es/www.brototermic.es/`: la web del `.es` (4 páginas + 2 PDF).
+- `legacy/com/brototermic.com/`: todo lo enlazado desde la portada, más lo que estaba publicado pero no enlazado: `contacto.html`, la sección `oviedo/` (copia idéntica del `.es`) y `sitemap.xml`.
+- `legacy/es/www.brototermic.es/`: la web del `.es`.
 
-En total hay **56 páginas HTML**: 48 del `.com`, 4 de `/oviedo/` (copias idénticas del `.es`) y 4 del `.es`. También hay **12 URLs de PDF** (8 en `/docs/` del `.com`, 2 en `/oviedo/docs/` y 2 en el `.es`) y unas 300 imágenes de contenido. El detalle está en `docs/inventario-urls.csv` y `docs/inventario-imagenes.csv`.
+En /legacy hay **56 páginas HTML**: 48 del `.com`, 4 de `/oviedo/` y 4 del `.es`. De ellas, **48 se mantienen** en la web nueva (47 del `.com` más `/oviedo/`, que cambia de contenido pero conserva la URL) y el resto se redirige; con las 4 familias nuevas, la web nueva tiene **52 páginas**. Además hay 12 URLs de PDF (8 se mantienen) y unas 300 imágenes de contenido.
 
-### 12.2 PDF
+### 13.2 Productos por página
 
-| URL | Enlazado desde | Nota |
-|---|---|---|
-| `/docs/catalogo-instrumentacion.pdf` | inicio | Idéntico (mismo MD5) al de `/oviedo/docs/` y al del `.es` |
-| `/docs/catalogo-Brototermic-resistencias.pdf` | inicio | Distinto del `catalogo-resistencias-calefactoras.pdf` del `.es` [POR VERIFICAR] |
-| `/docs/Acabados-resistencias-cartucho.pdf` | `resistencias-tipo-cartucho.html` | |
-| `/docs/catalogo_termopares_broto-03-02-2015.pdf` | `controltemperatura-sondastemperatura.html` | |
-| `/docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf` | `controltemperatura-sondastemperatura.html` | **Lleva ñ.** Copia sin ñ: `/docs/catalogo-canas-pirometricas-broto-03-02-2015.pdf` |
-| `/docs/DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf` | `controltemperatura-indicadores-de-procesos.html` | Lleva espacios y mayúsculas; se mantiene tal cual (URL indexada) |
-| `/docs/disibeint.IoT.pdf` | `nuevos-productos.html` | |
-| `/docs/ejemplo-de-aplicacion-iot-didieint.pdf` | `nuevos-productos.html` | «didieint» es una errata del nombre, pero se mantiene (es la URL) |
-| `/oviedo/docs/catalogo-instrumentacion.pdf`, `/oviedo/docs/catalogo-resistencias-calefactoras.pdf` | `/oviedo/` | Se redirigen a `/docs/` |
+Nombres tal como aparecen en /legacy (sin corregir), en el orden de la página:
 
-### 12.3 Productos por página
+- **resistencias-inmersion** (14): Modelos NA, OV, T · Modelos DP, ED, ET · Modelos Gama Europa · Grupo Monobloc · Candelas termo con refractario · Grupos calefactores con bridas · Calentadores al paso · Copa sumergible · Calentadores para líquidos · Calentadores para líquidos agresivos · Sumergidores baños agresivos · Calentadores de inmersión fijos · Resistencias inmersion industria · Reistencias con caja conexiones IP-44
+- **resistencias-calentamientoaire** (14): Resistencias para calentamiento de aire aletadas · Resistencias con racores aire reforzado · Baterías eléctricas (×4) · Conducto cilíndrico · Resistencias para horno y estufa · Resistencias de Nitruro de Boro · Resistencias Espiraladas para Hornos Industriales · Sistemas Resistencias para Tubos Radiantes · Paneles Calefactores · Sistemas Combinados · Aerotermo Industrial ATEX
+- **resistencias-flexibles** (15): Conformables alto rendimiento · Elementos para desescarche · Cable calefactor de silicona · Bipolares de silicona tipo torpedo · Cable calefactor tipo paralelo · Resistencias cobre recocido · Resistencias para compresores · Cintas calefactoras alta temperatura · Cable calefactor aislamiento mineral · Cable calefactor autorregulante · Mangueras calefactoras · Laminares flexibles autoadhesivas · Banda calefactora de silicona, AFBS · Banda calefactora de silicona, AFAFS · Banda de silicona, AFHSSD
+- **resistencias-infrarrojos** (17): Barritas de cuarzo · Monotubulares onda larga 77F · Monotubulares de onda media IRCM · Bitubo de onda media 77P · Emisores de onda corta IRCC · Bitubo de onda corta, modelos 81P · Equipos de calentamiento · Emisores cerámicos infrarrojos OSC / OSP / OSH / BOS · Pantallas de infrarrojos de cuarzo PQ · Infrarrojo compacto IC1003 / IC1013NG / IC1007 / IC1008 / IC1014FM
+- **resistencias-tipo-cartucho** (5): Cartucho alta carga · Cartucho baja carga · Microwatt · Cartuchos con termopar · Cartuchos expan
+- **resistencias-tipo-abrazadera** (7): Soporte de mica sin escafandra · Soporte de mica con escafandra · Cámara protectora de calor · Soporte de cerámica · Sistema hermético latón · Sistema hermético inoxidable · Sistema hermético alta carga
+- **resistencias-planas** (2): Planas soporte de mica · Planas soporte de cerámica
+- **resistencias-calefaccion-industrial** (7): Aerotermo eléctrico ANB · Aerotermo eléctrico RMO · Convectores trifásicos RIS · Convectores monofásicos CIE · Cortinas de aire caliente COR · Pantallas infrarrojos IRC · Pantallas infrarrojos IM
+- **resistencias-atex** (7): Inmersión con tapón roscado RFA · Tapón roscado y vaina RFA-CS · Calentadores de bidón · Convectores zonas clasificadas FAW · Modelos zonas clasificadas FUH · Calefactores para armarios · Aerotermo Industrial ATEX
+- **resistencias-especiales-a-medida** (0): texto corrido y tabla en imagen (`Tabla-fabricacion.jpg`), sin productos con nombre
+- **resistencias-mantas-calefactoras** (7): Mantas calefactoras depósitos IBC · Mantas ATEX depósitos IBC · Mantas calefactoras bidón · Camisa aislante aluminio IBC · Cobertura impermeable deposito IBC · Manta aislante deposito IBC · Mantas calefactoras bidon ATEX
+- **controltemperatura-sondastemperatura** (11): Termosonda en vaina metálica · Termopar cerámico alta temperatura · Termopar propósito general · Termopar bayoneta general · Termopar encamisado · Temosonda con mango · Termosonda con zócalo cerámico · Termorresistencia propósito general · Termorresistencia mineral · Sensores PTC · Sensores NTC
+- **controltemperatura-convertidores** (6): Convertidor señal carril Din Slim · Convertidor señal cabezal · Convertidor Señal carril DIN CV/1 · Convertidor señal Carril Din TXrail · Convertidor carril Termo Iso-Flex · Multiplexores MUX
+- **controltemperatura-cables-compensacion** (3): Cable compensación termopar · Cable termorresistencia · Cable eléctrico alta temperatura
+- **controltemperatura-indicadores-de-procesos** (17): Controlador a microprocesador (×3) · Controlador IC PLUS 902 · Controlador IC PLUS 915 · Controlador carril DIN DR4020-4022 · Controlador EW72 · Controlador WAYTEK MPR48 · Controlador multilazo CMC-99 · Regulador digital RGL · Regulador DIS401 · Controlador IDW961 · Controlador ID PLUS · Modulo adquisición datos Sielco D1 · Indicador Gran formato DG-01 · Indicadores universales ITP1 · Controlador doble lazo RE92
+- **controltemperatura-videoregistradores** (2): Video registrador FUJI · Video registrador OHKURA
+- **controltemperatura-dataloggers** (5): Log-Tag TRIX-8 · Log-Tag HAXO-8 · Log-Tag TREX-8 · Interface LTI para Log-Tag · Datalogger USB OM-EL
+- **controltemperatura-panelespc-software** (2): Panel PC · Software adquisición datos Datacare
+- **controltemperatura-accesorios-sondas** (8): Conectores compensados estandar · Conectores compensados mini · Conectores compensados cerámicos · Paneles para conectores · Conectores RTD · Racores deslizantes de compresión · Cabezales conexión · Vainas y Termopozos
+- **controltemperatura-sensores-infrarrojos** (7): Pistola infrarrojos LASERSIGHT · Pirómetro infrarrojos Serie CS · Pirómetro infrarrojos CS-Micro · Pirómetro infrarrojos CS-Laser · Pirómetro infrarrojos Serie CT-Laser · Cámara termográfica fija Serie PI · Cámara termográfica Serie EXX
+- **controltemperatura-termometros** (8): Termómetro EMPLUS600 · Termómetro electrónico EAS62 · Termómetro batería EWTL · Termómetros bimetálicos · Termómetros orientables · Termómetro a distancia · Termómetro tubería · Termómetro digital portátil
+- **controltemperatura-termostatos** (16): Termostatos estancos · Termostato capilar a distancia · Termostato regulable TR2 · Termostato limitador seguridad LS-1 · Termostato bulbo capilar tripolares · Termostato inmersión TC-2 · Termostato regulable tubería BRC · Termostato líquidos agresivos · Termostato ambiente a distancia · Termostato ambiente mecánico · Termostato ambiente digital · Cronotermostato semanal · Cronotermostato radiofrecuencia · Control telefónico GSM/línea fija · Control telefónico GSM enchufable · Sistemas telecontrol y telemando
+- **controltemperatura-equipos-de-medicion** (2): Calibradores de procesos · Horno de Calibración Portátil
+- **controltemperatura-reles-estado-solido** (4): Gama Celpac · Gama Celpac2G · Gama Okpac · Relés estáticos corriente continua
+- **presionhumedad-sondas-de-humedad** (8): Sonda humedad EWHS-284 · Sonda humedad EWHS-304 · Humedad/Temperatura EWHS-314 · Sonda humedad/temperatura STA-3 · Humedad/temperatura STA-3E · Sonda Humedad ambiente · Sonda Humedad/Temperatura cable · Transmisor Humedad
+- **presionhumedad-sensores-de-presion** (7): Transmisor TPSP22 · Transmisor TPSP41 · Transmisor TPSP42 · Transmisor TPSP 32 · Detector presión PA3060 · Detector presión PN7160 · Transmisor TPSM40
+- **controldenivel-niveles-de-flotador** (6): Sensor flotador INCR · INMR ECO · INMR INOX · INMR-VS · INMR-AMS · INMR HYP
+- **controldenivel-interruptores-magneticos** (13): IMN 40 INOX · IMN 70 INOX · IMN 50 NY V · IMN 50 INOX H · IMN RP INOX · IMN TP INOX · IMN TC INOX · IMN TB PVC · IMN BC INOX · IMN BB PVC · IMN DP INOX · IMN TBEX INOX · IMN MPS
+- **controldenivel-sensores-conductivos** (7): Electrodos NR 1 ½ · Electrodos NRA 1 1/2 · Electrodo NTBI · Electrodo NT · Electrodo NS · Electrodo NP · Electrodo NCPS DB INOX
+- **controldenivel-sensores-capacitivos** (3): Sensor SCR 35 · Sensor SCRR 35 T 43650 · Sensor SCAV TB
+- **controldenivel-transductores-magneticos** (2): TMN 300 TB INOX · TMN 300 DB INOX
+- **controldenivel-sensores-de-presion** (3): Sensor CNM 10 · Sensor CNM 30 · Sensor CNM 20 EX
+- **controldenivel-sensores-de-ultrasonidos** (1): Sensor ultrasonido SNU30P-1
+- **controldenivel-niveles-rotativos** (2): Sensor CNPR-N · Sensor CNPR-D
+- **controldenivel-reles-de-nivel** (9): PNSA-DNSA-SNSA · PNEA-DNEA · PNDA-DNDA · PNGA-DNGA · SNDA · PNWB · PTBA · PNAS · SNIA-SIN
+- **ventilacion** (4): Ventiladores compactos · axiales · centrífugos · tangenciales
+- **equipos-perifericos** (9): Alimentadores · Atemperadores · Caudalímetros · Deshumidificadores · Desincrustadores · Dosificadores · Mezcladores · Filtros magnéticos · Secadores
+- **equiposderefrigeracion-refrigeradores-chillers** (3): Modelo ENR 003 · Modelo ENR 001 · Modelo ENR 038
+- **hornos-industriales** (3): Horno Mic · Horno Metalar · Horno SM
+- **fabricaciones-a-medida** (página de servicio): Calefactor de inmersión · Batería calentamiento aire · Resistencias abrazaderas · Sensores de temperatura · Detectores de nivel
+- **nuevos-productos** (página de servicio): Equipos de refrigeración. CHILLERS · Sensores de nivel. IOT INDUSTRIAL · Calefactores de inmersión ATEX · Multiplexores MUX (repite contenido de otras categorías)
 
-Nombres tal como aparecen en `/legacy` (sin corregir):
+### 13.3 PDF públicos (se mantienen con su nombre exacto)
 
-- **resistencias-inmersion**: Modelos NA, OV, T · Modelos DP, ED, ET · Modelos Gama Europa · Grupo Monobloc · Candelas termo con refractario · Grupos calefactores con bridas · Calentadores al paso · Copa sumergible · Calentadores para líquidos · Calentadores para líquidos agresivos · Sumergidores baños agresivos · Calentadores de inmersión fijos · Resistencias inmersion industria · Reistencias con caja conexiones IP-44
-- **resistencias-calentamientoaire**: Resistencias para calentamiento de aire aletadas · Resistencias con racores aire reforzado · Baterías eléctricas (×4) · Conducto cilíndrico · Resistencias para horno y estufa · Resistencias de Nitruro de Boro · Resistencias Espiraladas para Hornos Industriales · Sistemas Resistencias para Tubos Radiantes · Paneles Calefactores · Sistemas Combinados · Aerotermo Industrial ATEX
-- **resistencias-flexibles**: Conformables alto rendimiento · Elementos para desescarche · Cable calefactor de silicona · Bipolares de silicona tipo torpedo · Cable calefactor tipo paralelo · Resistencias cobre recocido · Resistencias para compresores · Cintas calefactoras alta temperatura · Cable calefactor aislamiento mineral · Cable calefactor autorregulante · Mangueras calefactoras · Laminares flexibles autoadhesivas · Banda calefactora de silicona, AFBS · Banda calefactora de silicona, AFAFS · Banda de silicona, AFHSSD
-- **resistencias-infrarrojos**: Barritas de cuarzo · Monotubulares onda larga 77F · Monotubulares de onda media IRCM · Bitubo de onda media 77P · Emisores de onda corta IRCC · Bitubo de onda corta, modelos 81P · Equipos de calentamiento · Emisores cerámicos infrarrojos OSC / OSP / OSH / BOS · Pantallas de infrarrojos de cuarzo PQ · Infrarrojo compacto IC1003 / IC1013NG / IC1007 / IC1008 / IC1014FM
-- **resistencias-tipo-cartucho**: Cartucho alta carga · Cartucho baja carga · Microwatt · Cartuchos con termopar · Cartuchos expan
-- **resistencias-tipo-abrazadera**: Soporte de mica sin escafandra · Soporte de mica con escafandra · Cámara protectora de calor · Soporte de cerámica · Sistema hermético latón · Sistema hermético inoxidable · Sistema hermético alta carga
-- **resistencias-planas**: Planas soporte de mica · Planas soporte de cerámica
-- **resistencias-calefaccion-industrial**: Aerotermo eléctrico ANB · Aerotermo eléctrico RMO · Convectores trifásicos RIS · Convectores monofásicos CIE · Cortinas de aire caliente COR · Pantallas infrarrojos IRC · Pantallas infrarrojos IM
-- **resistencias-atex**: Inmersión con tapón roscado RFA · Tapón roscado y vaina RFA-CS · Calentadores de bidón · Convectores zonas clasificadas FAW · Modelos zonas clasificadas FUH · Calefactores para armarios · Aerotermo Industrial ATEX
-- **resistencias-especiales-a-medida**: texto corrido, sin productos con nombre
-- **resistencias-mantas-calefactoras**: Mantas calefactoras depósitos IBC · Mantas ATEX depósitos IBC · Mantas calefactoras bidón · Camisa aislante aluminio IBC · Cobertura impermeable depósito IBC · Manta aislante depósito IBC · Mantas calefactoras bidón ATEX
-- **controltemperatura-sondastemperatura**: Termosonda en vaina metálica · Termopar cerámico alta temperatura · Termopar propósito general · Termopar bayoneta general · Termopar encamisado · Temosonda con mango · Termosonda con zócalo cerámico · Termorresistencia propósito general · Termorresistencia mineral · Sensores PTC · Sensores NTC
-- **controltemperatura-convertidores**: Convertidor señal carril Din Slim · Convertidor señal cabezal · Convertidor Señal carril DIN CV/1 · Convertidor señal Carril Din TXrail · Convertidor carril Termo Iso-Flex · Multiplexores MUX
-- **controltemperatura-cables-compensacion**: Cable compensación termopar · Cable termorresistencia · Cable eléctrico alta temperatura
-- **controltemperatura-indicadores-de-procesos**: Controlador a microprocesador (×3) · Controlador IC PLUS 902 · Controlador IC PLUS 915 · Controlador carril DIN DR4020-4022 · Controlador EW72 · Controlador WAYTEK MPR48 · Controlador multilazo CMC-99 · Regulador digital RGL · Regulador DIS401 · Controlador IDW961 · Controlador ID PLUS · Modulo adquisición datos Sielco D1 · Indicador Gran formato DG-01 · Indicadores universales ITP1 · Controlador doble lazo RE92
-- **controltemperatura-videoregistradores**: Video registrador FUJI · Video registrador OHKURA
-- **controltemperatura-dataloggers**: Log-Tag TRIX-8 · Log-Tag HAXO-8 · Log-Tag TREX-8 · Interface LTI para Log-Tag · Datalogger USB OM-EL
-- **controltemperatura-panelespc-software**: Panel PC · Software adquisición datos Datacare
-- **controltemperatura-accesorios-sondas**: Conectores compensados estándar · Conectores compensados mini · Conectores compensados cerámicos · Paneles para conectores · Conectores RTD · Racores deslizantes de compresión · Cabezales conexión · Vainas y Termopozos
-- **controltemperatura-sensores-infrarrojos**: Pistola infrarrojos LASERSIGHT · Pirómetro infrarrojos Serie CS · Pirómetro infrarrojos CS-Micro · Pirómetro infrarrojos CS-Laser · Pirómetro infrarrojos Serie CT-Laser · Cámara termográfica fija Serie PI · Cámara termográfica Serie EXX
-- **controltemperatura-termometros**: Termómetro EMPLUS600 · Termómetro electrónico EAS62 · Termómetro batería EWTL · Termómetros bimetálicos · Termómetros orientables · Termómetro a distancia · Termómetro tubería · Termómetro digital portátil
-- **controltemperatura-termostatos**: Termostatos estancos · Termostato capilar a distancia · Termostato regulable TR2 · Termostato limitador seguridad LS-1 · Termostato bulbo capilar tripolares · Termostato inmersión TC-2 · Termostato regulable tubería BRC · Termostato líquidos agresivos · Termostato ambiente a distancia · Termostato ambiente mecánico · Termostato ambiente digital · Cronotermostato semanal · Cronotermostato radiofrecuencia · Control telefónico GSM/línea fija · Control telefónico GSM enchufable · Sistemas telecontrol y telemando
-- **controltemperatura-equipos-de-medicion**: Calibradores de procesos · Horno de Calibración Portátil
-- **controltemperatura-reles-estado-solido**: Gama Celpac · Gama Celpac2G · Gama Okpac · Relés estáticos corriente continua
-- **presionhumedad-sondas-de-humedad**: Sonda humedad EWHS-284 · Sonda humedad EWHS-304 · Humedad/Temperatura EWHS-314 · Sonda humedad/temperatura STA-3 · Humedad/temperatura STA-3E · Sonda Humedad ambiente · Sonda Humedad/Temperatura cable · Transmisor Humedad
-- **presionhumedad-sensores-de-presion**: Transmisor TPSP22 · Transmisor TPSP41 · Transmisor TPSP42 · Transmisor TPSP 32 · Detector presión PA3060 · Detector presión PN7160 · Transmisor TPSM40
-- **controldenivel-niveles-de-flotador**: Sensor flotador INCR · INMR ECO · INMR INOX · INMR-VS · INMR-AMS · INMR HYP
-- **controldenivel-interruptores-magneticos**: IMN 40 INOX · IMN 70 INOX · IMN 50 NY V · IMN 50 INOX H · IMN RP INOX · IMN TP INOX · IMN TC INOX · IMN TB PVC · IMN BC INOX · IMN BB PVC · IMN DP INOX · IMN TBEX INOX · IMN MPS
-- **controldenivel-sensores-conductivos**: Electrodos NR 1 ½ · Electrodos NRA 1 1/2 · Electrodo NTBI · Electrodo NT · Electrodo NS · Electrodo NP · Electrodo NCPS DB INOX
-- **controldenivel-sensores-capacitivos**: Sensor SCR 35 · Sensor SCRR 35 T 43650 · Sensor SCAV TB
-- **controldenivel-transductores-magneticos**: TMN 300 TB INOX · TMN 300 DB INOX
-- **controldenivel-sensores-de-presion**: Sensor CNM 10 · Sensor CNM 30 · Sensor CNM 20 EX
-- **controldenivel-sensores-de-ultrasonidos**: Sensor ultrasonido SNU30P-1
-- **controldenivel-niveles-rotativos**: Sensor CNPR-N · Sensor CNPR-D
-- **controldenivel-reles-de-nivel**: PNSA-DNSA-SNSA · PNEA-DNEA · PNDA-DNDA · PNGA-DNGA · SNDA · PNWB · PTBA · PNAS · SNIA-SIN
-- **ventilacion**: Ventiladores compactos · axiales · centrífugos · tangenciales
-- **equipos-perifericos**: Alimentadores · Atemperadores · Caudalímetros · Deshumidificadores · Desincrustadores · Dosificadores · Mezcladores · Filtros magnéticos · Secadores
-- **equiposderefrigeracion-refrigeradores-chillers**: Modelo ENR 003 · Modelo ENR 001 · Modelo ENR 038
-- **hornos-industriales**: Horno Mic · Horno Metalar · Horno SM
-- **fabricaciones-a-medida**: Calefactor de inmersión · Batería calentamiento aire · Resistencias abrazaderas · Sensores de temperatura · Detectores de nivel
-- **nuevos-productos**: Equipos de refrigeración. CHILLERS · Sensores de nivel. IOT INDUSTRIAL · Calefactores de inmersión ATEX · Multiplexores MUX
+| URL | Enlazado desde |
+|---|---|
+| `/docs/catalogo-instrumentacion.pdf` | inicio (idéntico, mismo MD5, al de `/oviedo/docs/` y al del `.es`) |
+| `/docs/catalogo-Brototermic-resistencias.pdf` | inicio |
+| `/docs/Acabados-resistencias-cartucho.pdf` | `resistencias-tipo-cartucho.html` |
+| `/docs/catalogo_termopares_broto-03-02-2015.pdf` | `controltemperatura-sondastemperatura.html` |
+| `/docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf` | `controltemperatura-sondastemperatura.html` (enlazar como `catalogo_ca%C3%B1as_…`) |
+| `/docs/DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf` | `controltemperatura-indicadores-de-procesos.html` (enlazar con `%20`) |
+| `/docs/disibeint.IoT.pdf` | `nuevos-productos.html` |
+| `/docs/ejemplo-de-aplicacion-iot-didieint.pdf` | `nuevos-productos.html` (la errata «didieint» forma parte de la URL: se mantiene) |
 
-### 12.4 Problemas técnicos de la web actual (no repetir)
+### 13.4 Cómo se descargó /legacy
 
-- Dos versiones de jQuery cargadas a la vez, `superfish` y `<!--[if lt IE 9]>`.
-- `min-width: 1150px` en el `body`: la web no es responsive.
-- Metas obsoletas en todas las páginas (`keywords`, `revisit-after`, `distribution`, `robots all`, `DC.*`).
-- Ningún canonical y ningún `robots.txt` (404). Las dos versiones del host (con y sin www) responden 200. `http` → `https` con 302.
-- Títulos con «|» sin espacios y H1 que acaban siempre en «. BROTOTERMIC, S.L.».
-- Alts genéricos del tipo «Producto. BROTOTERMIC, S.L.».
-- Decenas de `<br/>` vacíos para maquetar.
-- `callto:` en lugar de `tel:`. Enlaces sin protocolo (`href="www.agpd.es"`, `href="info@brototermic.com"`) que dan 404.
-- Las páginas `contacto/` cargan `contacto/images/logo.png` y `contacto/images/favicon.ico`, que no existen (404).
-- API key de Google Maps y site key de reCAPTCHA en el HTML. No se reutilizan; si hacen falta, se crean claves nuevas restringidas por dominio, y nunca se suben al repo si son secretas.
-- `sitemap.xml` con `lastmod` 2022-06-15 en todas las entradas y URLs repetidas.
-
-### 12.5 Correspondencia de URLs
-
-El control completo está en **`docs/inventario-urls.csv`**:
-- Columnas: `url, title, meta_description, h1, estado, destino_301`.
-- Codificación UTF-8 con BOM y separador coma.
-- Los `title`, `meta_description` y `h1` son los **antiguos**, como referencia para conservar la palabra clave.
-
-### 12.6 Cómo regenerar /legacy
-
-Solo sirve mientras la web antigua siga publicada. En Windows, `wget` se instala con `winget install JernejSimoncic.Wget`.
+Solo como referencia, porque `/legacy` ya está versionada. En Windows, `wget` se instala con `winget install JernejSimoncic.Wget`.
 
 ```bash
 wget --mirror --page-requisites --no-parent --wait=1 --restrict-file-names=nocontrol -P legacy/com https://brototermic.com
 wget --mirror --page-requisites --no-parent --wait=1 --restrict-file-names=nocontrol -P legacy/es https://www.brototermic.es
-# Páginas publicadas pero no enlazadas desde la portada:
+# Publicadas pero no enlazadas desde la portada:
 wget --page-requisites --no-parent --wait=1 --restrict-file-names=nocontrol -P legacy/com https://brototermic.com/contacto.html
 wget --mirror --page-requisites --no-parent --wait=1 --restrict-file-names=nocontrol -P legacy/com https://brototermic.com/oviedo/
 curl -o legacy/com/brototermic.com/sitemap.xml https://brototermic.com/sitemap.xml
-# En Windows, wget codifica mal la ñ: estos dos archivos se bajan aparte
+# En Windows, wget codifica mal la ñ: estos dos archivos se bajaron aparte
 curl -o "legacy/com/brototermic.com/docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf" "https://brototermic.com/docs/catalogo_ca%C3%B1as_pirometricas_broto-03-02-2015.pdf"
 curl -o "legacy/com/brototermic.com/images/brototermic-convertidor-señal.jpg" "https://brototermic.com/images/brototermic-convertidor-se%C3%B1al.jpg"
 ```
+
+### 13.5 Problemas de la web actual que no se deben repetir
+
+- jQuery 3.2.0 y 1.7.1 cargados a la vez, `min-width: 1150px` (no es responsive) y decenas de `<br/>` vacíos para maquetar.
+- Metas obsoletas, ningún canonical y ningún `robots.txt`. Las dos versiones del host responden 200, y `http` → `https` va con un 302.
+- Titles con «|» sin espacios y H1 que acaban siempre en «. BROTOTERMIC, S.L.». Alts genéricos.
+- `callto:` y enlaces sin protocolo que dan 404. Las páginas de `contacto/` piden `contacto/images/logo.png` y `contacto/images/favicon.ico`, que no existen.
+- API key de Google Maps y site key de reCAPTCHA en el HTML. No se reutilizan.
+- `sitemap.xml` con URLs repetidas y `lastmod` 2022-06-15 en todas.
+- `nuevos-productos.html` duplica el contenido de otras categorías (chillers).
