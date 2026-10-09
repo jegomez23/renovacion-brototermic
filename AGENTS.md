@@ -28,6 +28,7 @@
 | [docs/inventario-imagenes.csv](docs/inventario-imagenes.csv) | Todas las imágenes de contenido de /legacy con su alt actual y las páginas donde se usan |
 | [docs/checklist-publicacion.md](docs/checklist-publicacion.md) | Comprobaciones antes y después de publicar, Search Console, copia de seguridad y vuelta atrás |
 | [docs/preguntas-cliente.md](docs/preguntas-cliente.md) | Mensaje único al cliente con todas las preguntas pendientes y el registro de respuestas |
+| [docs/auditoria-seo.md](docs/auditoria-seo.md) | **Auditoría de paridad SEO** /legacy ↔ /dist, una fila por URL (la genera `tools/auditoria-seo.js`: no se edita a mano) |
 | [docs/decisiones.md](docs/decisiones.md) | **Registro detallado de decisiones** (fecha, origen, qué se decide y qué documentos cambian). El resumen sigue en la sección 11 de este archivo |
 
 ---
@@ -145,6 +146,7 @@ El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/a
   - Las reglas específicas van **antes** que las de host y protocolo, y su destino ya es la URL final (`https://brototermic.com/…`). Así ninguna URL encadena dos redirecciones.
   - `/index.html` y `/oviedo/index.html` se redirigen comprobando `%{THE_REQUEST}`, para no entrar en bucle con `DirectoryIndex`.
   - Una URL inexistente devuelve 404, nunca una redirección a la portada.
+- **Auditor de paridad SEO (`node tools/auditoria-seo.js` → [docs/auditoria-seo.md](docs/auditoria-seo.md)):** compara cada URL de /legacy con /dist: URL o 301 válido, title (keyword y «Vitoria»), meta, H1, todos los productos y referencias de modelo, todas las imágenes de contenido (las eliminadas, justificadas en `plan-imagenes.csv`), PDF, enlaces internos, cobertura del texto antiguo (≥ 95 %, frase a frase, aceptando solo las erratas de `plan-contenido.md` §3), canonical, JSON-LD y sitemap. `build.js` lo ejecuta siempre; **en modo publicación, cualquier ERROR detiene el build.** Es la red de seguridad del proyecto: ninguna página se da por buena si el auditor no la deja en OK.
 - **[docs/inventario-urls.csv](docs/inventario-urls.csv) es el control de la migración:** 77 filas (57 MANTENER, 15 REDIRIGIR, 5 NUEVA). Antes de publicar:
   - cada URL `MANTENER` existe en `/dist`;
   - cada `REDIRIGIR` tiene su regla, y no queda ningún `[POR VERIFICAR]` en `destino_301`.
@@ -266,7 +268,9 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── tools/               ← no se publican                                       [A]
 │   ├── validar-plan.js  ← comprueba plan-paginas.csv (title, meta, keyword, «Vitoria»)
 │   ├── servir.js        ← servidor local de /dist (node tools/servir.js → http://localhost:8000)
-│   ├── capturas.js      ← capturas a 360/768/1280 px y comprobaciones (scroll horizontal, consola, terceros)
+│   ├── capturas.js      ← capturas a 320/360/768/1280 px y comprobaciones (scroll horizontal, consola, terceros)
+│   ├── auditoria-seo.js ← auditor de paridad SEO /legacy ↔ /dist (escribe docs/auditoria-seo.md)
+│   ├── lib/legacy.js    ← lectura común de /legacy y de los CSV (importador y auditor)
 │   ├── importar-legacy.js
 │   ├── probar-redirecciones.sh
 │   └── apache-pruebas/  ← Apache en Docker (imagen httpd) para probar el .htaccess en local

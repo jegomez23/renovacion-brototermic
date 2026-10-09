@@ -485,6 +485,8 @@ function modeloCategoria(archivo, { datos, familia }) {
       specsTabla,
       specsLista: specs.length > 0 && !specsTabla && !p.specsNumeradas,
       specsListaNumerada: specs.length > 0 && !specsTabla && Boolean(p.specsNumeradas),
+      // Lista que ya trae su número en el texto («1. Base soldada…», remite a la imagen): sin viñeta, texto literal
+      specsConNumero: specs.length > 0 && !specsTabla && specs.every(s => /^\d+\s*[.)-]/.test(String(s))),
       pdfUrl: p.pdf ? urlPublica(p.pdf) : null,
       // Si el texto original ya enlaza el PDF («Ver Ficha Técnica.»), no se añade un segundo enlace igual
       mostrarPdf: Boolean(p.pdf) && !(p.texto || '').includes(`href="${urlPublica(p.pdf)}"`),

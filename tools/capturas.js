@@ -18,7 +18,12 @@ const path = require('path');
 if (typeof WebSocket === 'undefined') { console.error('Hace falta Node ≥ 22 (WebSocket nativo).'); process.exit(1); }
 
 const args = process.argv.slice(2);
-const RUTA = args.find(a => a.startsWith('/')) || '/resistencias-inmersion.html';
+// La ruta se acepta con o sin barra inicial («pagina.html» o «/pagina.html»). Ojo: Git Bash convierte
+// «/pagina.html» en «C:/Program Files/Git/pagina.html»; por eso se recorta y se avisa.
+const argRuta = args.find((a, i) => !a.startsWith('--') && args[i - 1] !== '--salida');
+let RUTA = argRuta ? argRuta.replace(/^[A-Za-z]:[\\/].*?[\\/]Git[\\/]/i, '/').replace(/\\/g, '/') : '/resistencias-inmersion.html';
+if (!RUTA.startsWith('/')) RUTA = '/' + RUTA;
+if (argRuta && argRuta !== RUTA) console.log(`(ruta interpretada: ${RUTA})`);
 const SALIDA = path.resolve(args.includes('--salida') ? args[args.indexOf('--salida') + 1] : path.join(os.tmpdir(), 'brototermic-capturas'));
 const BASE = process.env.BASE || 'http://localhost:8000';
 const PUERTO = 9333;

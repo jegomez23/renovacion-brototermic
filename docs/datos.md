@@ -9,7 +9,7 @@
 - Archivos JSON en **UTF-8 sin BOM**, indentados con 2 espacios, sin comentarios (JSON estándar).
 - Los nombres de campo van en minúsculas, en español y en camelCase (`nombreCorto`).
 - **Rutas:** siempre absolutas desde la raíz pública (`/images/…`, `/docs/…`, `/resistencias-inmersion.html`).
-- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. `build.js` busca `/images/<img>.jpg` (obligatorio: si falta, da error) y, opcionalmente, `/images/<img>.webp` con las mismas medidas (si existe, lo sirve con `<picture>`). Se usan las imágenes **originales a su tamaño real**, sin ampliar (decisión del HITO-1).
+- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. Si en /legacy la imagen no es JPG (`brototermic-mantas-calefactoras-bidon-brototermic.png`), se conserva su extensión: forma parte de la URL indexada. `build.js` busca `/images/<img>.jpg` (obligatorio: si falta, da error) y, opcionalmente, `/images/<img>.webp` con las mismas medidas (si existe, lo sirve con `<picture>`). Se usan las imágenes **originales a su tamaño real**, sin ampliar (decisión del HITO-1).
 - **Textos con formato (`texto`, `intro`, `cuerpo`):** fragmento HTML con estas etiquetas permitidas: `p`, `strong`, `em`, `br`, `a`, `ul`, `ol`, `li`, `sup`, `sub`, `table`, `thead`, `tbody`, `tr`, `th`, `td`, `caption`. Nada de `style`, `class`, `h1`–`h6` ni `img` (los títulos e imágenes los pone la plantilla). `build.js` avisa si encuentra otra etiqueta.
 - **[POR VERIFICAR]:** si un texto contiene `[POR VERIFICAR` o `(dato externo`, `build.js` lo avisa en el modo normal y **falla** en el modo de publicación (`node build.js --publicar`).
 - **[REVISIÓN CLIENTE]:** solo en los textos legales de `/content`, dentro de un comentario HTML (`<!-- [REVISIÓN CLIENTE] motivo -->`). `build.js` quita los comentarios del HTML final, lista cada marca como aviso y **no bloquea** la publicación.
@@ -136,6 +136,7 @@ Un archivo por página de categoría (**39**). El nombre del archivo es el del `
 | `h1` | string | sí | `"Resistencias para inmersión"` | B |
 | `intro` | string (HTML) | sí | 120-200 palabras, NUEVA (ver [plan-contenido.md](plan-contenido.md)) | B |
 | `cuerpo` | string (HTML) \| null | no | Texto original de /legacy que no es de un producto (p. ej. el texto general de `resistencias-especiales-a-medida` o de `resistencias-atex`, o la tabla transcrita de `Tabla-fabricacion.jpg`). Se pinta entre la intro y los productos. | B |
+| `imagenesCuerpo` | `{img, alt}`[] | no | Imágenes que en /legacy acompañaban al texto general (p. ej. `broto-fabricacion` y `Tabla-fabricacion` en `resistencias-especiales-a-medida`). Se pintan al final de `cuerpo`. Conservan su ruta y su nombre. | B |
 | `documentos` | objeto[] | no | `[{ "titulo": "Acabados de cartuchos", "pdf": "/docs/Acabados-resistencias-cartucho.pdf" }]` | B |
 | `relacionadas` | string[] | no | `["resistencias-atex"]`: enlaces cruzados (ver arquitectura.md, apartado 4) | B |
 | `productos` | objeto[] | sí (puede ser `[]`) | ver apartado 4 | B |

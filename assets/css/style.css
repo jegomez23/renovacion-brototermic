@@ -714,3 +714,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 /* Imágenes del texto general de una categoría (p. ej. el programa de fabricación de las resistencias a medida) */
 .cuerpo__imagen { margin: var(--esp-5) 0; }
 .cuerpo__imagen img { border: 1px solid var(--color-borde); border-radius: var(--radio-m); }
+.specs-lista--con-numero { padding-left: 0; list-style: none; }
+.categoria__productos > .cuerpo { margin-bottom: var(--esp-6); }
+/* Pie: el logo original tiene «Broto» en marino y no se lee sobre #1d356c; va el logo para fondo claro sobre una placa blanca */
+.pie__logo { padding: var(--esp-2) var(--esp-3); border-radius: var(--radio-s); background: var(--color-blanco); }

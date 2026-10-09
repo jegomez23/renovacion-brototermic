@@ -58,3 +58,16 @@
 | Bloque de sectores solo con sectores de /legacy y sin URLs nuevas | No existía | arquitectura.md: regla y tabla de sectores con su página de origen |
 | Corregir los alt de RE92 y de Catálogos | No aplicado | plan-imagenes.csv: RE92 tenía el alt del DG-01 (copia-pega de /legacy); la foto de Catálogos es un cajón de archivador: alt vacío (decorativa) |
 | Accesibilidad: *Disclosure Navigation* del W3C y `prefers-reduced-motion`; probar a 320 px | Aplicado salvo la prueba a 320 px | Se documenta el patrón en diseno.md y AGENTS.md §6; `tools/capturas.js` y la definición de terminado incluyen 320 px |
+
+## D-008 · 2026-10-09 · Catálogo completo y auditor de paridad SEO
+
+- **Origen:** responsable del proyecto (sesión del catálogo). Principio rector: **no perder el posicionamiento actual**.
+- **Decisiones:**
+  - Se crea `tools/auditoria-seo.js` (informe en `docs/auditoria-seo.md`) y `build.js` lo ejecuta; en modo publicación, un ERROR detiene el build.
+  - Las 38 categorías restantes se extraen de /legacy de forma **literal** con `tools/importar-legacy.js`, aplicando solo las erratas de `plan-contenido.md` §3 (más las tildes de «Todas las páginas»). Quedan con `_borrador: true` y con una intro de borrador para la revisión de la Persona B.
+  - El texto que en /legacy está fuera de los productos (introducciones, programa de fabricación, PDF de acabados) se conserva en `cuerpo` y se pinta en la columna principal, antes de los productos; sus imágenes, en `imagenesCuerpo`.
+  - **H1 de `resistencias-especiales-a-medida`:** «Fabricación especial y a medida de resistencias» (el anterior no contenía la keyword «fabricación especial y a medida»).
+  - Los iconos `Pdf_icon.png` se sustituyen por la etiqueta de texto «PDF» (el enlace al PDF se conserva) y los enlaces `href="#"` que envolvían fotos se eliminan (no llevaban a ningún sitio; la foto se conserva).
+  - **Logo del pie:** el logo original tiene «Broto» en marino y no se lee sobre `#1d356c`: el pie usa el logo para fondo claro sobre una placa blanca (`logoFondoOscuro` queda sin uso hasta que haya un SVG en blanco).
+  - Listas de especificaciones que ya traen su número en el texto («1. Base soldada…», remiten a la imagen): se pintan sin viñeta y con el texto literal.
+- **Pendiente de decidir:** la frase de pie propia de cada página antigua (texto de 25 px, ver el informe de la sesión) y la mención genérica a la Directiva 94/9/CE del `cuerpo` de `resistencias-atex` (plan-contenido §4, fila 7: se deja literal hasta que la Persona B la actualice).
