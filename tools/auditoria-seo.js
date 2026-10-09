@@ -14,7 +14,8 @@ const fs = require('fs');
 const path = require('path');
 const L = require('./lib/legacy');
 
-const DIST = path.join(L.RAIZ, 'dist');
+// AUDITORIA_DIST permite auditar una copia (p. ej. para probar el auditor con páginas estropeadas a propósito)
+const DIST = process.env.AUDITORIA_DIST ? path.resolve(process.env.AUDITORIA_DIST) : path.join(L.RAIZ, 'dist');
 const UMBRAL_COBERTURA = 95;   // % mínimo del texto antiguo presente en la página nueva
 const UMBRAL_FRASE = 0.85;     // una frase cuenta como presente si coincide en ≥ 85 % de sus palabras, en orden
 const EXCEPCIONES_VITORIA = new Set(['index.html']); // decisión del HITO-1 (docs/decisiones.md, D-003)
@@ -258,7 +259,10 @@ function auditarPagina(fila, ctx) {
 
   // Cobertura del texto significativo antiguo (sin menú ni pie)
   const cob = cobertura(frasesDe(area), nueva.textoMain);
-  c.texto = { estado: cob.porcentaje >= UMBRAL_COBERTURA ? 'OK' : 'ERROR', texto: `${cob.porcentaje.toFixed(1)} %`, valor: cob.porcentaje, palabras: cob.palabras };
+  // Principio 2: borrar texto indexado NO está permitido. Una sola frase perdida es ERROR aunque la media
+  // de la página siga por encima del umbral (prueba del 2026-10-09: quitar una frase daba OK con el 99 %).
+  const estadoTexto = cob.porcentaje >= UMBRAL_COBERTURA && cob.faltan.length === 0 ? 'OK' : 'ERROR';
+  c.texto = { estado: estadoTexto, texto: `${cob.porcentaje.toFixed(1)} %${cob.faltan.length ? ` · ${cob.faltan.length} frase(s) perdida(s)` : ''}`, valor: cob.porcentaje, palabras: cob.palabras };
   cob.faltan.forEach(f => detalles.push(`Frase antigua no encontrada (${Math.round(f.ratio * 100)} % de coincidencia): «${f.frase}»`));
 
   // Canonical, JSON-LD y sitemap
