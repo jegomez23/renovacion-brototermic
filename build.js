@@ -26,6 +26,11 @@ if (!['piloto', 'publicacion'].includes(MODO)) {
   process.exit(1);
 }
 const PUBLICAR = MODO === 'publicacion';
+const SIN_AUDITORIA = process.argv.includes('--sin-auditoria');
+if (SIN_AUDITORIA && PUBLICAR) {
+  console.error('ERROR  --sin-auditoria no se admite en modo publicación: la auditoría SEO es obligatoria para publicar');
+  process.exit(1);
+}
 
 // =====================================================================
 // 1. Avisos y errores
@@ -1091,15 +1096,21 @@ function main() {
   // Auditoría de paridad SEO contra /legacy (tools/auditoria-seo.js). Primero, sus pruebas de mutación
   // (tools/test-auditor.js): si el auditor no detecta alguna página estropeada a propósito, su resultado no vale y el
   // build falla en CUALQUIER modo. Después, en publicación, cualquier ERROR de la auditoría detiene el build.
-  const prueba = require('./tools/test-auditor.js').ejecutar({ modo: MODO });
-  if (!prueba.ok) prueba.fallos.forEach(f => error(`test-auditor: mutación no detectada: ${f} (el auditor no es fiable)`));
-  console.log(`test-auditor: ${prueba.total - prueba.fallos.length}/${prueba.total} mutaciones detectadas.`);
-  const auditoria = prueba.base;
-  for (const f of auditoria.filas.filter(x => x.estado === 'ERROR')) {
-    const fallos = Object.entries(f.checks).filter(([, c]) => c.estado === 'ERROR').map(([k, c]) => `${k}: ${c.texto}`).join('; ');
-    (PUBLICAR ? error : aviso)(`Auditoría SEO ${f.url} → ${fallos} (detalle: node tools/auditoria-seo.js)`);
+  // --sin-auditoria: SOLO para las reconstrucciones automáticas de npm run dev (la auditoría tarda ~20 s). No se admite
+  // en modo publicación: ahí la auditoría es obligatoria.
+  if (SIN_AUDITORIA) {
+    aviso('Auditoría SEO omitida (reconstrucción rápida de npm run dev): npm run test la pasa completa.');
+  } else {
+    const prueba = require('./tools/test-auditor.js').ejecutar({ modo: MODO });
+    if (!prueba.ok) prueba.fallos.forEach(f => error(`test-auditor: mutación no detectada: ${f} (el auditor no es fiable)`));
+    console.log(`test-auditor: ${prueba.total - prueba.fallos.length}/${prueba.total} mutaciones detectadas.`);
+    const auditoria = prueba.base;
+    for (const f of auditoria.filas.filter(x => x.estado === 'ERROR')) {
+      const fallos = Object.entries(f.checks).filter(([, c]) => c.estado === 'ERROR').map(([k, c]) => `${k}: ${c.texto}`).join('; ');
+      (PUBLICAR ? error : aviso)(`Auditoría SEO ${f.url} → ${fallos} (detalle: node tools/auditoria-seo.js)`);
+    }
+    console.log(`Auditoría SEO: ${auditoria.resumen.OK} OK · ${auditoria.resumen.AVISO} AVISO · ${auditoria.resumen.ERROR} ERROR`);
   }
-  console.log(`Auditoría SEO: ${auditoria.resumen.OK} OK · ${auditoria.resumen.AVISO} AVISO · ${auditoria.resumen.ERROR} ERROR`);
 
   // Resumen
   const faltan = plan.filter(f => !generadas.has(rutaPublica(f.archivo)));

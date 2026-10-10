@@ -5,6 +5,9 @@ legacy-*.log
 dist/
 dist-es/
 
+# Validador W3C local (npm run validar): se descarga aparte, no va en el repositorio
+tools/vnu/
+
 # Configuración del formulario (email de destino…): vive en el servidor, fuera del docroot; nunca en el repo
 config-formulario.php
 src/contacto/config.php
