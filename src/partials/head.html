@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="{{site.idioma}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{pagina.title}}</title>
+<meta name="description" content="{{pagina.meta}}">
+{{#if pagina.noindex}}<meta name="robots" content="noindex">{{else}}<link rel="canonical" href="{{pagina.canonical}}">{{/if}}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="{{site.nombre}}">
+<meta property="og:title" content="{{pagina.title}}">
+<meta property="og:description" content="{{pagina.meta}}">
+{{#unless pagina.noindex}}<meta property="og:url" content="{{pagina.canonical}}">{{/unless}}
+{{#if pagina.ogImagen}}<meta property="og:image" content="{{pagina.ogImagen}}">{{/if}}
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/images/favicon.ico">
+{{! Solo se precarga Lora 700 (la del H1, lo primero que se ve); crossorigin es obligatorio en fuentes aunque sean del mismo dominio }}
+<link rel="preload" href="/assets/fonts/lora-700.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{recursos.css}}">
+{{! Marca que hay JS antes de pintar: evita que el menú se vea desplegado un instante en móvil }}
+<script>document.documentElement.classList.add('js')</script>
+<script src="{{recursos.js}}" defer></script>
+{{> schema}}
+</head>

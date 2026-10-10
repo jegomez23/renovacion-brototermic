@@ -1,0 +1,30 @@
+{
+  "title": "Transductores magnéticos | BROTOTERMIC Vitoria",
+  "meta": "Transductores magnéticos de nivel TMN 300 en inoxidable para una lectura continua del nivel de líquido, para sistemas de 2, 3 o 4 hilos. Presupuesto.",
+  "h1": "Transductores magnéticos",
+  "intro": "<p>Los transductores magnéticos dan una lectura continua del nivel de un líquido: al subir o bajar, el flotador activa o desactiva una sucesión de contactos reed que generan una salida proporcional a la altura del nivel.</p><p>En esta página tienes dos modelos TMN 300 en acero inoxidable AISI 316: el TMN 300 TB INOX, con conexión a proceso por tapón roscado de 2\" G, y el TMN 300 DB INOX, con brida DIN DN 50, entre otras bridas disponibles. Los dos tienen una longitud de 150 a 2500 mm y un flotador cilíndrico de 52 × 52 mm, trabajan de -20 a +100 ºC y hasta 30 kg/cm², y un único modelo permite la conexión en sistemas de 2, 3 o 4 hilos.</p><p>Si solo necesitas detectar uno o varios puntos de nivel, consulta los <a href=\"/controldenivel-interruptores-magneticos.html\">interruptores magnéticos de nivel</a>.</p><p>Para pedir presupuesto, indícanos el líquido, la longitud que necesitas, la conexión a proceso, la temperatura y la presión de trabajo. Puedes adjuntar un plano en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": "<p>Se utilizan para obtener una lectura continua del nivel de líquido. Cuando el flotador sube o baja debido a la acción del líquido, se activan o desactivan respectivamente una sucesión de contactos reed que generan una salida proporcional a la altura del nivel.<br>Un único modelo permita la conexión en sistemas de 2, 3 o 4 hilos.</p>",
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "TMN 300 TB INOX",
+      "modelo": null,
+      "texto": "<p>Conexión a proceso: Tapón roscado. 2\" G. Inox AISI316 (1.4401).<br>Longitud: 150..2500 mm.<br>Flotador: Cilíndrico ø52x52 mm. Inox AISI316 (1.4401).<br>Temperatura de trabajo: -20..+100 ºC.<br>Presión: 30 kg/cm²<br>Conexión eléctrica: Caja de conexiones. PBT.<br>Rango de salida: 4..20 mA, (también versión salida resistiva).<br>Distancia entre contactos: 10 mm. Opcional 5 mm.<br>Tensión de alimentación: VCA, VCC.<br>Protección: IP67<br>. Otros materiales disponibles, como PVC, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-tmn300tb-inox",
+      "alt": "TMN 300 TB INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "TMN 300 DB INOX",
+      "modelo": null,
+      "texto": "<p>Conexión a proceso: Brida DIN. DN 50. Inox AISI316 (otras bridas disponibles).<br>Longitud: 150..2500 mm.<br>Flotador: Cilíndrico ø52x52 mm. Inox AISI316 (1.4401).<br>Temperatura de trabajo: -20..+100 ºC.<br>Presión: 30 kg/cm².<br>Conexión eléctrica: Caja de conexiones. PBT.<br>Rango de salida: 4..20 mA (también versión salida resistiva).<br>Distancia entre contactos: 10 mm. Opcional 5 mm.<br>Tensión de alimentación: VCA, VCC.<br>Protección: IP67.<br>Otros materiales disponibles, como PVC, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-tmn300db-inox",
+      "alt": "TMN 300 DB INOX",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

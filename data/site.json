@@ -1,0 +1,71 @@
+{
+  "nombre": "BROTOTERMIC",
+  "razonSocial": "BROTOTERMIC, S.L.",
+  "cif": "B01266303",
+  "registroMercantil": "Registro Mercantil de Álava, tomo 820, libro 0, folio 14, hoja VI-5952",
+  "fundacion": 1982,
+  "host": "https://brototermic.com",
+  "idioma": "es-ES",
+  "pendientes": ["fundacion", "sedes.vitoria.direccion"],
+  "logo": "/images/logo-claro.png",
+  "logoFondoOscuro": "/images/logo.png",
+  "sedes": [
+    {
+      "id": "vitoria",
+      "nombre": "Sede central — Vitoria-Gasteiz",
+      "direccion": "C/ Pintor Mauro Ortiz de Urbina, 7 bajo",
+      "cp": "01008",
+      "localidad": "Vitoria-Gasteiz",
+      "provincia": "Álava",
+      "pais": "ES",
+      "telefono": "945 22 33 31",
+      "tel": "+34945223331",
+      "email": "info@brototermic.com",
+      "pagina": "/contacto/contacto.html",
+      "mapaUrl": "https://www.google.com/maps/search/?api=1&query=Calle+Pintor+Mauro+Ortiz+de+Urbina+7%2C+01008+Vitoria-Gasteiz",
+      "geo": null,
+      "horario": null,
+      "foto": "brototermic",
+      "alt": "Fachada de la oficina de BROTOTERMIC en Vitoria-Gasteiz"
+    },
+    {
+      "id": "oviedo",
+      "nombre": "Delegación — Oviedo (Asturias)",
+      "direccion": "Llano Ponte nº 8 bajo",
+      "cp": "33011",
+      "localidad": "Oviedo",
+      "provincia": "Asturias",
+      "pais": "ES",
+      "telefono": "629 462 642",
+      "tel": "+34629462642",
+      "email": "brototermic@brototermic.com",
+      "pagina": "/oviedo/",
+      "mapaUrl": "https://www.google.com/maps/search/?api=1&query=Llano+Ponte+8%2C+33011+Oviedo",
+      "geo": null,
+      "horario": null,
+      "foto": "brototermic-oviedo",
+      "alt": "Sala de reuniones y despacho de la delegación de BROTOTERMIC en Oviedo"
+    }
+  ],
+  "marcas": [
+    { "nombre": "ElectricFor", "logo": null },
+    { "nombre": "Mesel", "logo": null },
+    { "nombre": "Disibeint", "logo": null },
+    { "nombre": "Sanara", "logo": null },
+    { "nombre": "Ebm-Papst", "logo": null },
+    { "nombre": "Eliwell", "logo": null },
+    { "nombre": "Kuhlmann Electro Heat", "logo": null },
+    { "nombre": "Remberg", "logo": null },
+    { "nombre": "Amco", "logo": null }
+  ],
+  "catalogos": [
+    { "titulo": "Catálogo de instrumentación", "pdf": "/docs/catalogo-instrumentacion.pdf", "familias": ["controltemperatura", "controldenivel", "presionhumedad"] },
+    { "titulo": "Catálogo de resistencias calefactoras", "pdf": "/docs/catalogo-Brototermic-resistencias.pdf", "familias": ["resistencias-electricas"] }
+  ],
+  "formulario": {
+    "accion": "/contacto/bat/rd-mailform.php",
+    "envioActivo": false,
+    "maxAdjuntoMB": 10,
+    "tiposAdjunto": [".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]
+  }
+}

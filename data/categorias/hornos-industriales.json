@@ -1,0 +1,39 @@
+{
+  "title": "Hornos industriales Mic, Metalar y SM | BROTOTERMIC Vitoria",
+  "meta": "Hornos industriales y hornos mufla eléctricos para tratamiento térmico y microfusión: modelos Mic, Metalar y SM. Consulta y pide presupuesto.",
+  "h1": "Hornos industriales",
+  "intro": "<p>Los hornos industriales de esta página son hornos eléctricos para el tratamiento térmico de piezas: temple, revenido, recocido, sinterizado, esmaltado, soldadura y microfusión.</p><p>El horno Mic es un horno mufla eléctrico con resistencias de hilo Kanthal colocadas en placas refractarias, totalmente ocultas en las paredes laterales y en el suelo, para trabajos de microfusión. Los hornos Metalar tratan piezas hasta 1200 ºC, con calefacción por resistencias eléctricas y revestimiento interior de material refractario. Los hornos SM, de solera móvil (vagoneta) para facilitar la carga y la descarga, están pensados para piezas pesadas o de gran tamaño y se fabrican con 2 acabados y 4 temperaturas máximas diferentes.</p><p>Las resistencias espiraladas para hornos industriales y los paneles calefactores están en <a href=\"/resistencias-calentamientoaire.html\">resistencias para calentamiento de aire</a>.</p><p>Para pedir presupuesto, indícanos el tratamiento térmico que vas a hacer, la temperatura máxima, el tamaño y el peso de las piezas y la producción prevista. Puedes adjuntar un plano o una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Horno Mic",
+      "modelo": null,
+      "texto": "<p>Horno mufla eléctrico para tratamiento térmico.<br>Funcionamiento mediante resistencias de hilo Kanthal colocadas en el interior de placas refractarias totalmente ocultas (en paredes laterales y suelo).<br>Para trabajos de microfusión incluye bandeja de acero refractario con orificio y tubo para licuado y recuperación de ceras. Temperatura máxima 1.050 ºC. Capacidad desde 7 hasta 45 litros.<br>Revestimiento interior en ladrillo refractario y puerta en fibra cerámica.<br>Cuadro de control automático con microprocesador Tecno-piro PR-9T.<br>Normativa CE.<br>Varios modelos en función de su capacidad.</p>",
+      "specs": [],
+      "img": "brototermic-horno-mic",
+      "alt": "Horno Mic",
+      "pdf": null
+    },
+    {
+      "nombre": "Horno Metalar",
+      "modelo": null,
+      "texto": "<p>Diseñados para el tratamiento térmico de piezas hasta 1200ºC (temple, revenido, recocido, soldadura, sinterizado...) Sistema de calefacción mediante resistencias eléctricas. Revestimiento interior en material refractario. Temperatura máxima 1.200 ºC. Bajo demanda podemos proyectar y fabricar hornos de cualquier tamaño (ver pag. de \"metalar especiales\").<br>Puerta de apertura lateral o guillotina, opcionalmente se puede fabricar con diversos tipos de puerta tanto manual como automática.<br>Cuadro de control automático al que es posible incorporar de forma opcional programadores, temporizadores de ciclos, puesta en marcha, registradores de temperatura. Normativa CE.<br>Varios modelos desde 20 hasta 410 litros de capacidad.</p>",
+      "specs": [],
+      "img": "brototermic-horno-metalar",
+      "alt": "Horno Metalar",
+      "pdf": null
+    },
+    {
+      "nombre": "Horno SM",
+      "modelo": null,
+      "texto": "<p>Tratamiento térmico (temple, revenido, sinterizado, esmaltado...) de piezas pesadas o de gran tamaño. La solera móvil (vagoneta) facilita la carga y descarga.<br>Se fabrican con 2 acabados y 4 temperaturas máximas diferentes.<br>Mod. SMR: Está montado con ladrillo refractario. Sus características más destacadas son su robustez y la durabilidad del revestimiento. Temp. máx. 1100ºC-1260ºC-1300ºC;<br>Mod. SMF: Fabricado con fibras cerámicas de alta calidad. Respecto al horno de refractario destaca por un menor consumo eléctrico y una mayor velocidad de calentamiento y enfriamiento. Temp. máx. 1100ºC-1320ºC.<br>Cuadro de control automático con microprocesador de doble zona. Chimenea automática motorizada. Tiro inferior de enfriamiento. Normativa CE.</p>",
+      "specs": [],
+      "img": "brototermic-horno-sm",
+      "alt": "Horno SM",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

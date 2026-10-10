@@ -1,0 +1,146 @@
+# =====================================================================
+# .htaccess de brototermic.com (build.js lo copia a /dist)
+# Fuente de las reglas: docs/redirecciones.csv · Reglas SEO: AGENTS.md §3.1
+#
+# Orden (importa):
+#   1. Reglas específicas del .com y del .es, con destino FINAL (https, sin www): ninguna cadena de 301
+#   2. Cualquier otra URL del .es → 404 (sin comodín de 301 ni contenido duplicado)
+#   3. http → https y www → sin www, conservando la ruta
+#   4. Reescrituras internas (sin redirección): el PDF con ñ pedido en Latin-1 (%F1)
+#
+# Ningún .htaccess se publica sin pasar antes tools/probar-redirecciones.sh contra el Apache de Docker
+# (tools/apache-pruebas). Este archivo se guarda en UTF-8 SIN BOM (lleva una «ñ» en la regla del punto 4).
+# =====================================================================
+
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+AddDefaultCharset utf-8
+
+# Página 404 propia (noindex). En el .es, el 404 por defecto de Apache: los enlaces de /404.html son
+# rutas del .com y desde el host .es llevarían a otro 404.
+ErrorDocument 404 /404.html
+<If "%{HTTP_HOST} =~ /brototermic\.es$/i">
+  ErrorDocument 404 default
+</If>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# ---------- 1a. .com: URLs duplicadas ----------
+# /index.html y /oviedo/index.html: se comprueba %{THE_REQUEST} (lo que pidió el navegador) para no
+# redirigir la subpetición interna de DirectoryIndex, que entraría en bucle.
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s/index\.html[\s?] [NC]
+RewriteRule ^index\.html$ https://brototermic.com/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s/oviedo/index\.html[\s?] [NC]
+RewriteRule ^oviedo/index\.html$ https://brototermic.com/oviedo/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteRule ^contacto\.html$ https://brototermic.com/contacto/contacto.html [R=301,L]
+
+# ---------- 1b. .com: páginas antiguas de /oviedo/ ----------
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteRule ^oviedo/contacto/contacto\.html$ https://brototermic.com/oviedo/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteRule ^oviedo/politica-de-privacidad-brototermic-oviedo\.html$ https://brototermic.com/privacidad.html [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteRule ^oviedo/politica-de-cookies-brototermic-oviedo\.html$ https://brototermic.com/cookies.html [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteRule ^oviedo/docs/catalogo-instrumentacion\.pdf$ https://brototermic.com/docs/catalogo-instrumentacion.pdf [R=301,L]
+
+# Catálogo equivalente: pendiente de que el cliente confirme cuál es el vigente (redirecciones.csv)
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteRule ^oviedo/docs/catalogo-resistencias-calefactoras\.pdf$ https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf [R=301,L]
+
+# ---------- 1c. .es: solo las URLs que existían (inventario-urls.csv) ----------
+# «^(index\.html)?$»: la portada y /index.html (la subpetición de DirectoryIndex va al mismo destino)
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.es$ [NC]
+RewriteRule ^(index\.html)?$ https://brototermic.com/oviedo/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.es$ [NC]
+RewriteRule ^contacto/contacto\.html$ https://brototermic.com/oviedo/ [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.es$ [NC]
+RewriteRule ^politica-de-privacidad-brototermic-oviedo\.html$ https://brototermic.com/privacidad.html [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.es$ [NC]
+RewriteRule ^politica-de-cookies-brototermic-oviedo\.html$ https://brototermic.com/cookies.html [R=301,L]
+
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.es$ [NC]
+RewriteRule ^docs/catalogo-instrumentacion\.pdf$ https://brototermic.com/docs/catalogo-instrumentacion.pdf [R=301,L]
+
+# Catálogo equivalente: pendiente de confirmar el vigente (ver la regla de /oviedo/docs/)
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.es$ [NC]
+RewriteRule ^docs/catalogo-resistencias-calefactoras\.pdf$ https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf [R=301,L]
+
+# ---------- 2. Resto del .es → 404 ----------
+# Ni 301 a ciegas a /oviedo/ (Google lo trataría como «soft 404») ni el contenido del .com con el host .es
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.es$ [NC]
+RewriteRule ^ - [R=404,L]
+
+# ---------- 3. HTTPS y host canónico sin www ----------
+# La ruta se toma de %{THE_REQUEST} para conservar su codificación original (%C3%B1, %20, %F1) y su
+# consulta (?producto=…). NE: no se vuelve a codificar.
+# Si el hosting termina el HTTPS en un proxy y %{HTTPS} nunca vale «on», esta regla entraría en bucle:
+# se cambia la primera condición por «RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]» (checklist §1).
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteCond %{HTTP_HOST} ^(www\.)?brototermic\.com$ [NC]
+RewriteCond %{THE_REQUEST} ^[A-Z]+\s(/\S*)\s
+RewriteRule ^ https://brototermic.com%1 [R=301,L,NE]
+
+# ---------- 4. Reescrituras internas ----------
+# El PDF con ñ también se pedía en Latin-1 (%F1) y respondía 200: se sirve el mismo archivo (sin redirección)
+RewriteRule ^docs/catalogo_ca\xf1as_pirometricas_broto-03-02-2015\.pdf$ docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf [L]
+</IfModule>
+
+# ---------- Tipos MIME ----------
+<IfModule mod_mime.c>
+  AddType font/woff2 .woff2
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
+# ---------- Compresión ----------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json application/ld+json image/svg+xml
+</IfModule>
+
+# ---------- Caché ----------
+# CSS y JS llevan ?v=<hash> en la URL (build.js): se pueden guardar un año. Imágenes, fuentes y PDF, un mes.
+# El HTML se revalida siempre, para que una corrección se vea al momento.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 hour"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/gif "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 month"
+  ExpiresByType image/x-icon "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+  # Seguridad básica: sin dependencias de terceros, así que no rompe nada
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>

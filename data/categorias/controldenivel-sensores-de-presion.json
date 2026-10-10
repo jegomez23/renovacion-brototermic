@@ -1,0 +1,41 @@
+{
+  "title": "Sensores de nivel por presión | BROTOTERMIC Vitoria",
+  "meta": "Sensores de nivel por presión de membrana CNM para productos sólidos de flujo fácil en silos, con membranas opcionales. Consulta modelos y presupuesto.",
+  "h1": "Sensores de nivel por presión",
+  "intro": "<p>Los sensores de nivel por presión controlan el nivel de productos sólidos de flujo fácil en silos a presión atmosférica: cuando el material cubre la membrana, la presión que ejerce la obliga a retroceder y acciona el interruptor alojado en la caja.</p><p>En esta página tienes tres modelos con membrana de nitrilo y salida por microrruptor SPDT: el CNM 10, de dimensiones reducidas y membrana enrasada de 102 mm; el CNM 30, de diseño anticondensación con membrana aflorante de 155 mm, y el CNM 20 EX, de aplicación general y categoría ATEX 1/2 D. Hay membranas opcionales de neopreno, vitón y acero inoxidable.</p><p>Si lo que necesitas es medir la presión de un líquido o de un gas, consulta los <a href=\"/presionhumedad-sensores-de-presion.html\">sensores de presión industriales</a>.</p><p>Para pedir presupuesto, indícanos el producto y su densidad, el tipo de silo, la posición de montaje y si la zona está clasificada ATEX. Puedes adjuntar una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": "<p>Control de nivel de productos sólidos de flujo fácil a presión atmosférica. La membrana del controlador debe estar expuesta al material a controlar. A medida que el material que entra en el silo se amontona y cubre la membrana, la presión que ejerce la obliga a retroceder accionando el interruptor alojado en la caja. Membranas opcionales en Neopreno, Vitón, Acero inoxidable Densidad del producto: 0,3..2,5 t/m³.</p>",
+  "documentos": [],
+  "relacionadas": [
+    "presionhumedad-sensores-de-presion"
+  ],
+  "productos": [
+    {
+      "nombre": "Sensor CNM 10",
+      "modelo": null,
+      "texto": "<p>Dimensiones reducidas.<br>Fabricado en material plástico.<br>Membrana enrasada. ø102 mm. Nitrílico.<br>Salida: Microrruptor SPDT 5A / 250V.<br>Presión de actuación: &gt;8 g.<br>Temperatura de trabajo: -10..+60 ºC.<br>Protección: IP50</p>",
+      "specs": [],
+      "img": "brototermic-sensorcnm10",
+      "alt": "Sensor CNM 10",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor CNM 30",
+      "modelo": null,
+      "texto": "<p>Diseño anticondensación.<br>Fabricado en material plástico reforzado.<br>Membrana aflorante. ø155 mm. Nitrílico.<br>Salida: Microrruptor SPDT 10A / 250V.<br>Presión de actuación: &gt;60 g.<br>Temperatura: -20..+80 ºC.<br>Protección: IP53.</p>",
+      "specs": [],
+      "img": "brototermic-sensorcnm30",
+      "alt": "Sensor CNM 30",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor CNM 20 EX",
+      "modelo": null,
+      "texto": "<p>Aplicación general.<br>Fabricado en material plástico reforzado.<br>Membrana enrasada. ø155 mm. Nitrílico.<br>Salida: Microrruptor SPDT 10A / 250V.<br>Presión de actuación: &gt;60 g.<br>Temperatura: -20..+80 ºC.<br>Protección: IP53.<br>ATEX Grupo II, Categoría 1/2 D (polvo), Zonas 20, 21 y 22.</p>",
+      "specs": [],
+      "img": "brototermic-sensorcnm20ex",
+      "alt": "Sensor CNM 20 EX",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

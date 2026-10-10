@@ -1,0 +1,66 @@
+{
+  "title": "Niveles de flotador | Control de nivel | BROTOTERMIC",
+  "meta": "Sensores de nivel de flotador INCR e INMR para el control de máximo o mínimo nivel en procesos de llenado o vaciado de líquidos. Pide presupuesto.",
+  "h1": "Niveles de flotador",
+  "intro": "<p>Los niveles de flotador controlan el nivel máximo o mínimo en procesos de llenado o vaciado de líquidos: el flotador sigue el nivel y acciona un microrruptor.</p><p>En esta página tienes el sensor INCR de polietileno, de reducidas dimensiones, para aguas limpias; el INMR ECO de polipropileno, para aguas sucias o residuales y fabricado sin plomo ni mercurio; el INMR INOX en AISI 316, para productos químicos y líquidos con temperatura; el INMR-VS omnidireccional, para líquidos especialmente agitados; el INMR-AMS, con certificado ACS para agua potable, y el INMR HYP de Hypalon, para productos químicos o agresivos.</p><p>Si necesitas detectar varios puntos de nivel con un solo sensor, consulta los <a href=\"/controldenivel-interruptores-magneticos.html\">interruptores magnéticos de nivel</a>.</p><p>Para pedir presupuesto, indícanos el líquido y su temperatura, la función que necesitas (máximo o mínimo, llenado o vaciado), la longitud del cable y la carga que debe soportar el microrruptor. Puedes adjuntar una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Sensor flotador INCR",
+      "modelo": null,
+      "texto": "<p>Control máximo o mínimo nivel en un proceso de llenado o vaciado de líquidos.<br>Para aguas limpias<br>Reducidas dimensiones: ø28x157 mm.<br>Diferentes longitudes de cable.<br>Fabricado en Polietileno.<br>Microrruptor conmutado. 4 A / 230 VCA<br>Temperatura trabajo: +60 ºC. 1 kg/cm².<br>Protección IP68</p>",
+      "specs": [],
+      "img": "brototermic-sensor-incr",
+      "alt": "Sensor flotador INCR",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor flotador INMR ECO",
+      "modelo": null,
+      "texto": "<p>Control máximo o mínimo nivel en líquidos.<br>Para aguas sucias o residuales.<br>Ecológico, no se emplea plomo o mercurio en su construcción. <br>Fabricado en Polipropileno.<br>Dimensiones: Ø103x163mm.<br>Microrruptor SPDT 10 A / 250 VCA.<br>Temperatura de trabajo: +60 ºC. 6 kg/cm².<br>Protección P68.</p>",
+      "specs": [],
+      "img": "brototermic-sensor-inmr",
+      "alt": "Sensor flotador INMR ECO",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor flotador INMR INOX",
+      "modelo": null,
+      "texto": "<p>Control máximo o mínimo nivel en un proceso de llenado o vaciado de líquidos.<br>Para productos químicos y líquidos con temperatura.<br>Fabricado en Inox AISI316 (1.4401).<br>Dimensiones: Ø90x140mm.<br>Microrruptor SPDT 10 A / 250 VCA.<br>Temperatura de trabajo: +100ºC. 2 bar.<br>Protección IP68.</p>",
+      "specs": [],
+      "img": "brototermic-sensor-inmr-inox",
+      "alt": "Sensor flotador INMR INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor flotador INMR-VS",
+      "modelo": null,
+      "texto": "<p>Control máximo o mínimo nivel en un proceso de llenado o vaciado de líquidos. Omnidireccional.<br>Para líquidos especialmente agitados.<br>Gran ángulo de trabajo: 165º.<br>Económico, bajo coste.<br>Fabricado en Polipropileno copolímero.<br>Microrruptor SPDT 20 A / 250 VCA.<br>Temperatura de trabajo: +85 ºC. 3,5 kg/cm².<br>Protección IP68.</p>",
+      "specs": [],
+      "img": "brototermic-sensor-inmr-vs",
+      "alt": "Sensor flotador INMR-VS",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor flotador INMR-AMS",
+      "modelo": null,
+      "texto": "<p>Control máximo o mínimo nivel en un proceso de llenado o vaciado de líquidos. Omnidireccional.<br>Uso obligatorio en agua potable (certif. ACS).<br>Gran ángulo de trabajo: 165º.<br>Fabricado en PP especial, certif. ACS.<br>Dimensiones: Ø95x152mm.<br>Microrruptor SPDT 16 A / 250 VCA.<br>Temperatura de trabajo: +85 ºC. 3,5 kg/cm².<br>Protección IP68.</p>",
+      "specs": [],
+      "img": "brototermic-sensor-inmr-ams",
+      "alt": "Sensor flotador INMR-AMS",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor flotador INMR HYP",
+      "modelo": null,
+      "texto": "<p>Control máximo y/o mínimo nivel en un proceso de llenado o vaciado de líquidos. Omnidireccional.<br>Para productos químicos o agresivos.<br>Fabricado en Hypalon.<br>Microrruptor SPDT 16 A / 250 VCA.<br>Temperatura de trabajo: +90 ºC. 4 kg/cm².<br>Protección IP68.</p>",
+      "specs": [],
+      "img": "brototermic-sensor-inmr-hyp",
+      "alt": "Sensor flotador INMR HYP",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

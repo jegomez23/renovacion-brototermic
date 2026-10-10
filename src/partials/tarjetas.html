@@ -1,0 +1,11 @@
+{{! Rejilla de tarjetas (familias en el inicio y en /oviedo/, categorías en las familias). El enlace va en el título
+    y se estira a toda la tarjeta con CSS: así el lector de pantalla solo lee el nombre. La foto es ilustrativa (alt vacío). }}
+<ul class="tarjetas">
+  {{#each pagina.tarjetas}}<li class="tarjeta">
+    {{#if imagen}}<div class="tarjeta__imagen"><picture>{{#if imagen.webp}}<source type="image/webp" srcset="{{imagen.webp}}">{{/if}}<img src="{{imagen.src}}" width="{{imagen.ancho}}" height="{{imagen.alto}}" alt="" loading="lazy" decoding="async"></picture></div>{{/if}}
+    <h3 class="tarjeta__titulo"><a class="tarjeta__enlace" href="{{url}}">{{nombre}}</a></h3>
+    <p class="tarjeta__resumen">{{resumen}}</p>
+    {{#if nota}}<p class="tarjeta__nota">{{nota}}</p>{{/if}}
+  </li>
+  {{/each}}
+</ul>

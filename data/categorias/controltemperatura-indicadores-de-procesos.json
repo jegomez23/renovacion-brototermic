@@ -1,0 +1,167 @@
+{
+  "title": "Controladores e indicadores de proceso | BROTOTERMIC Vitoria",
+  "meta": "Controladores de temperatura a microprocesador PID, reguladores digitales, indicadores universales y de gran formato y módulos de adquisición de datos.",
+  "h1": "Controladores e indicadores de procesos",
+  "intro": "<p>Los controladores e indicadores de procesos regulan y muestran la temperatura, la humedad, la presión y otras magnitudes de un proceso a partir de la señal de sondas como termopares, Pt100, PTC o NTC.</p><p>Aquí tienes los controladores a microprocesador T-100, T-400 y T-900, en formatos 1/16, 1/8 y 1/4 DIN; los controladores Eliwell IC PLUS 902 y 915, DR4020-4022 para carril DIN y EW72; el controlador económico WAYTEK MPR48, el multilazo CMC-99 con pantalla táctil y el de doble lazo RE92. También encontrarás el regulador digital RGL, el indicador-regulador DIS401, los controladores IDW961 e ID PLUS para unidades refrigerantes y estáticas, el módulo de adquisición de datos Sielco D1, el indicador de gran formato DG-01 y los indicadores universales ITP1, con su ficha técnica en PDF.</p><p>Si necesitas conmutar la potencia desde el controlador, consulta los <a href=\"/controltemperatura-reles-estado-solido.html\">relés de estado sólido</a>.</p><p>Para pedir presupuesto, indícanos la magnitud que quieres controlar, el tipo de sensor, el formato de montaje, las salidas y la alimentación. Puedes adjuntar un esquema o una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [
+    "controltemperatura-reles-estado-solido"
+  ],
+  "productos": [
+    {
+      "nombre": "Controlador a microprocesador T-100",
+      "modelo": null,
+      "texto": "<p>Doble display de 4 dígitos c/u. Formato: 48 x 48 x 80 mm (1/16 DIN). Función de autodiagnóstico. Entrada y rango: Configurables (Pt 100, Pt 50, K, J, R, S, 6, E, T, W, PLII, U, L, -10+10 mV, O - 10 mV, O - 50 mV, 10 - 50 mV). Sistema de control: PID/Fuzzy con autotúning. ON/OFF con histéresis ajustable. Relé de control: SPST 1 Alarma (Standard), salida relé SPST. Opcional: 2 Alarmas, salida reles SPST. Alimentación: 85 - 265 V a.c.</p>",
+      "specs": [],
+      "img": "brototermic-controladort100",
+      "alt": "Controlador a microprocesador  T-100",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador a microprocesador T-400",
+      "modelo": null,
+      "texto": "<p>Doble display de 4 dígitos c/u. Formato: 48 x 96 x 80 mm (1/8 DIN). Entrada y rango: Configurables (Pt 100, Pt 50, K, J, R, S, 6, E, T, W, PLII, U, L, -10+10 mV, O - 10 mV, O - 50 mV, 10 - 50 mV). Relé de control: SPDT. Alarma 1: Relé SPDT. Alarma 2: Relé SPST. Sistema de control: PID/Fuzzy con autotúning. ON/OFF con histéresis ajustable. Funcionamiento automático/Manual. Alimentación: 85 - 265 V a.c. Variantes: T-400 Servo: Salida de control: Rele de 3 posiciones para mando de servoválvula. Posicionamiento mediante tiempo de rotación de la válvula. T-400 Program: 2 programas de 8 segmentos encadenables en 1 de 16 segmentos 3 alarmas (fin de programa, fin de segmento, etc...). Posibilidad de dar prioridad al tiempo o a la temperatura. Fin de programa o reinicio.</p>",
+      "specs": [],
+      "img": "brototermic-controladort400",
+      "alt": "Controlador a microprocesador  T-400",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador a microprocesador T-900",
+      "modelo": null,
+      "texto": "<p>Doble display de 4 dígitos c/u. Formato: 96 x 96 x 80 mm (1/4 DIN). Entrada y rango: Configurables (Pt 100, Pt 50, K, J, R, S, 6, E, T, W, PLII, U, L, -10+10 mV, O - 10 mV, O - 50 mV, 10 - 50 mV). Relé de control: SPDT. Alarma 1: Relé SPDT. Alarma 2: Relé SPST. Sistema de control: PID/Fuzzy con autotúning. ON/OFF con histéresis ajustable. Funcionamiento automático/Manual. Indicación del % de potencia entregada, mediante barra de LED.<br>Alimentación: 85 - 265 V a.c. <p></p>",
+      "specs": [],
+      "img": "brototermic-controladort900",
+      "alt": "Controlador a microprocesador  T-900",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador IC PLUS 902",
+      "modelo": null,
+      "texto": "<p>Formato: 74 x 32 x 59 mm Control electrónico de 1 set-point de temperatura, humedad, presión y otras magnitudes. Diferentes modelos según tipo de entrada PTC/NTC, Termopar/PT100, V/I Diversas tensiones de alimentación 12-24V ac/dc, 230V Permite comunicación Modbus.</p>",
+      "specs": [],
+      "img": "brototermic-controladort902",
+      "alt": "Controlador IC PLUS 902",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador IC PLUS 915",
+      "modelo": null,
+      "texto": "<p>Marca Eliwell. Formato: 74 x 32 x 59 mm. Control electrónico de 2 set-point de temperatura, humedad, presión y otras magnitudes. Diferentes modelos según tipo de entrada PTC/NTC, Termopar/PT100, V/I. Diversas tensiones de alimentación 12-24V ac/dc, 230V. Permite comunicación Modbus.</p>",
+      "specs": [],
+      "img": "brototermic-controlador915",
+      "alt": "Controlador IC PLUS 915",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador carril DIN DR4020-4022",
+      "modelo": null,
+      "texto": "<p>Marca Eliwell. Formato: 70x85x61mm. Control industrial para guía DIN con dos salidas para regulación temperatura y procesos. Diferentes modelos según tipo de entrada PTC/NTC, Termopar, PT100, V/I. Diversas tensiones de alimentación 12-24V ac/dc, 230V. Salida analógica según modelo.</p>",
+      "specs": [],
+      "img": "brototermic-controladordr4020",
+      "alt": "Controlador carril DIN DR4020-4022",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador EW72",
+      "modelo": null,
+      "texto": "<p>Marca Eliwell. Formato:72X72X80mm Control industrial para guía DIN con varias salidas para regulación temperatura y procesos, según modelo. Diferentes modelos según tipo de entrada PTC/NTC, Termopar, PT100, V/I. Diversas tensiones de alimentación 12-24V ac/dc, 230V. Salida analógica según modelo.</p>",
+      "specs": [],
+      "img": "brototermic-controladorew72",
+      "alt": "Controlador EW72",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador WAYTEK MPR48",
+      "modelo": null,
+      "texto": "<p>Controlador gama económica. Controlador 48x48 mm (1/16 Din) de un lazo de control. Se caracteriza por su elevada versatilidad y facilidad de configuración. 1 entrada configurable, seleccionable entre TC, K, J, S, R, PT100,PT500, PT1000, Ni100, PTC1K, NTC10K (B 3435K), 0/4..20 mA, 0..10V,0...40mV, Potenciómetro 1...6/160. Kohm, T.A (1024 puntos). Salida configurable como mando (SSR-Relè-V/I), alarma/evento, retransmisión analógica y/o serial. Rango extendido de alimentación de 24 a 230 Volt Ac/Dc con aislamiento galvánico.</p>",
+      "specs": [],
+      "img": "brototermic-controladormpr48",
+      "alt": "Controlador WAYTEK MPR48",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador multilazo CMC-99",
+      "modelo": null,
+      "texto": "<p>Formato 96x96mm, Display táctil LCD de 320X240Pixeles de 3,5\". Amplio espectro de interfaces de comunicaciones (USB, serie, Ethernet, GSM), Hasta 48 entradas analógicas configurables. Algoritmo de control P.I.D. Entradas digitales. Salidas de alarma configurables. Puertos para la conexión directa de teclado, ratón o Pen Drive de almacenamiento de datos, Protocolo RS-485 / ModBus RTU, Memoria interna de 4GB, el equipo es totalmente ampliable mediante módulos externos.<p></p>",
+      "specs": [],
+      "img": "brototermic-controladorcmc99",
+      "alt": "Controlador multilazo CMC-99",
+      "pdf": null
+    },
+    {
+      "nombre": "Regulador digital RGL",
+      "modelo": null,
+      "texto": "<p>Formato: 96 x 96 x 127 mm (1/4 DIN). Alimentación Standard: 110/220 V a.c. 6 24/220V a.c. a determinar.<br>Entrada: Pt 100, J, K, 4/20 mA, 0/10V (3 dígitos) a determinar.<br>Preselección del punto de consigna: Analógica mediante botón con embrague. Indicación del valor medido: LED display. 3 dígitos de 8 mm, color rojo. Salida de control: Relé SPDT. Opcional: Lógica de 0/24 V, analógica 0/10 V o 4/20 mA. Sistema de control: Todo/Nada o PD a determinar. Alarma opcional, salida por relé SPDT.</p>",
+      "specs": [],
+      "img": "brototermic-reguladordigital",
+      "alt": "Regulador digital RGL",
+      "pdf": null
+    },
+    {
+      "nombre": "Regulador DIS401",
+      "modelo": null,
+      "texto": "<p>Indicador-regulador con 2 entradas universales: Termopar, RTD, 0/10V, 0-4/20mA..<br>Salidas de 2 relés+ SSR+analógica+RS485<br>Alimentación universal<br>Funciones: suma, diferencia, media<br>Formato: 48x96<br>Doble display</p>",
+      "specs": [],
+      "img": "brototermic-reguladordis401",
+      "alt": "Regulador DIS401",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador IDW961",
+      "modelo": null,
+      "texto": "<p><strong>Controlador unidades refrigerantes IDW961.</strong><br>Incorporan hasta 3 relés y 2 sondas (según modelo). Sonda NTC incluida. Parámetro Frío/Calor. Descarche eléctrico o inversión ciclo. Tiempos de protección del compresor, así como de Paro / Marcha en caso de sonda rota. Fin descarche por temperatura con tiempo seguridad, ambos programables. Protección frontal: IP65. Instalación: sobre panel, con agujero de montaje 71x29mm (+0,2/-0,1mm)<br>Temperatura de uso: -5...55°C <p></p>",
+      "specs": [],
+      "img": "brototermic-idw961",
+      "alt": "Controlador unidades refrigerantes IDW961",
+      "pdf": null
+    },
+    {
+      "nombre": "Controlador ID PLUS",
+      "modelo": null,
+      "texto": "<p><strong>Controlador unidades estáticas ID PLUS</strong> Controles para unidades estáticas, ventiladas o de calor. Hasta 4 programaciones diferentes de parámetros preconfigurados. Parámetro Frío/Calor. Tipo de sonda admitida: PTC, NTC Y PT1000.<br>Instalación: en panel, con agujero de montaje 71x29mm (+0,2/-0,1mm).<br>Temperatura de uso: -5...55°C. Se conecta a TelevisSystem y ModBus.<br>Nueva Unicard USB/TTL para carga/descarga de parámetros.</p>",
+      "specs": [],
+      "img": "brototermic-idplus971",
+      "alt": "ID PLUS 971",
+      "pdf": null
+    },
+    {
+      "nombre": "Módulo de adquisición de datos Sielco D1",
+      "modelo": null,
+      "texto": "<p>Módulos de entrada salida que permiten la lectura de señales digitales y analógicas, medida de frecuencia, totalizador de pulsos y control on/off de aparatos externos. Todos los módulos están disponibles en carril DIN. La comunicación entre los módulos de entrada /salida y el sistema supervisor se basa en una comunicación serie RS-422/RS-485, con protocolo Modbus (ASCII o RTU). El software WINLOG, nos proporciona el interface para el operario en un entorno Windows para la supervisión en tiempo real.</p>",
+      "specs": [],
+      "img": "brototermic-sielcod1",
+      "alt": "Infrarrojo compacto IC1013NG",
+      "pdf": null
+    },
+    {
+      "nombre": "Indicador Gran formato DG-01",
+      "modelo": null,
+      "texto": "<p>Display de Gran formato para indicación digital de hasta 3 variables a través de puerto RS-485 Modbus con o sin SONDA de Tª y HR.<br>Cumple con la normativa RITE. Ideal para indicación de variables en locales de gran concurrencia de personas según REAL DECRETO 1826/2009 de 27 de Noviembre. <p></p>",
+      "specs": [],
+      "img": "brototermic-indicadordg01",
+      "alt": "Indicador Gran formato DG-01",
+      "pdf": null
+    },
+    {
+      "nombre": "Indicadores universales ITP1",
+      "modelo": null,
+      "texto": "<p>Indicadores digitales programables. Montaje en panel en orificio estándar de 22,5mm. Pantalla programable (4 dígitos, 7 segmentos), posibilidad configuración punto decimal. Entrada 4-20mA <a href=\"/docs/DISPLAYS%20DIGITALES%20PROGRAMABLES%20BROTOTERMIC%20HR.pdf\"><br>Ver Ficha Técnica.</a></p>",
+      "specs": [],
+      "img": "indicadores-universales-itp1-brototermic",
+      "alt": "Indicadores  Universales ITP1",
+      "pdf": "/docs/DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf"
+    },
+    {
+      "nombre": "Controlador doble lazo RE92",
+      "modelo": null,
+      "texto": "<p>RE92 es un avanzado controlador de doble lazo para usos industriales. RE92 puede controlar dos lazos controlados de forma independiente o controlar dos variables en un único elemento. Alimentación universal 85..253Vac/dc. Señal de entrada universal. 6 salidas de relé PID, encendido / apagado, control de tres estados de calefacción-refrigeración y control paso a paso. Comunicación - RS485 (estándar), Ethernet (opcional) y registrador de datos. Pantalla gráfica de 3.5\" a todo color con control de luminosidad.</p>",
+      "specs": [],
+      "img": "controlador-doble-lazo-re92-brototermic",
+      "alt": "Controlador de doble lazo RE92 con pantalla en color que muestra los dos lazos de control",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

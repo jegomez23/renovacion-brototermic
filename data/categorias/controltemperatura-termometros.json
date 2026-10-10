@@ -1,0 +1,84 @@
+{
+  "title": "Termómetros | BROTOTERMIC Vitoria",
+  "meta": "Termómetros electrónicos multientrada y con memoria de máximas y mínimas, bimetálicos, orientables, a distancia, de tubería y digitales portátiles.",
+  "h1": "Termómetros",
+  "intro": "<p>Los termómetros de esta página indican la temperatura en procesos, en tuberías y en cámaras frigoríficas, y también hay modelos portátiles para medir donde haga falta.</p><p>Encontrarás el indicador electrónico multientrada EMPLUS600; el termómetro EAS62, de doble entrada y con memoria de máxima y mínima; el termómetro de batería EWTL, con display LCD y sonda incluida; termómetros bimetálicos de dial y orientables, en acero o en acero inoxidable; el tele-termómetro para cámaras frigoríficas y de refrigeración; el termómetro bimetálico para tuberías y un termómetro digital portátil para termopar tipo K, con un rango de -50 a 1.300 ºC.</p><p>Los termómetros bimetálicos se fabrican también a medida, con distintos diámetros de dial, longitudes de vaina y rangos de temperatura.</p><p>Para pedir presupuesto, indícanos el rango de temperatura, el tipo de montaje, el diámetro del dial o el tipo de sonda y la longitud de la vaina. Puedes adjuntar una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Termómetro EMPLUS600",
+      "modelo": null,
+      "texto": "<p>Termómetro electrónico EMPLUS600<br>Indicador electrónico temperatura (y otras magnitudes)<br>Multientrada: NTC/PTC, termopar, Pt-100, V-I.<br>Formato: 74 x 32 x 59 mm.<br>Alimentación según modelo.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-emplus600",
+      "alt": "Termómetro EMPLUS600 estándar",
+      "pdf": null
+    },
+    {
+      "nombre": "Termómetro electrónico EAS62",
+      "modelo": null,
+      "texto": "<p>Termómetro doble entrada Tª con memoria de máxima y mínima.<br>Entrada: sonda PTC 1 sonda incluida, 2ª sonda opcional.<br>Escala: -40° a 140°C.<br>Alimentación: 230V.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-eas62",
+      "alt": "Termómetro electrónico EAS62",
+      "pdf": null
+    },
+    {
+      "nombre": "Termómetro batería EWTL",
+      "modelo": null,
+      "texto": "<p>Termómetro display LCD de 2 dígitos y ½.<br>Campo visualización: -20.0…70.0°C con D.P.<br>Formato: frontal 48x28'6mm profundidad 13'5mm.<br>Sonda incluida conectado al instrumento con cable de 1'5m.<br>Alimentación: 1 batería de 1'5V LR44 o equivalente.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-ewtl",
+      "alt": "Termómetro batería EWTL",
+      "pdf": null
+    },
+    {
+      "nombre": "Termómetros bimetálicos",
+      "modelo": null,
+      "texto": "<p>Termómetros de Dial construidos en caja de acero y vaina de latón o todo en Inoxidable.<br>Modelos estándar y fabricaciones a medida.<br>Diversos diámetros nominales de dial, longitudes de vaina.<br>Con o sin fijación a proceso mediante racord.<br>Salida radial o dorsal de la vaina.<br>Rangos de Tª desde 0 a 500°C.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-bimetalico",
+      "alt": "Termómetros bimetálicos",
+      "pdf": null
+    },
+    {
+      "nombre": "Termómetros orientables",
+      "modelo": null,
+      "texto": "<p>Termómetros bimetálicos orientables, fabricados en inoxidable con dial orientable.<br>Diversos diámetros nominales de dial, longitudes de vaina.<br>Con o sin fijación a proceso mediante racord.<br>Múltiples de rango de temperatura.<br>Fabricación a medida.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-bimetalico-orientable",
+      "alt": "Termómetros bimetálicos orientables",
+      "pdf": null
+    },
+    {
+      "nombre": "Termómetro a distancia",
+      "modelo": null,
+      "texto": "<p>Tele-termómetro con caja en plástico y cable con sensor bimetálico de 1,5m. <br>Adecuado para su uso en cámaras frigoríficas y de refrigeración.<br>Rangos de Tª de -40 a 40°C y de 0 a 120°C.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-a-distancia",
+      "alt": "Termómetro a distancia",
+      "pdf": null
+    },
+    {
+      "nombre": "Termómetro tubería",
+      "modelo": null,
+      "texto": "<p>Termómetro bimetálico para tuberías.<br>Diámetro de la caja: Ø63mm.<br>Material de la caja: acero cincado.<br>Material del aro: acero inoxidable.<br>Rango temperatura 0+120ºC, 0+200ºC.<br>Sensor: Tira bimetálica.<br>Fijo a la instalación mediante muelle.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-tuberia",
+      "alt": "Termómetro tubería",
+      "pdf": null
+    },
+    {
+      "nombre": "Termómetro digital portátil",
+      "modelo": null,
+      "texto": "<p>Entrada: Termopar tipo K (Modelos con 1 ó 2 entradas) para conector miniatura. <br>Rango de medida: -50 +1.300°C (58 +2000° F). C/F, seleccionable automáticamente. Corrección manual del cero. Funda de protección antichoque. Diversidad de modelos de termopar adaptables. Memorización del valor máximo medido.<br>Pantalla LCD.<br>Alimentación: batería 6F22 9V.</p>",
+      "specs": [],
+      "img": "brototermic-termometro-digital-portatil",
+      "alt": "Termómetro digital portátil",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

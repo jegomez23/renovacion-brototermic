@@ -1,0 +1,71 @@
+{{> head}}
+<body>
+{{> cabecera}}
+<main id="contenido" tabindex="-1">
+  {{> migas}}
+  <div class="contenedor">
+    <header class="pagina-cabecera">
+      <h1>{{pagina.h1}}</h1>
+      <div class="entradilla">{{{pagina.intro}}}</div>
+      <div class="pagina-cabecera__acciones">
+        <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+        {{#each pagina.documentos}}<a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a>
+        {{/each}}
+      </div>
+    </header>
+
+    {{#if pagina.productos}}
+    {{! <details> se pliega y despliega sin JS; el JS solo lo cierra al cargar en móvil }}
+    <details class="indice" open>
+      <summary class="indice__resumen">Ver los {{pagina.productos.length}} productos de esta página</summary>
+      <ol class="indice__lista">
+        {{#each pagina.productos}}<li><a href="#{{ancla}}">{{nombre}}</a></li>
+        {{/each}}
+      </ol>
+    </details>
+    {{/if}}
+
+
+
+    <div class="categoria">
+      <div class="categoria__productos">
+        {{#if pagina.cuerpo}}<div class="cuerpo">{{{pagina.cuerpo}}}
+          {{#each pagina.imagenesCuerpo}}{{#if imagen}}<figure class="cuerpo__imagen"><picture>{{#if imagen.webp}}<source type="image/webp" srcset="{{imagen.webp}}">{{/if}}<img src="{{imagen.src}}" width="{{imagen.ancho}}" height="{{imagen.alto}}" alt="{{alt}}" loading="lazy" decoding="async"></picture></figure>{{/if}}
+          {{/each}}
+        </div>{{/if}}
+        {{#each pagina.productos}}{{> producto}}
+        {{/each}}
+      </div>
+      <aside class="categoria__lateral">
+        <nav class="hermanas" aria-labelledby="hermanas-titulo">
+          <h2 class="hermanas__titulo" id="hermanas-titulo">{{pagina.familia.nombre}}</h2>
+          <ul class="hermanas__lista">
+            {{#each pagina.hermanas}}<li><a href="{{url}}"{{#if actual}} aria-current="page"{{/if}}>{{menu}}</a></li>
+            {{/each}}
+          </ul>
+          {{#if pagina.familia.url}}<a class="hermanas__todas" href="{{pagina.familia.url}}">{{pagina.familia.verTodas}}</a>{{/if}}
+        </nav>
+        <div class="cta-compacta">
+          <p class="cta-compacta__titulo">¿No encuentras el modelo?</p>
+          <p>Lo fabricamos a medida a partir de tu plano o de una muestra.</p>
+          <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+          <a class="cta-compacta__tel" href="tel:{{menu.telPrincipal}}">{{menu.telefonoPrincipal}}</a>
+        </div>
+      </aside>
+    </div>
+
+    {{#if pagina.relacionadas}}
+    <section class="relacionadas" aria-labelledby="relacionadas-titulo">
+      <h2 class="relacionadas__titulo" id="relacionadas-titulo">También te puede interesar</h2>
+      <ul class="relacionadas__lista">
+        {{#each pagina.relacionadas}}<li><a href="{{url}}">{{nombre}}</a></li>
+        {{/each}}
+      </ul>
+    </section>
+    {{/if}}
+  </div>
+  {{> cta-presupuesto}}
+</main>
+{{> pie}}
+</body>
+</html>

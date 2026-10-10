@@ -1,0 +1,62 @@
+{{> head}}
+<body>
+{{> cabecera}}
+<main id="contenido" tabindex="-1">
+  {{> migas}}
+  <div class="contenedor">
+    <header class="pagina-cabecera pagina-cabecera--con-imagen">
+      <div>
+        <h1>{{pagina.h1}}</h1>
+        <div class="entradilla">{{{pagina.texto.hero}}}</div>
+        <address class="sede-datos">
+          {{pagina.sede.direccion}}, {{pagina.sede.cp}} {{pagina.sede.localidad}} ({{pagina.sede.provincia}})<br>
+          Teléfono: <a href="tel:{{pagina.sede.tel}}">{{pagina.sede.telefono}}</a><br>
+          Email: <a href="mailto:{{pagina.sede.email}}">{{pagina.sede.email}}</a>
+        </address>
+        <div class="pagina-cabecera__acciones">
+          <a class="boton boton--primario" href="#formulario">Pedir presupuesto</a>
+          {{#if pagina.sede.mapaUrl}}<a class="enlace-pdf" href="{{pagina.sede.mapaUrl}}">Cómo llegar<span class="visualmente-oculto"> a la delegación de Oviedo (Google Maps)</span></a>{{/if}}
+        </div>
+      </div>
+      {{#if pagina.sede.imagen}}<picture class="pagina-cabecera__imagen">{{#if pagina.sede.imagen.webp}}<source type="image/webp" srcset="{{pagina.sede.imagen.webp}}">{{/if}}<img src="{{pagina.sede.imagen.src}}" width="{{pagina.sede.imagen.ancho}}" height="{{pagina.sede.imagen.alto}}" alt="{{pagina.sede.alt}}" fetchpriority="high"></picture>{{/if}}
+    </header>
+
+    <section class="seccion" aria-labelledby="ofrecemos-titulo">
+      <h2 id="ofrecemos-titulo">Qué ofrecemos en Asturias</h2>
+      <div class="sobre-nosotros__texto">{{{pagina.texto.ofrecemos}}}</div>
+      {{> tarjetas}}
+    </section>
+
+    <div class="seccion destacados destacados--dos">
+      <section class="destacado destacado--sin-imagen" aria-labelledby="medida-titulo">
+        <h2 class="destacado__titulo" id="medida-titulo">Productos a medida</h2>
+        {{{pagina.texto.medida}}}
+        <a class="boton boton--secundario" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
+      </section>
+      <section class="destacado destacado--sin-imagen" aria-labelledby="catalogos-titulo">
+        <h2 class="destacado__titulo" id="catalogos-titulo">Catálogos</h2>
+        {{{pagina.texto.catalogos}}}
+        <ul class="destacado__lista">
+          {{#each pagina.catalogos}}<li><a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a></li>
+          {{/each}}
+        </ul>
+      </section>
+    </div>
+
+    <section class="seccion marcas" aria-labelledby="marcas-titulo">
+      <h2 id="marcas-titulo">Nuestras marcas representadas</h2>
+      <ul class="marcas__lista">
+        {{#each pagina.marcas}}<li>{{nombre}}</li>
+        {{/each}}
+      </ul>
+    </section>
+
+    <div class="seccion contacto">
+      {{> formulario}}
+    </div>
+  </div>
+</main>
+{{> pie}}
+<script src="{{recursos.jsFormulario}}" defer></script>
+</body>
+</html>

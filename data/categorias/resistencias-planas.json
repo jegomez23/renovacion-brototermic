@@ -1,0 +1,32 @@
+{
+  "title": "Resistencias planas de mica y cerámica | BROTOTERMIC",
+  "meta": "Resistencias planas con soporte de mica, hasta 400 ºC, y con soporte de cerámica. Orificios para termopar y taladros según demanda. Pide presupuesto.",
+  "h1": "Resistencias planas",
+  "intro": "<p>Las resistencias planas son elementos calefactores con funda metálica y un hilo o cinta de níquel-cromo 80-20 en su interior, aislado con mica o con soportes cerámicos.</p><p>En esta página tienes dos versiones. Las de soporte de mica llevan funda de acero zincado o de acero inoxidable y el elemento calefactor bobinado sobre mica, para temperaturas de hasta 400 ºC; admiten orificios para termopar y taladros según demanda. Las de soporte de cerámica llevan funda de acero inoxidable y la espiral de níquel-cromo alojada en soportes cerámicos que soportan altas temperaturas, con conexión eléctrica por tornillos o por cables flexibles.</p><p>Si necesitas otra forma, otra medida o una conexión distinta, fabricamos la resistencia a medida a partir de un plano o de una muestra.</p><p>Para pedir presupuesto, indícanos las medidas de la superficie que hay que calentar, la temperatura de trabajo, la potencia, la tensión y el tipo de conexión. Puedes adjuntar un plano o una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [
+    "resistencias-especiales-a-medida"
+  ],
+  "productos": [
+    {
+      "nombre": "Planas soporte de mica",
+      "modelo": null,
+      "texto": "<p>Funda en acero zincado o acero inoxidable. Elemento calefactor de hilo o cinta de aleación de Níquel-Cromo calidad 80-20, bobinado sobre aislante de mica adaptable a altas temperaturas, hasta 400ºC. Posibilidad de realizar orificios para termopar o taladros según demanda del cliente Distintos tipos de conexión eléctrica: Tornillos, enchufable, cables flexibles, regleta cerámica Tamaños, watios y voltios según características técnicas y demanda.</p>",
+      "specs": [],
+      "img": "brototermic-resistencia-plana1",
+      "alt": "Resistencias planas soporte de mica",
+      "pdf": null
+    },
+    {
+      "nombre": "Planas soporte de cerámica",
+      "modelo": null,
+      "texto": "<p>Funda en acero inoxidable. Elemento calefactor espiral aleación de Níquel-Cromo calidad 80-20, introducido en soportes cerámicos que soportan altas temperaturas. <br>Distintos tipos de conexión eléctrica: Tornillos, Cables flexibles. <br>Tamaños, watios y voltios según características técnicas y demanda.</p>",
+      "specs": [],
+      "img": "brototermic-resistencia-plana2",
+      "alt": "Resistencias planas soporte de cerámica",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

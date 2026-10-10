@@ -51,8 +51,10 @@ const caso = (url, codigo, destino = '') => casos.push([cod(url), codigo, destin
 const MUESTRAS = ['/resistencias-inmersion.html', '/docs/catalogo-instrumentacion.pdf', '/oviedo/'];
 for (const r of csv('docs/redirecciones.csv')) {
   for (const url of variantes(r.origen)) {
-    if (!url.endsWith('/*')) { caso(url, 301, r.destino); continue; }
+    if (!url.endsWith('/*')) { caso(url, Number(r.tipo), r.destino); continue; }
     const base = url.slice(0, -2);
+    // Regla 404 (resto del .es): ni redirige ni sirve el contenido del .com
+    if (r.tipo === '404') { ['/ruta-que-no-existe.html', '/resistencias-inmersion.html', '/images/logo.png'].forEach(p => caso(base + p, 404)); continue; }
     if (r.destino.endsWith('/*')) MUESTRAS.forEach(p => caso(base + p, 301, r.destino.slice(0, -2) + p));
     else ['/ruta-que-no-existe.html', '/images/logo.png'].forEach(p => caso(base + p, 301, r.destino));
   }

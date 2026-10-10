@@ -1,0 +1,51 @@
+<footer class="pie">
+  <div class="contenedor pie__columnas">
+    <div class="pie__columna pie__columna--marca">
+      <a class="pie__logo" href="/"><img src="{{menu.logo.src}}" width="{{menu.logo.ancho}}" height="{{menu.logo.alto}}" alt="BROTOTERMIC, ir al inicio" loading="lazy"></a>
+      <p>Resistencias eléctricas e instrumentación industrial desde {{site.fundacion}}.</p>
+      <h2 class="pie__titulo">Catálogos</h2>
+      <ul class="pie__lista">
+        {{#each menu.catalogos}}<li><a href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a></li>
+        {{/each}}
+      </ul>
+    </div>
+    <nav class="pie__columna" aria-labelledby="pie-productos">
+      <h2 class="pie__titulo" id="pie-productos">Productos</h2>
+      <ul class="pie__lista">
+        {{#each menu.familias}}<li><a href="{{url}}">{{nombre}}</a></li>
+        {{/each}}
+      </ul>
+    </nav>
+    <nav class="pie__columna" aria-labelledby="pie-empresa">
+      <h2 class="pie__titulo" id="pie-empresa">Empresa</h2>
+      <ul class="pie__lista">
+        <li><a href="/fabricaciones-a-medida.html">Fabricación a medida</a></li>
+        <li><a href="/empresa.html">Empresa</a></li>
+        <li><a href="/nuevos-productos.html">Nuevos productos</a></li>
+        <li><a href="/contacto/contacto.html">Contacto</a></li>
+        <li><a href="/oviedo/">Asturias (Oviedo)</a></li>
+      </ul>
+    </nav>
+    <div class="pie__columna pie__columna--sedes">
+      <h2 class="pie__titulo">Sedes</h2>
+      {{#each site.sedes}}<div class="sede">
+        <h3 class="sede__nombre">{{nombre}}</h3>
+        <address>
+          {{direccion}}<br>{{cp}} {{localidad}} ({{provincia}})<br>
+          <a href="tel:{{tel}}">{{telefono}}</a><br>
+          <a href="mailto:{{email}}">{{email}}</a>
+        </address>
+        {{#if mapaUrl}}<a class="sede__mapa" href="{{mapaUrl}}">Cómo llegar<span class="visualmente-oculto"> a la sede de {{localidad}} (Google Maps)</span></a>{{/if}}
+      </div>
+      {{/each}}
+    </div>
+  </div>
+  <div class="contenedor pie__legal">
+    <p>© {{anio}} {{site.razonSocial}}</p>
+    <ul>
+      <li><a href="/privacidad.html">Política de privacidad</a></li>
+      <li><a href="/cookies.html">Política de cookies</a></li>
+      <li><a href="/mapa-web.html">Mapa web</a></li>
+    </ul>
+  </div>
+</footer>

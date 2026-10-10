@@ -1,0 +1,138 @@
+{
+  "title": "Resistencias para inmersión | BROTOTERMIC",
+  "meta": "Resistencias para inmersión en agua, aceite y líquidos agresivos: tapón roscado, bridas, calentadores al paso y sumergidores. Fabricación a medida.",
+  "h1": "Resistencias para inmersión",
+  "intro": "<p>Las resistencias para inmersión calientan directamente el líquido en el que se sumergen: agua, aceite, aceite térmico o baños químicos. Se instalan en depósitos, tanques y recipientes de proceso, y también en equipos de uso doméstico, como las candelas para termo.</p><p>En esta página tienes resistencias blindadas en tubo de cobre niquelado o de acero inoxidable con tapón roscado de acoplamiento, monofásicas y trifásicas; grupos calefactores con bridas, preparados para trabajar sometidos a presión; calentadores al paso; copas sumergibles para el fondo del tanque, y sumergidores para líquidos corrosivos, pensados para galvanotecnia y para baños alcalinos, ácidos o salinos. Para enotecnia hay calentadores fabricados íntegramente en acero inoxidable AISI 316L, que facilitan la fermentación del mosto.</p><p>Si ningún modelo encaja con tu instalación, fabricamos la resistencia a medida a partir de un plano o de una muestra.</p><p>Para pedir presupuesto, indícanos el líquido, las medidas del depósito, la potencia y la tensión de trabajo. Puedes adjuntar un plano o una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": ["resistencias-especiales-a-medida"],
+  "productos": [
+    {
+      "nombre": "Modelos NA, OV, T",
+      "modelo": "NA, OV, T",
+      "texto": "<p>Resistencias blindadas en tubo de cobre niquelado o acero inoxidable, con tapón roscado de acoplamiento. Monofásicas, trifásicas. Caperuza de protección IP40.</p>",
+      "specs": [],
+      "img": "brototermic-resistenciainmersion",
+      "alt": "Seis resistencias de inmersión blindadas en U, de distintas longitudes, con tapón roscado de latón y caperuza negra",
+      "pdf": null
+    },
+    {
+      "nombre": "Modelos DP, ED, ET",
+      "modelo": "DP, ED, ET",
+      "texto": "<p>Resistencias blindadas en tubo de cobre niquelado o acero inoxidable, con tapón roscado de acoplamiento. Trifásicas, caperuza de protección IP40, varias potencias y medidas.</p>",
+      "specs": [],
+      "img": "brototermic-resistenciatrifasica",
+      "alt": "Tres resistencias de inmersión trifásicas con tres elementos en U y tapón roscado de latón",
+      "pdf": null
+    },
+    {
+      "nombre": "Modelos Gama Europa",
+      "modelo": null,
+      "texto": "<p>Resistencias blindadas con tapón roscado de acoplamiento. Trifásicas, caja de conexiones estanca IP66, vaina para termostato, en cobre niquelado o inoxidable.</p>",
+      "specs": [],
+      "img": "brototermic-gamaeuropa",
+      "alt": "Tres resistencias de inmersión Gama Europa con elementos en U y caja de conexiones negra",
+      "pdf": null
+    },
+    {
+      "nombre": "Grupo Monobloc",
+      "modelo": null,
+      "texto": "<p>Grupo monobloc de resistencia monofásica con vaina para termostato y tapón de acoplamiento de latón 1\" ¼ Gas, en tubo de cobre niquelado o acero inoxidable.</p><p>Modelos NOB para agua, aceite térmico de alta calidad o aceite. Varias potencias y medidas.</p>",
+      "specs": [],
+      "img": "brototermic-resistenciamonobloc",
+      "alt": "Cuatro resistencias monobloc rectas de distintas longitudes con tapón de latón y terminales de conexión",
+      "pdf": null
+    },
+    {
+      "nombre": "Candelas termo con refractario",
+      "modelo": null,
+      "texto": "<p>Las resistencias de candela trabajan insertadas en el interior de una vaina que a su vez está en contacto con el líquido a calentar. Se fabrican tanto para uso doméstico como para uso industrial. Varias potencias y medidas.</p>",
+      "specs": [],
+      "img": "brototermic-candelas",
+      "alt": "Tres candelas para termo con el hilo calefactor sobre soporte cerámico refractario",
+      "pdf": null
+    },
+    {
+      "nombre": "Grupos calefactores con bridas",
+      "modelo": null,
+      "texto": "<p>Los grupos calefactores GCB son equipos de calentamiento preparados para trabajar sometidos a presión. Su construcción está basada en la soldadura de varios elementos calefactores blindados a una brida ciega normalizada, con su correspondiente caja de conexiones.</p>",
+      "specs": [],
+      "img": "brototermic-calefactores",
+      "alt": "Grupos calefactores verticales formados por haces de resistencias tubulares soldados a una brida con caja de conexiones",
+      "pdf": null
+    },
+    {
+      "nombre": "Calentadores al paso",
+      "modelo": null,
+      "texto": "<p>Los calentadores de paso GCP consisten en un grupo calefactor GCB montado sobre un cuerpo tubular de acero o acero inoxidable, de brida adecuada, fondo y tubuladuras de entrada, salida y purga, roscadas o embridadas.</p>",
+      "specs": [],
+      "img": "brototermic-calentadores",
+      "alt": "Calentador al paso con cuerpo tubular rojo montado en una bancada metálica junto a su cuadro eléctrico",
+      "pdf": null
+    },
+    {
+      "nombre": "Copa sumergible",
+      "modelo": null,
+      "texto": "<p>Resistencias de inmersión para fondo de tanque construidas en tubo de acero inoxidable y con cabezal de conexiones con grado de protección contra la humedad IP67 en acero colado con una rosca de 1/2\" gas hembra para acoplar un tubo pasante.</p>",
+      "specs": [],
+      "img": "brototermic-copasumergible",
+      "alt": "Resistencias tipo copa sumergible: espirales de tubo de acero inoxidable con cabezal de conexiones para el fondo del tanque",
+      "pdf": null
+    },
+    {
+      "nombre": "Calentadores para líquidos",
+      "modelo": null,
+      "texto": "<p>Resistencias de inmersión tipo sumergidor con un mango para asir la resistencia y poder manejarla fácilmente. Tubo blindado de acero inoxidable. Se suministra con un cable de alimentación de 1500 mm de longitud.</p>",
+      "specs": [],
+      "img": "brototermic-liquidos-noagresivos",
+      "alt": "Calentadores sumergidores de acero inoxidable con mango y cable de alimentación",
+      "pdf": null
+    },
+    {
+      "nombre": "Calentadores para líquidos agresivos",
+      "modelo": null,
+      "texto": "<p>Resistencias de inmersión «over side» para ácidos y bases en general. Con un mango de resina epoxi que lo hace estanco a la penetración de líquidos, grado de protección contra la humedad IP67.</p>",
+      "specs": [],
+      "img": "brototermic-liquidosagresivos",
+      "alt": "Cuatro calentadores de inmersión con mango de resina y elementos calefactores de distintas formas",
+      "pdf": null
+    },
+    {
+      "nombre": "Sumergidores baños agresivos",
+      "modelo": null,
+      "texto": "<p>Calentadores especiales que se emplean sobre todo en galvanotecnia para líquidos corrosivos. Permiten calentar todo tipo de baños galvánicos: alcalinos, desengrasantes, salinos, ácidos y cualquier disolución química.</p>",
+      "specs": [],
+      "img": "brototermic-sumergidores",
+      "alt": "Cinco sumergidores cilíndricos verticales con funda tubular y cabezal de conexiones",
+      "pdf": null
+    },
+    {
+      "nombre": "Calentadores de inmersión fijos",
+      "modelo": null,
+      "texto": "<p>Calentador de inmersión trifásico con base circular adecuada para grandes tanques o recipientes de cocción, sales, etc. Se suministra con caja de conexiones con un grado de protección contra la humedad IP54 y cable de alimentación de 3000 mm de longitud.</p>",
+      "specs": [],
+      "img": "brototermic-calentadoresinmersion",
+      "alt": "Calentador de inmersión fijo con elementos curvados en espiral que forman una base circular",
+      "pdf": null
+    },
+    {
+      "nombre": "Resistencias de inmersión para industria",
+      "modelo": null,
+      "texto": "<p>Los calentadores de inmersión EPV han sido diseñados para calentar líquidos y, en enotecnia, para facilitar el proceso de fermentación del mosto. Íntegramente fabricados en acero inoxidable AISI 316L y completamente estancos para su inmersión total en los depósitos de fermentación.</p>",
+      "specs": [],
+      "img": "brototermic-industriaalimentaria",
+      "alt": "Cuatro calentadores de inmersión de acero inoxidable con elementos verticales",
+      "pdf": null
+    },
+    {
+      "nombre": "Resistencias con caja de conexiones IP44",
+      "modelo": null,
+      "texto": "<p>Resistencias de calentamiento tipo sumergidor con caja de conexiones IP44 que incorpora un termostato de regulación de temperatura de rearme automático y un limitador de seguridad de rearme manual. Gama para agua y para aceite.</p>",
+      "specs": [],
+      "img": "brototermic-cajaconexiones",
+      "alt": "Resistencia sumergidora en forma de serpentín con caja de conexiones gris y cable de alimentación",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

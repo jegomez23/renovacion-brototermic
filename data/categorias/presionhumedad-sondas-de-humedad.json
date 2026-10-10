@@ -1,0 +1,86 @@
+{
+  "title": "Sondas de humedad | Presión y humedad | BROTOTERMIC",
+  "meta": "Sondas de humedad y de humedad y temperatura EWHS y STA, de pared, ambiente y con cable, y transmisores de humedad con salida 4-20 mA. Pide presupuesto.",
+  "h1": "Sondas de humedad",
+  "intro": "<p>Las sondas de humedad miden la humedad relativa, y muchas también la temperatura, y envían la señal a los instrumentos de medida y control. Se usan en la industria alimentaria, en la automatización de procesos, en salas de servidores y museos, y en oficinas, viviendas y laboratorios.</p><p>Aquí tienes las sondas de la serie EWHS (284, 304 y 314, que añade la medida de temperatura con Pt100); los transmisores de humedad relativa y temperatura STA-3, para montaje mural en ambientes limpios, y STA-3E, para ambientes industriales o a la intemperie con protección IP65; una sonda de humedad ambiente para interior o exterior; una sonda de humedad y temperatura con cable de 1 metro, y transmisores con salidas a relé para temperatura, humedad relativa y presión barométrica. La mayoría ofrece salida de 4-20 mA.</p><p>Para registrar estos valores de forma autónoma, consulta los <a href=\"/controltemperatura-dataloggers.html\">dataloggers</a>.</p><p>Para pedir presupuesto, indícanos dónde se va a instalar la sonda, los rangos de humedad y de temperatura y la salida que necesitas. Puedes adjuntar una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [
+    "controltemperatura-dataloggers"
+  ],
+  "productos": [
+    {
+      "nombre": "Sonda humedad EWHS-284",
+      "modelo": null,
+      "texto": "<p>Las sondas de humedad de la serie EWHS son sensores construidos para conectarse a instrumentos de medición de humedad y humedad/temperatura que se caracterizan por su elevada precisión. Salida 4…20m A. Dimensiones: 103x25mm.<br>Velocidad máxima del aire: 20m/s.<br>Sondas de pared con protección IP65.<br>Temperatura uso: -30…+70°C.<br>Medición de humedad: 0…100%HR.<br>Filtro de aire de malla de metal.<br>Alimentación 9…28Vc.</p>",
+      "specs": [],
+      "img": "brototermic-sonda-humedad",
+      "alt": "Sonda humedad EWHS-284",
+      "pdf": null
+    },
+    {
+      "nombre": "Sonda humedad EWHS-304",
+      "modelo": null,
+      "texto": "<p>Las sondas de humedad de la serie EWHS son sensores construidos para conectarse a instrumentos de medición de humedad y humedad/temperatura que se caracterizan por su elevada precisión. Salida 4…20mA. Dimensiones: 80x80x25.<br>Velocidad máxima del aire: 20m/s.<br>Sondas de pared con protección IP65.<br>Temperatura uso: -30…+70°C.<br>Medición de humedad: 0…100%HR.<br>Filtro de aire de polietileno.<br>Alimentación: 9..30Vc.</p>",
+      "specs": [],
+      "img": "brototermic-sonda-ewhs304",
+      "alt": "Sonda humedad EWHS-304",
+      "pdf": null
+    },
+    {
+      "nombre": "Humedad/Temperatura/EWHS-314",
+      "modelo": null,
+      "texto": "<p>Sensor que incorpora sonda de temperatura (PT-100) y humedad (Hygromer). Salida 4…20mA.<br>Dimensiones: 80x80x25.<br>Velocidad máxima del aire: 20m/s.<br>Sondas de pared con protección IP65.<br>Temperatura uso: -30…+70°C.<br>Medición de humedad: 0…100%HR.<br>Filtro de aire de polietileno.<br>Alimentación: 15…40Vc o 12….28Vc.</p>",
+      "specs": [],
+      "img": "brototermic-sonda-ewhs314",
+      "alt": "Humedad/Temperatura/EWHS-314",
+      "pdf": null
+    },
+    {
+      "nombre": "Sonda humedad/temperatura STA-3",
+      "modelo": null,
+      "texto": "<p>Transmisor de H.R y temperatura ambiente para montaje mural en ambientes limpios (oficinas, viviendas, laboratorios, etc...).<br>Dimensiones: 105 x 55 x 46 mm. Temperatura: Rango 0/50°C. Precisión: I 0.5°C. Señal de salida: 4/20 mA.<br>H.R.: Sensor capacitivo. Rango: 0/100%.<br>Precisión: Mejor del 3% (entre el 5 y el 95%). Señal de salida: 4/20 mA.</p>",
+      "specs": [],
+      "img": "brototermic-sonda-sta3",
+      "alt": "Sonda humedad/temperatura STA-3",
+      "pdf": null
+    },
+    {
+      "nombre": "Humedad/temperatura STA-3E",
+      "modelo": null,
+      "texto": "<p>Mismas características que el anterior pero para aplicación en ambientes industriales o a la intemperie. <br>Rangos: Temperatura: -5+55°C. H.R.: 0/100%. Presentación: Caja ABS de 110 x 75 x 57 mm. Grado de protección: IP65. Sensores protegidos con filtro de bronce sinterizado.</p>",
+      "specs": [],
+      "img": "brototermic-sonda-sta3e",
+      "alt": "Humedad/temperatura STA-3E",
+      "pdf": null
+    },
+    {
+      "nombre": "Sonda Humedad ambiente",
+      "modelo": null,
+      "texto": "<p>Transmisor de humedad relativa ambiente. Uso al aire libre, de interior. Salida: 4-20ma, rango de humedad relativa 0 a 100%. <br>Rango de operación de temperatura -30 hasta +80°c. Rango de humedad relativa de 0 a 100%. Filtro con malla de acero inoxidable<br>Protección de la caja con la electrónica ip65, ip40 sensores.<br>Alimentación: 9-30vdc. Dimensiones: 88.5 x 170 x 39.5 mm (w x h x d), longitud del tallo 75 mm</p>",
+      "specs": [],
+      "img": "brototermic-humedad-ambiente",
+      "alt": "Sonda Humedad ambiente",
+      "pdf": null
+    },
+    {
+      "nombre": "Sonda Humedad/Temperatura cable",
+      "modelo": null,
+      "texto": "<p>Humedad relativa del aire, sensores de temperatura en la sonda de cable de 1 metro. Los valores de medición también se convierten a otra interpretación. Humedad salida: 4-20ma. Valor medido: humedad relativa + temperatura Intervalo de medición de la temperatura -30 hasta 105°C. Rango de humedad relativa de 0 a 100% Filtro con malla de acero inoxidable. Dimensiones: pantalla de la unidad 88.5 x 114 x 39.5 mm (w x h x d), sonda Ø18x 88 mm</p>",
+      "specs": [],
+      "img": "brototermic-temperatura",
+      "alt": "Sonda Humedad/Temperatura cable",
+      "pdf": null
+    },
+    {
+      "nombre": "Transmisor Humedad Temperatura salida relé",
+      "modelo": null,
+      "texto": "<p>Los transmisores con salidas a relé están diseñados para la medición y control de temperatura, humedad relativa y presión barométrica. Sus campos de aplicación más frecuentes son la industria alimentaria, automatización de procesos, salas de servidores, museos, galerías de arte, estaciones meteorológicas, etc.<br>Salidas: 4÷20 mA, 0÷10 V, RS232, RS485, ETHERNET<br>Doble display. Dos salidas a relé<br>Hasta tres entradas binarias<br>Configuración desde teclado o desde software</p>",
+      "specs": [],
+      "img": "brototermic-temperaturarele",
+      "alt": "Transmisor Humedad/Temperatura salida relé",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

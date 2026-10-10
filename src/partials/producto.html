@@ -1,0 +1,22 @@
+<article class="producto" id="{{ancla}}" aria-labelledby="{{ancla}}-nombre">
+  {{#if imagen}}<div class="producto__imagen">
+    <picture>{{#if imagen.webp}}<source type="image/webp" srcset="{{imagen.webp}}">{{/if}}<img src="{{imagen.src}}" width="{{imagen.ancho}}" height="{{imagen.alto}}" alt="{{alt}}" loading="lazy" decoding="async"></picture>
+    {{#each extra}}{{#if imagen}}<picture>{{#if imagen.webp}}<source type="image/webp" srcset="{{imagen.webp}}">{{/if}}<img src="{{imagen.src}}" width="{{imagen.ancho}}" height="{{imagen.alto}}" alt="{{alt}}" loading="lazy" decoding="async"></picture>{{/if}}{{/each}}
+  </div>{{/if}}
+  <div class="producto__cuerpo">
+    <h2 class="producto__nombre" id="{{ancla}}-nombre">{{nombre}}</h2>
+    {{#if mostrarModelo}}<p class="producto__modelo">Modelo: {{modelo}}</p>{{/if}}
+    <div class="producto__texto">{{{texto}}}</div>
+    {{#if specsTabla}}<table class="specs">
+      <caption>Especificaciones de {{nombre}}</caption>
+      <tbody>
+        {{#each specs}}<tr><th scope="row">{{campo}}</th><td>{{valor}}</td></tr>
+        {{/each}}
+      </tbody>
+    </table>{{/if}}
+    {{#if specsLista}}<ul class="specs-lista{{#if specsConNumero}} specs-lista--con-numero{{/if}}">{{#each specs}}<li>{{this}}</li>{{/each}}</ul>{{/if}}
+    {{#if specsListaNumerada}}<ol class="specs-lista specs-lista--numerada">{{#each specs}}<li>{{this}}</li>{{/each}}</ol>{{/if}}
+    {{#if mostrarPdf}}<p><a class="enlace-pdf" href="{{pdfUrl}}">Ficha de {{nombre}} <span class="etiqueta-pdf">PDF</span></a></p>{{/if}}
+    <p class="producto__accion"><a class="boton boton--secundario" href="{{presupuestoUrl}}">Pedir presupuesto<span class="visualmente-oculto"> de {{nombre}}</span></a></p>
+  </div>
+</article>

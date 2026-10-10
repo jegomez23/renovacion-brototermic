@@ -14,6 +14,6 @@
 "*://(www.)brototermic.es/politica-de-cookies-brototermic-oviedo.html","https://brototermic.com/cookies.html","301","Unificación de dominios: legal equivalente."
 "*://(www.)brototermic.es/docs/catalogo-instrumentacion.pdf","https://brototermic.com/docs/catalogo-instrumentacion.pdf","301","Unificación de dominios: PDF idéntico (mismo MD5)."
 "*://(www.)brototermic.es/docs/catalogo-resistencias-calefactoras.pdf","https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf","301","Unificación de dominios [POR VERIFICAR catálogo vigente, ver fila de /oviedo/docs/]."
-"*://(www.)brototermic.es/*","https://brototermic.com/oviedo/","301","Cualquier otra URL del .es (imágenes, scripts, URLs desconocidas) va a la landing de Asturias. Va después de las reglas específicas del .es."
+"*://(www.)brototermic.es/*","","404","Cualquier otra URL del .es (imágenes, scripts, URLs desconocidas) devuelve 404: sin comodín de 301 (Google lo trataría como soft 404) y sin servir el contenido del .com con el host .es. Va después de las reglas específicas del .es. Decisión del 2026-10-09 (revisión de Codex)."
 "http://brototermic.com/*","https://brototermic.com/*","301","HTTPS forzado con 301 (hoy es 302). Mantiene la ruta."
 "*://www.brototermic.com/*","https://brototermic.com/*","301","Host canónico sin www. Decisión 2026-10-09. Mantiene la ruta."

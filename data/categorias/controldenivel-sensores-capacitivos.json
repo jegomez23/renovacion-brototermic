@@ -1,0 +1,39 @@
+{
+  "title": "Sensores capacitivos | BROTOTERMIC Vitoria",
+  "meta": "Sensores capacitivos SCR y SCAV para el control de máximo y mínimo nivel de productos en grano, polvo, áridos y productos químicos. Pide presupuesto.",
+  "h1": "Sensores capacitivos",
+  "intro": "<p>Los sensores capacitivos controlan el nivel máximo o mínimo de productos en grano, en polvo, áridos y productos químicos, y algunos modelos también el de sólidos y líquidos, sean conductivos o no.</p><p>En esta página tienes tres modelos. El sensor SCR 35 está fabricado en PVC de color rojo y también se suministra en PTFE. El SCRR 35 T 43650, de PTFE, es utilizable en la industria farmacéutica o alimentaria y también existe en PVC. El SCAV TB sirve para sólidos y líquidos, conductivos o no, con electrodo de PVC, PP, PVDF o HALAR y una longitud variable de hasta 3 metros.</p><p>Para amplificar la señal de estos sensores está el relé PNAS, que encontrarás en <a href=\"/controldenivel-reles-de-nivel.html\">relés de nivel</a>.</p><p>Para pedir presupuesto, indícanos el producto que quieres controlar, si es sólido o líquido, el material del depósito, la conexión a proceso y la temperatura de trabajo. Puedes adjuntar una foto en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Sensor SCR 35",
+      "modelo": null,
+      "texto": "<p>Sensores diseñados para el control de máximo y/o mínimo nivel con productos en grano, polvo, áridos, productos químicos, etc.<br>Fabricado en PVC, color rojo. También en PTFE (SCRR35T)<br>Conexión a proceso: Rosca 1\"1/4 G, también en 1\"1/2 (SCRR35)<br>Conexión eléctrica: Cable.<br>Temperatura trabajo: -15…+70°C.<br>Distancia de actuación: 4…12 mm.<br>Protección: IP65.<br>Deben conectarse a un relé amplificador de señal PNAS/T</p>",
+      "specs": [],
+      "img": "brototermic-sensor-scr35",
+      "alt": "Sensor SCR 35",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor SCRR 35 T 43650",
+      "modelo": null,
+      "texto": "<p>Sensores diseñados para el control de máximo y/o mínimo nivel con productos en grano, polvo, áridos, productos químicos, etc.<br>Fabricado en PTFE, utilizable en la industria farmacéutica o alimentaria. También en PVC.<br>Conexión a proceso: Rosca 1\"1/2.<br>Conexión eléctrica: Conector DIN43650<br>. Temperatura trabajo: -15…+70°C.<br>Distancia de actuación: 4…12 mm.<br>Protección: IP65<br>. Deben conectarse a un relé amplificador de señal PNAS/T.</p>",
+      "specs": [],
+      "img": "brototermic-sensor-scrr35",
+      "alt": "Sensor SCRR 35 T 43650",
+      "pdf": null
+    },
+    {
+      "nombre": "Sensor SCAV TB",
+      "modelo": null,
+      "texto": "<p>Sensores diseñados para el control de máximo y/o mínimo nivel con productos en grano, polvo, áridos, productos químicos, sólidos y líquidos tanto conductivos o no.<br>Electrodo: PVC, PP, PVDF, HALAR.<br>Longitud variable hasta 3 metros.<br>Conexión a proceso: Tapón roscado 1\" G. PVC, PP, PVDF, Inox AISI316 (1.4401)<br>Conexión eléctrica: Caja conexiones PBT 64x95x110mm. IP67.<br>Salida: Relé 6A 240VCA 6A 24VCC; 4-20mA (modelo TCAV).<br>Temperatura de trabajo: -10..+120 ºC.<br>Presión: 6 o 10 kg/cm², según modelo</p>",
+      "specs": [],
+      "img": "brototermic-sensor-scavtb",
+      "alt": "Sensor SCAV TB",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

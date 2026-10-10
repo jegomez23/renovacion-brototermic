@@ -9,7 +9,7 @@
 - Archivos JSON en **UTF-8 sin BOM**, indentados con 2 espacios, sin comentarios (JSON estándar).
 - Los nombres de campo van en minúsculas, en español y en camelCase (`nombreCorto`).
 - **Rutas:** siempre absolutas desde la raíz pública (`/images/…`, `/docs/…`, `/resistencias-inmersion.html`).
-- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. `build.js` busca `/images/<img>.jpg` y `/images/<img>-480.webp` (**solo se sirve la versión de 480 px**; no hay 960: decisión del 2026-10-09). Si falta el `.webp`, avisa y pinta solo el JPG; si falta el `.jpg`, da error.
+- **Imágenes (`img`):** nombre base **sin extensión** de un archivo de `/images/`. Si en /legacy la imagen no es JPG (`brototermic-mantas-calefactoras-bidon-brototermic.png`), se conserva su extensión: forma parte de la URL indexada. `build.js` busca `/images/<img>.jpg` (obligatorio: si falta, da error) y, opcionalmente, `/images/<img>.webp` con las mismas medidas (si existe, lo sirve con `<picture>`). Se usan las imágenes **originales a su tamaño real**, sin ampliar (decisión del HITO-1).
 - **Textos con formato (`texto`, `intro`, `cuerpo`):** fragmento HTML con estas etiquetas permitidas: `p`, `strong`, `em`, `br`, `a`, `ul`, `ol`, `li`, `sup`, `sub`, `table`, `thead`, `tbody`, `tr`, `th`, `td`, `caption`. Nada de `style`, `class`, `h1`–`h6` ni `img` (los títulos e imágenes los pone la plantilla). `build.js` avisa si encuentra otra etiqueta.
 - **[POR VERIFICAR]:** si un texto contiene `[POR VERIFICAR` o `(dato externo`, `build.js` lo avisa en el modo normal y **falla** en el modo de publicación (`node build.js --publicar`).
 - **[REVISIÓN CLIENTE]:** solo en los textos legales de `/content`, dentro de un comentario HTML (`<!-- [REVISIÓN CLIENTE] motivo -->`). `build.js` quita los comentarios del HTML final, lista cada marca como aviso y **no bloquea** la publicación.
@@ -28,6 +28,8 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | `fundacion` | number | sí | `1982` | B |
 | `host` | string | sí | `"https://brototermic.com"` (sin barra final, sin www) | A |
 | `idioma` | string | sí | `"es-ES"` | A |
+| `logo` | string | sí | `"/images/logo-claro.png"`: logo de la **cabecera** (fondo blanco). Provisional hasta el SVG. `build.js` lee sus medidas. | B |
+| `logoFondoOscuro` | string | sí | `"/images/logo.png"`: logo original, para el **pie** (fondo `#1d356c`). | B |
 | `pendientes` | string[] | sí | `["fundacion", "sedes.vitoria.direccion"]`: datos externos que se usan pero falta que el cliente los confirme. `build.js` los lista como aviso en cada ejecución; **no bloquean** la publicación (decisión del 2026-10-09). Vacío = todo confirmado. | B |
 | `sedes` | objeto[] | sí | ver tabla siguiente (exactamente 2: `vitoria` y `oviedo`) | B |
 | `marcas` | objeto[] | sí | ver tabla de marcas | B |
@@ -70,13 +72,28 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | `pdf` | string | sí | `"/docs/catalogo-instrumentacion.pdf"` | B |
 | `familias` | string[] | sí | `["controltemperatura", "controldenivel", "presionhumedad"]`: familias donde se enlaza | B |
 
-`formulario`:
+`formulario` (decisión del 2026-10-09, revisión de Codex: **compatible con el `rd-mailform.php` actual**):
 
 | Campo | Tipo | Oblig. | Ejemplo | Quién |
 |---|---|---|---|---|
-| `accion` | string | sí | `"/contacto/enviar.php"` (PHP en el hosting: excepción aprobada el 2026-10-09, AGENTS.md §2) | A |
-| `maxAdjuntoMB` | number | sí | `10` [POR VERIFICAR con el cliente y con los límites de PHP del hosting]. `enviar.php` aplica el mismo límite en el servidor. | A |
-| `tiposAdjunto` | string[] | sí | `[".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]`. Lista blanca: `enviar.php` comprueba la extensión y el tipo real del archivo (`finfo`). DWG/DXF, pendiente de confirmar con el cliente. | A |
+| `accion` | string | sí | `"/contacto/bat/rd-mailform.php"`: URL de envío. Hoy es la del formulario actual; si el hosting no admite adjuntos con ese script, se cambia por `"/contacto/enviar.php"` (excepción PHP aprobada) sin tocar la plantilla. | A |
+| `envioActivo` | boolean | sí | `false` **hasta tener acceso al hosting** y probar el envío. Con `false`, el formulario se pinta pero no envía nada: el botón y un aviso remiten al teléfono y al email. | A |
+| `maxAdjuntoMB` | number | sí | `10` [POR VERIFICAR con el cliente y con los límites de PHP del hosting]. El script de envío aplica el mismo límite en el servidor. | A |
+| `tiposAdjunto` | string[] | sí | `[".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]`. Lista blanca: el script comprueba la extensión y el tipo real del archivo (`finfo`). DWG/DXF, pendiente de confirmar con el cliente. | A |
+
+**Nombres de los campos que envía el formulario** (atributo `name`; los 5 primeros son los que ya espera `rd-mailform.php`):
+
+| `name` | Campo | Oblig. | Nota |
+|---|---|---|---|
+| `form-type` | oculto | sí | Valor `contact`, como el formulario actual |
+| `name` | Nombre | sí | |
+| `email` | Email | sí | |
+| `phone` | Teléfono | no | |
+| `message` | Mensaje | sí | Se rellena con el producto si se llega desde «Pedir presupuesto» (`?producto=`) |
+| `empresa` | Empresa | no | Nuevo |
+| `adjunto` | Plano o foto | no | Nuevo. Exige `enctype="multipart/form-data"` |
+| `rgpd` | Casilla de privacidad | sí | Nuevo. Valor `si`; el script la exige también en el servidor |
+| `web` | Campo trampa | — | Nuevo. Oculto por CSS; si llega relleno, el envío se descarta |
 
 ## 2. `data/familias.json`
 
@@ -97,6 +114,9 @@ Array ordenado: **el orden del array es el orden del megamenú, del inicio y del
 | `img` | string \| null | no | `"slide-1"` | B |
 | `alt` | string \| null | si hay `img` | | B |
 | `resumen` | string | sí | 1 frase (≤ 120 caracteres) para la tarjeta de familia en el inicio | B |
+| `_borrador` | boolean | no | `true` mientras la intro de la familia sea un borrador sin revisar. Igual que en las categorías: aviso en piloto, error en publicación. | A pone `true`; B lo quita al revisar |
+
+La foto de cada tarjeta de categoría no se pide aparte: `build.js` usa la del primer producto con imagen de esa categoría (o la primera de `imagenesCuerpo` si no tiene productos), con `alt` vacío porque el título de la tarjeta ya es el enlace.
 
 `categorias[]` (dentro de una familia):
 
@@ -105,6 +125,7 @@ Array ordenado: **el orden del array es el orden del megamenú, del inicio y del
 | `archivo` | string | sí | `"resistencias-inmersion"`: debe existir `data/categorias/resistencias-inmersion.json` | B |
 | `menu` | string | sí | `"Inmersión"` (rótulo corto en el megamenú y en las migas) | B |
 | `resumen` | string | sí | 1 frase (≤ 120 caracteres) para la tarjeta de categoría en la página de familia | B |
+| `otrosNombres` | string[] | no | Otros rótulos con los que la web antigua enlazaba la página (`["niveles de boya"]`). Se muestran en el mapa web y los usa el buscador del menú: así no se pierde ese texto indexado | B |
 
 En las «directas», `title`, `meta`, `h1` e `intro` viven en su `data/categorias/<archivo>.json`, como en cualquier categoría.
 
@@ -119,6 +140,7 @@ Un archivo por página de categoría (**39**). El nombre del archivo es el del `
 | `h1` | string | sí | `"Resistencias para inmersión"` | B |
 | `intro` | string (HTML) | sí | 120-200 palabras, NUEVA (ver [plan-contenido.md](plan-contenido.md)) | B |
 | `cuerpo` | string (HTML) \| null | no | Texto original de /legacy que no es de un producto (p. ej. el texto general de `resistencias-especiales-a-medida` o de `resistencias-atex`, o la tabla transcrita de `Tabla-fabricacion.jpg`). Se pinta entre la intro y los productos. | B |
+| `imagenesCuerpo` | `{img, alt}`[] | no | Imágenes que en /legacy acompañaban al texto general (p. ej. `broto-fabricacion` y `Tabla-fabricacion` en `resistencias-especiales-a-medida`). Se pintan al final de `cuerpo`. Conservan su ruta y su nombre. | B |
 | `documentos` | objeto[] | no | `[{ "titulo": "Acabados de cartuchos", "pdf": "/docs/Acabados-resistencias-cartucho.pdf" }]` | B |
 | `relacionadas` | string[] | no | `["resistencias-atex"]`: enlaces cruzados (ver arquitectura.md, apartado 4) | B |
 | `productos` | objeto[] | sí (puede ser `[]`) | ver apartado 4 | B |
@@ -185,6 +207,22 @@ h1: Nuestra historia
 <p>…</p>
 ```
 
+Metadatos (una línea `clave: valor` cada uno):
+
+| Clave | Oblig. | Uso |
+|---|---|---|
+| `title`, `meta`, `h1` | sí | Los de `plan-paginas.csv` (si no coinciden, aviso) |
+| `miga` | no | Nombre corto en las migas y en el BreadcrumbList («Empresa», «Fabricación a medida»). Si falta, se usa el H1 |
+| `sedes` | no | `si` = la plantilla añade el bloque de sedes al final (empresa) |
+| `borrador` | no | `si` mientras el texto no esté revisado: aviso en piloto, **error en publicación** (como `_borrador` en los JSON). Lo quita la Persona B |
+| `hero-alt` | sí en `inicio` | Alt de la imagen del hero (`slide-1`) |
+
+**Bloques (inicio y sede):** `<!-- bloque: nombre -->` parte el texto en trozos que la plantilla coloca en su sitio. El inicio exige los bloques `hero`, `empresa`, `medida`, `novedades`, `catalogos`, `marcas` y `sedes` (si falta uno, error).
+
+**Imágenes:** además de las etiquetas de texto, `h2`, `h3`, `figure`, `figcaption` e `img`. Cada `<img>` lleva solo `src="/images/<archivo>"` (con la ruta codificada si tiene espacios o ñ) y `alt`; `build.js` añade `width`, `height`, `loading="lazy"` y el WebP si existe, y da error si la imagen no está en `/images/`. Sin clases: el formato sale de la estructura (la `figure` va a la derecha del texto en ≥ 768 px).
+
+**Texto de /legacy:** se conserva literal, con las erratas del §3 y las sustituciones del §4 de [plan-contenido.md](plan-contenido.md). Las sustituciones del §4 están en `tools/lib/legacy.js` (`SUSTITUCIONES`), para que el auditor no las cuente como frases perdidas.
+
 | Archivo | Página | Plantilla | Quién |
 |---|---|---|---|
 | `content/inicio.html` | `/` | inicio (solo los bloques de texto; tarjetas, marcas y sedes salen de `/data`) | B |
@@ -202,6 +240,6 @@ h1: Nuestra historia
 1. Todas las páginas del `plan-paginas.csv` existen en `/dist` y no hay ninguna más (salvo `404.html` si se aprueba).
 2. Title ≤ 60 caracteres, meta de 140 a 155, title y meta únicos, un solo H1 por página.
 3. Cada `archivo` de `familias.json` tiene su JSON en `data/categorias/` y viceversa.
-4. Toda `img` existe en `/images/` (`.jpg` obligatorio; el `-480.webp` da aviso si falta).
+4. Toda `img` existe en `/images/` (`.jpg` obligatorio; el `.webp` es opcional).
 5. Todo enlace interno apunta a una página de `/dist` o a un PDF de `/docs`.
 6. Ninguna página publicada contiene `[POR VERIFICAR`, `(dato externo` ni `_borrador: true` (solo en modo `--publicar`).

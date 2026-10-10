@@ -1,0 +1,30 @@
+{
+  "title": "Equipos de medición | BROTOTERMIC Vitoria",
+  "meta": "Calibradores de procesos que generan y simulan señales de termopar, RTD, volts y mA, y horno de calibración portátil. Certificado de calibración incluido.",
+  "h1": "Equipos de medición y calibración",
+  "intro": "<p>Los equipos de medición y calibración sirven para comprobar y ajustar sondas e instrumentos de temperatura y de proceso, generando o simulando señales y temperaturas de referencia.</p><p>En esta página tienes calibradores de procesos: instrumentos robustos, de gran precisión y alta fiabilidad, en tres modelos que generan y simulan las señales de distintos termopares, termorresistencias RTD y señales de proceso. También tienes un horno de calibración portátil que genera temperaturas reales de referencia de -40 a 650 ºC para facilitar la calibración de las sondas, en dos modelos, el 985-150 y el 985-650, con distinta precisión y estabilidad. El certificado de calibración del fabricante está incluido.</p><p>Las sondas que se calibran están en <a href=\"/controltemperatura-sondastemperatura.html\">sondas de temperatura</a>, y los transmisores, en <a href=\"/controltemperatura-convertidores.html\">convertidores de señal</a>.</p><p>Para pedir presupuesto, indícanos qué sondas o señales quieres calibrar, el rango de temperatura y la precisión que necesitas. Escríbenos desde el formulario o llámanos al 945 22 33 31.</p>",
+  "cuerpo": null,
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "Calibradores de procesos",
+      "modelo": null,
+      "texto": "<p>Los calibradores de señal son instrumentos robustos de una gran precisión y alta fiabilidad. Tres modelos los cuales pueden tanto generar como simular las señales de diferentes termopares, termorresistencias RTD o señales de proceso de volts o mA. Pantalla LCD de gran formato.<br>Certificado de calibración del fabricante incluido. Tamaño 205X97X45 mm.<br>Alimentación por batería o alimentador externo. Conector estándar para alimentador externo.</p>",
+      "specs": [],
+      "img": "brototermic-calibradores-procesos",
+      "alt": "Calibradores de procesos",
+      "pdf": null
+    },
+    {
+      "nombre": "Horno de Calibración Portátil",
+      "modelo": null,
+      "texto": "<p>Este horno de calibración genera temperaturas reales de referencia de -40ºC a 650ºC para facilitar la calibración de las sondas. Precisión: ±0.3ºC (modelo 985-150), ± 1.5ºC (modelo 985-650) Estabilidad: ±0.05ºC (985-150), ±0.5ºC (985-650) Resolución: 0.1ºC (985-400 y 985-650) Interface de comunicación serie USB Software compatible con Windows® (opcional) Calibración seca sin sustancias líquidas Se suministra con dos insertos por horno:<br>Temperatura de funcionamiento: 0...40ºC Cable de extensión de prueba para termostatos, certificado de calibración Opcionalmente se suministra maleta de trasporte Dimensiones: 117 x 300 x 245 mm</p>",
+      "specs": [],
+      "img": "brototermic-calibracion-portatil",
+      "alt": "Horno de Calibración Portátil",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

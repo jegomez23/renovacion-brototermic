@@ -1,0 +1,6 @@
+<nav class="contenedor migas" aria-label="Migas de pan">
+  <ol>
+    {{#each pagina.migas}}<li>{{#if actual}}<span aria-current="page">{{nombre}}</span>{{else}}<a href="{{url}}">{{nombre}}</a>{{/if}}</li>
+    {{/each}}
+  </ol>
+</nav>

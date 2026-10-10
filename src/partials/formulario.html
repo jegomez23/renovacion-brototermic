@@ -1,0 +1,54 @@
+{{! Formulario de presupuesto (diseno.md §3.13 · contrato de campos: datos.md §1). Sin JS hace un POST normal
+    a site.json → formulario.accion; el JS (formulario.js) solo valida en el navegador y rellena el producto.
+    Con envioActivo = false se pinta igual, pero el botón está desactivado y un aviso remite al teléfono y al email. }}
+<form class="formulario" id="formulario" method="post" action="{{pagina.form.accion}}" enctype="multipart/form-data" novalidate data-max-mb="{{pagina.form.maxMB}}" data-tipos="{{pagina.form.accept}}">
+  <h2 class="formulario__titulo">Pide presupuesto</h2>
+  <p class="formulario__nota">Los campos con <span aria-hidden="true">*</span><span class="visualmente-oculto">asterisco</span> son obligatorios.</p>
+  {{#unless pagina.form.envioActivo}}<p class="formulario__aviso" role="note">El envío del formulario estará disponible muy pronto. Mientras tanto, escríbenos a <a href="mailto:{{menu.email}}">{{menu.email}}</a> o llámanos al <a href="tel:{{menu.telPrincipal}}">{{menu.telefonoPrincipal}}</a>.</p>{{/unless}}
+  <div class="formulario__error-resumen" role="alert" tabindex="-1" hidden></div>
+  <input type="hidden" name="form-type" value="contact">
+  <div class="formulario__rejilla">
+    <div class="campo">
+      <label for="f-nombre">Nombre <span aria-hidden="true">*</span></label>
+      <input id="f-nombre" name="name" type="text" autocomplete="name" required maxlength="100" aria-describedby="f-nombre-error">
+      <p class="campo__error" id="f-nombre-error" hidden></p>
+    </div>
+    <div class="campo">
+      <label for="f-empresa">Empresa</label>
+      <input id="f-empresa" name="empresa" type="text" autocomplete="organization" maxlength="150">
+    </div>
+    <div class="campo">
+      <label for="f-email">Email <span aria-hidden="true">*</span></label>
+      <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="150" aria-describedby="f-email-error">
+      <p class="campo__error" id="f-email-error" hidden></p>
+    </div>
+    <div class="campo">
+      <label for="f-telefono">Teléfono</label>
+      <input id="f-telefono" name="phone" type="tel" autocomplete="tel" maxlength="30">
+    </div>
+  </div>
+  <div class="campo">
+    <label for="f-mensaje">Mensaje <span aria-hidden="true">*</span></label>
+    <textarea id="f-mensaje" name="message" rows="6" required maxlength="5000" aria-describedby="f-mensaje-ayuda f-mensaje-error">{{pagina.form.mensajeInicial}}</textarea>
+    <p class="campo__ayuda" id="f-mensaje-ayuda">Indícanos el producto o la aplicación, las medidas, la cantidad y cualquier dato que conozcas.</p>
+    <p class="campo__error" id="f-mensaje-error" hidden></p>
+  </div>
+  <div class="campo">
+    <label for="f-adjunto">Plano o foto (opcional)</label>
+    <input id="f-adjunto" name="adjunto" type="file" accept="{{pagina.form.accept}}" aria-describedby="f-adjunto-ayuda f-adjunto-error">
+    <p class="campo__ayuda" id="f-adjunto-ayuda">{{pagina.form.tiposTexto}}. Máximo {{pagina.form.maxMB}} MB.</p>
+    <p class="campo__error" id="f-adjunto-error" hidden></p>
+  </div>
+  {{! Campo trampa: oculto por CSS (no type=hidden); si llega relleno, el servidor descarta el envío }}
+  <div class="campo-trampa" aria-hidden="true">
+    <label for="f-web">No rellenes este campo</label>
+    <input id="f-web" name="web" type="text" tabindex="-1" autocomplete="off">
+  </div>
+  <div class="campo campo--casilla">
+    <input id="f-rgpd" name="rgpd" type="checkbox" value="si" required aria-describedby="f-rgpd-error">
+    <label for="f-rgpd">He leído y acepto la <a href="/privacidad.html">política de privacidad</a> <span aria-hidden="true">*</span></label>
+    <p class="campo__error" id="f-rgpd-error" hidden></p>
+  </div>
+  <p class="formulario__legal">Usamos tus datos y los archivos que adjuntes solo para responder a tu solicitud.</p>
+  <button class="boton boton--primario formulario__enviar" type="submit"{{#unless pagina.form.envioActivo}} disabled{{/unless}}>Enviar solicitud</button>
+</form>

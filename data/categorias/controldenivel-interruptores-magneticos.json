@@ -1,0 +1,129 @@
+{
+  "title": "Interruptores magnéticos | BROTOTERMIC Vitoria",
+  "meta": "Interruptores magnéticos de nivel IMN con contactos reed para detectar uno o varios puntos de nivel en líquidos, en inoxidable, PVC y nylon. Presupuesto.",
+  "h1": "Interruptores magnéticos de nivel",
+  "intro": "<p>Los interruptores magnéticos de nivel detectan uno o varios puntos de nivel en líquidos: un imán alojado en el flotador activa los contactos reed del interior del tubo cuando el líquido lo desplaza. Se emplean en maniobras de llenado y vaciado y en alarmas.</p><p>En esta página tienes modelos para un único punto de nivel, de longitud fija, en acero inoxidable AISI 316 y en nylon (IMN 40 INOX, IMN 70 INOX, IMN 50 NY V e IMN 50 INOX H), y modelos para uno o varios puntos, de 90 a 3500 mm, con conexión a proceso por racor, tapón roscado o brida, en acero inoxidable o en PVC (IMN RP, TP, TC, TB, BC, BB, DP y TBEX). El IMN MPS es configurable por el propio usuario y se combina con los relés SNIA y SIN.</p><p>Los modelos de varios puntos se fabrican a medida, con la longitud y el número de contactos que necesites.</p><p>Para pedir presupuesto, indícanos el líquido, su temperatura y su presión, cuántos puntos de nivel quieres detectar y a qué alturas, la conexión a proceso y la conexión eléctrica. Puedes adjuntar un plano en el formulario o llamarnos al 945 22 33 31.</p>",
+  "cuerpo": "<p>Los interruptores magnéticos de nivel IMN están basados en la acción de unos interruptores \"reed\" situados en el interior del tubo, que se activan mediante un imán alojado en el interior del flotador y que se desplaza debido al empuje del líquido.<br>Se emplean en aplicaciones donde se quiere detectar de uno a varios puntos de nivel en líquidos, para maniobras de llenado,vaciado, alarmas de sobrellenado, etc.<br>La mayoría se fabrican a medida para ajustarse a las condiciones de cada aplicación. Ejecuciones con diferentes grados de protección:<br><strong> Estándar:</strong> ejecución normal, sin relleno interno, la gran mayoría de aplicaciones.<br><strong> Protegida:</strong> efecto anticondensación. En instalaciones donde existen grandes diferencias de temperatura.<br><strong> Encapsulada:</strong> relleno con resina epóxica, establece un grado superior de estanqueidad.</p><p>.</p>",
+  "documentos": [],
+  "relacionadas": [],
+  "productos": [
+    {
+      "nombre": "IMN 40 INOX",
+      "modelo": null,
+      "texto": "<p>Para detección de un único punto de nivel en líquidos. Longitud: 40 mm (fija).<br>Conexión a proceso: Racor. 1/8\" G. Inox AISI316 (14401)<br>Flotador: Cilíndrico ø29x32 mm.<br>Contactos: (NA) 40W/VA-2A/230VCA/CC. Invirtiendo flotador N.A o N.C.<br>Temperatura trabajo: -40..+125°C.<br>Densidad: 0,8 g/cm³.<br>Presión: 20 kg/cm².<br>Protección: IP65</p>",
+      "specs": [],
+      "img": "brototermic-imn-40-inox",
+      "alt": "IMN 40 INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN 70 INOX",
+      "modelo": null,
+      "texto": "<p>Para detección de un único punto de nivel en líquidos.<br>Conexión a proceso: Racor. 1/4\" G. Inox AISI316 (1.4401).<br>Longitud: 70 mm (fija).<br>Flotador: Esférico ø52 mm.<br>Contactos: (NA) 120W/VA-3A/250VCA/CC. Invirtiendo flotador N.A o N.C.<br>Temperatura de trabajo: -40°C.+125°C.<br>Densidad: 0,7 g/cm³.<br>Presión: 30 kg/cm².<br>Protección: IP65.</p>",
+      "specs": [],
+      "img": "brototermic-imn-70-inox",
+      "alt": "IMN 70 INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN 50 NY V",
+      "modelo": null,
+      "texto": "<p>Para detección de un único punto de nivel en líquidos.<br>Conexión a proceso: Racor. Nylon. M16x2.<br>Longitud: 55 mm (fija).<br>Flotador: Cilíndrico ø21x30 mm. Nylon 6.6 o Polipropileno.<br>Contactos: (NA) 15W/VA-0,3A/250VCA. Invirtiendo flotador N.A o N.C.<br>Conexión eléctrica: Cable PVC.<br>Densidad: 0,7 g/cm³.<br>Temperatura de trabajo: -30..+60 ºC<br>. Protección: IP65.</p>",
+      "specs": [],
+      "img": "brototermic-imn-50-nyv",
+      "alt": "IMN 50 NY V",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN 50 INOX H",
+      "modelo": null,
+      "texto": "<p>Para detección de un único punto de nivel en líquidos.<br>Montaje desde el interior del depósito, otros modelos montaje desde el exterior.<br>Conexión a proceso: Racor 1/8\" G.<br>Conexión eléctrica: Cable Silicona.<br>Longitud: 82 mm (fija).<br>Contacto: 50W/VA 230 VCA 0,5A. Invirtiendo flotador N.A o N.C.<br>Temperatura de trabajo: -40..+120°C<br>Protección IP68.<br>Disponible en otros materiales Nylon, Polipropileno</p>",
+      "specs": [],
+      "img": "brototermic-imn-50-inox-h",
+      "alt": "IMN 50 INOX H",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN RP INOX",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos.<br>Fabricación a medida.<br>Material: Inox AISI316.<br>Longitud: 90..3500 mm.<br>Conexión eléctrica: Cable de PVC/Silicona.<br>Conexión a proceso: racord 3/8\"G - ½\"G – ¾\"G.<br>Nº contactos: 1…..5.<br>Temperatura: -40..+125ºC.<br>Protección: IP65.<br>Posibilidad de fabricar en otros materiales: <br>PVC, PP, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-imn-rp-inox",
+      "alt": "IMN RP INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN TP INOX",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos.<br>Fabricación a medida.<br>Material: Inox AISI316.<br>Longitud: 90..3500 mm.<br>Conexión eléctrica: Cable de PVC/Silicona.<br>Conexión a proceso: tapón roscado 1\" ½G –2\"G.<br>Nº contactos: 1…..5.<br>Temperatura: -40..+125ºC.<br>Protección: IP65.<br>Posibilidad de fabricar en otros materiales: PVC, PP, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-imn-tp-inox",
+      "alt": "IMN TP INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN TC INOX",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos.<br>Fabricación a medida.<br>Material: Inox AISI316.<br>Longitud: 90..3500 mm.<br>Conexión eléctrica: Conector DIN 43650.<br>Conexión a proceso: tapón roscado 1\" ½G –2\"G.<br>Nº contactos: 1…..5.<br>Temperatura: -40..+125ºC. <br>Protección: IP65.<br>Posibilidad de fabricar en otros materiales: PVC, PP, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-imn-tc-inox",
+      "alt": "IMN TC INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN TB PVC",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos.<br>Fabricación a medida.<br>Material: PVC.<br>Longitud: 90..3500 mm.<br>Conexión eléctrica: Caja conexiones PBT 64x95x110mm.<br>Conexión a proceso: tapón roscado 1\"G, 1\" ½G, 2\"G. Nº contactos: 1…3 (tubo 12mm) 1…5 (tubo 16mm). Temperatura: -10..+60ºC (cuerpo) -20.+80ºC (cabezal) Protección: IP67.<br>Posibilidad de fabricar en otros materiales: INOX, PP, PVDF</p>",
+      "specs": [],
+      "img": "brototermic-imn-tb-pvc",
+      "alt": "IMN TB PVC",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN BC INOX",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos.<br>Fabricación a medida.<br>Material: Inox AISI316.<br>Longitud: 90..3500 mm.<br>Conexión eléctrica: Conector DIN 43650.<br>Conexión a proceso: Brida ø80 mm. Inox AISI316<br>Nº contactos: 1…3<br>Temperatura de trabajo: -40..+125ºC<br>Protección: IP65<br>Posibilidad de fabricar en otros materiales: PVC, PP, PVDF</p>",
+      "specs": [],
+      "img": "brototermic-imn-bc-inox",
+      "alt": "IMN BC INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN BB PVC",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos Fabricación a medida.<br>Material: PVC.<br>Longitud: 90..3500 mm.<br>Conexión eléctrica: Caja conexiones PBT 64x95x110mm.<br>Conexión a proceso: Brida ø120 mm. PVC.<br>Nº contactos: 1…3 (tubo 12mm) 1…5 (tubo 16mm)<br>Temperatura de trabajo: -10..+60ºC (cuerpo) -20.+80ºC (cabezal).<br>Protección: IP65.<br>Posibilidad de fabricar en otros materiales: INOX, PP, PVDF.</p>",
+      "specs": [],
+      "img": "brototermic-imn-bb-pvc",
+      "alt": "IMN BB PVC",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN DP INOX",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos.<br>Fabricación a medida.<br>Material: Inox AISI316.<br>Longitud: 90..3500 mm.<br>Conexión eléctrica: cable manguera PVC/silicona.<br>Conexión a proceso: Brida DN25, DN32, DN40, DN50, DN100<br>Nº contactos: 1…5<br>Temperatura de trabajo: -40..+125ºC<br>Protección: IP65<br>Posibilidad de fabricar en otros materiales: PVC, PP, PVDF</p>",
+      "specs": [],
+      "img": "brototermic-imn-dp-inox",
+      "alt": "IMN DP INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN TBEX INOX",
+      "modelo": null,
+      "texto": "<p>Para la detección de uno o varios puntos de nivel en líquidos.<br>Fabricación a medida.<br>Material: Inox AISI316.<br>Longitud: 100..3500 mm.<br>Conexión eléctrica: caja conexiones de aluminio.<br>Conexión a proceso: tapón roscado 2\"G, 2\" ½G, 3\"G.<br>Nº contactos: 1…3<br>Temperatura de trabajo: -40..+125ºC.<br>Protección: IP65<br>Atex: equipo eléctrico simple, puede utilizarse en áreas clasificadas, como seguridad intrínseca, siempre que se utilice un aislador galvánico clasificado Atex.</p>",
+      "specs": [],
+      "img": "brototermic-imn-tbex-inox",
+      "alt": "IMN TBEX INOX",
+      "pdf": null
+    },
+    {
+      "nombre": "IMN MPS",
+      "modelo": null,
+      "texto": "<p>Interruptor de nivel configurable por el usuario.<br>Fabricado en Inox AISI316 (1.4401)<br>Conexión a proceso:<br>Tapón roscado. 1\"1/4..2\"1/2 G.<br>Número de contactos: <br>1…5 con controlador SNIA y módulos MPS05<br>1…80 con controlador SIN y módulos MPS80<br>Flotador: Cilíndrico ø52x52 mm<br>Temperatura trabajo: -20…+60°C<br>Densidad: 0,55 g/cm³<br>Posibilidad fabricarlo en PVC y PVDF</p>",
+      "specs": [],
+      "img": "brototermic-imn-mps",
+      "alt": "IMN MPS",
+      "pdf": null
+    }
+  ],
+  "_borrador": true
+}

@@ -67,7 +67,7 @@ Todas las URLs son absolutas sobre `https://brototermic.com`. Las marcadas como 
 │   └── /contacto/contacto.html                      (/contacto.html redirige aquí)
 │
 ├── SEDE
-│   └── /oviedo/                                     Landing de Asturias (archivo oviedo/index.html; todo el .es redirige aquí)
+│   └── /oviedo/                                     Landing de Asturias (archivo oviedo/index.html; las URLs conocidas del .es redirigen aquí; el resto del .es da 404)
 │
 ├── LEGAL Y AYUDA
 │   ├── /privacidad.html
@@ -177,6 +177,22 @@ Visibles en todas las páginas salvo el inicio, debajo de la cabecera. Usan el n
 | Legal y ayuda | Inicio › Política de privacidad · Inicio › Política de cookies · Inicio › Mapa web |
 
 El JSON-LD `BreadcrumbList` reproduce exactamente las mismas migas (ver [schema.md](schema.md)).
+
+### Bloque de sectores (inicio y familias)
+
+Decisión del 2026-10-09 (revisión de Codex): **solo sectores que aparecen en /legacy, en texto, y sin URLs nuevas** (no hay páginas por sector). Cada sector puede enlazar, como mucho, a la categoría existente de la que sale el dato.
+
+| Sector (como en /legacy) | Página de /legacy donde aparece |
+|---|---|
+| Industria alimentaria | resistencias-inmersion, presionhumedad-sondas-de-humedad, controldenivel-sensores-capacitivos, controldenivel-sensores-conductivos |
+| Industria farmacéutica | controldenivel-sensores-capacitivos, controldenivel-sensores-conductivos |
+| Industria química y petroquímica, plataformas petrolíferas | resistencias-atex |
+| Galvanotecnia | resistencias-inmersion (sumergidores para baños agresivos) |
+| Enotecnia (fermentación del mosto) | resistencias-inmersion (calentadores EPV) |
+| Transformación de termoplásticos | equipos-perifericos |
+| Industria papelera, textil y del plástico | controltemperatura-sensores-infrarrojos |
+| Sector agropecuario (granjas, veterinarios) | resistencias-infrarrojos (emisores cerámicos de bulbo) |
+| Automatización de procesos, salas de servidores, museos | presionhumedad-sondas-de-humedad |
 
 ## 4. Enlazado interno
 
