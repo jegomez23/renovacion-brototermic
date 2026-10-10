@@ -842,6 +842,34 @@ function modeloContacto() {
   return pagina;
 }
 
+// Sede de Oviedo (/oviedo/): landing de la delegación con su LocalBusiness
+function modeloSede() {
+  const c = leerContenido('oviedo');
+  if (!c) return null;
+  for (const campo of ['title', 'meta', 'h1']) if (!c.meta[campo]) error(`${c.ruta}: falta «${campo}» en los metadatos`);
+  if (c.meta.borrador === 'si') pendiente(`${c.ruta}: sigue marcado como borrador (lo quita la Persona B al revisarlo)`);
+  comprobarPlan(c.ruta, 'oviedo/index.html', c.meta);
+  const sede = sedes().find(s => s.id === 'oviedo');
+  const pagina = {
+    ruta: '/oviedo/',
+    canonical: `${host}/oviedo/`,
+    title: c.meta.title,
+    meta: c.meta.meta,
+    h1: c.meta.h1,
+    migas: migasDe({ nombre: c.meta.miga || c.meta.h1, url: '/oviedo/' }),
+    texto: Object.fromEntries(['hero', 'ofrecemos', 'medida', 'catalogos'].map(b => [b, bloque(c, b)])),
+    sede,
+    tarjetas: tarjetasFamilias(),
+    marcas: site.marcas,
+    catalogos: site.catalogos.map(k => ({ titulo: k.titulo, url: urlPublica(k.pdf) })),
+    sedes: [sede],
+    form: modeloFormulario('Consulta para la delegación de Oviedo (Asturias):\n'),
+    ogImagen: sede.imagen ? `${host}${sede.imagen.src}` : null,
+  };
+  pagina.schema = schemaPagina(pagina, { nodos: [schemaSede(site.sedes.find(s => s.id === 'oviedo'))] });
+  return pagina;
+}
+
 // Página de servicio o legal: el texto entero sale de content/<slug>.html
 function modeloContenido(slug, archivo) {
   const c = leerContenido(slug);
@@ -939,6 +967,8 @@ function main() {
   }
   const contacto = modeloContacto();
   if (contacto) paginas.push({ plantilla: 'contacto', pagina: contacto });
+  const oviedo = modeloSede();
+  if (oviedo) paginas.push({ plantilla: 'sede', pagina: oviedo });
 
   // Title y meta únicos entre todas las páginas generadas
   for (const campo of ['title', 'meta']) {

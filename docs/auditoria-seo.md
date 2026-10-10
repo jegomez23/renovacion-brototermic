@@ -40,6 +40,7 @@
 | `/hornos-industriales.html` | ✅ OK | 59 car. | 141 car. | OK | 3/3 · modelos 8/8 | 3/3 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/mapa-web.html` | ✅ OK | 30 car. | 150 car. | OK | 0/0 · modelos 14/14 | 0/0 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/nuevos-productos.html` | ✅ OK | 42 car. | 154 car. | OK | 0/0 · modelos 16/16 | 4/4 | 2/2 | 45/45 | 100.0 % | OK | OK | OK |
+| `/oviedo/` | ⚠️ AVISO | ⚠️ 59 car. | 145 car. | ⚠️ sin la keyword (el H1 antiguo tampoco la tenía) | 0/0 | 0/0 | 0/0 | 6/6 | 100.0 % | OK | OK | OK |
 | `/presionhumedad-sensores-de-presion.html` | ✅ OK | 54 car. | 151 car. | OK | 7/7 · modelos 17/17 | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/presionhumedad-sondas-de-humedad.html` | ✅ OK | 51 car. | 152 car. | OK | 8/8 · modelos 13/13 | 8/8 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/privacidad.html` | ✅ OK | 36 car. | 154 car. | OK | 0/0 · modelos 17/17 | 0/0 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
@@ -63,7 +64,6 @@
 | `/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/contacto/contacto.html |
 | `/index.html` | redirección | ✅ OK | 301 → https://brototermic.com/ |
 | `/oviedo/contacto/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
-| `/oviedo/` | sede | ⚠️ AVISO | pendiente: aún no se genera |
 | `/oviedo/index.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
 | `/oviedo/politica-de-cookies-brototermic-oviedo.html` | redirección | ✅ OK | 301 → https://brototermic.com/cookies.html |
 | `/oviedo/politica-de-privacidad-brototermic-oviedo.html` | redirección | ✅ OK | 301 → https://brototermic.com/privacidad.html |
@@ -120,6 +120,10 @@
 ### `/empresa.html` — AVISO
 
 - Keyword [POR VERIFICAR GSC]: «empresa BROTOTERMIC [POR VERIFICAR GSC]».
+
+### `/oviedo/` — AVISO
+
+- Keyword [POR VERIFICAR GSC]: «componentes industriales Oviedo [POR VERIFICAR GSC]».
 
 ### `/resistencias-tipo-cartucho.html` — OK
 

@@ -813,14 +813,22 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   color: var(--color-primario-oscuro);
   font-weight: 600;
 }
-.sobre-nosotros__texto { max-width: var(--ancho-lectura); }
+.sobre-nosotros__texto { max-width: var(--ancho-lectura); margin-bottom: var(--esp-5); }
+.destacado--sin-imagen { grid-template-columns: 1fr; align-content: start; gap: 0; }
+.destacado--sin-imagen > .boton { justify-self: start; }
+.sede-datos { margin: var(--esp-4) 0; line-height: 1.8; }
+.sede-datos a { display: inline-block; min-height: 44px; line-height: 44px; }
 @media (min-width: 768px) {
   .hero { padding-block: var(--esp-7) var(--esp-8); }
   .hero__interior { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
   .confianza { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
+@media (min-width: 768px) {
+  .destacados--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 @media (min-width: 1280px) {
   .destacados { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .destacados--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .destacado { grid-template-columns: 1fr; }
 }
 
