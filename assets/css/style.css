@@ -814,6 +814,16 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   font-weight: 600;
 }
 .sobre-nosotros__texto { max-width: var(--ancho-lectura); margin-bottom: var(--esp-5); }
+.sobre-nosotros__texto figure { margin: 0 0 var(--esp-4); }
+.sobre-nosotros__texto figure img { border: 1px solid var(--color-borde); border-radius: var(--radio-m); background: var(--color-blanco); }
+/* /oviedo/: Calidad · Servicio · Innovación (cada uno, un h3 y su párrafo; en tres columnas desde 768 px) */
+.valores__lista { display: grid; gap: var(--esp-2) var(--esp-6); }
+.valores__lista h3 { margin: var(--esp-4) 0 0; }
+.valores__lista p { margin: 0; }
+@media (min-width: 768px) {
+  .valores__lista { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: auto auto; grid-auto-flow: column; }
+  .valores__lista h3 { margin-top: 0; }
+}
 .destacado--sin-imagen { grid-template-columns: 1fr; align-content: start; gap: 0; }
 .destacado--sin-imagen > .boton { justify-self: start; }
 .sede-datos { margin: var(--esp-4) 0; line-height: 1.8; }
@@ -823,12 +833,8 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   .hero__interior { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
   .confianza { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
-@media (min-width: 768px) {
-  .destacados--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
 @media (min-width: 1280px) {
   .destacados { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .destacados--dos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .destacado { grid-template-columns: 1fr; }
 }
 
@@ -898,6 +904,13 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .contenido ul { padding-left: 1.25rem; }
 .contenido li + li { margin-top: var(--esp-2); }
 .contenido--legal { padding-bottom: var(--separacion-secciones); }
+/* contacto/error.html#motivo: enviar.php redirige con el motivo en el ancla y se resalta sin JS */
+.contenido li:target {
+  padding: var(--esp-2) var(--esp-3);
+  border-left: 4px solid var(--color-error);
+  background: #fdf1f0;
+  font-weight: 600;
+}
 @media (min-width: 768px) {
   /* Foto a la derecha del texto que la acompaña, a su tamaño real */
   .contenido figure { float: right; margin: 0 0 var(--esp-4) var(--esp-6); }

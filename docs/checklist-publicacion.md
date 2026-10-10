@@ -9,7 +9,7 @@
 
 - [ ] Accesos confirmados: FTP/SFTP del hosting del `.com`, Search Console del `.com` y del `.es`, DNS o hosting del `.es`. Las credenciales se guardan **fuera del repositorio**.
 - [ ] El hosting admite `.htaccess` con `mod_rewrite` y `mod_headers` (comprobado con un archivo de prueba en una carpeta temporal, que luego se borra).
-- [ ] Formulario PHP (`rd-mailform.php` o `enviar.php`, el que indique `site.formulario.accion`) probado de principio a fin (A-2-03). La versión de PHP del hosting es compatible y sus límites `upload_max_filesize` y `post_max_size` son mayores que `site.formulario.maxAdjuntoMB`.
+- [ ] `config-formulario.php` creado en el servidor **fuera del docroot** (a partir de `src/contacto/config.example.php`), con el email de destino del cliente; `max_adjunto_mb` y `tipos` iguales a los de `site.json`. Formulario (`/contacto/enviar.php`) probado de principio a fin (A-2-03). La versión de PHP del hosting es compatible y sus límites `upload_max_filesize` y `post_max_size` son mayores que `site.formulario.maxAdjuntoMB`.
 - [ ] Docker Desktop instalado en el equipo de la Persona A y el entorno `tools/apache-pruebas/` arranca (`docker compose up -d --build`).
 - [ ] Día y hora de publicación acordados con el cliente, en horario de baja actividad y **nunca un viernes por la tarde**. Las dos personas disponibles durante las 2 horas siguientes.
 
@@ -19,11 +19,11 @@
 - [ ] Descarga **completa** por FTP de la web actual del servidor del `.com` (todos los archivos, incluidos `.htaccess`, `contacto/bat/` y cualquier PHP), guardada en dos sitios **fuera del repo** (p. ej. un disco y una nube). Anotar la fecha y el tamaño.
 - [ ] Ídem del `.es`, si está en un hosting accesible.
 - [ ] Captura de la configuración actual de DNS de los dos dominios.
-- [ ] Exportación de Search Console de los últimos 3 meses (páginas y consultas) del `.com` y del `.es`, para comparar después.
+- [ ] Exportación de Search Console de los últimos 16 meses (páginas y consultas) del `.com` y del `.es`, para comparar después.
 
 ### Build
 - [ ] `node build.js --publicar` termina **sin errores** (sin `_borrador`, sin `[POR VERIFICAR` y sin «(dato externo» en `/dist`). Los avisos de `site.pendientes` se revisan y se aceptan.
-- [ ] `/dist` contiene exactamente las 52 páginas de `plan-paginas.csv` más `404.html`, los 8 PDF con su nombre exacto, `sitemap.xml`, `robots.txt` y `.htaccess`.
+- [ ] `/dist` contiene exactamente las 52 páginas de `plan-paginas.csv` más `404.html`, `contacto/gracias.html`, `contacto/error.html` y `contacto/enviar.php` (y `/dist-es`, solo su `.htaccess`), los 8 PDF con su nombre exacto, `sitemap.xml`, `robots.txt` y `.htaccess`.
 - [ ] `node tools/comprobar-dist.js` (con `node tools/servir.js` arrancado) dice «Todo correcto»: sitemap solo con URLs canónicas que responden 200, robots, canonical en todas las páginas, 404 con noindex y 0 páginas huérfanas.
 
 ### URLs
@@ -57,7 +57,7 @@
 - [ ] Todas las imágenes tienen `alt` real, `width` y `height`, y `loading="lazy"` excepto el hero.
 
 ### Formulario
-- [ ] `site.formulario.envioActivo` está en `true` solo después de comprobar en el hosting qué script procesa el envío (`rd-mailform.php` o `enviar.php`) y que admite el adjunto.
+- [ ] `site.formulario.envioActivo` está en `true` solo después de comprobar en el hosting que `enviar.php` envía con adjunto. Remitente del dominio con SPF/DKIM/DMARC correctos (si no, el correo puede ir a spam).
 - [ ] Envío real de prueba con adjunto (PDF y JPG) recibido en el buzón acordado.
 - [ ] **Validación en el servidor**, probada sin el navegador (`curl -F …` directo al script de envío): rechaza un email mal formado, un mensaje vacío, la casilla RGPD sin marcar, un adjunto mayor que el límite y un tipo no permitido (p. ej. un `.exe` renombrado a `.pdf`, que `finfo` debe detectar).
 - [ ] Un nombre o un email con salto de línea no inyecta cabeceras en el correo.
@@ -67,10 +67,13 @@
 
 ## 2. Publicación
 
-1. [ ] Subir `/dist` a una **carpeta temporal** del servidor y comprobar 3 páginas desde ella (si el hosting lo permite).
-2. [ ] Mover la web antigua a una carpeta de respaldo **fuera del docroot** (no borrarla) o tenerla ya descargada (punto 1).
-3. [ ] Subir el contenido de `/dist` al docroot, `.htaccess` el último.
-4. [ ] Aplicar la redirección del `.es` (su `.htaccess` o la redirección del proveedor de DNS u hosting, según lo que haya respondido el cliente).
+> Detalle y orden en [publicacion.md](publicacion.md) §2. **Solo se sube el contenido de `/dist` y de `/dist-es`**; nunca `/legacy`, `/docs`, `/tools`, `/data`, `/src`, `.git` ni archivos `.md`, `.csv` o `.json`.
+
+1. [ ] `node tools/comprobar-publicable.js` dice «todos publicables» (lista blanca de lo que se puede subir).
+2. [ ] **La web antigua NO se mueve ni se borra** del docroot: se queda hasta que el formulario nuevo funcione en producción (publicacion.md §2.5).
+3. [ ] Subir al docroot del `.com`, por este orden: recursos (`assets/`, `images/`, `oviedo/images/`, `docs/`), páginas (`.html`, `sitemap.xml`, `robots.txt`) y **`.htaccess` el último**.
+4. [ ] `.es`: identificar el escenario (A: mismo hosting y otro docroot; B: otro hosting; C: mismo docroot) en el panel del hosting y aplicar lo de publicacion.md §2.4. Certificado HTTPS del `.es` activo.
+5. [ ] (2 semanas después, con el formulario nuevo funcionando) limpieza de la web antigua según publicacion.md §2.5, incluida la retirada de `contacto/bat/`.
 
 ## 3. Después de publicar (primeras 2 horas)
 
@@ -98,9 +101,9 @@
 **Cuándo:** un fallo grave que no se arregla en 30 minutos: la web no carga, hay bucles de redirección, los formularios no llegan y no hay alternativa, o desaparecen en masa páginas que deben mantenerse.
 
 **Cómo (≤ 15 minutos):**
-1. Borrar o renombrar el `.htaccess` nuevo (corta las redirecciones al momento).
-2. Restaurar la web antigua desde la carpeta de respaldo del servidor o desde la copia del punto 1 (incluido su `.htaccess` original).
-3. Si se tocó la redirección del `.es`, desactivarla.
+1. Renombrar el `.htaccess` nuevo (corta las redirecciones al momento).
+2. Restaurar desde la copia del punto 1 lo que se sustituyó (páginas `.html`, `sitemap.xml`, imágenes y el `.htaccess` original). La web antigua no se movió, así que no hay que recuperar nada más.
+3. Si se subió `dist-es/.htaccess` al `.es`, restaurar su `.htaccess` anterior.
 4. Comprobar inicio, 3 categorías y contacto en la web antigua.
 5. Avisar al cliente y anotar en el PR la causa, la hora y lo que se hizo.
 6. **No** enviar nada a Search Console (ni sitemap ni cambio de dirección) hasta volver a publicar.

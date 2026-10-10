@@ -21,17 +21,28 @@
       {{#if pagina.sede.imagen}}<picture class="pagina-cabecera__imagen">{{#if pagina.sede.imagen.webp}}<source type="image/webp" srcset="{{pagina.sede.imagen.webp}}">{{/if}}<img src="{{pagina.sede.imagen.src}}" width="{{pagina.sede.imagen.ancho}}" height="{{pagina.sede.imagen.alto}}" alt="{{pagina.sede.alt}}" fetchpriority="high"></picture>{{/if}}
     </header>
 
+    {{! Calidad / Servicio / Innovación: el carrusel de la portada antigua del .es, con su texto literal }}
+    <section class="seccion valores" aria-labelledby="valores-titulo">
+      <h2 id="valores-titulo">Calidad, servicio e innovación</h2>
+      <div class="valores__lista">{{{pagina.texto.valores}}}</div>
+    </section>
+
     <section class="seccion" aria-labelledby="ofrecemos-titulo">
-      <h2 id="ofrecemos-titulo">Qué ofrecemos en Asturias</h2>
+      <h2 id="ofrecemos-titulo">Instrumentación industrial especializada en Asturias</h2>
       <div class="sobre-nosotros__texto">{{{pagina.texto.ofrecemos}}}</div>
       {{> tarjetas}}
     </section>
 
-    <div class="seccion destacados destacados--dos">
+    <div class="seccion destacados">
       <section class="destacado destacado--sin-imagen" aria-labelledby="medida-titulo">
         <h2 class="destacado__titulo" id="medida-titulo">Productos a medida</h2>
         {{{pagina.texto.medida}}}
         <a class="boton boton--secundario" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
+      </section>
+      <section class="destacado destacado--sin-imagen" aria-labelledby="novedades-titulo">
+        <h2 class="destacado__titulo" id="novedades-titulo">Mercado y aplicación</h2>
+        {{{pagina.texto.novedades}}}
+        <a class="boton boton--secundario" href="/nuevos-productos.html">Nuevos productos</a>
       </section>
       <section class="destacado destacado--sin-imagen" aria-labelledby="catalogos-titulo">
         <h2 class="destacado__titulo" id="catalogos-titulo">Catálogos</h2>

@@ -19,7 +19,10 @@ node build.js --modo=publicacion   # falla si queda algo pendiente (borradores, 
 node tools/servir.js               # sirve /dist en http://localhost:8000
 node tools/capturas.js             # capturas y comprobaciones a 320, 360, 768 y 1280 px
 node tools/validar-plan.js # comprueba title, meta y keywords de docs/plan-paginas.csv
+node tools/test-auditor.js         # pruebas de mutación del auditor SEO (también las ejecuta build.js)
+node tools/auditoria-seo.js --modo=publicacion  # auditor de paridad /legacy ↔ /dist (escribe docs/auditoria-seo.md)
+node tools/comprobar-publicable.js # /dist y /dist-es solo contienen lo que se puede subir al servidor
 bash tools/probar-redirecciones.sh   # prueba el .htaccess en el Apache de Docker (ver tools/apache-pruebas/)
 ```
 
-Lo que se publica en el hosting (Apache) es el contenido de `/dist`.
+Lo que se publica en el hosting (Apache) es **solo** el contenido de `/dist` (docroot del `.com`) y de `/dist-es` (docroot del `.es`): ver [docs/publicacion.md](docs/publicacion.md).

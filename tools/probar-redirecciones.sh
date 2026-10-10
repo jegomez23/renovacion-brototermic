@@ -64,6 +64,12 @@ for (const u of csv('docs/inventario-urls.csv')) if (u.estado === 'MANTENER' || 
 caso('https://brototermic.com/docs/catalogo_ca%F1as_pirometricas_broto-03-02-2015.pdf', 200);
 // Una URL inexistente da 404, nunca una redirección a la portada
 caso('https://brototermic.com/esta-pagina-no-existe.html', 404);
+// Sin listado de carpetas (la regla de mod_rewrite que sustituye a «Options -Indexes»)
+caso('https://brototermic.com/images/', 404);
+caso('https://brototermic.com/docs/', 404);
+// Una imagen antigua que ya no se muestra sigue publicada (decisión D-011)
+caso('https://brototermic.com/images/slide-2.jpg', 200);
+caso('https://brototermic.com/oviedo/images/brototermic-oviedo.jpg', 200);
 process.stdout.write(casos.join('\n') + '\n');
 JS
 )

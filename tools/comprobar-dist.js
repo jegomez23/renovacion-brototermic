@@ -18,6 +18,8 @@ const L = require('./lib/legacy');
 const DIST = path.join(L.RAIZ, 'dist');
 const BASE = process.env.BASE || 'http://localhost:8000';
 const fallos = [];
+// Páginas noindex, sin canonical y fuera del sitemap (build.js → PAGINAS_NOINDEX): la 404 y las respuestas del formulario
+const NOINDEX = new Set(['/404.html', '/contacto/gracias.html', '/contacto/error.html']);
 const falla = m => fallos.push(m);
 const rutaPublica = archivo => '/' + archivo.replace(/(^|\/)index\.html$/, '$1');
 const archivoDe = ruta => path.join(DIST, decodeURIComponent(ruta.endsWith('/') ? `${ruta}index.html` : ruta));
@@ -77,14 +79,19 @@ async function main() {
   for (const archivo of paginas) {
     const html = fs.readFileSync(path.join(DIST, archivo), 'utf8');
     const cans = [...html.matchAll(/<link rel="canonical" href="([^"]+)"/g)].map(m => m[1]);
-    if (archivo === '/404.html') continue;
+    if (NOINDEX.has(archivo)) {
+      if (cans.length) falla(`${archivo}: es noindex y no debe llevar canonical`);
+      if (!/<meta name="robots" content="noindex">/.test(html)) falla(`${archivo}: falta noindex`);
+      if (sitemap.includes(archivo)) falla(`${archivo}: está en el sitemap`);
+      continue;
+    }
     const esperado = `${L.HOST}${archivo.replace(/(^|\/)index\.html$/, '$1')}`;
     if (cans.length !== 1) falla(`canonical: ${archivo} tiene ${cans.length}`);
     else if (cans[0] !== esperado) falla(`canonical: ${archivo} → ${cans[0]} (esperado ${esperado})`);
     else conCanonical++;
     if (/<meta name="robots" content="[^"]*noindex/.test(html)) falla(`${archivo}: tiene noindex`);
   }
-  console.log(`3. canonical: ${conCanonical} de ${paginas.length - 1} páginas indexables con un canonical absoluto igual a su URL`);
+  console.log(`3. canonical: ${conCanonical} de ${paginas.length - NOINDEX.size} páginas indexables con un canonical absoluto igual a su URL`);
 
   // ---------- 4. 404.html ----------
   const p404 = path.join(DIST, '404.html');
@@ -105,7 +112,7 @@ async function main() {
   // ---------- 5. páginas huérfanas ----------
   const entrantes = new Map(rutasPlan.map(r => [r, new Set()]));
   for (const archivo of paginas) {
-    if (archivo === '/404.html') continue; // un enlace desde la 404 no cuenta: nadie llega a ella navegando
+    if (NOINDEX.has(archivo)) continue; // un enlace desde la 404 o desde gracias/error no cuenta: nadie llega navegando
     const desde = archivo.replace(/(^|\/)index\.html$/, '$1');
     const html = fs.readFileSync(path.join(DIST, archivo), 'utf8');
     for (const m of html.matchAll(/\shref="(\/[^"#?]*)/g)) {

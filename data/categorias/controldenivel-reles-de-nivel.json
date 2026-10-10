@@ -60,7 +60,7 @@
       "texto": "<p>Control alternativo de 2 bombas.<br>Mando por sensor de nivel.<br>Modos trabajo: Paro-Automático-Manual.<br>Sensores con contactos libres de potencial.<br>Son necesarios 3 sensores para realizar la maniobra.</p>",
       "specs": [],
       "img": "brototermic-pnwb",
-      "alt": "IMN TP INOX",
+      "alt": "Relé de nivel PNWB para carril DIN, con indicadores luminosos y potenciómetros de ajuste",
       "pdf": null
     },
     {

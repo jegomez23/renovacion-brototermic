@@ -14,9 +14,11 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const L = require('./tools/lib/legacy');
 
 const RAIZ = __dirname;
-const DIST = path.join(RAIZ, 'dist');
+const DIST = path.join(RAIZ, 'dist');         // docroot del .com
+const DIST_ES = path.join(RAIZ, 'dist-es');   // docroot del .es: solo su .htaccess (301 al .com y 404 para el resto)
 const argModo = process.argv.find(a => a.startsWith('--modo='));
 const MODO = process.argv.includes('--publicar') ? 'publicacion' : argModo ? argModo.slice(7) : 'piloto';
 if (!['piloto', 'publicacion'].includes(MODO)) {
@@ -294,15 +296,28 @@ if (sinJson.length) pendiente(`${sinJson.length} de ${categorias.size} categorí
 // =====================================================================
 // Imágenes originales a su tamaño real (AGENTS.md §5): <nombre>.jpg (o .png/.gif si así se llama en /legacy:
 // la extensión forma parte de la URL indexada y no se cambia) y <nombre>.webp opcional
+// «nombre» es el nombre base de un archivo de /images/ («brototermic-candelas») o, para una imagen antigua que se
+// conserva con su URL original (D-011), su ruta completa sin extensión («oviedo/images/brototermic-oviedo»): esas
+// se toman de /legacy y build.js las publica en la misma ruta.
+const IMAGENES_CONSERVADAS = new Map(L.imagenesConservadas().map(i => [i.url, i.origen]));
+function archivoImagen(nombre) {
+  for (const ext of ['.jpg', '.png', '.gif']) {
+    const enRepo = path.join(RAIZ, 'images', `${nombre}${ext}`);
+    if (fs.existsSync(enRepo)) return { ruta: enRepo, url: `/images/${nombre}${ext}`, ext };
+    const antigua = nombre.includes('/') && IMAGENES_CONSERVADAS.get(`/${nombre}${ext}`);
+    if (antigua) return { ruta: antigua, url: `/${nombre}${ext}`, ext };
+  }
+  return null;
+}
 function imagen(nombre, contexto) {
   if (!nombre) return null;
-  const ext = ['.jpg', '.png', '.gif'].find(e => fs.existsSync(path.join(RAIZ, 'images', `${nombre}${e}`)));
-  if (!ext) { error(`${contexto}: no existe images/${nombre}.jpg`); return null; }
-  const medidas = medidasImagen(path.join(RAIZ, 'images', `${nombre}${ext}`));
-  if (!medidas) { error(`${contexto}: no se pueden leer las medidas de images/${nombre}${ext}`); return null; }
+  const archivo = archivoImagen(nombre);
+  if (!archivo) { error(`${contexto}: no existe images/${nombre}.jpg`); return null; }
+  const medidas = medidasImagen(archivo.ruta);
+  if (!medidas) { error(`${contexto}: no se pueden leer las medidas de ${archivo.url}`); return null; }
   const tieneWebp = fs.existsSync(path.join(RAIZ, 'images', `${nombre}.webp`));
   return {
-    src: urlPublica(`/images/${nombre}${ext}`),
+    src: urlPublica(archivo.url),
     webp: tieneWebp ? urlPublica(`/images/${nombre}.webp`) : null,
     ancho: medidas.ancho,
     alto: medidas.alto,
@@ -669,8 +684,10 @@ function leerContenido(slug) {
     const src = (attrs.match(/\ssrc="([^"]+)"/) || [])[1];
     const alt = (attrs.match(/\salt="([^"]*)"/) || [])[1];
     if (!src || alt === undefined) { error(`${ruta}: <img> sin src o sin alt: ${etiqueta}`); return etiqueta; }
-    if (!src.startsWith('/images/')) { error(`${ruta}: la imagen ${src} no está en /images/`); return etiqueta; }
-    const img = imagen(decodeURI(src).slice('/images/'.length).replace(/\.(jpe?g|png|gif)$/i, ''), ruta);
+    // En /images/ o, si es una imagen antigua conservada con su URL original (D-011), en /oviedo/images/
+    if (!src.startsWith('/images/') && !IMAGENES_CONSERVADAS.has(decodeURI(src))) { error(`${ruta}: la imagen ${src} no está en /images/ ni entre las conservadas de /legacy`); return etiqueta; }
+    const sinExt = decodeURI(src).replace(/\.(jpe?g|png|gif)$/i, '');
+    const img = imagen(src.startsWith('/images/') ? sinExt.slice('/images/'.length) : sinExt.slice(1), ruta);
     if (!img) return '';
     imagenes.push(img);
     return `<picture>${img.webp ? `<source type="image/webp" srcset="${img.webp}">` : ''}` +
@@ -857,7 +874,7 @@ function modeloSede() {
     meta: c.meta.meta,
     h1: c.meta.h1,
     migas: migasDe({ nombre: c.meta.miga || c.meta.h1, url: '/oviedo/' }),
-    texto: Object.fromEntries(['hero', 'ofrecemos', 'medida', 'catalogos'].map(b => [b, bloque(c, b)])),
+    texto: Object.fromEntries(['hero', 'valores', 'ofrecemos', 'medida', 'novedades', 'catalogos'].map(b => [b, bloque(c, b)])),
     sede,
     tarjetas: tarjetasFamilias(),
     marcas: site.marcas,
@@ -870,21 +887,29 @@ function modeloSede() {
   return pagina;
 }
 
-// 404.html (propuesta del §12 aprobada el 2026-10-10): noindex, sin canonical, sin JSON-LD y fuera del sitemap.
-// No está en plan-paginas.csv (no es una URL indexable). Apache la sirve con ErrorDocument (src/.htaccess).
-function modelo404() {
-  const c = leerContenido('404');
+// Páginas noindex, sin canonical, sin JSON-LD y fuera del sitemap y de plan-paginas.csv (no son URLs indexables):
+// 404.html (propuesta del §12 aprobada el 2026-10-10; Apache la sirve con ErrorDocument, src/.htaccess) y las
+// páginas de respuesta del formulario.
+// Las páginas de respuesta del formulario (contacto/gracias.html y contacto/error.html, a las que redirige
+// src/contacto/enviar.php) siguen el mismo patrón: noindex, sin canonical, fuera del sitemap y del plan.
+const PAGINAS_NOINDEX = [
+  { slug: '404', ruta: '/404.html', migas: [] },
+  { slug: 'gracias', ruta: '/contacto/gracias.html', migas: [{ nombre: 'Contacto', url: '/contacto/contacto.html' }] },
+  { slug: 'error', ruta: '/contacto/error.html', migas: [{ nombre: 'Contacto', url: '/contacto/contacto.html' }] },
+];
+function modeloNoindex({ slug, ruta, migas }) {
+  const c = leerContenido(slug);
   if (!c) return null;
   for (const campo of ['title', 'meta', 'h1']) if (!c.meta[campo]) error(`${c.ruta}: falta «${campo}» en los metadatos`);
   return {
-    ruta: '/404.html',
+    ruta,
     canonical: null,
     noindex: true,
     title: c.meta.title,
     meta: c.meta.meta,
     h1: c.meta.h1,
     contenido: c.cuerpo,
-    migas: migasDe({ nombre: c.meta.miga || c.meta.h1, url: '/404.html' }),
+    migas: migasDe(...migas, { nombre: c.meta.miga || c.meta.h1, url: ruta }),
     sedes: null,
     mapa: null,
     ogImagen: null,
@@ -920,11 +945,11 @@ function modeloContenido(slug, archivo) {
 // =====================================================================
 // 9. Generación
 // =====================================================================
+// /dist y /dist-es se vacían enteros: solo deben contener lo que se sube al servidor (tools/comprobar-publicable.js)
 function limpiarDist() {
-  fs.mkdirSync(DIST, { recursive: true });
-  for (const e of fs.readdirSync(DIST)) {
-    if (e === '.gitkeep') continue;
-    fs.rmSync(path.join(DIST, e), { recursive: true, force: true });
+  for (const dir of [DIST, DIST_ES]) {
+    fs.mkdirSync(dir, { recursive: true });
+    for (const e of fs.readdirSync(dir)) fs.rmSync(path.join(dir, e), { recursive: true, force: true });
   }
 }
 
@@ -959,6 +984,7 @@ function validarHtml(pagina, html, generadas) {
     }
     if (!url.startsWith('/')) { error(`${c}: enlace relativo «${url}» (las rutas deben ser absolutas desde la raíz)`); continue; }
     const ruta = decodeURI(url.split(/[?#]/)[0]);
+    if (IMAGENES_CONSERVADAS.has(ruta)) continue; // imagen antigua conservada (D-011): build.js la copia de /legacy
     if (ruta.startsWith('/assets/') || ruta.startsWith('/images/')) {
       if (!fs.existsSync(path.join(RAIZ, ruta))) error(`${c}: no existe ${ruta}`);
     } else if (ruta.startsWith('/docs/')) {
@@ -991,9 +1017,26 @@ function main() {
   if (contacto) paginas.push({ plantilla: 'contacto', pagina: contacto });
   const oviedo = modeloSede();
   if (oviedo) paginas.push({ plantilla: 'sede', pagina: oviedo });
-  const p404 = modelo404();
-  if (p404) paginas.push({ plantilla: 'legal', pagina: p404 });
+  for (const def of PAGINAS_NOINDEX) {
+    const p = modeloNoindex(def);
+    if (p) paginas.push({ plantilla: 'legal', pagina: p });
+    else if (def.slug !== '404') error(`content/${def.slug}.html no existe: enviar.php redirige a ${def.ruta}`);
+  }
   for (const p of paginas) p.pagina = { noindex: false, ...p.pagina };
+
+  // Un mismo alt en fotos DISTINTAS es casi siempre un alt copiado de otro producto (casos PNWB y Sielco D1 de /legacy):
+  // pendiente de revisar (aviso en piloto, error en publicación). La misma foto con el mismo alt en dos páginas, sí vale.
+  const fotosPorAlt = new Map();
+  for (const [archivo, { datos }] of categorias) {
+    for (const p of datos?.productos || []) {
+      if (!p.img || !p.alt) continue;
+      if (!fotosPorAlt.has(p.alt)) fotosPorAlt.set(p.alt, new Map());
+      fotosPorAlt.get(p.alt).set(p.img, `${archivo} → «${p.nombre}»`);
+    }
+  }
+  for (const [alt, fotos] of fotosPorAlt) {
+    if (fotos.size > 1) pendiente(`alt «${alt}» repetido en fotos distintas: ${[...fotos.values()].join(', ')} (cada foto necesita su alt)`);
+  }
 
   // Title y meta únicos entre todas las páginas generadas
   for (const campo of ['title', 'meta']) {
@@ -1015,9 +1058,26 @@ function main() {
   // Copia de recursos: /assets, /images y solo los .pdf de /docs, con su nombre exacto
   const nAssets = copiarDirectorio(path.join(RAIZ, 'assets'), path.join(DIST, 'assets'));
   const nImagenes = copiarDirectorio(path.join(RAIZ, 'images'), path.join(DIST, 'images'));
+  // Imágenes antiguas que la web nueva ya no muestra, pero cuya URL puede estar indexada (decisión D-011): se
+  // publican igual, sin enlazar, para que nunca den 404. Se copian de /legacy (copia byte a byte de la web actual);
+  // si /images/ del repo tiene una con el mismo nombre (p. ej. retocada), manda la del repo.
+  let nConservadas = 0;
+  for (const { url, origen } of L.imagenesConservadas()) {
+    const destino = path.join(DIST, url);
+    if (fs.existsSync(destino)) continue;
+    fs.mkdirSync(path.dirname(destino), { recursive: true });
+    fs.copyFileSync(origen, destino);
+    nConservadas++;
+  }
   const nPdf = copiarDirectorio(path.join(RAIZ, 'docs'), path.join(DIST, 'docs'), f => f.toLowerCase().endsWith('.pdf'));
   if (fs.existsSync(path.join(RAIZ, 'src', '.htaccess'))) fs.copyFileSync(path.join(RAIZ, 'src', '.htaccess'), path.join(DIST, '.htaccess'));
   else pendiente('src/.htaccess aún no existe (tarea A-1-09): /dist sale sin redirecciones.');
+  // Script del formulario (AGENTS.md §2): SOLO enviar.php. config.example.php no se publica; la configuración real
+  // vive en el servidor, fuera del docroot. Mientras envioActivo sea false, el botón está desactivado.
+  fs.copyFileSync(path.join(RAIZ, 'src', 'contacto', 'enviar.php'), path.join(DIST, 'contacto', 'enviar.php'));
+  // Docroot del .es (docs/publicacion.md §2.4): solo su .htaccess
+  if (fs.existsSync(path.join(RAIZ, 'src', 'es', '.htaccess'))) fs.copyFileSync(path.join(RAIZ, 'src', 'es', '.htaccess'), path.join(DIST_ES, '.htaccess'));
+  else error('src/es/.htaccess no existe: el .es se quedaría sin sus redirecciones.');
 
   // sitemap.xml: solo URLs canónicas que existen (páginas generadas + PDF públicos), nunca una URL redirigida
   const pdfs = fs.readdirSync(path.join(RAIZ, 'docs')).filter(f => f.toLowerCase().endsWith('.pdf')).sort();
@@ -1028,9 +1088,13 @@ function main() {
     urlsSitemap.map(u => `  <url><loc>${xmlEscapar(encodeURI(u))}</loc></url>`).join('\n') + '\n</urlset>\n');
   fs.writeFileSync(path.join(DIST, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${host}/sitemap.xml\n`);
 
-  // Auditoría de paridad SEO contra /legacy (tools/auditoria-seo.js): en publicación, cualquier ERROR detiene el build
-  const { auditar } = require('./tools/auditoria-seo.js');
-  const auditoria = auditar({ modo: MODO });
+  // Auditoría de paridad SEO contra /legacy (tools/auditoria-seo.js). Primero, sus pruebas de mutación
+  // (tools/test-auditor.js): si el auditor no detecta alguna página estropeada a propósito, su resultado no vale y el
+  // build falla en CUALQUIER modo. Después, en publicación, cualquier ERROR de la auditoría detiene el build.
+  const prueba = require('./tools/test-auditor.js').ejecutar({ modo: MODO });
+  if (!prueba.ok) prueba.fallos.forEach(f => error(`test-auditor: mutación no detectada: ${f} (el auditor no es fiable)`));
+  console.log(`test-auditor: ${prueba.total - prueba.fallos.length}/${prueba.total} mutaciones detectadas.`);
+  const auditoria = prueba.base;
   for (const f of auditoria.filas.filter(x => x.estado === 'ERROR')) {
     const fallos = Object.entries(f.checks).filter(([, c]) => c.estado === 'ERROR').map(([k, c]) => `${k}: ${c.texto}`).join('; ');
     (PUBLICAR ? error : aviso)(`Auditoría SEO ${f.url} → ${fallos} (detalle: node tools/auditoria-seo.js)`);
@@ -1040,7 +1104,7 @@ function main() {
   // Resumen
   const faltan = plan.filter(f => !generadas.has(rutaPublica(f.archivo)));
   // Validación 1 (datos.md §6): ninguna página fuera del plan, salvo la 404
-  for (const r of generadas) if (!rutasPlan.has(r) && r !== '/404.html') error(`dist${r}: página generada que no está en plan-paginas.csv`);
+  for (const r of generadas) if (!rutasPlan.has(r) && !PAGINAS_NOINDEX.some(p => p.ruta === r)) error(`dist${r}: página generada que no está en plan-paginas.csv`);
   if (faltan.length) pendiente(`Generadas ${generadas.size} de ${plan.length} páginas del plan; faltan ${faltan.length}.`);
   if (enlacesPendientes.size) {
     pendiente(`${enlacesPendientes.size} enlaces internos apuntan a páginas del plan que aún no se generan` +
@@ -1048,7 +1112,9 @@ function main() {
   }
   for (const p of site.pendientes || []) aviso(`Dato externo pendiente de confirmar por el cliente: site.${p}`);
 
-  console.log(`build.js (modo ${MODO}) → /dist: ${generadas.size} página(s), ${nAssets} archivos de /assets, ${nImagenes} imágenes, ${nPdf} PDF.`);
+  console.log(`build.js (modo ${MODO}) → /dist: ${generadas.size} página(s), ${nAssets} archivos de /assets, ${nImagenes} imágenes (+${nConservadas} antiguas conservadas sin enlazar), ${nPdf} PDF; /dist-es: .htaccess del .es.`);
+  // Lo que se sube al servidor: solo lo publicable (lista blanca). Cualquier otro archivo es error en cualquier modo.
+  for (const p of require('./tools/comprobar-publicable.js').comprobar().problemas) error(`No publicable: ${p}`);
   for (const a of avisos) console.log(`  AVISO  ${a}`);
   for (const e of errores) console.log(`  ERROR  ${e}`);
   if (errores.length) {

@@ -41,7 +41,7 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | Campo | Tipo | Oblig. | Ejemplo (Vitoria) | Quién |
 |---|---|---|---|---|
 | `id` | `"vitoria"` \| `"oviedo"` | sí | `"vitoria"` | B |
-| `nombre` | string | sí | `"Sede central — Vitoria-Gasteiz"` | B |
+| `nombre` | string | sí | `"Sede central en Vitoria-Gasteiz"` (conserva el rótulo de /legacy: «Sede central en Vitoria», «Delegación en Asturias») | B |
 | `direccion` | string | sí | `"C/ Pintor Mauro Ortiz de Urbina, 7 bajo"` (dato externo, confirmar con el cliente) | B |
 | `cp` | string | sí | `"01008"` (string: conserva el 0 inicial) | B |
 | `localidad` | string | sí | `"Vitoria-Gasteiz"` | B |
@@ -54,7 +54,7 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | `mapaUrl` | string \| null | no | Enlace «Cómo llegar» a Google Maps con la dirección. Oviedo: con la dirección real (Llano Ponte 8, 33011), nunca con las coordenadas de Madrid del iframe antiguo. | B |
 | `geo` | `{ "lat": number, "lng": number }` \| null | no | `{ "lat": 42.849668, "lng": -2.685874 }` [POR VERIFICAR] | B |
 | `horario` | string[] \| null | no | Formato `openingHours` de schema.org: `["Mo-Fr HH:MM-HH:MM"]`. **`null` hasta que lo dé el cliente**: no hay horarios en /legacy. | B |
-| `foto` | string \| null | no | `"brototermic"` (nombre base en /images) | B |
+| `foto` | string \| null | no | `"brototermic"` (nombre base en /images) o, para una imagen antigua que conserva su URL (D-011), su ruta sin extensión: `"oviedo/images/brototermic-oviedo"` | B |
 | `alt` | string \| null | si hay `foto` | `"Fachada de la oficina de BROTOTERMIC en Vitoria-Gasteiz"` | B |
 
 `marcas[]`:
@@ -72,11 +72,11 @@ Datos globales: empresa, sedes, marcas y configuración. Un solo objeto.
 | `pdf` | string | sí | `"/docs/catalogo-instrumentacion.pdf"` | B |
 | `familias` | string[] | sí | `["controltemperatura", "controldenivel", "presionhumedad"]`: familias donde se enlaza | B |
 
-`formulario` (decisión del 2026-10-09, revisión de Codex: **compatible con el `rd-mailform.php` actual**):
+`formulario` (decisiones D-007 y D-011: mismos nombres de campo que el formulario antiguo, pero se procesa con **`/contacto/enviar.php`**; `rd-mailform.php` no cumple AGENTS.md §2):
 
 | Campo | Tipo | Oblig. | Ejemplo | Quién |
 |---|---|---|---|---|
-| `accion` | string | sí | `"/contacto/bat/rd-mailform.php"`: URL de envío. Hoy es la del formulario actual; si el hosting no admite adjuntos con ese script, se cambia por `"/contacto/enviar.php"` (excepción PHP aprobada) sin tocar la plantilla. | A |
+| `accion` | string | sí | `"/contacto/enviar.php"`: URL de envío (src/contacto/enviar.php, excepción PHP aprobada). Su configuración (destino, límites) vive en el servidor, fuera del docroot. | A |
 | `envioActivo` | boolean | sí | `false` **hasta tener acceso al hosting** y probar el envío. Con `false`, el formulario se pinta pero no envía nada: el botón y un aviso remiten al teléfono y al email. | A |
 | `maxAdjuntoMB` | number | sí | `10` [POR VERIFICAR con el cliente y con los límites de PHP del hosting]. El script de envío aplica el mismo límite en el servidor. | A |
 | `tiposAdjunto` | string[] | sí | `[".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]`. Lista blanca: el script comprueba la extensión y el tipo real del archivo (`finfo`). DWG/DXF, pendiente de confirmar con el cliente. | A |

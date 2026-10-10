@@ -1,9 +1,13 @@
 # Logs de descarga de /legacy
 legacy-*.log
 
-# Salida generada por build.js (no se edita a mano)
-dist/*
-!dist/.gitkeep
+# Salida generada por build.js (no se edita a mano): docroot del .com y docroot del .es
+dist/
+dist-es/
+
+# Configuración del formulario (email de destino…): vive en el servidor, fuera del docroot; nunca en el repo
+config-formulario.php
+src/contacto/config.php
 
 # Credenciales y configuración local: NUNCA al repositorio
 .env

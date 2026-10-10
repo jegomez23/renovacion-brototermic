@@ -272,7 +272,7 @@ Datos de la delegación: dirección completa (CP 33011), «Cómo llegar» (direc
 ```
 [Cabecera]
 [Migas] Inicio › Contacto
-H1 «Contacto y presupuestos» · entradilla (content/contacto.html): qué datos enviar para un presupuesto rápido
+H1 «Contacto: componentes industriales en Vitoria y Oviedo» (conserva la keyword del H1 antiguo, «Componentes Industriales|BROTOTERMIC Vitoria») · entradilla (content/contacto.html): qué datos enviar para un presupuesto rápido
 ┌──────────────────────────────┬────────────────────────────┐
 │ [Formulario] id="formulario"  │ [Bloque de sedes] (2 tarjetas apiladas) │
 └──────────────────────────────┴────────────────────────────┘

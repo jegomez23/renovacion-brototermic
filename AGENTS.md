@@ -31,6 +31,7 @@
 | [docs/preguntas-cliente.md](docs/preguntas-cliente.md) | Mensaje único al cliente con todas las preguntas pendientes y el registro de respuestas |
 | [docs/auditoria-seo.md](docs/auditoria-seo.md) | **Auditoría de paridad SEO** /legacy ↔ /dist, una fila por URL (la genera `tools/auditoria-seo.js`: no se edita a mano) |
 | [docs/decisiones.md](docs/decisiones.md) | **Registro detallado de decisiones** (fecha, origen, qué se decide y qué documentos cambian). El resumen sigue en la sección 11 de este archivo |
+| [docs/auditoria-final.md](docs/auditoria-final.md) | **Auditoría final independiente** (2026-10-10): hallazgos por severidad y su **estado** (corregido, pendiente de nosotros, de la Persona B o del cliente) |
 
 ---
 
@@ -115,13 +116,15 @@ El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/a
 
 - **Renovación completa** con diseño moderno, minimalista y profesional, 100 % responsive y *mobile-first*.
 - **Lo que se sube al servidor es SOLO HTML + CSS + JavaScript vanilla** (más `.htaccess`, PDF, imágenes y fuentes). Sin CMS, sin frameworks (nada de React, Vue, Tailwind ni Bootstrap) y sin dependencias en el navegador: ni CDN, ni Google Fonts remotas, ni jQuery, ni scripts de terceros.
-  - **Única excepción, APROBADA el 2026-10-09: el formulario se procesa con un único script PHP en el hosting actual** El hosting ya ejecuta PHP: el formulario actual usa `contacto/bat/rd-mailform.php`, y el nuevo envía **los mismos nombres de campo** (revisión de Codex, [docs/decisiones.md](docs/decisiones.md) D-007), así que puede usar ese script tal cual. Si al tener acceso al hosting resulta que no admite el adjunto o no cumple estos requisitos, se sustituye por `src/contacto/enviar.php` → `/contacto/enviar.php`, cambiando solo `site.json → formulario.accion`. Requisitos del script, sea cual sea:
+  - **Única excepción, APROBADA el 2026-10-09: el formulario se procesa con un único script PHP en el hosting actual: `src/contacto/enviar.php` → `/contacto/enviar.php`** (decisión D-011). **`rd-mailform.php` NO sirve**, ni siquiera «tal cual» con los mismos nombres de campo: es un script de plantilla pensado para AJAX (responde con códigos `MF000`), no conoce el campo trampa ni la casilla RGPD, no comprueba el tipo real del adjunto y usa una versión desconocida de PHPMailer (auditoría final, C-02 y A-03). El formulario nuevo conserva los nombres de campo de `rd-mailform.php` (`name`, `email`, `phone`, `message`, `form-type`), pero se envía a `enviar.php` (`site.json → formulario.accion`). La configuración (email de destino, límites) vive en el servidor, **fuera del docroot y del repositorio** (`config-formulario.php`, a partir de `src/contacto/config.example.php`). Requisitos que cumple el script (y que debe cumplir cualquier sustituto):
     - **Validación en el servidor** de todos los campos, aunque el navegador ya los valide (nombre, email y mensaje obligatorios; email con formato válido; longitudes máximas). Nunca se confía en lo que llega del navegador.
     - **Adjunto:** límite de tamaño (`site.formulario.maxAdjuntoMB`) y lista blanca de tipos (`site.formulario.tiposAdjunto`), comprobando la extensión **y** el tipo real del archivo (`finfo`), no solo lo que declara el navegador. El adjunto va al email y no se guarda en el servidor.
     - **Campo trampa antispam** (honeypot): si llega relleno, se responde como si todo fuera bien y no se envía nada.
     - **Casilla RGPD** obligatoria: sin ella, el envío se rechaza también en el servidor.
     - Cabeceras de correo saneadas (sin saltos de línea en nombre, email ni asunto, para evitar la inyección de cabeceras), sin mostrar errores de PHP al usuario y sin credenciales en el repositorio (si hace falta SMTP, la configuración vive en el servidor, fuera de `/dist`).
     - Sin JS funciona igual: el formulario hace un POST normal y el script devuelve una página de éxito o de error. Con JS, solo se mejora la validación en el navegador.
+    - **Límite de envíos por IP** (se guarda solo un hash de la IP con sal, nunca la IP).
+    - Responde siempre con una redirección a `/contacto/gracias.html` o a `/contacto/error.html#motivo` (páginas noindex): igual con y sin JS.
     - Sin reCAPTCHA ni servicios de terceros.
 - **Generador mínimo `build.js`** (Node ≥ 18, **sin dependencias npm**: solo `fs`, `path` y otros módulos nativos). Combina `/src`, `/data`, `/content`, `/assets`, `/images` y los PDF de `/docs`, y escribe HTML estático en `/dist`.
   - El menú, las migas de pan y **todos los enlaces salen escritos en el HTML final**. Nunca se inyectan con JS en el navegador, porque el SEO depende de ello.
@@ -147,7 +150,7 @@ El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/a
   - Las reglas específicas van **antes** que las de host y protocolo, y su destino ya es la URL final (`https://brototermic.com/…`). Así ninguna URL encadena dos redirecciones.
   - `/index.html` y `/oviedo/index.html` se redirigen comprobando `%{THE_REQUEST}`, para no entrar en bucle con `DirectoryIndex`.
   - Una URL inexistente devuelve 404, nunca una redirección a la portada.
-- **Auditor de paridad SEO (`node tools/auditoria-seo.js` → [docs/auditoria-seo.md](docs/auditoria-seo.md)):** compara cada URL de /legacy con /dist: URL o 301 válido, title (keyword y «Vitoria»), meta, H1, todos los productos y referencias de modelo, todas las imágenes de contenido (las eliminadas, justificadas en `plan-imagenes.csv`), PDF, enlaces internos, cobertura del texto antiguo (≥ 95 %, frase a frase, aceptando solo las erratas de `plan-contenido.md` §3), canonical, JSON-LD y sitemap. `build.js` lo ejecuta siempre; **en modo publicación, cualquier ERROR detiene el build.** Es la red de seguridad del proyecto: ninguna página se da por buena si el auditor no la deja en OK.
+- **Auditor de paridad SEO (`node tools/auditoria-seo.js` → [docs/auditoria-seo.md](docs/auditoria-seo.md)):** compara cada URL de /legacy con /dist: URL o 301 válido **en el `.htaccess` real** (`dist/.htaccess` y `dist-es/.htaccess`), title (keyword y «Vitoria»), meta, H1, todos los productos, **datos técnicos idénticos producto a producto** (cifras, unidades, rangos, modelos, IP y teléfonos, sin tolerancia y en los dos sentidos; las intros no pueden traer ninguno que no esté en /legacy), todas las imágenes de contenido (las eliminadas, justificadas en `plan-imagenes.csv`), PDF, enlaces internos, cobertura del texto antiguo (≥ 95 %, frase a frase y en las categorías producto a producto, aceptando solo las correcciones de `plan-contenido.md` §3 y §4), canonical, JSON-LD y sitemap. Si no encuentra el contenido de la página antigua, es ERROR. **Antes de dar por buena una auditoría, `tools/test-auditor.js` estropea páginas a propósito (10 mutaciones) y comprueba que el auditor las detecta; si no, el build falla en cualquier modo** (D-011). `build.js` lo ejecuta siempre; **en modo publicación, cualquier ERROR detiene el build.** Es la red de seguridad del proyecto: ninguna página se da por buena si el auditor no la deja en OK.
 - **[docs/inventario-urls.csv](docs/inventario-urls.csv) es el control de la migración:** 77 filas (57 MANTENER, 15 REDIRIGIR, 5 NUEVA). Antes de publicar:
   - cada URL `MANTENER` existe en `/dist`;
   - cada `REDIRIGIR` tiene su regla, y no queda ningún `[POR VERIFICAR]` en `destino_301`.
@@ -207,6 +210,7 @@ Especificación completa en [docs/schema.md](docs/schema.md). Resumen:
 
 - **Ruta pública única: `/images/`**, la misma que hoy (`https://brototermic.com/images/<nombre>.jpg`). En el repositorio viven en la carpeta raíz **`/images/`**, y `build.js` las copia tal cual a `/dist/images/`. **Las imágenes nuevas (WebP, retocadas, de ambiente o logos) también van en `/images/`** (los logos de marca, en `/images/marcas/`).
 - **Se mantienen las imágenes existentes con el mismo nombre base**, también las que tienen ñ o mayúsculas.
+- **Ninguna URL de imagen indexada da 404** (D-011): todas las imágenes de `/images/` y `/oviedo/images/` de /legacy se publican aunque la web nueva no las muestre (sin enlazar). `build.js` las copia de /legacy a `/dist` con su ruta original; si `/images/` del repo tiene una con el mismo nombre, manda la del repo. Una imagen de contenido que deja de mostrarse en su página necesita igualmente su fila `ELIMINAR` en `plan-imagenes.csv`.
 - **Se usan las imágenes originales a su tamaño real** (decisión del HITO-1, 2026-10-09; [docs/decisiones.md](docs/decisiones.md), D-005). **Se descarta la ampliación con IA** (Real-ESRGAN): una foto de 260 px ampliada inventa detalle que el producto no tiene.
   - Se muestran en un **contenedor 4:3 con `object-fit: contain` y marco blanco**, sin ampliarlas por CSS más allá de su tamaño real. Casi todas miden **260 × 168 px**.
   - **WebP opcional:** si existe `<nombre>.webp` con las mismas medidas que el JPG, `build.js` lo sirve con `<picture>`; si no, solo el JPG. No es obligatorio para las fotos de producto (pesan 8-16 KB).
@@ -241,7 +245,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 - **Estilo:** moderno, limpio, industrial y técnico. Mucho espacio en blanco, jerarquía clara y fotografía de producto sobre fondo neutro.
 - **Cabecera blanca** (decisión del HITO-1, 2026-10-09): barra principal en blanco con el logo (versión provisional para fondo claro, `images/logo-claro.png`, hasta que llegue el SVG del cliente) y una franja fina en `#004c9a` con los teléfonos y el email (≥ 768 px).
 - **Componentes:** cabecera con megamenú (acordeón en móvil) y buscador de categorías, hero, tarjeta de familia, tarjeta de producto, tabla de especificaciones, botón primario y secundario, migas de pan, CTA de presupuesto, bloque de marcas, bloque de sedes, formulario y pie.
-- **Formulario:** nombre, empresa, email, teléfono, mensaje, adjunto (plano o foto), casilla RGPD y campo trampa antispam. Se procesa con PHP en el hosting actual (excepción aprobada, sección 2). **Los nombres de campo son compatibles con el `rd-mailform.php` actual** (`name`, `email`, `phone`, `message`, `form-type`) más `empresa`, `adjunto` y `rgpd`; la URL de envío está en `site.json → formulario.accion`, y **no se activa el envío real hasta tener acceso al hosting** (`formulario.envioActivo: false`). Contrato en [docs/datos.md](docs/datos.md).
+- **Formulario:** nombre, empresa, email, teléfono, mensaje, adjunto (plano o foto), casilla RGPD y campo trampa antispam. Se procesa con PHP en el hosting actual (excepción aprobada, sección 2). Los nombres de campo son los del formulario antiguo (`name`, `email`, `phone`, `message`, `form-type`) más `empresa`, `adjunto`, `rgpd` y el campo trampa `web`; se envía a **`/contacto/enviar.php`** (`site.json → formulario.accion`; `rd-mailform.php` no sirve, §2), y **no se activa el envío real hasta tener acceso al hosting y su configuración** (`formulario.envioActivo: false`). Contrato en [docs/datos.md](docs/datos.md).
 - **Accesibilidad del menú:** patrón *Disclosure Navigation Menu* del W3C (APG): botones con `aria-expanded` y `aria-controls`, sin `role="menu"`, Esc cierra y devuelve el foco. Movimiento reducido: `prefers-reduced-motion` anula transiciones y scroll suave. Se comprueba también a **320 px**.
 - **Rendimiento:** Lighthouse en móvil ≥ 90, LCP < 2,5 s, **una sola hoja CSS**, JS con **`defer`** y ninguna petición a terceros.
 - **Accesibilidad:** contraste AA, navegable con teclado y foco visible, HTML semántico y zonas táctiles de al menos 44 px.
@@ -264,18 +268,22 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── src/                                                                        [A]
 │   ├── templates/       ← inicio, familia, categoria, servicio, contacto, sede, legal
 │   ├── partials/        ← head, cabecera (megamenú), migas, cta-presupuesto, pie, schema
-│   ├── contacto/enviar.php ← script PHP del formulario, solo si `rd-mailform.php` no sirve (§2)
+│   ├── contacto/enviar.php ← script PHP del formulario (§2); config.example.php: ejemplo de su configuración (no se publica)
+│   ├── es/.htaccess     ← .htaccess del docroot del .es (se copia a /dist-es)
 │   └── .htaccess        ← redirecciones y configuración Apache (se copia a /dist)
 ├── tools/               ← no se publican                                       [A]
 │   ├── validar-plan.js  ← comprueba plan-paginas.csv (title, meta, keyword, «Vitoria»)
 │   ├── servir.js        ← servidor local de /dist (node tools/servir.js → http://localhost:8000)
 │   ├── capturas.js      ← capturas a 320/360/768/1280 px y comprobaciones (scroll horizontal, consola, terceros)
 │   ├── auditoria-seo.js ← auditor de paridad SEO /legacy ↔ /dist (escribe docs/auditoria-seo.md)
+│   ├── test-auditor.js  ← pruebas de mutación del auditor: se ejecutan siempre antes de dar por buena una auditoría
+│   ├── comprobar-publicable.js ← lista blanca de lo que se puede subir al servidor (/dist y /dist-es)
 │   ├── comprobar-dist.js ← sitemap (solo canónicas con 200), robots, canonical, 404 noindex y huérfanas
-│   ├── lib/legacy.js    ← lectura común de /legacy y de los CSV (importador y auditor)
+│   ├── lib/legacy.js    ← lectura común de /legacy y de los CSV (importador y auditor); datos técnicos exactos
+│   ├── lib/htaccess.js  ← simulador del subconjunto de .htaccess que usamos (el auditor comprueba las 301 contra el archivo real)
 │   ├── importar-legacy.js
 │   ├── probar-redirecciones.sh
-│   └── apache-pruebas/  ← Apache en Docker (imagen httpd) para probar el .htaccess en local
+│   └── apache-pruebas/  ← Apache en Docker (imagen httpd): dos vhosts, .com → /dist y .es → /dist-es, como en producción
 ├── data/                                                                       [B]
 │   ├── site.json        ← empresa, sedes, marcas, catálogos, formulario
 │   ├── familias.json    ← familias, categorías y orden del megamenú
@@ -287,7 +295,8 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 │   └── fonts/           ← Lora 400 y 700 en WOFF2
 ├── images/              ← TODAS las imágenes públicas (se publican en /images/)      [B]
 ├── docs/                ← PDF públicos (/docs/*.pdf) + planificación del proyecto (no se publica) [B: PDF; ambos: planes]
-└── dist/                ← salida generada por build.js. NO se edita a mano. No está en git
+├── dist/                ← salida generada por build.js: docroot del .com. NO se edita a mano. No está en git
+└── dist-es/             ← salida de build.js: docroot del .es (solo su .htaccess). No está en git
 ```
 
 ### Reglas de la estructura
@@ -388,6 +397,7 @@ Una página está lista cuando cumple todo esto:
 | 2026-10-09 | **HITO-1 (decisiones del piloto, detalle en [docs/decisiones.md](docs/decisiones.md)):** cabecera blanca con logo provisional para fondo claro y franja `#004c9a`; title del inicio «Componentes industriales e instrumentación \| BROTOTERMIC»; hero `slide-1` a 910 px (WebP + JPG); **se descarta la ampliación de imágenes**: originales a tamaño real y retoque manual solo de 3 fotos (fondo e iluminación); buscador de categorías y marco blanco aprobados. |
 | 2026-10-09 | **Revisión de Codex:** sin comodín en el `.es` (301 solo URLs conocidas, 404 el resto); formulario compatible con `rd-mailform.php` y sin envío real hasta tener el hosting; `build.js` con modos `piloto` y `publicacion`; bloque de sectores solo con sectores de /legacy y sin URLs nuevas; alts de RE92 y Catálogos corregidos; menú según el patrón *Disclosure Navigation* del W3C, `prefers-reduced-motion` y prueba a 320 px. |
 | 2026-10-10 | **Página 404 propia** (`/404.html`, `noindex`, sin canonical, fuera del sitemap; `ErrorDocument` en el `.htaccess`) y **tira de logos de marcas a 990 px** con `loading="lazy"` como excepción a la regla de 480 px: aprobadas (D-010). |
+| 2026-10-10 | **Correcciones de la auditoría final (D-011):** auditor con datos técnicos exactos, cobertura por producto, 301 comprobadas contra el `.htaccess` real y pruebas de mutación obligatorias (`tools/test-auditor.js`); todas las imágenes antiguas de `/images/` y `/oviedo/images/` publicadas (ninguna URL de imagen en 404); solo se sube `/dist` y `/dist-es` (lista blanca: `tools/comprobar-publicable.js`) y la web antigua no se mueve hasta que el formulario nuevo funcione; el `.es` con docroot y `.htaccess` propios (`/dist-es`, solo `mod_alias`); `.htaccess` del `.com` sin `Options`, `DirectoryIndex` ni `<If>`; formulario con `enviar.php` (no `rd-mailform.php`); `/oviedo/` con todo su texto antiguo; alts copiados corregidos; privacidad sin el Privacy Shield como vigente. |
 
 ---
 
@@ -410,8 +420,9 @@ Las preguntas al cliente están redactadas en [docs/preguntas-cliente.md](docs/p
 13. **Propuesta de diseño pendiente de aprobar:** el «Cómo llegar» con un enlace a Google Maps en lugar de un iframe (por rendimiento y cookies). La página 404 propia se aprobó el 2026-10-10 (D-010).
 14. **Logo vectorial (SVG)** para fondo claro: mientras no llegue, la cabecera usa `images/logo-claro.png`, una copia del logo original con las partes blancas pasadas a `#004c9a` (provisional, pendiente de que el cliente la apruebe o la sustituya).
 15. **Retoque de 3 fotos del piloto** (fondo e iluminación): lo hace la Persona B; herramienta a su elección, siempre comparando con el original.
-16. **Envío real del formulario:** se activa (`envioActivo: true`) cuando haya acceso al hosting y se sepa qué admite `rd-mailform.php` (adjuntos) o se suba `enviar.php`.
+16. **Envío real del formulario:** `enviar.php` está hecho y probado en local (php -S + capturador SMTP, D-011). Se activa (`envioActivo: true`) cuando haya acceso al hosting: crear `config-formulario.php` fuera del docroot con el email de destino del cliente, comprobar los límites de PHP (`upload_max_filesize`, `post_max_size`) y hacer un envío real.
 17. **Docker:** no está instalado en el equipo de la Persona A. Hace falta instalar Docker Desktop para usar `tools/apache-pruebas/`.
+18. **Docroot del `.es`:** confirmar en el panel del hosting (o con el cliente) a qué carpeta apunta `brototermic.es` para aplicar el escenario A, B o C de [docs/publicacion.md](docs/publicacion.md) §2.4, y que su certificado HTTPS sigue activo.
 
 ---
 
