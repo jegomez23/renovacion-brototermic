@@ -257,6 +257,8 @@ function auditarPagina(fila, ctx) {
   const destinos = new Set();
   for (const h of L.hrefs(L.sinComentarios(legacyHtml))) {
     if (!h || h.startsWith('#') || /^(mailto|tel|callto|javascript):/i.test(h)) continue;
+    // Enlaces sin protocolo de /legacy (href="www.agpd.es", href="info@…"): daban 404 y no se copian (AGENTS.md §3.2)
+    if (/^(www\.|[\w.+-]+@)/i.test(h)) continue;
     let abs; try { abs = new URL(h, base); } catch { continue; }
     if (/\.(jpe?g|png|gif|css|js|ico|pdf)$/i.test(abs.pathname)) continue;
     const c2 = canonizar(abs.href);

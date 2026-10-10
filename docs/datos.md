@@ -125,6 +125,7 @@ La foto de cada tarjeta de categoría no se pide aparte: `build.js` usa la del p
 | `archivo` | string | sí | `"resistencias-inmersion"`: debe existir `data/categorias/resistencias-inmersion.json` | B |
 | `menu` | string | sí | `"Inmersión"` (rótulo corto en el megamenú y en las migas) | B |
 | `resumen` | string | sí | 1 frase (≤ 120 caracteres) para la tarjeta de categoría en la página de familia | B |
+| `otrosNombres` | string[] | no | Otros rótulos con los que la web antigua enlazaba la página (`["niveles de boya"]`). Se muestran en el mapa web y los usa el buscador del menú: así no se pierde ese texto indexado | B |
 
 En las «directas», `title`, `meta`, `h1` e `intro` viven en su `data/categorias/<archivo>.json`, como en cualquier categoría.
 

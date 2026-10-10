@@ -2,7 +2,7 @@
 
 > Generado por `node tools/auditoria-seo.js` (modo **piloto**). **No se edita a mano.** Compara cada URL de /legacy con su equivalente en /dist: que exista (o tenga un 301 válido), que conserve title, H1, productos, modelos, imágenes, PDF, enlaces internos y el texto (cobertura ≥ 95 %), y que tenga canonical, JSON-LD y presencia en sitemap.xml.
 
-**Resultado:** 66 OK · 11 AVISO · 0 ERROR (77 URLs del inventario).
+**Resultado:** 69 OK · 8 AVISO · 0 ERROR (77 URLs del inventario).
 
 ## Páginas generadas
 
@@ -30,14 +30,17 @@
 | `/controltemperatura-termometros.html` | ✅ OK | 33 car. | 147 car. | OK | 8/8 · modelos 8/8 | 8/8 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/controltemperatura-termostatos.html` | ✅ OK | 33 car. | 153 car. | OK | 16/16 · modelos 19/19 | 16/16 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/controltemperatura-videoregistradores.html` | ✅ OK | 41 car. | 149 car. | OK | 2/2 · modelos 9/9 | 2/2 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
+| `/cookies.html` | ✅ OK | 33 car. | 146 car. | OK | 0/0 · modelos 10/10 | 0/0 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/empresa.html` | ⚠️ AVISO | ⚠️ 54 car. | 150 car. | ⚠️ sin la keyword (el H1 antiguo tampoco la tenía) | 0/0 | 1/1 | 2/2 | 46/46 | 100.0 % | OK | OK | OK |
 | `/equipos-perifericos.html` | ✅ OK | 53 car. | 151 car. | OK | 9/9 · modelos 15/15 | 9/9 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/equiposderefrigeracion-refrigeradores-chillers.html` | ✅ OK | 52 car. | 142 car. | OK | 3/3 · modelos 5/5 | 3/3 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/fabricaciones-a-medida.html` | ✅ OK | 49 car. | 153 car. | OK | 0/0 · modelos 12/12 | 5/5 | 0/0 | 45/45 | 100.0 % | OK | OK | OK |
 | `/hornos-industriales.html` | ✅ OK | 59 car. | 141 car. | OK | 3/3 · modelos 8/8 | 3/3 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
+| `/mapa-web.html` | ✅ OK | 30 car. | 150 car. | OK | 0/0 · modelos 14/14 | 0/0 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/nuevos-productos.html` | ✅ OK | 42 car. | 154 car. | OK | 0/0 · modelos 16/16 | 4/4 | 2/2 | 45/45 | 100.0 % | OK | OK | OK |
 | `/presionhumedad-sensores-de-presion.html` | ✅ OK | 54 car. | 151 car. | OK | 7/7 · modelos 17/17 | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/presionhumedad-sondas-de-humedad.html` | ✅ OK | 51 car. | 152 car. | OK | 8/8 · modelos 13/13 | 8/8 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
+| `/privacidad.html` | ✅ OK | 36 car. | 154 car. | OK | 0/0 · modelos 17/17 | 0/0 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/resistencias-atex.html` | ✅ OK | 39 car. | 152 car. | OK | 7/7 · modelos 24/24 | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/resistencias-calefaccion-industrial.html` | ✅ OK | 57 car. | 148 car. | OK | 7/7 · modelos 16/16 | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/resistencias-calentamientoaire.html` | ✅ OK | 56 car. | 149 car. | OK | 14/14 · modelos 22/22 | 14/14 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
@@ -58,15 +61,12 @@
 | `/` | inicio | ⚠️ AVISO | pendiente: aún no se genera |
 | `/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/contacto/contacto.html |
 | `/contacto/contacto.html` | contacto | ⚠️ AVISO | pendiente: aún no se genera |
-| `/cookies.html` | legal | ⚠️ AVISO | pendiente: aún no se genera |
 | `/index.html` | redirección | ✅ OK | 301 → https://brototermic.com/ |
-| `/mapa-web.html` | legal | ⚠️ AVISO | pendiente: aún no se genera |
 | `/oviedo/contacto/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
 | `/oviedo/` | sede | ⚠️ AVISO | pendiente: aún no se genera |
 | `/oviedo/index.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
 | `/oviedo/politica-de-cookies-brototermic-oviedo.html` | redirección | ✅ OK | 301 → https://brototermic.com/cookies.html |
 | `/oviedo/politica-de-privacidad-brototermic-oviedo.html` | redirección | ✅ OK | 301 → https://brototermic.com/privacidad.html |
-| `/privacidad.html` | legal | ⚠️ AVISO | pendiente: aún no se genera |
 | `/docs/Acabados-resistencias-cartucho.pdf` | archivo | ✅ OK | existe |
 | `/docs/DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf` | archivo | ✅ OK | existe |
 | `/docs/catalogo-Brototermic-resistencias.pdf` | archivo | ✅ OK | existe |

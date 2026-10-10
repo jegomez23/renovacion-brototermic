@@ -72,7 +72,7 @@
     "resumen": "Flotadores, interruptores magnéticos, sensores conductivos, capacitivos, de presión y ultrasonidos y relés de nivel.",
     "_borrador": true,
     "categorias": [
-      { "archivo": "controldenivel-niveles-de-flotador", "menu": "Niveles de flotador", "resumen": "Sensores de flotador INCR e INMR para el control de máximo o mínimo nivel de líquidos." },
+      { "archivo": "controldenivel-niveles-de-flotador", "menu": "Niveles de flotador", "otrosNombres": ["niveles de boya"], "resumen": "Sensores de flotador INCR e INMR para el control de máximo o mínimo nivel de líquidos." },
       { "archivo": "controldenivel-interruptores-magneticos", "menu": "Interruptores magnéticos", "resumen": "Interruptores magnéticos IMN para detectar uno o varios puntos de nivel en líquidos." },
       { "archivo": "controldenivel-sensores-conductivos", "menu": "Sensores conductivos", "resumen": "Electrodos y porta-electrodos para controlar el nivel de líquidos conductivos." },
       { "archivo": "controldenivel-sensores-capacitivos", "menu": "Sensores capacitivos", "resumen": "Sensores SCR y SCAV para productos en grano, polvo, áridos y productos químicos." },

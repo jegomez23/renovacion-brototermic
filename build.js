@@ -271,6 +271,8 @@ const host = site.host.replace(/\/$/, '');
 const rutaPublica = archivo => '/' + archivo.replace(/(^|\/)index\.html$/, '$1');
 const rutasPlan = new Set(plan.map(f => rutaPublica(f.archivo)));
 
+// Entrada de cada categoría en familias.json, por archivo (para sus campos opcionales: otrosNombres)
+const categoriasPorArchivo = new Map(familias.flatMap(f => f.categorias).map(c => [c.archivo, c]));
 const categorias = new Map(); // archivo → { datos, familia, menu }
 for (const fam of familias) {
   const lista = fam.tipo === 'familia' ? fam.categorias : [{ archivo: fam.archivo, menu: fam.nombre }];
@@ -353,7 +355,7 @@ function modeloMenu(rutaActual) {
     clase: '',
     enlaces: [
       enlace('Ver todas', urlFamilia(fam), { verTodas: true, oculto: ` las categorías de ${fam.nombre.toLowerCase()}` }),
-      ...fam.categorias.map(c => enlace(c.menu, `/${c.archivo}.html`, { buscar: textoBusqueda(c.archivo, `${fam.nombre} ${c.menu}`) })),
+      ...fam.categorias.map(c => enlace(c.menu, `/${c.archivo}.html`, { buscar: textoBusqueda(c.archivo, [fam.nombre, c.menu, ...(c.otrosNombres || [])].join(' ')) })),
     ],
   });
   const columnas = [1, 2, 3, 4].map(n => ({
@@ -681,6 +683,30 @@ const sedes = () => (sedesConFoto ??= site.sedes.map(s => ({
   imagen: s.foto ? imagen(s.foto, `site.json → sedes.${s.id}.foto`) : null,
 })));
 
+// Mapa web: TODAS las páginas del plan, generado desde familias.json (orden del menú) y plan-paginas.csv.
+// Los rótulos son los H1 del plan (contienen la keyword de cada página). Se comprueba que no falte ninguna.
+function mapaWeb() {
+  const h1 = archivo => planPorArchivo.get(archivo)?.h1_propuesto || archivo;
+  // «otrosNombres» (familias.json): rótulos con los que la web antigua enlazaba la página («Niveles de boya»)
+  const alias = archivo => categoriasPorArchivo.get(archivo.replace(/\.html$/, ''))?.otrosNombres || [];
+  const li = (archivo, hijos = '') => `<li><a href="${escaparHtml(rutaPublica(archivo))}">${escaparHtml(h1(archivo))}</a>` +
+    `${alias(archivo).length ? ` (${escaparHtml(alias(archivo).join(', '))})` : ''}${hijos}</li>`;
+  const ul = items => `<ul>${items.join('')}</ul>`;
+  const enMapa = new Set();
+  const usar = a => { enMapa.add(a); return a; };
+  const productos = familias.map(f => f.tipo === 'familia'
+    ? li(usar(`${f.archivo}.html`), ul(f.categorias.map(c => li(usar(`${c.archivo}.html`)))))
+    : li(usar(`${f.archivo}.html`)));
+  const grupos = [
+    ['Productos', productos],
+    ['Empresa y servicios', ['index.html', 'empresa.html', 'fabricaciones-a-medida.html', 'nuevos-productos.html'].map(a => li(usar(a)))],
+    ['Contacto y sedes', ['contacto/contacto.html', 'oviedo/index.html'].map(a => li(usar(a)))],
+    ['Información legal', ['privacidad.html', 'cookies.html', 'mapa-web.html'].map(a => li(usar(a)))],
+  ];
+  for (const f of plan) if (!enMapa.has(f.archivo)) error(`mapa-web: la página ${f.archivo} del plan no aparece en el mapa web`);
+  return grupos.map(([titulo, items]) => `<h2>${titulo}</h2>${ul(items)}`).join('\n');
+}
+
 // Página de servicio o legal: el texto entero sale de content/<slug>.html
 function modeloContenido(slug, archivo) {
   const c = leerContenido(slug);
@@ -699,6 +725,7 @@ function modeloContenido(slug, archivo) {
     // «miga»: nombre corto en las migas (arquitectura.md §3); si falta, el H1
     migas: migasDe({ nombre: c.meta.miga || c.meta.h1, url: ruta }),
     sedes: c.meta.sedes === 'si' ? sedes() : null,
+    mapa: slug === 'mapa-web' ? mapaWeb() : null,
     ogImagen: c.imagenes[0] ? `${host}${c.imagenes[0].src}` : null,
   };
   pagina.schema = schemaPagina(pagina);

@@ -71,3 +71,15 @@
   - **Logo del pie:** el logo original tiene «Broto» en marino y no se lee sobre `#1d356c`: el pie usa el logo para fondo claro sobre una placa blanca (`logoFondoOscuro` queda sin uso hasta que haya un SVG en blanco).
   - Listas de especificaciones que ya traen su número en el texto («1. Base soldada…», remiten a la imagen): se pintan sin viñeta y con el texto literal.
 - **Pendiente de decidir:** la frase de pie propia de cada página antigua (texto de 25 px, ver el informe de la sesión) y la mención genérica a la Directiva 94/9/CE del `cuerpo` de `resistencias-atex` (plan-contenido §4, fila 7: se deja literal hasta que la Persona B la actualice).
+
+## D-009 · 2026-10-10 · Páginas de familia, servicio y legales; ajustes del auditor
+
+- **Origen:** sesión de las páginas restantes (rama `feat/paginas-restantes`). Principio rector: no perder el posicionamiento actual.
+- **Decisiones:**
+  - **Familias:** plantilla `familia` con tarjetas de categoría (foto del primer producto, alt vacío porque el título ya es el enlace), bloque «¿No encuentras lo que buscas?» con el texto de /legacy de fabricaciones a medida y enlaces a las otras familias. Intros redactadas con el prompt estándar solo con datos de /legacy, marcadas `_borrador` para la revisión de la Persona B.
+  - **`/content`:** metadatos `miga`, `sedes` y `borrador: si` (este último bloquea la publicación como `_borrador`); se admiten `figure` e `img` (build.js añade medidas, lazy y WebP). Contrato en datos.md §5.
+  - **Auditor:** el chequeo de productos solo se aplica a categorías; las sustituciones del §4 de plan-contenido (y las eliminaciones decididas) están en `tools/lib/legacy.js → SUSTITUCIONES` y no cuentan como frases perdidas; un H1 sin keyword es AVISO (no ERROR) si el H1 antiguo tampoco la tenía (caso «Nuestra historia» de empresa); los enlaces sin protocolo de /legacy (`www.agpd.es`, `info@…`) no se exigen (daban 404, AGENTS.md §3.2); `&nbsp` sin «;» se decodifica como espacio.
+  - **Cookies (§4.18):** la política describe que la web nueva no usa cookies; se eliminan también las categorías «esenciales» (sesión, cesta), «analíticas» y «de usuario» (idioma) que describía el texto antiguo, porque la web nueva no las tiene. [REVISIÓN CLIENTE]
+  - **Privacidad:** texto literal con §4.15-4.17 y §4.20 (párrafo de adjuntos del formulario). Nueva marca [REVISIÓN CLIENTE]: el apartado de Microsoft se apoya en el acuerdo Privacy Shield, anulado en 2020.
+  - **Mapa web:** lo genera build.js con los H1 del plan y da error si falta alguna página. El rótulo antiguo «Niveles de boya» se conserva con el campo nuevo `otrosNombres` de familias.json (también lo usa el buscador del menú).
+- **Documentos:** datos.md (§2 y §5), build.js, tools/auditoria-seo.js, tools/lib/legacy.js, plantillas `familia`, `servicio` y `legal`.

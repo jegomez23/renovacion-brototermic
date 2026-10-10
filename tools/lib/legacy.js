@@ -159,9 +159,25 @@ const SUSTITUCIONES = {
     // §4.11 (el H1 no cuenta en la cobertura, pero el rótulo se corrige igual)
     ['Nuevos Productos 2021', 'Nuevos productos'],
   ],
+  'privacidad.html': [
+    ['Ptr. Ortiz de Urbina, n. 7', 'C/ Pintor Mauro Ortiz de Urbina, 7 bajo'],   // §4.15
+    ['www.agpd.es', 'www.aepd.es'],                                                // §4.16 [REVISIÓN CLIENTE]
+    ['Código de inscripción en la Agencia Española de Protección de Datos: 2131260399', ''], // §4.17
+  ],
+  'cookies.html': [
+    // §4.18: la política describe solo las cookies reales de la web nueva (ninguna: sin analítica, mapas,
+    // reCAPTCHA, redes sociales ni zona de clientes). Se eliminan las categorías que no se usan y el
+    // apartado de cookies de terceros. [REVISIÓN CLIENTE]
+    [/Las cookies que utilizamos en esta página web se agrupan[\s\S]*?(?=\s*<\/p>)/g,
+      'Esta web no utiliza cookies propias ni de terceros: no tiene analítica, ni mapas incrustados, ni botones de redes sociales, ni zona de clientes.'],
+    [/si sólo quiere rechazar todas o algunas de las cookies de terceros[\s\S]*?Cookies de terceros.\.?\s*/g, ''],
+    [/TIPO Y FINALIDAD:[\s\S]*?(?=\s*<\/p>)/g, ''],
+    ['Código de inscripción en la Agencia Española de Protección de Datos: 2131260399', ''], // §4.17
+  ],
 };
+// «de» es un texto literal (sus espacios casan con cualquier espacio del HTML) o una RegExp ya construida
 const sustituciones = archivo => (SUSTITUCIONES[archivo] || []).map(([de, a]) => ({
-  re: new RegExp(de.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ /g, '\\s+'), 'g'),
+  re: de instanceof RegExp ? de : new RegExp(de.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ /g, '\\s+'), 'g'),
   a,
 }));
 
