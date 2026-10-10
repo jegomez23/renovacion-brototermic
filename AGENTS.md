@@ -9,12 +9,15 @@
 > - **(dato externo, confirmar con cliente)**: dato que ha dado el cliente pero no aparece en `/legacy`. **Se usa** en la web, y queda anotado en `data/site.json → pendientes` hasta que el cliente lo confirme (decisión del 2026-10-09).
 > - **[REVISIÓN CLIENTE]**: texto legal que **se publica** con la redacción propuesta, pero que el cliente o su asesor deben revisar. En `/content` va dentro de un comentario HTML (`<!-- [REVISIÓN CLIENTE] motivo -->`) para que no se vea en la página; `build.js` lo lista como aviso y **no bloquea** la publicación (decisión del 2026-10-09).
 >
+> **Dónde estamos, en 1 minuto: [docs/estado.md](docs/estado.md)** (qué está hecho, cómo ver la web y qué bloquea la publicación).
+>
 > Última revisión: 2026-10-10.
 
 ## Documentos del proyecto (`/docs`)
 
 | Documento | Para qué sirve |
 |---|---|
+| [docs/estado.md](docs/estado.md) | **Estado del proyecto en 1 minuto:** qué está hecho (con cifras), cómo ver la web (`npm run dev`), qué bloquea la publicación (nosotros, Persona B, cliente) y los siguientes pasos |
 | [docs/tareas.md](docs/tareas.md) | **Por dónde empezar:** backlog por día y persona, dependencias, ruta crítica y qué se recorta si no da tiempo |
 | [docs/arquitectura.md](docs/arquitectura.md) | Árbol de la web, megamenú definitivo, migas de pan y reglas de enlazado interno |
 | [docs/plan-paginas.csv](docs/plan-paginas.csv) | Las 52 páginas finales: plantilla, title y meta nuevos, H1, keyword, nº de productos, prioridad, responsable y día |
