@@ -870,6 +870,28 @@ function modeloSede() {
   return pagina;
 }
 
+// 404.html (propuesta del §12 aprobada el 2026-10-10): noindex, sin canonical, sin JSON-LD y fuera del sitemap.
+// No está en plan-paginas.csv (no es una URL indexable). Apache la sirve con ErrorDocument (src/.htaccess).
+function modelo404() {
+  const c = leerContenido('404');
+  if (!c) return null;
+  for (const campo of ['title', 'meta', 'h1']) if (!c.meta[campo]) error(`${c.ruta}: falta «${campo}» en los metadatos`);
+  return {
+    ruta: '/404.html',
+    canonical: null,
+    noindex: true,
+    title: c.meta.title,
+    meta: c.meta.meta,
+    h1: c.meta.h1,
+    contenido: c.cuerpo,
+    migas: migasDe({ nombre: c.meta.miga || c.meta.h1, url: '/404.html' }),
+    sedes: null,
+    mapa: null,
+    ogImagen: null,
+    schema: null,
+  };
+}
+
 // Página de servicio o legal: el texto entero sale de content/<slug>.html
 function modeloContenido(slug, archivo) {
   const c = leerContenido(slug);
@@ -969,6 +991,9 @@ function main() {
   if (contacto) paginas.push({ plantilla: 'contacto', pagina: contacto });
   const oviedo = modeloSede();
   if (oviedo) paginas.push({ plantilla: 'sede', pagina: oviedo });
+  const p404 = modelo404();
+  if (p404) paginas.push({ plantilla: 'legal', pagina: p404 });
+  for (const p of paginas) p.pagina = { noindex: false, ...p.pagina };
 
   // Title y meta únicos entre todas las páginas generadas
   for (const campo of ['title', 'meta']) {
@@ -996,7 +1021,7 @@ function main() {
 
   // sitemap.xml: solo URLs canónicas que existen (páginas generadas + PDF públicos), nunca una URL redirigida
   const pdfs = fs.readdirSync(path.join(RAIZ, 'docs')).filter(f => f.toLowerCase().endsWith('.pdf')).sort();
-  const urlsSitemap = [...paginas.map(p => p.pagina.canonical), ...pdfs.map(f => `${host}/docs/${f}`)];
+  const urlsSitemap = [...paginas.filter(p => !p.pagina.noindex).map(p => p.pagina.canonical), ...pdfs.map(f => `${host}/docs/${f}`)];
   const xmlEscapar = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   fs.writeFileSync(path.join(DIST, 'sitemap.xml'),
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
@@ -1014,6 +1039,8 @@ function main() {
 
   // Resumen
   const faltan = plan.filter(f => !generadas.has(rutaPublica(f.archivo)));
+  // Validación 1 (datos.md §6): ninguna página fuera del plan, salvo la 404
+  for (const r of generadas) if (!rutasPlan.has(r) && r !== '/404.html') error(`dist${r}: página generada que no está en plan-paginas.csv`);
   if (faltan.length) pendiente(`Generadas ${generadas.size} de ${plan.length} páginas del plan; faltan ${faltan.length}.`);
   if (enlacesPendientes.size) {
     pendiente(`${enlacesPendientes.size} enlaces internos apuntan a páginas del plan que aún no se generan` +

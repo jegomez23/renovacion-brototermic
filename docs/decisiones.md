@@ -83,3 +83,11 @@
   - **Privacidad:** texto literal con §4.15-4.17 y §4.20 (párrafo de adjuntos del formulario). Nueva marca [REVISIÓN CLIENTE]: el apartado de Microsoft se apoya en el acuerdo Privacy Shield, anulado en 2020.
   - **Mapa web:** lo genera build.js con los H1 del plan y da error si falta alguna página. El rótulo antiguo «Niveles de boya» se conserva con el campo nuevo `otrosNombres` de familias.json (también lo usa el buscador del menú).
 - **Documentos:** datos.md (§2 y §5), build.js, tools/auditoria-seo.js, tools/lib/legacy.js, plantillas `familia`, `servicio` y `legal`.
+
+## D-010 · 2026-10-10 · Página 404 propia y tira de logos de marcas a 990 px
+
+- **Origen:** responsable del proyecto, revisión del informe de la sesión del 2026-10-10.
+- **Decisiones:**
+  - **Página 404 propia** (era la propuesta pendiente 13 de AGENTS.md §12): `/404.html` con `<meta name="robots" content="noindex">`, sin canonical, sin JSON-LD y fuera del sitemap. Texto en `content/404.html` (enlaces al inicio, las 4 familias, el mapa web y el formulario). El `.htaccess` la sirve con `ErrorDocument 404 /404.html` en el `.com`; en el `.es` se mantiene el 404 por defecto de Apache, porque los enlaces de la 404 son rutas del `.com`. `build.js` la genera aparte del plan (no es una URL indexable) y da error si se genera cualquier otra página fuera de `plan-paginas.csv`.
+  - **Tira de logos de marcas** (`/images/brototermic-marcas-representadas.jpg`, 990 × 80): se aprueba como **excepción** a la regla «solo el hero se sirve a más de 480 px», con `loading="lazy"` (está por debajo del primer pantallazo). Se conserva la URL indexada de /legacy. Cuando lleguen los SVG oficiales de las marcas (pendiente 8), se sustituye por los logos individuales y esta excepción desaparece.
+- **Documentos:** AGENTS.md (§5, §11 y §12.13), diseno.md §3.4, `src/.htaccess`, `build.js`, `content/404.html`, `tools/comprobar-dist.js`.

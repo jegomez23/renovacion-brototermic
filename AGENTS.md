@@ -9,7 +9,7 @@
 > - **(dato externo, confirmar con cliente)**: dato que ha dado el cliente pero no aparece en `/legacy`. **Se usa** en la web, y queda anotado en `data/site.json → pendientes` hasta que el cliente lo confirme (decisión del 2026-10-09).
 > - **[REVISIÓN CLIENTE]**: texto legal que **se publica** con la redacción propuesta, pero que el cliente o su asesor deben revisar. En `/content` va dentro de un comentario HTML (`<!-- [REVISIÓN CLIENTE] motivo -->`) para que no se vea en la página; `build.js` lo lista como aviso y **no bloquea** la publicación (decisión del 2026-10-09).
 >
-> Última revisión: 2026-10-09.
+> Última revisión: 2026-10-10.
 
 ## Documentos del proyecto (`/docs`)
 
@@ -27,6 +27,7 @@
 | [docs/inventario-urls.csv](docs/inventario-urls.csv) | **Control de la migración:** cada URL antigua o nueva con su estado (MANTENER / REDIRIGIR / NUEVA) y destino |
 | [docs/inventario-imagenes.csv](docs/inventario-imagenes.csv) | Todas las imágenes de contenido de /legacy con su alt actual y las páginas donde se usan |
 | [docs/checklist-publicacion.md](docs/checklist-publicacion.md) | Comprobaciones antes y después de publicar, Search Console, copia de seguridad y vuelta atrás |
+| [docs/publicacion.md](docs/publicacion.md) | **Guion del día de publicar**, con los comandos: copia por FTP, subida, verificaciones en producción, Search Console, vuelta atrás y seguimiento de 4-8 semanas |
 | [docs/preguntas-cliente.md](docs/preguntas-cliente.md) | Mensaje único al cliente con todas las preguntas pendientes y el registro de respuestas |
 | [docs/auditoria-seo.md](docs/auditoria-seo.md) | **Auditoría de paridad SEO** /legacy ↔ /dist, una fila por URL (la genera `tools/auditoria-seo.js`: no se edita a mano) |
 | [docs/decisiones.md](docs/decisiones.md) | **Registro detallado de decisiones** (fecha, origen, qué se decide y qué documentos cambian). El resumen sigue en la sección 11 de este archivo |
@@ -210,7 +211,7 @@ Especificación completa en [docs/schema.md](docs/schema.md). Resumen:
   - Se muestran en un **contenedor 4:3 con `object-fit: contain` y marco blanco**, sin ampliarlas por CSS más allá de su tamaño real. Casi todas miden **260 × 168 px**.
   - **WebP opcional:** si existe `<nombre>.webp` con las mismas medidas que el JPG, `build.js` lo sirve con `<picture>`; si no, solo el JPG. No es obligatorio para las fotos de producto (pesan 8-16 KB).
   - **Retoque manual solo en 3 fotos del piloto con dominante de color**, y únicamente en **fondo e iluminación** (nunca forma, rótulos ni color del producto): `brototermic-industriaalimentaria`, `brototermic-calefactores` y `brototermic-liquidos-noagresivos` (medidas: [docs/plan-imagenes.csv](docs/plan-imagenes.csv)). El archivo retocado conserva el nombre y las medidas.
-  - **Hero del inicio:** `slide-1` se sirve a **910 px** (su tamaño real), con `slide-1.webp` y `slide-1.jpg` de respaldo. Es la única imagen que se sirve a más de 480 px.
+  - **Hero del inicio:** `slide-1` se sirve a **910 px** (su tamaño real), con `slide-1.webp` y `slide-1.jpg` de respaldo, sin `loading="lazy"`. Única excepción además del hero: la **tira de logos de marcas** del inicio (`brototermic-marcas-representadas.jpg`, 990 × 80), con `loading="lazy"`, hasta que lleguen los SVG de las marcas (decisión del 2026-10-10, [docs/decisiones.md](docs/decisiones.md) D-010).
   - Las fotos mejores que pueda dar el cliente o los fabricantes (pregunta 21) sustituyen a las originales con el mismo nombre: la URL no cambia, así que no afecta al SEO.
 - Todas las `<img>` llevan **`width` y `height`**, **`loading="lazy"` excepto la imagen principal (hero)**, que lleva `fetchpriority="high"`, y un **`alt` descriptivo real** (qué producto es y qué se ve), sin «BROTOTERMIC, S.L.». Los alts propuestos están en [docs/plan-imagenes.csv](docs/plan-imagenes.csv) y se revisan con la imagen delante.
 - **IA solo para RETOCAR** (fondo, nitidez, ampliación). **Nunca para inventar un producto** ni cambiar su forma, sus rótulos o su color. Las imágenes de ambiente o de portada sí pueden generarse, siempre que no muestren un producto concreto como si fuera del catálogo.
@@ -270,6 +271,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 │   ├── servir.js        ← servidor local de /dist (node tools/servir.js → http://localhost:8000)
 │   ├── capturas.js      ← capturas a 320/360/768/1280 px y comprobaciones (scroll horizontal, consola, terceros)
 │   ├── auditoria-seo.js ← auditor de paridad SEO /legacy ↔ /dist (escribe docs/auditoria-seo.md)
+│   ├── comprobar-dist.js ← sitemap (solo canónicas con 200), robots, canonical, 404 noindex y huérfanas
 │   ├── lib/legacy.js    ← lectura común de /legacy y de los CSV (importador y auditor)
 │   ├── importar-legacy.js
 │   ├── probar-redirecciones.sh
@@ -385,6 +387,7 @@ Una página está lista cuando cumple todo esto:
 | 2026-10-09 | **BreadcrumbList** en todas las páginas **excepto el inicio**: aprobado. |
 | 2026-10-09 | **HITO-1 (decisiones del piloto, detalle en [docs/decisiones.md](docs/decisiones.md)):** cabecera blanca con logo provisional para fondo claro y franja `#004c9a`; title del inicio «Componentes industriales e instrumentación \| BROTOTERMIC»; hero `slide-1` a 910 px (WebP + JPG); **se descarta la ampliación de imágenes**: originales a tamaño real y retoque manual solo de 3 fotos (fondo e iluminación); buscador de categorías y marco blanco aprobados. |
 | 2026-10-09 | **Revisión de Codex:** sin comodín en el `.es` (301 solo URLs conocidas, 404 el resto); formulario compatible con `rd-mailform.php` y sin envío real hasta tener el hosting; `build.js` con modos `piloto` y `publicacion`; bloque de sectores solo con sectores de /legacy y sin URLs nuevas; alts de RE92 y Catálogos corregidos; menú según el patrón *Disclosure Navigation* del W3C, `prefers-reduced-motion` y prueba a 320 px. |
+| 2026-10-10 | **Página 404 propia** (`/404.html`, `noindex`, sin canonical, fuera del sitemap; `ErrorDocument` en el `.htaccess`) y **tira de logos de marcas a 990 px** con `loading="lazy"` como excepción a la regla de 480 px: aprobadas (D-010). |
 
 ---
 
@@ -404,7 +407,7 @@ Las preguntas al cliente están redactadas en [docs/preguntas-cliente.md](docs/p
 10. Si se quiere **analítica**. Sin ella, y sin mapas incrustados ni reCAPTCHA, la web no necesita banner de cookies.
 11. Keywords marcadas [POR VERIFICAR GSC] en `plan-paginas.csv` (inicio, contacto, empresa, `/oviedo/`, transductores magnéticos, accesorios para sondas).
 12. Qué **provincias limítrofes** se atienden desde Vitoria (para `areaServed`).
-13. **Propuestas de diseño pendientes de aprobar:** página 404 propia y el «Cómo llegar» con un enlace a Google Maps en lugar de un iframe (por rendimiento y cookies).
+13. **Propuesta de diseño pendiente de aprobar:** el «Cómo llegar» con un enlace a Google Maps en lugar de un iframe (por rendimiento y cookies). La página 404 propia se aprobó el 2026-10-10 (D-010).
 14. **Logo vectorial (SVG)** para fondo claro: mientras no llegue, la cabecera usa `images/logo-claro.png`, una copia del logo original con las partes blancas pasadas a `#004c9a` (provisional, pendiente de que el cliente la apruebe o la sustituya).
 15. **Retoque de 3 fotos del piloto** (fondo e iluminación): lo hace la Persona B; herramienta a su elección, siempre comparando con el original.
 16. **Envío real del formulario:** se activa (`envioActivo: true`) cuando haya acceso al hosting y se sepa qué admite `rd-mailform.php` (adjuntos) o se suba `enviar.php`.

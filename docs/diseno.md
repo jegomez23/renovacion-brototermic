@@ -128,7 +128,7 @@ Cada componente tiene su descripción, sus variantes y su comportamiento en móv
 ### 3.4 Hero
 - **Descripción:** solo en el inicio, en `/oviedo/` y en las familias. Lleva el H1, una frase de valor (de /legacy o de `content/`), 2 botones («Pedir presupuesto» como primario y «Ver productos» como secundario) y una imagen (en el inicio, `slide-1`, el calefactor ATEX con brida).
 - **Variantes:** `inicio` (imagen grande a la derecha en escritorio), `familia` (imagen pequeña, más bajo) y `sede` (foto real de la delegación).
-- **Imagen del hero del inicio:** `slide-1` a **910 px**, su tamaño real (`<picture>` con `slide-1.webp` y `slide-1.jpg` de respaldo). Es la única imagen que se sirve a más de 480 px (HITO-1).
+- **Imagen del hero del inicio:** `slide-1` a **910 px**, su tamaño real (`<picture>` con `slide-1.webp` y `slide-1.jpg` de respaldo). Es la única imagen que se sirve a más de 480 px (HITO-1), salvo la tira de logos de marcas (990 px, con `loading="lazy"`; D-010).
 - **Móvil:** el texto va primero y la imagen debajo, con proporción fija. La imagen del hero no lleva `loading="lazy"` y lleva `fetchpriority="high"`.
 
 ### 3.5 Tarjeta de familia

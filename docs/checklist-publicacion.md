@@ -1,5 +1,7 @@
 # Checklist de publicación
 
+> El guion paso a paso del día de publicar, con los comandos, está en [publicacion.md](publicacion.md); este documento son las casillas de control.
+>
 > La ejecuta la Persona A con la Persona B delante. Cada casilla se marca en el PR de publicación, con la evidencia (salida de comando o captura). Si una casilla de «Antes» falla, **no se publica**.
 > Fuentes de control: [inventario-urls.csv](inventario-urls.csv), [redirecciones.csv](redirecciones.csv), [plan-paginas.csv](plan-paginas.csv).
 
@@ -21,7 +23,8 @@
 
 ### Build
 - [ ] `node build.js --publicar` termina **sin errores** (sin `_borrador`, sin `[POR VERIFICAR` y sin «(dato externo» en `/dist`). Los avisos de `site.pendientes` se revisan y se aceptan.
-- [ ] `/dist` contiene exactamente las 52 páginas de `plan-paginas.csv`, los 8 PDF con su nombre exacto, `sitemap.xml`, `robots.txt` y `.htaccess`.
+- [ ] `/dist` contiene exactamente las 52 páginas de `plan-paginas.csv` más `404.html`, los 8 PDF con su nombre exacto, `sitemap.xml`, `robots.txt` y `.htaccess`.
+- [ ] `node tools/comprobar-dist.js` (con `node tools/servir.js` arrancado) dice «Todo correcto»: sitemap solo con URLs canónicas que responden 200, robots, canonical en todas las páginas, 404 con noindex y 0 páginas huérfanas.
 
 ### URLs
 - [ ] Cada fila `MANTENER` de `inventario-urls.csv` existe en `/dist` con la misma ruta y el mismo nombre (comprobado por script).
@@ -84,7 +87,7 @@
 - [ ] Propiedad del `.es`: usar la **herramienta de cambio de dirección** hacia `brototermic.com`. [POR VERIFICAR: la herramienta comprueba que la portada antigua redirige al sitio nuevo; aquí redirige a `/oviedo/` y no a la portada, y podría rechazarlo. Si lo rechaza, basta con las redirecciones 301 y el sitemap; se documenta y no se cambia la decisión.]
 - [ ] Mantener la propiedad del `.es` y su registro de dominio **al menos 1 año** con las redirecciones activas.
 
-## 5. Seguimiento (días 1, 3, 7, 14 y 30)
+## 5. Seguimiento (días 1, 3, 7, 14 y 30; después, hasta la semana 8 según [publicacion.md](publicacion.md) §6)
 
 - [ ] Informe de cobertura y de páginas: errores 404 nuevos, «Página con redirección» y «Duplicada». Cada 404 de una URL antigua se añade a `inventario-urls.csv` y a `redirecciones.csv`.
 - [ ] Comparar clics e impresiones con la exportación previa. Si una página pierde más de un 30 % de clics en 14 días, revisar su title, su contenido y su redirección.

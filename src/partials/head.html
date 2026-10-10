@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{pagina.title}}</title>
 <meta name="description" content="{{pagina.meta}}">
-<link rel="canonical" href="{{pagina.canonical}}">
+{{#if pagina.noindex}}<meta name="robots" content="noindex">{{else}}<link rel="canonical" href="{{pagina.canonical}}">{{/if}}
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_ES">
 <meta property="og:site_name" content="{{site.nombre}}">
 <meta property="og:title" content="{{pagina.title}}">
 <meta property="og:description" content="{{pagina.meta}}">
-<meta property="og:url" content="{{pagina.canonical}}">
+{{#unless pagina.noindex}}<meta property="og:url" content="{{pagina.canonical}}">{{/unless}}
 {{#if pagina.ogImagen}}<meta property="og:image" content="{{pagina.ogImagen}}">{{/if}}
 <meta name="theme-color" content="#ffffff">
 <link rel="icon" href="/images/favicon.ico">

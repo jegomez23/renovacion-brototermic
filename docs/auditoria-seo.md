@@ -1,6 +1,6 @@
 # Auditoría de paridad SEO
 
-> Generado por `node tools/auditoria-seo.js` (modo **piloto**). **No se edita a mano.** Compara cada URL de /legacy con su equivalente en /dist: que exista (o tenga un 301 válido), que conserve title, H1, productos, modelos, imágenes, PDF, enlaces internos y el texto (cobertura ≥ 95 %), y que tenga canonical, JSON-LD y presencia en sitemap.xml.
+> Generado por `node tools/auditoria-seo.js` (modo **publicacion**). **No se edita a mano.** Compara cada URL de /legacy con su equivalente en /dist: que exista (o tenga un 301 válido), que conserve title, H1, productos, modelos, imágenes, PDF, enlaces internos y el texto (cobertura ≥ 95 %), y que tenga canonical, JSON-LD y presencia en sitemap.xml.
 
 **Resultado:** 69 OK · 8 AVISO · 0 ERROR (77 URLs del inventario).
 

@@ -16,6 +16,13 @@ Options -Indexes -MultiViews
 DirectoryIndex index.html
 AddDefaultCharset utf-8
 
+# Página 404 propia (noindex). En el .es, el 404 por defecto de Apache: los enlaces de /404.html son
+# rutas del .com y desde el host .es llevarían a otro 404.
+ErrorDocument 404 /404.html
+<If "%{HTTP_HOST} =~ /brototermic\.es$/i">
+  ErrorDocument 404 default
+</If>
+
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
