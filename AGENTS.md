@@ -261,6 +261,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── README.md
 ├── .gitignore
 ├── .gitattributes       ← /legacy se guarda byte a byte; formatos binarios marcados
+├── package.json         ← SOLO scripts (dev, build, build:publicacion, test, validar): ninguna dependencia
 ├── build.js             ← generador (Node ≥ 18, sin dependencias npm)            [A]
 ├── legacy/              ← copia de la web actual. VERSIONADA. SOLO LECTURA, NUNCA se edita
 │   ├── com/brototermic.com/   (incluye contacto.html, oviedo/ y sitemap.xml)
@@ -273,7 +274,10 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 │   └── .htaccess        ← redirecciones y configuración Apache (se copia a /dist)
 ├── tools/               ← no se publican                                       [A]
 │   ├── validar-plan.js  ← comprueba plan-paginas.csv (title, meta, keyword, «Vitoria»)
-│   ├── servir.js        ← servidor local de /dist (node tools/servir.js → http://localhost:8000)
+│   ├── dev.js           ← npm run dev: build + servidor en http://localhost:8000 + reconstrucción al guardar
+│   ├── test.js          ← npm run test: build, test-auditor + auditor, comprobar-dist y comprobar-publicable
+│   ├── validar.js       ← npm run validar: W3C local (validador Nu en tools/vnu/, que no va en git)
+│   ├── servir.js        ← servidor local de /dist (solo 127.0.0.1; también lo usan dev.js y test.js)
 │   ├── capturas.js      ← capturas a 320/360/768/1280 px y comprobaciones (scroll horizontal, consola, terceros)
 │   ├── auditoria-seo.js ← auditor de paridad SEO /legacy ↔ /dist (escribe docs/auditoria-seo.md)
 │   ├── test-auditor.js  ← pruebas de mutación del auditor: se ejecutan siempre antes de dar por buena una auditoría
