@@ -659,8 +659,10 @@ function leerContenido(slug) {
   }
   let cuerpo = texto.slice(cab[0].length);
   for (const m of cuerpo.matchAll(/<!--\s*\[REVISIÓN CLIENTE\]([\s\S]*?)-->/g)) aviso(`${ruta}: [REVISIÓN CLIENTE] ${m[1].trim()}`);
+  // «<!-- bloque: nombre -->» parte el texto en bloques que la plantilla coloca por separado (inicio, sede)
+  cuerpo = cuerpo.replace(/<!--\s*bloque:\s*([\w-]+)\s*-->/g, '\u0000$1\u0000');
   cuerpo = cuerpo.replace(/<!--[\s\S]*?-->/g, '').trim();
-  revisarEtiquetas(cuerpo, ruta, ETIQUETAS_CONTENIDO);
+  revisarEtiquetas(cuerpo.replace(/\u0000[\w-]+\u0000/g, ''), ruta, ETIQUETAS_CONTENIDO);
   const imagenes = [];
   cuerpo = cuerpo.replace(/<img\b([^>]*)>/gi, (etiqueta, attrs) => {
     const src = (attrs.match(/\ssrc="([^"]+)"/) || [])[1];
@@ -673,7 +675,62 @@ function leerContenido(slug) {
     return `<picture>${img.webp ? `<source type="image/webp" srcset="${img.webp}">` : ''}` +
       `<img src="${img.src}" width="${img.ancho}" height="${img.alto}" alt="${alt}" loading="lazy" decoding="async"></picture>`;
   });
-  return { ruta, meta, cuerpo, imagenes };
+  const [principal, ...trozos] = cuerpo.split('\u0000');
+  const bloques = {};
+  for (let i = 0; i < trozos.length; i += 2) bloques[trozos[i]] = trozos[i + 1].trim();
+  return { ruta, meta, cuerpo: principal.trim(), bloques, imagenes };
+}
+
+// Bloque obligatorio de un texto de /content (inicio, sede): error claro si falta
+function bloque(c, nombre) {
+  if (!(nombre in c.bloques)) { error(`${c.ruta}: falta el bloque «<!-- bloque: ${nombre} -->»`); return ''; }
+  return c.bloques[nombre];
+}
+
+// Schema completo de la organización y de cada sede (schema.md §3 y §4). Lo que no tiene dato se omite.
+const direccionPostal = s => ({
+  '@type': 'PostalAddress', streetAddress: s.direccion, postalCode: s.cp,
+  addressLocality: s.localidad, addressRegion: s.provincia, addressCountry: s.pais,
+});
+const idSede = s => (s.id === 'vitoria' ? `${host}/#sede-vitoria` : `${host}${s.pagina}#sede-${s.id}`);
+const AREA_SEDE = { vitoria: 'País Vasco', oviedo: 'Asturias' }; // provincias limítrofes: pendiente 12 de AGENTS.md
+function schemaSede(s) {
+  const foto = s.foto ? imagen(s.foto, `site.json → sedes.${s.id}.foto`) : null;
+  return {
+    '@type': 'LocalBusiness',
+    '@id': idSede(s),
+    name: `${site.nombre} — ${s.localidad}`,
+    parentOrganization: { '@id': `${host}/#organizacion` },
+    url: `${host}${s.pagina}`,
+    telephone: s.tel,
+    email: s.email,
+    ...(foto ? { image: `${host}${foto.src}` } : {}),
+    address: direccionPostal(s),
+    ...(s.geo ? { geo: { '@type': 'GeoCoordinates', latitude: s.geo.lat, longitude: s.geo.lng } } : {}),
+    ...(s.mapaUrl ? { hasMap: s.mapaUrl } : {}),
+    ...(s.horario ? { openingHours: s.horario } : {}),
+    areaServed: AREA_SEDE[s.id],
+  };
+}
+function schemaOrganizacion() {
+  const vit = site.sedes.find(s => s.id === 'vitoria');
+  return {
+    '@type': 'Organization',
+    '@id': `${host}/#organizacion`,
+    name: site.nombre,
+    legalName: site.razonSocial,
+    taxID: site.cif,
+    url: `${host}/`,
+    logo: `${host}${encodeURI(site.logo)}`,
+    foundingDate: String(site.fundacion),
+    email: vit.email,
+    telephone: vit.tel,
+    address: direccionPostal(vit),
+    contactPoint: site.sedes.map(s => ({
+      '@type': 'ContactPoint', telephone: s.tel, email: s.email, contactType: 'sales', areaServed: 'ES', availableLanguage: 'es',
+    })),
+    subOrganization: site.sedes.map(s => ({ '@id': idSede(s) })),
+  };
 }
 
 // Sedes con su foto (bloque de sedes del inicio, empresa, contacto)
@@ -705,6 +762,59 @@ function mapaWeb() {
   ];
   for (const f of plan) if (!enMapa.has(f.archivo)) error(`mapa-web: la página ${f.archivo} del plan no aparece en el mapa web`);
   return grupos.map(([titulo, items]) => `<h2>${titulo}</h2>${ul(items)}`).join('\n');
+}
+
+// Tarjetas de las 8 familias (4 con página + 4 directas), en el orden de familias.json (inicio y /oviedo/)
+function tarjetasFamilias() {
+  return familias.map(f => {
+    const esFamilia = f.tipo === 'familia';
+    if (!f.resumen) error(`data/familias.json → ${f.id}: falta el «resumen» de la tarjeta`);
+    const n = esFamilia ? f.categorias.length : categorias.get(f.archivo)?.datos?.productos.length || 0;
+    return {
+      nombre: f.nombre,
+      url: urlFamilia(f),
+      resumen: f.resumen,
+      imagen: f.img ? imagen(f.img, `data/familias.json → ${f.id}`) : imagenDeCategoria(esFamilia ? f.categorias[0].archivo : f.archivo),
+      nota: n ? `${n} ${esFamilia ? 'categorías' : 'productos'}` : null,
+    };
+  });
+}
+
+// Inicio: los textos salen de content/inicio.html (bloques); tarjetas, marcas, catálogos y sedes, de /data
+function modeloInicio() {
+  const c = leerContenido('inicio');
+  if (!c) return null;
+  for (const campo of ['title', 'meta', 'h1']) if (!c.meta[campo]) error(`${c.ruta}: falta «${campo}» en los metadatos`);
+  if (c.meta.borrador === 'si') pendiente(`${c.ruta}: sigue marcado como borrador (lo quita la Persona B al revisarlo)`);
+  comprobarPlan(c.ruta, 'index.html', c.meta);
+  const hero = imagen('slide-1', c.ruta);
+  const pagina = {
+    ruta: '/',
+    canonical: `${host}/`,
+    title: c.meta.title,
+    meta: c.meta.meta,
+    h1: c.meta.h1,
+    migas: migasDe(),
+    hero: hero ? { ...hero, alt: c.meta['hero-alt'] || '' } : null,
+    texto: Object.fromEntries(['hero', 'empresa', 'medida', 'novedades', 'catalogos', 'marcas', 'sedes'].map(b => [b, bloque(c, b)])),
+    tarjetas: tarjetasFamilias(),
+    fundacion: site.fundacion,
+    numMarcas: site.marcas.length,
+    marcas: site.marcas,
+    marcasImagen: imagen('brototermic-marcas-representadas', c.ruta),
+    catalogos: site.catalogos.map(k => ({ titulo: k.titulo, url: urlPublica(k.pdf) })),
+    sedes: sedes(),
+    // Miniaturas de /legacy (100 × 110, decorativas: el título de cada bloque ya dice lo que es)
+    miniaturas: {
+      medida: imagen('productos-a-medida-brototermic', c.ruta),
+      novedades: imagen('nuevos-productos-brototermic', c.ruta),
+      catalogos: imagen('Catalogos-de-brototermic', c.ruta),
+    },
+    ogImagen: hero ? `${host}${hero.src}` : null,
+  };
+  if (!pagina.hero?.alt) error(`${c.ruta}: falta «hero-alt» (alt de slide-1) en los metadatos`);
+  pagina.schema = schemaPagina(pagina, { organizacion: schemaOrganizacion(), nodos: site.sedes.map(schemaSede) });
+  return pagina;
 }
 
 // Página de servicio o legal: el texto entero sale de content/<slug>.html
@@ -791,6 +901,8 @@ function main() {
   limpiarDist();
 
   const paginas = [];
+  const inicio = modeloInicio();
+  if (inicio) paginas.push({ plantilla: 'inicio', pagina: inicio });
   for (const fam of familias.filter(f => f.tipo === 'familia')) paginas.push({ plantilla: 'familia', pagina: modeloFamilia(fam) });
   for (const [archivo, cat] of categorias) {
     if (cat.datos) paginas.push({ plantilla: 'categoria', pagina: modeloCategoria(archivo, cat) });

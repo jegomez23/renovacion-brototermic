@@ -1,0 +1,91 @@
+{{> head}}
+<body>
+{{> cabecera}}
+<main id="contenido" tabindex="-1">
+  {{! Hero: la única imagen que se sirve a más de 480 px (HITO-1); sin lazy y con prioridad alta (LCP) }}
+  <section class="hero">
+    <div class="contenedor hero__interior">
+      <div class="hero__texto">
+        <h1>{{pagina.h1}}</h1>
+        <div class="entradilla">{{{pagina.texto.hero}}}</div>
+        <div class="pagina-cabecera__acciones">
+          <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+          <a class="boton boton--secundario" href="#familias">Ver productos</a>
+        </div>
+      </div>
+      {{#if pagina.hero}}<picture class="hero__imagen">{{#if pagina.hero.webp}}<source type="image/webp" srcset="{{pagina.hero.webp}}">{{/if}}<img src="{{pagina.hero.src}}" width="{{pagina.hero.ancho}}" height="{{pagina.hero.alto}}" alt="{{pagina.hero.alt}}" fetchpriority="high"></picture>{{/if}}
+    </div>
+  </section>
+
+  <div class="contenedor">
+    <ul class="confianza" aria-label="BROTOTERMIC en cifras">
+      <li><strong>Desde {{pagina.fundacion}}</strong> distribución industrial</li>
+      <li><strong>{{pagina.numMarcas}} marcas</strong> representadas</li>
+      <li><strong>Fabricación</strong> a medida</li>
+      <li><strong>Vitoria y Oviedo</strong> dos sedes</li>
+    </ul>
+
+    <section class="seccion" id="familias" aria-labelledby="familias-titulo">
+      <h2 id="familias-titulo">Familias de producto</h2>
+      {{> tarjetas}}
+    </section>
+
+    <div class="seccion destacados">
+      <section class="destacado" aria-labelledby="medida-titulo">
+        {{#if pagina.miniaturas.medida}}<img class="destacado__imagen" src="{{pagina.miniaturas.medida.src}}" width="{{pagina.miniaturas.medida.ancho}}" height="{{pagina.miniaturas.medida.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
+        <div>
+          <h2 class="destacado__titulo" id="medida-titulo">Productos a medida</h2>
+          {{{pagina.texto.medida}}}
+          <a class="boton boton--secundario" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
+        </div>
+      </section>
+      <section class="destacado" aria-labelledby="novedades-titulo">
+        {{#if pagina.miniaturas.novedades}}<img class="destacado__imagen" src="{{pagina.miniaturas.novedades.src}}" width="{{pagina.miniaturas.novedades.ancho}}" height="{{pagina.miniaturas.novedades.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
+        <div>
+          <h2 class="destacado__titulo" id="novedades-titulo">Mercado y aplicación</h2>
+          {{{pagina.texto.novedades}}}
+          <a class="boton boton--secundario" href="/nuevos-productos.html">Nuevos productos</a>
+        </div>
+      </section>
+      <section class="destacado" aria-labelledby="catalogos-titulo">
+        {{#if pagina.miniaturas.catalogos}}<img class="destacado__imagen" src="{{pagina.miniaturas.catalogos.src}}" width="{{pagina.miniaturas.catalogos.ancho}}" height="{{pagina.miniaturas.catalogos.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
+        <div>
+          <h2 class="destacado__titulo" id="catalogos-titulo">Nuestros catálogos</h2>
+          {{{pagina.texto.catalogos}}}
+          <ul class="destacado__lista">
+            {{#each pagina.catalogos}}<li><a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a></li>
+            {{/each}}
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <section class="seccion marcas" aria-labelledby="marcas-titulo">
+      <h2 id="marcas-titulo">Nuestras marcas representadas</h2>
+      {{{pagina.texto.marcas}}}
+      {{#if pagina.marcasImagen}}<img class="marcas__imagen" src="{{pagina.marcasImagen.src}}" width="{{pagina.marcasImagen.ancho}}" height="{{pagina.marcasImagen.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
+      <ul class="marcas__lista">
+        {{#each pagina.marcas}}<li>{{nombre}}</li>
+        {{/each}}
+      </ul>
+    </section>
+
+    <section class="seccion sobre-nosotros" aria-labelledby="empresa-titulo">
+      <div class="sobre-nosotros__texto">
+        <h2 id="empresa-titulo">Sobre nosotros</h2>
+        {{{pagina.texto.empresa}}}
+        <a class="boton boton--secundario" href="/empresa.html">Conoce nuestra historia</a>
+      </div>
+    </section>
+
+    <section class="seccion" aria-labelledby="sedes-titulo">
+      <h2 id="sedes-titulo">Dónde estamos</h2>
+      {{{pagina.texto.sedes}}}
+      {{> sedes}}
+    </section>
+  </div>
+  {{> cta-presupuesto}}
+</main>
+{{> pie}}
+</body>
+</html>

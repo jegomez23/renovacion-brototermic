@@ -215,6 +215,9 @@ Metadatos (una línea `clave: valor` cada uno):
 | `miga` | no | Nombre corto en las migas y en el BreadcrumbList («Empresa», «Fabricación a medida»). Si falta, se usa el H1 |
 | `sedes` | no | `si` = la plantilla añade el bloque de sedes al final (empresa) |
 | `borrador` | no | `si` mientras el texto no esté revisado: aviso en piloto, **error en publicación** (como `_borrador` en los JSON). Lo quita la Persona B |
+| `hero-alt` | sí en `inicio` | Alt de la imagen del hero (`slide-1`) |
+
+**Bloques (inicio y sede):** `<!-- bloque: nombre -->` parte el texto en trozos que la plantilla coloca en su sitio. El inicio exige los bloques `hero`, `empresa`, `medida`, `novedades`, `catalogos`, `marcas` y `sedes` (si falta uno, error).
 
 **Imágenes:** además de las etiquetas de texto, `h2`, `h3`, `figure`, `figcaption` e `img`. Cada `<img>` lleva solo `src="/images/<archivo>"` (con la ruta codificada si tiene espacios o ñ) y `alt`; `build.js` añade `width`, `height`, `loading="lazy"` y el WebP si existe, y da error si la imagen no está en `/images/`. Sin clases: el formato sale de la estructura (la `figure` va a la derecha del texto en ≥ 768 px).
 
