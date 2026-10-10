@@ -114,6 +114,9 @@ Array ordenado: **el orden del array es el orden del megamenú, del inicio y del
 | `img` | string \| null | no | `"slide-1"` | B |
 | `alt` | string \| null | si hay `img` | | B |
 | `resumen` | string | sí | 1 frase (≤ 120 caracteres) para la tarjeta de familia en el inicio | B |
+| `_borrador` | boolean | no | `true` mientras la intro de la familia sea un borrador sin revisar. Igual que en las categorías: aviso en piloto, error en publicación. | A pone `true`; B lo quita al revisar |
+
+La foto de cada tarjeta de categoría no se pide aparte: `build.js` usa la del primer producto con imagen de esa categoría (o la primera de `imagenesCuerpo` si no tiene productos), con `alt` vacío porque el título de la tarjeta ya es el enlace.
 
 `categorias[]` (dentro de una familia):
 

@@ -1,0 +1,43 @@
+{{> head}}
+<body>
+{{> cabecera}}
+<main id="contenido" tabindex="-1">
+  {{> migas}}
+  <div class="contenedor">
+    <header class="pagina-cabecera{{#if pagina.imagen}} pagina-cabecera--con-imagen{{/if}}">
+      <div>
+        <h1>{{pagina.h1}}</h1>
+        <div class="entradilla">{{{pagina.intro}}}</div>
+        <div class="pagina-cabecera__acciones">
+          <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+          {{#each pagina.catalogos}}<a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a>
+          {{/each}}
+        </div>
+      </div>
+      {{#if pagina.imagen}}<picture class="pagina-cabecera__imagen">{{#if pagina.imagen.webp}}<source type="image/webp" srcset="{{pagina.imagen.webp}}">{{/if}}<img src="{{pagina.imagen.src}}" width="{{pagina.imagen.ancho}}" height="{{pagina.imagen.alto}}" alt="{{pagina.imagen.alt}}" fetchpriority="high"></picture>{{/if}}
+    </header>
+
+    <section class="seccion" aria-labelledby="categorias-titulo">
+      <h2 id="categorias-titulo">{{pagina.tituloTarjetas}}</h2>
+      {{> tarjetas}}
+    </section>
+
+    <section class="bloque-medida" aria-labelledby="medida-titulo">
+      <h2 class="bloque-medida__titulo" id="medida-titulo">¿No encuentras lo que buscas?</h2>
+      <p>Fabricamos a medida cualquier tipo de resistencia eléctrica calefactora, equipos de calentamiento, sensores de temperatura y detectores de nivel, según el plano que nos envíes o el que diseñe la oficina técnica de nuestros fabricantes representados.</p>
+      <a class="boton boton--secundario" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
+    </section>
+
+    <nav class="seccion otras-familias" aria-labelledby="otras-familias-titulo">
+      <h2 class="otras-familias__titulo" id="otras-familias-titulo">Otras familias de producto</h2>
+      <ul class="relacionadas__lista">
+        {{#each pagina.otrasFamilias}}<li><a href="{{url}}">{{nombre}}</a></li>
+        {{/each}}
+      </ul>
+    </nav>
+  </div>
+  {{> cta-presupuesto}}
+</main>
+{{> pie}}
+</body>
+</html>

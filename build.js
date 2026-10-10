@@ -397,9 +397,14 @@ const presupuestoUrl = nombre => `/contacto/contacto.html?producto=${encodeURICo
 // =====================================================================
 const organizacionRef = () => ({ '@type': 'Organization', '@id': `${host}/#organizacion`, name: site.nombre, url: `${host}/` });
 
-function schemaCategoria(pagina) {
+// Grafo común de cualquier página: organización (referencia salvo en el inicio), WebPage, migas (si hay
+// más de una: el inicio no lleva) y, si se pasa, un ItemList (productos o categorías) como entidad principal.
+// «nodos»: nodos extra (LocalBusiness de las sedes, Organization completa…).
+function schemaPagina(pagina, { itemList = null, organizacion = organizacionRef(), nodos = [] } = {}) {
+  const conMigas = pagina.migas.length > 1;
   const grafo = [
-    organizacionRef(),
+    organizacion,
+    ...nodos,
     {
       '@type': 'WebPage',
       '@id': `${pagina.canonical}#pagina`,
@@ -408,34 +413,64 @@ function schemaCategoria(pagina) {
       description: pagina.meta,
       inLanguage: site.idioma,
       publisher: { '@id': `${host}/#organizacion` },
-      breadcrumb: { '@id': `${pagina.canonical}#migas` },
-      ...(pagina.productos.length ? { mainEntity: { '@id': `${pagina.canonical}#productos` } } : {}),
+      ...(conMigas ? { breadcrumb: { '@id': `${pagina.canonical}#migas` } } : {}),
+      ...(itemList ? { mainEntity: { '@id': `${pagina.canonical}#lista` } } : {}),
     },
-    {
+  ];
+  if (conMigas) {
+    grafo.push({
       '@type': 'BreadcrumbList',
       '@id': `${pagina.canonical}#migas`,
       itemListElement: pagina.migas.map((m, i) => ({ '@type': 'ListItem', position: i + 1, name: m.nombre, item: `${host}${m.url}` })),
-    },
-  ];
-  // Nada de Product ni Offer (no hay precios): ItemList con el nombre y el ancla de cada producto
-  if (pagina.productos.length) {
+    });
+  }
+  // Nada de Product ni Offer (no hay precios): ItemList con el nombre y la URL de cada elemento
+  if (itemList) {
     grafo.push({
       '@type': 'ItemList',
-      '@id': `${pagina.canonical}#productos`,
+      '@id': `${pagina.canonical}#lista`,
       name: pagina.h1,
-      numberOfItems: pagina.productos.length,
+      numberOfItems: itemList.length,
       itemListOrder: 'https://schema.org/ItemListUnordered',
-      itemListElement: pagina.productos.map((p, i) => ({
+      itemListElement: itemList.map((e, i) => ({
         '@type': 'ListItem',
         position: i + 1,
-        name: p.nombre,
-        url: `${pagina.canonical}#${p.ancla}`,
-        ...(p.imagen ? { image: `${host}${p.imagen.src}` } : {}),
+        name: e.nombre,
+        url: e.url,
+        ...(e.imagen ? { image: `${host}${e.imagen.src}` } : {}),
       })),
     });
   }
   // «<» escapado: un texto con «</script>» nunca puede cerrar la etiqueta antes de tiempo
   return JSON.stringify({ '@context': 'https://schema.org', '@graph': grafo }, null, 2).replace(/</g, '\\u003c');
+}
+
+const schemaCategoria = pagina => schemaPagina(pagina, {
+  itemList: pagina.productos.length
+    ? pagina.productos.map(p => ({ nombre: p.nombre, url: `${pagina.canonical}#${p.ancla}`, imagen: p.imagen }))
+    : null,
+});
+
+// Migas: [{nombre, url}] → con «actual» en la última
+function migasDe(...niveles) {
+  const migas = [{ nombre: 'Inicio', url: '/' }, ...niveles];
+  migas.forEach((m, i) => { m.actual = i === migas.length - 1; });
+  return migas;
+}
+
+// Comprobaciones contra el plan (plan-paginas.csv) y reglas SEO (AGENTS.md §3.2) comunes a todas las plantillas
+function comprobarPlan(ctx, archivo, datos) {
+  const filaPlan = planPorArchivo.get(archivo);
+  if (!filaPlan) { error(`${ctx}: ${archivo} no está en plan-paginas.csv`); return null; }
+  for (const [campo, col] of [['title', 'title_nuevo_propuesto'], ['meta', 'meta_nueva_propuesta'], ['h1', 'h1_propuesto']]) {
+    if (datos[campo] !== filaPlan[col]) aviso(`${ctx}: ${campo} distinto del de plan-paginas.csv («${datos[campo]}» / «${filaPlan[col]}»)`);
+  }
+  return filaPlan;
+}
+function comprobarIntro(ctx, intro) {
+  revisarEtiquetas(intro || '', `${ctx} → intro`);
+  const palabras = contarPalabras(intro || '');
+  if (palabras < 120 || palabras > 200) pendiente(`${ctx}: la intro tiene ${palabras} palabras (deben ser 120-200)`);
 }
 
 // =====================================================================
@@ -457,7 +492,7 @@ function modeloCategoria(archivo, { datos, familia }) {
     if (datos[campo] === undefined) error(`${ctx}: falta el campo obligatorio «${campo}»`);
   }
   if (datos._borrador) pendiente(`${ctx}: sigue marcado como _borrador (lo quita la Persona B al revisarlo)`);
-  revisarEtiquetas(datos.intro || '', `${ctx} → intro`);
+  comprobarIntro(ctx, datos.intro);
   if (datos.cuerpo) revisarEtiquetas(datos.cuerpo, `${ctx} → cuerpo`);
 
   const anclas = new Set();
@@ -495,10 +530,9 @@ function modeloCategoria(archivo, { datos, familia }) {
   });
 
   const esDirecta = familia.tipo === 'directa';
-  const migas = [{ nombre: 'Inicio', url: '/' }];
-  if (!esDirecta) migas.push({ nombre: familia.nombre, url: urlFamilia(familia) });
-  migas.push({ nombre: categorias.get(archivo).menu, url: ruta });
-  migas.forEach((m, i) => { m.actual = i === migas.length - 1; });
+  const migas = esDirecta
+    ? migasDe({ nombre: categorias.get(archivo).menu, url: ruta })
+    : migasDe({ nombre: familia.nombre, url: urlFamilia(familia) }, { nombre: categorias.get(archivo).menu, url: ruta });
 
   // Hermanas: las otras categorías de la familia (en una directa, las otras directas)
   const hermanas = esDirecta
@@ -534,20 +568,68 @@ function modeloCategoria(archivo, { datos, familia }) {
   };
   pagina.schema = schemaCategoria(pagina);
 
-  // Comprobaciones contra el plan (plan-paginas.csv) y reglas SEO (AGENTS.md §3.2)
-  const filaPlan = planPorArchivo.get(`${archivo}.html`);
-  if (!filaPlan) error(`${ctx}: ${archivo}.html no está en plan-paginas.csv`);
-  else {
-    if (filaPlan.num_productos !== '' && Number(filaPlan.num_productos) !== productos.length) {
-      error(`${ctx}: tiene ${productos.length} productos y el plan dice ${filaPlan.num_productos} (no se puede perder ninguno)`);
-    }
-    for (const [campo, col] of [['title', 'title_nuevo_propuesto'], ['meta', 'meta_nueva_propuesta'], ['h1', 'h1_propuesto']]) {
-      if (datos[campo] !== filaPlan[col]) aviso(`${ctx}: ${campo} distinto del de plan-paginas.csv («${datos[campo]}» / «${filaPlan[col]}»)`);
-    }
+  const filaPlan = comprobarPlan(ctx, `${archivo}.html`, datos);
+  if (filaPlan && filaPlan.num_productos !== '' && Number(filaPlan.num_productos) !== productos.length) {
+    error(`${ctx}: tiene ${productos.length} productos y el plan dice ${filaPlan.num_productos} (no se puede perder ninguno)`);
   }
-  const palabras = contarPalabras(datos.intro || '');
-  if (palabras < 120 || palabras > 200) pendiente(`${ctx}: la intro tiene ${palabras} palabras (deben ser 120-200)`);
 
+  return pagina;
+}
+
+// Imagen representativa de una categoría (tarjetas): la del primer producto con foto o, si no hay
+// productos, la primera del texto general. Solo se usa como ilustración: el enlace ya lleva el nombre.
+function imagenDeCategoria(archivo) {
+  const datos = categorias.get(archivo)?.datos;
+  if (!datos) return null;
+  const img = datos.productos.find(p => p.img)?.img || (datos.imagenesCuerpo || [])[0]?.img;
+  return img ? imagen(img, `data/categorias/${archivo}.json`) : null;
+}
+
+// =====================================================================
+// 8b. Páginas de familia (NUEVAS: no existían en /legacy)
+// =====================================================================
+function modeloFamilia(fam) {
+  const ruta = urlFamilia(fam);
+  const ctx = `data/familias.json → ${fam.id}`;
+  for (const campo of ['title', 'meta', 'h1', 'intro', 'resumen']) {
+    if (!fam[campo]) error(`${ctx}: falta el campo «${campo}»`);
+  }
+  if (fam._borrador) pendiente(`${ctx}: sigue marcado como _borrador (lo quita la Persona B al revisarlo)`);
+  comprobarIntro(ctx, fam.intro);
+  comprobarPlan(ctx, `${fam.archivo}.html`, fam);
+
+  const tarjetas = fam.categorias.map(c => {
+    if (!c.resumen) error(`${ctx} → ${c.archivo}: falta el «resumen» de la tarjeta`);
+    else if (longitud(c.resumen) > 120) aviso(`${ctx} → ${c.archivo}: el resumen tiene ${longitud(c.resumen)} caracteres (máx. 120)`);
+    const n = categorias.get(c.archivo)?.datos?.productos.length || 0;
+    return {
+      nombre: c.menu,
+      url: `/${c.archivo}.html`,
+      resumen: c.resumen,
+      imagen: imagenDeCategoria(c.archivo),
+      nota: n ? `${n} producto${n === 1 ? '' : 's'}` : null,
+    };
+  });
+  const canonical = `${host}${ruta}`;
+  const pagina = {
+    ruta,
+    canonical,
+    title: fam.title,
+    meta: fam.meta,
+    h1: fam.h1,
+    intro: fam.intro,
+    imagen: fam.img ? { ...imagen(fam.img, ctx), alt: fam.alt } : null,
+    migas: migasDe({ nombre: fam.nombre, url: ruta }),
+    tituloTarjetas: `Categorías de ${fam.nombre.toLowerCase()}`,
+    tarjetas,
+    // Catálogo PDF de la familia (site.json → catalogos[].familias)
+    catalogos: site.catalogos.filter(c => c.familias.includes(fam.id)).map(c => ({ titulo: c.titulo, url: urlPublica(c.pdf) })),
+    otrasFamilias: familias.filter(f => f !== fam).map(f => ({ nombre: f.nombre, url: urlFamilia(f) })),
+    ogImagen: tarjetas.find(t => t.imagen) ? `${host}${tarjetas.find(t => t.imagen).imagen.src}` : null,
+  };
+  pagina.schema = schemaPagina(pagina, {
+    itemList: tarjetas.map(t => ({ nombre: t.nombre, url: `${host}${t.url}` })),
+  });
   return pagina;
 }
 
@@ -610,6 +692,7 @@ function main() {
   limpiarDist();
 
   const paginas = [];
+  for (const fam of familias.filter(f => f.tipo === 'familia')) paginas.push({ plantilla: 'familia', pagina: modeloFamilia(fam) });
   for (const [archivo, cat] of categorias) {
     if (cat.datos) paginas.push({ plantilla: 'categoria', pagina: modeloCategoria(archivo, cat) });
   }
