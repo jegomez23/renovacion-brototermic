@@ -9,6 +9,7 @@
 | URL | Estado | Title | Meta | H1 | Productos | Imágenes | PDF | Enlaces | Texto | Canonical | JSON-LD | Sitemap |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | `/` | ⚠️ AVISO | ⚠️ 56 car. | 154 car. | ⚠️ sin la keyword (el H1 antiguo tampoco la tenía) | 0/0 · modelos 2/2 | 5/5 | 2/2 | 47/47 | 100.0 % | OK | OK | OK |
+| `/contacto/contacto.html` | ⚠️ AVISO | ⚠️ 56 car. | 154 car. | ⚠️ sin la keyword (el H1 antiguo tampoco la tenía) | 0/0 | 0/0 | 0/0 | 3/3 | 100.0 % | OK | OK | OK |
 | `/controldenivel-interruptores-magneticos.html` | ✅ OK | 46 car. | 153 car. | OK | 13/13 · modelos 37/37 | 13/13 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/controldenivel-niveles-de-flotador.html` | ✅ OK | 52 car. | 146 car. | OK | 6/6 · modelos 14/14 | 6/6 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/controldenivel-niveles-rotativos.html` | ✅ OK | 39 car. | 152 car. | OK | 2/2 · modelos 9/9 | 2/2 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
@@ -60,7 +61,6 @@
 | URL | Tipo | Estado | Comprobación |
 |---|---|---|---|
 | `/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/contacto/contacto.html |
-| `/contacto/contacto.html` | contacto | ⚠️ AVISO | pendiente: aún no se genera |
 | `/index.html` | redirección | ✅ OK | 301 → https://brototermic.com/ |
 | `/oviedo/contacto/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
 | `/oviedo/` | sede | ⚠️ AVISO | pendiente: aún no se genera |
@@ -96,6 +96,10 @@
 ### `/` — AVISO
 
 - Keyword [POR VERIFICAR GSC]: «componentes industriales e instrumentación [POR VERIFICAR GSC]».
+
+### `/contacto/contacto.html` — AVISO
+
+- Keyword [POR VERIFICAR GSC]: «componentes industriales Vitoria [POR VERIFICAR GSC]».
 
 ### `/controldenivel-transductores-magneticos.html` — AVISO
 

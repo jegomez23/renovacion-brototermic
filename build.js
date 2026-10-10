@@ -315,6 +315,7 @@ function imagen(nombre, contexto) {
 const recursos = {
   css: `/assets/css/style.css?v=${hashArchivo(path.join(RAIZ, 'assets/css/style.css'))}`,
   js: `/assets/js/menu.js?v=${hashArchivo(path.join(RAIZ, 'assets/js/menu.js'))}`,
+  jsFormulario: `/assets/js/formulario.js?v=${hashArchivo(path.join(RAIZ, 'assets/js/formulario.js'))}`,
 };
 // Dos logos: para fondo claro (cabecera blanca) y el original para fondo oscuro (pie)
 function logoDe(campo) {
@@ -817,6 +818,30 @@ function modeloInicio() {
   return pagina;
 }
 
+// Formulario de presupuesto (contacto y /oviedo/): todo sale de site.json → formulario
+function modeloFormulario(mensajeInicial = '') {
+  const tipos = formulario.tiposAdjunto || [];
+  const nombres = tipos.map(t => t.replace(/^\./, '').toUpperCase());
+  return {
+    accion: formulario.accion,
+    envioActivo: formulario.envioActivo === true,
+    maxMB: formulario.maxAdjuntoMB,
+    accept: tipos.join(','),
+    tiposTexto: nombres.length > 1 ? `${nombres.slice(0, -1).join(', ')} o ${nombres.at(-1)}` : nombres.join(''),
+    mensajeInicial,
+  };
+}
+
+// Contacto: entradilla de content/contacto.html + formulario + sedes, con las dos LocalBusiness
+function modeloContacto() {
+  const pagina = modeloContenido('contacto', 'contacto/contacto.html');
+  if (!pagina) return null;
+  pagina.sedes = sedes();
+  pagina.form = modeloFormulario();
+  pagina.schema = schemaPagina(pagina, { nodos: site.sedes.map(schemaSede) });
+  return pagina;
+}
+
 // Página de servicio o legal: el texto entero sale de content/<slug>.html
 function modeloContenido(slug, archivo) {
   const c = leerContenido(slug);
@@ -912,6 +937,8 @@ function main() {
     const pagina = modeloContenido(fila.archivo.replace(/\.html$/, ''), fila.archivo);
     if (pagina) paginas.push({ plantilla: fila.plantilla, pagina });
   }
+  const contacto = modeloContacto();
+  if (contacto) paginas.push({ plantilla: 'contacto', pagina: contacto });
 
   // Title y meta únicos entre todas las páginas generadas
   for (const campo of ['title', 'meta']) {

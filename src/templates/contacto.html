@@ -1,0 +1,27 @@
+{{> head}}
+<body>
+{{> cabecera}}
+<main id="contenido" tabindex="-1">
+  {{> migas}}
+  <div class="contenedor">
+    <header class="pagina-cabecera">
+      <h1>{{pagina.h1}}</h1>
+      <div class="entradilla">{{{pagina.contenido}}}</div>
+      {{! En móvil, lo primero: los teléfonos (diseno.md §4.6) }}
+      <ul class="contacto-rapido">
+        {{#each pagina.sedes}}<li>{{localidad}}: <a href="tel:{{tel}}">{{telefono}}</a></li>{{/each}}
+      </ul>
+    </header>
+    <div class="contacto">
+      {{> formulario}}
+      <section class="contacto__sedes" aria-labelledby="sedes-titulo">
+        <h2 id="sedes-titulo">Dónde estamos</h2>
+        {{> sedes}}
+      </section>
+    </div>
+  </div>
+</main>
+{{> pie}}
+<script src="{{recursos.jsFormulario}}" defer></script>
+</body>
+</html>
