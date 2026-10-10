@@ -206,6 +206,19 @@ h1: Nuestra historia
 <p>…</p>
 ```
 
+Metadatos (una línea `clave: valor` cada uno):
+
+| Clave | Oblig. | Uso |
+|---|---|---|
+| `title`, `meta`, `h1` | sí | Los de `plan-paginas.csv` (si no coinciden, aviso) |
+| `miga` | no | Nombre corto en las migas y en el BreadcrumbList («Empresa», «Fabricación a medida»). Si falta, se usa el H1 |
+| `sedes` | no | `si` = la plantilla añade el bloque de sedes al final (empresa) |
+| `borrador` | no | `si` mientras el texto no esté revisado: aviso en piloto, **error en publicación** (como `_borrador` en los JSON). Lo quita la Persona B |
+
+**Imágenes:** además de las etiquetas de texto, `h2`, `h3`, `figure`, `figcaption` e `img`. Cada `<img>` lleva solo `src="/images/<archivo>"` (con la ruta codificada si tiene espacios o ñ) y `alt`; `build.js` añade `width`, `height`, `loading="lazy"` y el WebP si existe, y da error si la imagen no está en `/images/`. Sin clases: el formato sale de la estructura (la `figure` va a la derecha del texto en ≥ 768 px).
+
+**Texto de /legacy:** se conserva literal, con las erratas del §3 y las sustituciones del §4 de [plan-contenido.md](plan-contenido.md). Las sustituciones del §4 están en `tools/lib/legacy.js` (`SUSTITUCIONES`), para que el auditor no las cuente como frases perdidas.
+
 | Archivo | Página | Plantilla | Quién |
 |---|---|---|---|
 | `content/inicio.html` | `/` | inicio (solo los bloques de texto; tarjetas, marcas y sedes salen de `/data`) | B |

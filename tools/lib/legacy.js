@@ -33,7 +33,9 @@ const ENTIDADES = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'",
 const decodificar = s => s
   .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
   .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
-  .replace(/&([a-z0-9]+);/gi, (m, e) => ENTIDADES[e] ?? ENTIDADES[e.toLowerCase()] ?? m);
+  .replace(/&([a-z0-9]+);/gi, (m, e) => ENTIDADES[e] ?? ENTIDADES[e.toLowerCase()] ?? m)
+  // «&nbsp» sin punto y coma (nuevos-productos.html): el navegador también lo muestra como espacio
+  .replace(/&nbsp(?![\w;])/gi, ' ');
 
 const sinComentarios = h => h.replace(/<!--[\s\S]*?-->/g, '').replace(/<script\b[\s\S]*?<\/script>/gi, '').replace(/<style\b[\s\S]*?<\/style>/gi, '');
 
@@ -131,11 +133,43 @@ const ERRATAS_MANUALES = {
   'controldenivel-sensores-capacitivos.html': [['Distancia actuación: 4…12mmm', 'Distancia de actuación: 4…12 mm']],
   'controltemperatura-equipos-de-medicion.html': [['incluído', 'incluido']],
   'controltemperatura-sondastemperatura.html': [['Termorresistencia  mineral', 'Termorresistencia mineral']],
+  'nuevos-productos.html': [['Getways DE HubB', 'Gateways DE HubB']],
 };
-// Aplica las erratas de una página (archivo = «resistencias-inmersion.html») a un texto
+// Textos desactualizados de docs/plan-contenido.md §4: las ÚNICAS sustituciones de texto (no erratas) que
+// se permiten en páginas de /legacy. Cada una cita su fila del §4. Los espacios del texto antiguo casan con
+// cualquier espacio o salto de línea del HTML. «a» vacío = el texto se elimina (decidido en el §4).
+// Solo hace falta listar lo que DESAPARECE: añadir palabras alrededor no rompe la cobertura del auditor.
+const SUSTITUCIONES = {
+  'index.html': [
+    // §4.1: «más de 35 años» → «desde 1982» (dato externo, en site.json → pendientes)
+    ['Con más de 35 años de experiencia, compuesta por un equipo joven y dinámico que se esfuerza por dar el mejor servicio a sus clientes.',
+      'Desde 1982 suministramos resistencias eléctricas e instrumentación a la industria del País Vasco, de las provincias limítrofes y de Asturias.'],
+    // §4.2: sin superlativo
+    ['es una de las empresas líderes en el sector de la distribución de instrumentación industrial especializada',
+      'es una empresa de distribución de instrumentación industrial especializada'],
+    // §4.12
+    ['NUEVA DELEGACIÓN EN ASTURIAS', 'Delegación en Asturias'],
+  ],
+  'empresa.html': [
+    // §4.3 (cita) y §4.4 (Servicio)
+    ['Después de treinta y cinco años', 'Después de más de cuarenta años'],
+    ['Con más de 35 años de experiencia, y compuesta por un equipo', 'Con experiencia desde 1982 y un equipo'],
+  ],
+  'nuevos-productos.html': [
+    // §4.11 (el H1 no cuenta en la cobertura, pero el rótulo se corrige igual)
+    ['Nuevos Productos 2021', 'Nuevos productos'],
+  ],
+};
+const sustituciones = archivo => (SUSTITUCIONES[archivo] || []).map(([de, a]) => ({
+  re: new RegExp(de.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/ /g, '\\s+'), 'g'),
+  a,
+}));
+
+// Aplica las erratas (§3) y las sustituciones (§4) de una página (archivo = «resistencias-inmersion.html») a un texto
 function corregirErratas(texto, archivo, lista = erratas()) {
   let s = texto;
   for (const e of lista) if (e.archivo === archivo) s = s.split(e.de).join(e.a);
+  for (const { re, a } of sustituciones(archivo)) s = s.replace(re, a);
   return s;
 }
 

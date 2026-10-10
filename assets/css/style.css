@@ -3,7 +3,7 @@
    Tokens: docs/diseno.md §2 · Componentes: §3 · Reglas: AGENTS.md §6
    Estructura: 1 fuentes · 2 tokens · 3 base · 4 utilidades · 5 botones · 6 cabecera y menú
                7 migas · 8 página de categoría · 9 producto · 10 CTA · 11 pie · 12 movimiento e impresión
-               13 familias, inicio y sede (secciones, tarjetas, bloque «a medida»)
+               13 familias, inicio y sede (secciones, tarjetas, bloque «a medida») · 14 texto de /content y sedes
    Puntos de corte: base < 768 px (móvil) · md ≥ 768 px · lg ≥ 1280 px
    ===================================================================== */
 
@@ -769,6 +769,40 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 @media (min-width: 768px) {
   .pagina-cabecera--con-imagen { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
   .bloque-medida { padding: var(--esp-6) var(--esp-7); }
+}
+
+/* ---------- 14. Texto de /content (servicio y legales) y bloque de sedes ---------- */
+/* Los fragmentos de /content no llevan clases: el formato sale de su estructura (h2, h3, figure, listas) */
+.contenido { max-width: 48rem; padding-top: var(--esp-5); }
+.contenido > :not(figure) { max-width: var(--ancho-lectura); }
+.contenido h2 { clear: both; margin-top: var(--esp-7); }
+.contenido h3 { clear: both; margin-top: var(--esp-6); }
+.contenido figure { margin: 0 0 var(--esp-4); }
+.contenido figure img { border: 1px solid var(--color-borde); border-radius: var(--radio-m); background: var(--color-blanco); }
+.contenido ul { padding-left: 1.25rem; }
+.contenido li + li { margin-top: var(--esp-2); }
+.contenido--legal { padding-bottom: var(--separacion-secciones); }
+@media (min-width: 768px) {
+  /* Foto a la derecha del texto que la acompaña, a su tamaño real */
+  .contenido figure { float: right; margin: 0 0 var(--esp-4) var(--esp-6); }
+  .contenido { overflow: hidden; } /* contiene el último flotante */
+}
+
+.sedes { display: grid; gap: var(--esp-5); margin: 0; padding: 0; list-style: none; }
+.sedes__tarjeta {
+  display: grid;
+  gap: var(--esp-4);
+  padding: var(--esp-5);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+}
+.sedes__foto img { border-radius: var(--radio-s); }
+.sedes__nombre { margin-bottom: var(--esp-2); }
+.sedes address { margin-bottom: var(--esp-2); line-height: 1.8; }
+.sedes address a { display: inline-block; min-height: 44px; line-height: 44px; }
+.sedes__mapa { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+@media (min-width: 768px) {
+  .sedes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* Imágenes del texto general de una categoría (p. ej. el programa de fabricación de las resistencias a medida) */

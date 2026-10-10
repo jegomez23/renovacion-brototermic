@@ -1,0 +1,15 @@
+{{> head}}
+<body>
+{{> cabecera}}
+<main id="contenido" tabindex="-1">
+  {{> migas}}
+  <div class="contenedor">
+    <article class="contenido contenido--legal">
+      <h1>{{pagina.h1}}</h1>
+      {{{pagina.contenido}}}
+    </article>
+  </div>
+</main>
+{{> pie}}
+</body>
+</html>

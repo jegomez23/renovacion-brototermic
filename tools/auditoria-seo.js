@@ -205,13 +205,22 @@ function auditarPagina(fila, ctx) {
   c.meta = { estado: lm >= 140 && lm <= 155 && !repetida ? 'OK' : 'ERROR', texto: `${lm} car.${repetida ? ', repetida' : ''}` };
 
   // H1: uno solo y con la keyword
+  // Si el H1 antiguo tampoco tenía la keyword, no se pierde nada: AVISO (paridad), no ERROR
   const probH = [];
-  if (nueva.h1s.length !== 1) probH.push(`${nueva.h1s.length} H1`);
-  else if (kw && !contienePalabras(nueva.h1s[0], kw)) probH.push('sin la keyword');
-  c.h1 = { estado: probH.length ? 'ERROR' : 'OK', texto: probH.length ? probH.join('; ') : 'OK' };
+  let estadoH = 'OK';
+  if (nueva.h1s.length !== 1) { probH.push(`${nueva.h1s.length} H1`); estadoH = 'ERROR'; }
+  else if (kw && !contienePalabras(nueva.h1s[0], kw)) {
+    const h1Antiguo = L.textoPlano((area.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '');
+    const laTenia = contienePalabras(h1Antiguo, kw);
+    probH.push(laTenia ? 'sin la keyword' : 'sin la keyword (el H1 antiguo tampoco la tenía)');
+    estadoH = laTenia ? 'ERROR' : 'AVISO';
+  }
+  c.h1 = { estado: estadoH, texto: probH.length ? probH.join('; ') : 'OK' };
 
-  // Productos: todos los nombres antiguos en un H2 nuevo, y todas las referencias de modelo en el texto
-  const antiguos = L.productosLegacy(legacyHtml);
+  // Productos: todos los nombres antiguos en un H2 nuevo, y todas las referencias de modelo en el texto.
+  // Solo en categorías: en el resto de páginas los <article> de /legacy son bloques de texto (la historia de
+  // empresa, «Calidad»…), no productos; su texto lo vigila la cobertura y sus modelos, el chequeo de modelos.
+  const antiguos = p?.plantilla === 'categoria' ? L.productosLegacy(legacyHtml) : [];
   const faltanNombres = antiguos.filter(a => a.nombre && !nombreEn(a.nombre, nueva.h2s)).map(a => a.nombre);
   const modelos = modelosDe(L.textoPlano(area.replace(/<h1\b[\s\S]*?<\/h1>/i, '')));
   const textoNuevoRaw = nueva.textoMain;

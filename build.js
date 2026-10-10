@@ -477,10 +477,10 @@ function comprobarIntro(ctx, intro) {
 // 8. Páginas de categoría
 // =====================================================================
 const ETIQUETAS_TEXTO = new Set(['p', 'strong', 'em', 'br', 'a', 'ul', 'ol', 'li', 'sup', 'sub', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'caption']);
-function revisarEtiquetas(html, contexto) {
+function revisarEtiquetas(html, contexto, permitidas = ETIQUETAS_TEXTO) {
   for (const m of html.matchAll(/<\/?([a-z0-9]+)([^>]*)>/gi)) {
     const n = m[1].toLowerCase();
-    if (!ETIQUETAS_TEXTO.has(n)) aviso(`${contexto}: etiqueta <${n}> no permitida en textos (datos.md)`);
+    if (!permitidas.has(n)) aviso(`${contexto}: etiqueta <${n}> no permitida en textos (datos.md)`);
     if (/\s(style|class)\s*=/i.test(m[2])) aviso(`${contexto}: atributo style/class en <${n}> (los estilos los pone la plantilla)`);
   }
 }
@@ -634,6 +634,78 @@ function modeloFamilia(fam) {
 }
 
 // =====================================================================
+// 8c. Páginas con texto de /content (servicio, sede, contacto, legales): datos.md §5
+// =====================================================================
+const ETIQUETAS_CONTENIDO = new Set([...ETIQUETAS_TEXTO, 'h2', 'h3', 'img', 'figure', 'figcaption']);
+
+// Lee content/<slug>.html: bloque de metadatos (comentario inicial, «clave: valor») y cuerpo HTML.
+// Las marcas [REVISIÓN CLIENTE] se listan como aviso y, como todo comentario, no llegan al HTML final.
+// <img src="/images/…" alt="…"> se completa con width, height, loading y el WebP si existe.
+// Devuelve null si el archivo aún no existe (la página queda pendiente).
+function leerContenido(slug) {
+  const ruta = `content/${slug}.html`;
+  const abs = path.join(RAIZ, ruta);
+  if (!fs.existsSync(abs)) return null;
+  let texto = fs.readFileSync(abs, 'utf8');
+  if (texto.charCodeAt(0) === 0xfeff) { error(`${ruta}: tiene BOM; debe guardarse como UTF-8 sin BOM`); texto = texto.slice(1); }
+  const cab = texto.match(/^\s*<!--([\s\S]*?)-->/);
+  if (!cab) throw new ErrorFatal(`${ruta}: falta el bloque de metadatos (<!-- title: … -->) al principio`);
+  const meta = {};
+  for (const l of cab[1].split(/\r?\n/)) {
+    const m = l.match(/^\s*([\w-]+):\s*(.*?)\s*$/);
+    if (m) meta[m[1]] = m[2];
+  }
+  let cuerpo = texto.slice(cab[0].length);
+  for (const m of cuerpo.matchAll(/<!--\s*\[REVISIÓN CLIENTE\]([\s\S]*?)-->/g)) aviso(`${ruta}: [REVISIÓN CLIENTE] ${m[1].trim()}`);
+  cuerpo = cuerpo.replace(/<!--[\s\S]*?-->/g, '').trim();
+  revisarEtiquetas(cuerpo, ruta, ETIQUETAS_CONTENIDO);
+  const imagenes = [];
+  cuerpo = cuerpo.replace(/<img\b([^>]*)>/gi, (etiqueta, attrs) => {
+    const src = (attrs.match(/\ssrc="([^"]+)"/) || [])[1];
+    const alt = (attrs.match(/\salt="([^"]*)"/) || [])[1];
+    if (!src || alt === undefined) { error(`${ruta}: <img> sin src o sin alt: ${etiqueta}`); return etiqueta; }
+    if (!src.startsWith('/images/')) { error(`${ruta}: la imagen ${src} no está en /images/`); return etiqueta; }
+    const img = imagen(decodeURI(src).slice('/images/'.length).replace(/\.(jpe?g|png|gif)$/i, ''), ruta);
+    if (!img) return '';
+    imagenes.push(img);
+    return `<picture>${img.webp ? `<source type="image/webp" srcset="${img.webp}">` : ''}` +
+      `<img src="${img.src}" width="${img.ancho}" height="${img.alto}" alt="${alt}" loading="lazy" decoding="async"></picture>`;
+  });
+  return { ruta, meta, cuerpo, imagenes };
+}
+
+// Sedes con su foto (bloque de sedes del inicio, empresa, contacto)
+let sedesConFoto = null;
+const sedes = () => (sedesConFoto ??= site.sedes.map(s => ({
+  ...s,
+  imagen: s.foto ? imagen(s.foto, `site.json → sedes.${s.id}.foto`) : null,
+})));
+
+// Página de servicio o legal: el texto entero sale de content/<slug>.html
+function modeloContenido(slug, archivo) {
+  const c = leerContenido(slug);
+  if (!c) return null;
+  for (const campo of ['title', 'meta', 'h1']) if (!c.meta[campo]) error(`${c.ruta}: falta «${campo}» en los metadatos`);
+  if (c.meta.borrador === 'si') pendiente(`${c.ruta}: sigue marcado como borrador (lo quita la Persona B al revisarlo)`);
+  comprobarPlan(c.ruta, archivo, c.meta);
+  const ruta = rutaPublica(archivo);
+  const pagina = {
+    ruta,
+    canonical: `${host}${ruta}`,
+    title: c.meta.title,
+    meta: c.meta.meta,
+    h1: c.meta.h1,
+    contenido: c.cuerpo,
+    // «miga»: nombre corto en las migas (arquitectura.md §3); si falta, el H1
+    migas: migasDe({ nombre: c.meta.miga || c.meta.h1, url: ruta }),
+    sedes: c.meta.sedes === 'si' ? sedes() : null,
+    ogImagen: c.imagenes[0] ? `${host}${c.imagenes[0].src}` : null,
+  };
+  pagina.schema = schemaPagina(pagina);
+  return pagina;
+}
+
+// =====================================================================
 // 9. Generación
 // =====================================================================
 function limpiarDist() {
@@ -695,6 +767,11 @@ function main() {
   for (const fam of familias.filter(f => f.tipo === 'familia')) paginas.push({ plantilla: 'familia', pagina: modeloFamilia(fam) });
   for (const [archivo, cat] of categorias) {
     if (cat.datos) paginas.push({ plantilla: 'categoria', pagina: modeloCategoria(archivo, cat) });
+  }
+  // Servicio y legales: una página por fila del plan con esa plantilla, si ya existe su content/<slug>.html
+  for (const fila of plan.filter(f => f.plantilla === 'servicio' || f.plantilla === 'legal')) {
+    const pagina = modeloContenido(fila.archivo.replace(/\.html$/, ''), fila.archivo);
+    if (pagina) paginas.push({ plantilla: fila.plantilla, pagina });
   }
 
   // Title y meta únicos entre todas las páginas generadas

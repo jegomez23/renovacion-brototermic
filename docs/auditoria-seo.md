@@ -2,7 +2,7 @@
 
 > Generado por `node tools/auditoria-seo.js` (modo **piloto**). **No se edita a mano.** Compara cada URL de /legacy con su equivalente en /dist: que exista (o tenga un 301 válido), que conserve title, H1, productos, modelos, imágenes, PDF, enlaces internos y el texto (cobertura ≥ 95 %), y que tenga canonical, JSON-LD y presencia en sitemap.xml.
 
-**Resultado:** 60 OK · 17 AVISO · 0 ERROR (77 URLs del inventario).
+**Resultado:** 66 OK · 11 AVISO · 0 ERROR (77 URLs del inventario).
 
 ## Páginas generadas
 
@@ -30,9 +30,12 @@
 | `/controltemperatura-termometros.html` | ✅ OK | 33 car. | 147 car. | OK | 8/8 · modelos 8/8 | 8/8 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/controltemperatura-termostatos.html` | ✅ OK | 33 car. | 153 car. | OK | 16/16 · modelos 19/19 | 16/16 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/controltemperatura-videoregistradores.html` | ✅ OK | 41 car. | 149 car. | OK | 2/2 · modelos 9/9 | 2/2 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
+| `/empresa.html` | ⚠️ AVISO | ⚠️ 54 car. | 150 car. | ⚠️ sin la keyword (el H1 antiguo tampoco la tenía) | 0/0 | 1/1 | 2/2 | 46/46 | 100.0 % | OK | OK | OK |
 | `/equipos-perifericos.html` | ✅ OK | 53 car. | 151 car. | OK | 9/9 · modelos 15/15 | 9/9 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/equiposderefrigeracion-refrigeradores-chillers.html` | ✅ OK | 52 car. | 142 car. | OK | 3/3 · modelos 5/5 | 3/3 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
+| `/fabricaciones-a-medida.html` | ✅ OK | 49 car. | 153 car. | OK | 0/0 · modelos 12/12 | 5/5 | 0/0 | 45/45 | 100.0 % | OK | OK | OK |
 | `/hornos-industriales.html` | ✅ OK | 59 car. | 141 car. | OK | 3/3 · modelos 8/8 | 3/3 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
+| `/nuevos-productos.html` | ✅ OK | 42 car. | 154 car. | OK | 0/0 · modelos 16/16 | 4/4 | 2/2 | 45/45 | 100.0 % | OK | OK | OK |
 | `/presionhumedad-sensores-de-presion.html` | ✅ OK | 54 car. | 151 car. | OK | 7/7 · modelos 17/17 | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/presionhumedad-sondas-de-humedad.html` | ✅ OK | 51 car. | 152 car. | OK | 8/8 · modelos 13/13 | 8/8 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/resistencias-atex.html` | ✅ OK | 39 car. | 152 car. | OK | 7/7 · modelos 24/24 | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
@@ -56,11 +59,8 @@
 | `/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/contacto/contacto.html |
 | `/contacto/contacto.html` | contacto | ⚠️ AVISO | pendiente: aún no se genera |
 | `/cookies.html` | legal | ⚠️ AVISO | pendiente: aún no se genera |
-| `/empresa.html` | servicio | ⚠️ AVISO | pendiente: aún no se genera |
-| `/fabricaciones-a-medida.html` | servicio | ⚠️ AVISO | pendiente: aún no se genera |
 | `/index.html` | redirección | ✅ OK | 301 → https://brototermic.com/ |
 | `/mapa-web.html` | legal | ⚠️ AVISO | pendiente: aún no se genera |
-| `/nuevos-productos.html` | servicio | ⚠️ AVISO | pendiente: aún no se genera |
 | `/oviedo/contacto/contacto.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
 | `/oviedo/` | sede | ⚠️ AVISO | pendiente: aún no se genera |
 | `/oviedo/index.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
@@ -77,10 +77,10 @@
 | `/docs/ejemplo-de-aplicacion-iot-didieint.pdf` | archivo | ✅ OK | existe |
 | `/oviedo/docs/catalogo-instrumentacion.pdf` | redirección | ✅ OK | 301 → https://brototermic.com/docs/catalogo-instrumentacion.pdf |
 | `/oviedo/docs/catalogo-resistencias-calefactoras.pdf` | redirección | ⚠️ AVISO | 301 → https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf |
-| `/resistencias-electricas.html` | familia (nueva) | ⚠️ AVISO | pendiente |
-| `/controltemperatura.html` | familia (nueva) | ⚠️ AVISO | pendiente |
-| `/controldenivel.html` | familia (nueva) | ⚠️ AVISO | pendiente |
-| `/presionhumedad.html` | familia (nueva) | ⚠️ AVISO | pendiente |
+| `/resistencias-electricas.html` | familia (nueva) | ✅ OK | existe |
+| `/controltemperatura.html` | familia (nueva) | ✅ OK | existe |
+| `/controldenivel.html` | familia (nueva) | ✅ OK | existe |
+| `/presionhumedad.html` | familia (nueva) | ✅ OK | existe |
 | `/sitemap.xml` | archivo | ✅ OK | existe |
 | `/robots.txt` | archivo | ✅ OK | existe |
 | `.es /` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ |
@@ -108,6 +108,10 @@
 ### `/controltemperatura-sondastemperatura.html` — OK
 
 - Imagen eliminada (justificada): /images/Pdf_icon.png — Se sustituye por un icono SVG en la plantilla (Persona A).
+
+### `/empresa.html` — AVISO
+
+- Keyword [POR VERIFICAR GSC]: «empresa BROTOTERMIC [POR VERIFICAR GSC]».
 
 ### `/resistencias-tipo-cartucho.html` — OK
 
