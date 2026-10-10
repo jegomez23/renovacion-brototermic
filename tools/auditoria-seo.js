@@ -456,6 +456,13 @@ function auditarReglasGenerales(ctx, F) {
     ['https://brototermic.com/docs/', 404],
     ['https://brototermic.com/oviedo/', 200],
     ['https://brototermic.com/', 200],
+    // Archivos ocultos y copias de seguridad: 404 aunque existieran en el servidor (M-08)
+    ['https://brototermic.com/.git/HEAD', 404],
+    ['https://brototermic.com/.env', 404],
+    ['https://brototermic.com/contacto/.htaccess', 404],
+    ['https://brototermic.com/index.html.bak', 404],
+    ['https://brototermic.com/backup.SQL', 404],
+    ['https://brototermic.com/empresa.html~', 404],
   ];
   const detalles = casos.flatMap(([u, e, d]) => comprobarUrl(u, e, d, ctx, F));
   const estado = detalles.length ? 'ERROR' : 'OK';

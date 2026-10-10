@@ -67,6 +67,8 @@ caso('https://brototermic.com/esta-pagina-no-existe.html', 404);
 // Sin listado de carpetas (la regla de mod_rewrite que sustituye a «Options -Indexes»)
 caso('https://brototermic.com/images/', 404);
 caso('https://brototermic.com/docs/', 404);
+// Archivos ocultos y copias de seguridad: 404 (auditoría final, M-08)
+['/.git/HEAD', '/.env', '/index.html.bak', '/backup.sql', '/empresa.html~'].forEach(p => caso('https://brototermic.com' + p, 404));
 // Una imagen antigua que ya no se muestra sigue publicada (decisión D-011)
 caso('https://brototermic.com/images/slide-2.jpg', 200);
 caso('https://brototermic.com/oviedo/images/brototermic-oviedo.jpg', 200);

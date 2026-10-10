@@ -38,6 +38,14 @@ ErrorDocument 404 /404.html
 RewriteEngine On
 RewriteBase /
 
+# ---------- 0. Archivos ocultos y copias de seguridad: 404 (auditoría final, M-08) ----------
+# Con mod_rewrite (ya imprescindible) y no con «Require all denied», que exige otro override (AuthConfig) y podría
+# dar un 500. Se responde 404, no 403, para no confirmar que el archivo existe.
+# Ocultos: .git/, .env, .DS_Store… salvo /.well-known/ (lo usa el hosting para renovar el certificado HTTPS).
+RewriteRule (^|/)\.(?!well-known(/|$)) - [R=404,L]
+# Copias: «pagina.html.bak», «x.old», «x.orig», «volcado.sql», «x.swp», «index.html~»
+RewriteRule (\.(bak|old|orig|sql|swp)|~)$ - [R=404,L,NC]
+
 # ---------- 1a. .com: URLs duplicadas ----------
 # /index.html y /oviedo/index.html: se comprueba %{THE_REQUEST} (lo que pidió el navegador) para no
 # redirigir la subpetición interna de DirectoryIndex, que entraría en bucle.
@@ -159,8 +167,25 @@ RewriteRule ^ - [R=404,L]
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  # Seguridad básica: sin dependencias de terceros, así que no rompe nada
+  # ---------- Cabeceras de seguridad (auditoría final, M-04) ----------
+  # Sin dependencias de terceros, así que estas no rompen nada
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+  # HSTS: obliga al navegador a usar siempre HTTPS. Empieza con 5 minutos (max-age=300) para poder deshacerlo rápido
+  # si el HTTPS del hosting diera problemas. Cuando §3 de docs/publicacion.md esté en verde y pase 1 semana sin
+  # incidencias, subirlo a «max-age=31536000» (1 año). NO añadir «includeSubDomains» sin comprobar antes que TODOS
+  # los subdominios (correo, webmail, etc.) tienen HTTPS. Por http el navegador ignora esta cabecera.
+  Header always set Strict-Transport-Security "max-age=300"
+
+  # CSP en modo SOLO INFORME: el navegador no bloquea nada, solo anota en la consola lo que se habría bloqueado.
+  # Permite únicamente recursos del propio dominio y el único script en línea de la web (head.html: añade la clase
+  # «js»), identificado por su hash. El JSON-LD no se ejecuta, así que la CSP no le afecta.
+  # Para activarla: revisar la consola de inicio, una categoría, contacto y /oviedo/ en producción; si no hay avisos,
+  # cambiar «Content-Security-Policy-Report-Only» por «Content-Security-Policy».
+  # SI SE CAMBIA EL SCRIPT EN LÍNEA de src/partials/head.html, hay que recalcular el hash:
+  #   node -e "console.log(require('crypto').createHash('sha256').update(\"document.documentElement.classList.add('js')\").digest('base64'))"
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
 </IfModule>

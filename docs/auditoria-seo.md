@@ -90,7 +90,7 @@
 | `.es /politica-de-privacidad-brototermic-oviedo.html` | redirección | ✅ OK | 301 → https://brototermic.com/privacidad.html · .htaccess OK |
 | `.es /docs/catalogo-instrumentacion.pdf` | redirección | ✅ OK | 301 → https://brototermic.com/docs/catalogo-instrumentacion.pdf · .htaccess OK |
 | `.es /docs/catalogo-resistencias-calefactoras.pdf` | redirección | ⚠️ AVISO | 301 → https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf · .htaccess OK |
-| `.htaccess (reglas generales)` | redirección | ✅ OK | 14/14 casos |
+| `.htaccess (reglas generales)` | redirección | ✅ OK | 20/20 casos |
 
 ## Detalles
 
