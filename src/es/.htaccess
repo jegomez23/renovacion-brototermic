@@ -1,0 +1,41 @@
+# =====================================================================
+# .htaccess del DOCROOT DEL .es (www.brototermic.es y brototermic.es). build.js lo copia a /dist-es.
+# Fuente de las reglas: docs/redirecciones.csv (filas del .es) · Reglas SEO: AGENTS.md §3.1
+#
+# En este docroot no hay ninguna página: solo este archivo.
+#   - Las 7 URLs que existían en el .es → 301 directo a su equivalente FINAL del .com (https, sin www), en un salto,
+#     se pidan por http o https y con o sin www.
+#   - Cualquier otra URL del .es → 404 de verdad (ni redirección a ciegas, que Google trata como «soft 404», ni el
+#     contenido del .com servido con el host .es).
+#
+# Cuándo se usa (docs/publicacion.md §2.4):
+#   - Escenario A, mismo hosting con otro docroot para el .es: se sube el contenido de /dist-es a ese docroot.
+#   - Escenario B, el .es en otro hosting: igual, al docroot del .es en ese hosting.
+#   - (Si el .es apuntara al MISMO docroot que el .com, este archivo no se usa: el .htaccess del .com ya lleva
+#     las mismas reglas del .es como red de seguridad.)
+#
+# Solo usa mod_alias (Redirect/RedirectMatch), que viene en cualquier Apache y no necesita mod_rewrite: aquí no
+# hacen falta condiciones de host porque este docroot solo sirve al .es.
+# Si el panel del hosting fuerza el HTTPS del .es por su cuenta, http:// daría dos saltos (http→https del .es y
+# luego al .com): desactivar esa opción en el .es para que sea un solo 301.
+# Si el hosting devuelve 500 al subir este archivo: renombrarlo y mirar el registro de errores (AllowOverride
+# debe permitir «FileInfo», que es lo que necesita Redirect).
+#
+# Ningún .htaccess se publica sin pasar antes tools/probar-redirecciones.sh contra el Apache de Docker.
+# =====================================================================
+
+<IfModule mod_alias.c>
+  # La portada y /index.html → landing de la delegación de Asturias
+  RedirectMatch 301 ^/(index\.html)?$ https://brototermic.com/oviedo/
+  RedirectMatch 301 ^/contacto/contacto\.html$ https://brototermic.com/oviedo/
+  # Legales → sus equivalentes del .com
+  RedirectMatch 301 ^/politica-de-privacidad-brototermic-oviedo\.html$ https://brototermic.com/privacidad.html
+  RedirectMatch 301 ^/politica-de-cookies-brototermic-oviedo\.html$ https://brototermic.com/cookies.html
+  # Catálogos
+  RedirectMatch 301 ^/docs/catalogo-instrumentacion\.pdf$ https://brototermic.com/docs/catalogo-instrumentacion.pdf
+  # Catálogo equivalente: pendiente de que el cliente confirme cuál es el vigente (redirecciones.csv)
+  RedirectMatch 301 ^/docs/catalogo-resistencias-calefactoras\.pdf$ https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf
+
+  # Todo lo demás: 404 (va el último: mod_alias aplica la primera regla que coincide)
+  RedirectMatch 404 ^/
+</IfModule>

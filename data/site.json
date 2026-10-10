@@ -12,7 +12,7 @@
   "sedes": [
     {
       "id": "vitoria",
-      "nombre": "Sede central — Vitoria-Gasteiz",
+      "nombre": "Sede central en Vitoria-Gasteiz",
       "direccion": "C/ Pintor Mauro Ortiz de Urbina, 7 bajo",
       "cp": "01008",
       "localidad": "Vitoria-Gasteiz",
@@ -30,7 +30,7 @@
     },
     {
       "id": "oviedo",
-      "nombre": "Delegación — Oviedo (Asturias)",
+      "nombre": "Delegación en Asturias (Oviedo)",
       "direccion": "Llano Ponte nº 8 bajo",
       "cp": "33011",
       "localidad": "Oviedo",
@@ -43,7 +43,7 @@
       "mapaUrl": "https://www.google.com/maps/search/?api=1&query=Llano+Ponte+8%2C+33011+Oviedo",
       "geo": null,
       "horario": null,
-      "foto": "brototermic-oviedo",
+      "foto": "oviedo/images/brototermic-oviedo",
       "alt": "Sala de reuniones y despacho de la delegación de BROTOTERMIC en Oviedo"
     }
   ],
@@ -63,7 +63,7 @@
     { "titulo": "Catálogo de resistencias calefactoras", "pdf": "/docs/catalogo-Brototermic-resistencias.pdf", "familias": ["resistencias-electricas"] }
   ],
   "formulario": {
-    "accion": "/contacto/bat/rd-mailform.php",
+    "accion": "/contacto/enviar.php",
     "envioActivo": false,
     "maxAdjuntoMB": 10,
     "tiposAdjunto": [".pdf", ".jpg", ".jpeg", ".png", ".dwg", ".dxf"]

@@ -1,0 +1,17 @@
+{
+  "name": "brototermic-web",
+  "version": "0.9.0",
+  "private": true,
+  "description": "Renovación de brototermic.com: generador estático sin dependencias (ver AGENTS.md)",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node tools/dev.js",
+    "build": "node build.js",
+    "build:publicacion": "node build.js --modo=publicacion",
+    "test": "node tools/test.js",
+    "validar": "node tools/validar.js"
+  }
+}

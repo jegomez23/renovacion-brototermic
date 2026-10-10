@@ -12,7 +12,7 @@
    - `node tools/comprobar-dist.js` dice «Todo correcto»;
    - el formulario se ha probado de principio a fin en el hosting.
 2. Es un día laborable por la mañana, nunca un viernes por la tarde, y las dos personas están disponibles las 2 horas siguientes.
-3. Se ha exportado de Search Console (`.com` y `.es`) el informe de **Rendimiento → Páginas** y **Consultas** de los últimos 3 meses (CSV). Es la **línea base** del seguimiento (apartado 6): sin ella no se puede saber si algo empeora.
+3. Se ha exportado de Search Console (`.com` y `.es`) el informe de **Rendimiento → Páginas** y **Consultas** de los últimos **16 meses** (lo máximo que da Search Console: así se ve la estacionalidad) (CSV). Es la **línea base** del seguimiento (apartado 6): sin ella no se puede saber si algo empeora.
 
 ## 1. Copia de seguridad completa ANTES de tocar nada
 
@@ -40,30 +40,63 @@ Nada se sube ni se borra hasta que la copia esté hecha y comprobada.
    ```
 
    Anotar en el PR: fecha, número de archivos, tamaño del zip y su SHA-256.
-4. Lo mismo con el `.es` si está en un hosting accesible, y una captura de la configuración DNS de los dos dominios.
-5. Si el hosting lo permite, **renombrar** (no borrar) la web antigua dentro del servidor a una carpeta fuera del docroot (`web-antigua-AAAA-MM-DD`): es la vuelta atrás más rápida (apartado 5).
+4. Lo mismo con el **docroot del `.es`** (`copia-es-AAAA-MM-DD`), y una captura de la configuración DNS de los dos dominios y de la página «Dominios» del panel del hosting (a qué carpeta apunta cada dominio: la necesita el apartado 2.4).
+5. Guardar también el **listado completo de archivos** de cada copia (`find . -type f | sort > listado-com.txt`): sirve para saber qué archivos antiguos siguen en el servidor después de publicar (apartado 2.5).
+6. **La web antigua NO se mueve ni se borra** del docroot: sigue ahí hasta que el formulario nuevo funcione en producción (apartado 2.5). Mientras tanto, `contacto/bat/rd-mailform.php` es la única vía de contacto por web que conocemos, y las imágenes y archivos que no están en `/dist` siguen respondiendo.
 
-## 2. Subir /dist y el .htaccess
+## 2. Subir /dist, /dist-es y los .htaccess
+
+> **Al servidor se sube SOLO el contenido de `/dist` (al docroot del `.com`) y el de `/dist-es` (al docroot del `.es`).** Nunca la raíz del repositorio ni ninguna otra carpeta: ni `/legacy`, ni `/docs` (sus PDF ya están en `/dist/docs`), ni `/tools`, `/data`, `/src`, `.git`, ni archivos `.md`, `.csv` o `.json`. `node tools/comprobar-publicable.js` lo comprueba con una lista blanca (`build.js` lo ejecuta siempre): si sobra algo, el build falla.
 
 1. Generar la versión final en limpio:
 
    ```bash
    git switch main && git pull
-   node build.js --modo=publicacion        # debe terminar sin errores
+   node build.js --modo=publicacion        # debe terminar sin errores (incluye test-auditor y comprobar-publicable)
+   node tools/comprobar-publicable.js      # «todos publicables»
    node tools/comprobar-dist.js            # con node tools/servir.js arrancado en otra terminal
    ```
 
-2. **Subir el contenido de `/dist` al docroot**, conservando las carpetas (`assets/`, `images/`, `docs/`, `contacto/`, `oviedo/`). **El `.htaccess` se sube el último**: así, si la subida se corta, no hay redirecciones apuntando a páginas que aún no están.
-   - FileZilla o WinSCP: subir todo menos `.htaccess`; cuando termine sin errores, subir `.htaccess`.
-   - Con `lftp`:
+2. **Qué se sustituye, qué se añade y qué se conserva en el docroot del `.com`:**
 
-     ```bash
-     lftp -u USUARIO sftp://SERVIDOR -e "mirror -R --verbose --exclude-glob .htaccess dist/ /RUTA-DOCROOT; put dist/.htaccess -o /RUTA-DOCROOT/.htaccess; quit"
-     ```
+   | | Archivos | Qué pasa |
+   |---|---|---|
+   | **Se sustituye** (mismo nombre) | las 48 páginas `.html` que ya existían, `sitemap.xml`, las imágenes de `/images/` y los 8 PDF de `/docs/` (byte a byte iguales, salvo las fotos retocadas, que conservan nombre y medidas), `.htaccess` | El archivo nuevo pisa al antiguo. Las URLs no cambian. |
+   | **Se añade** (no existía) | `/assets/` (CSS, JS, fuentes), `robots.txt`, `404.html`, las 4 familias, `contacto/enviar.php`, `contacto/gracias.html`, `contacto/error.html`, `/oviedo/index.html` nuevo | Nuevo en el servidor. |
+   | **Se conserva** (no se toca) | todo lo demás de la web antigua: sus carpetas `css/`, `js/`, `contacto/bat/` (con `rd-mailform.php`), las páginas antiguas de `/oviedo/` (el `.htaccess` las redirige), etc. | Se queda hasta la limpieza del apartado 2.5. |
 
-   - **No se borra nada del servidor** con la subida (sin `--delete`): los archivos antiguos que no están en `/dist` (por ejemplo `contacto/bat/rd-mailform.php` si el formulario lo sigue usando) se quedan.
-3. Comprobar que los nombres con **ñ** y con **espacios** han llegado bien (algunos clientes FTP los cambian): `docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf`, `docs/DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf`, `images/brototermic-convertidor-señal.jpg` y `images/brototermic-detectores- nivel.jpg`.
-4. Aplicar la redirección del `.es` (su `.htaccess`, o la redirección del proveedor de DNS u hosting, según haya respondido el cliente).
+3. **Orden de subida** (cada paso, cuando el anterior ha terminado sin errores):
+   1. Los recursos: `assets/`, `images/`, `oviedo/images/` y `docs/`. Las páginas antiguas no los usan, así que subirlos no cambia nada visible.
+   2. Las páginas: los `.html` de la raíz, `contacto/`, `oviedo/index.html`, `sitemap.xml` y `robots.txt`. Desde aquí se ve la web nueva.
+   3. **El `.htaccess`, el último**: si la subida se corta antes, no hay redirecciones apuntando a páginas que aún no están.
+
+   Con FileZilla o WinSCP, en ese orden y con «mostrar archivos ocultos». Con `lftp` (`--exclude-glob .htaccess` en el primer paso; **nunca `--delete`**):
+
+   ```bash
+   lftp -u USUARIO sftp://SERVIDOR -e "mirror -R --verbose --exclude-glob .htaccess dist/ /RUTA-DOCROOT; put dist/.htaccess -o /RUTA-DOCROOT/.htaccess; quit"
+   ```
+
+4. Comprobar que los nombres con **ñ** y con **espacios** han llegado bien (algunos clientes FTP los cambian): `docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf`, `docs/DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf`, `images/brototermic-convertidor-señal.jpg` y `images/brototermic-detectores- nivel.jpg`.
+
+### 2.4 El `.es`: qué escenario aplicar
+
+Hoy el `.es` sirve su propia web, distinta de la del `.com`: tiene **su propio docroot**. Lo que hay que mirar (en la página «Dominios» del panel del hosting, o preguntándolo al cliente) es dónde está ese docroot:
+
+| Escenario | Cómo se reconoce | Qué se hace |
+|---|---|---|
+| **A. Mismo hosting, otro docroot** (lo más probable: las dos IP coinciden) | En el panel, `brototermic.es` apunta a una carpeta distinta de la del `.com` | Copia de seguridad de esa carpeta (§1.4) y subir **solo** `dist-es/.htaccess` a su raíz, sustituyendo al que haya. Los archivos antiguos del `.es` pueden quedarse: el `.htaccess` redirige o da 404 a cualquier URL antes de servirlos. |
+| **B. Otro hosting** | El `.es` está en otro proveedor (otro panel, otra cuenta FTP) | Lo mismo que A, con el FTP de ese hosting. Comprobar que admite `.htaccess` (Apache) y `mod_alias`; si no, configurar en su panel las mismas 301 de `redirecciones.csv` y el 404 del resto. |
+| *C. El `.es` apunta al docroot del `.com`* | En el panel, los dos dominios apuntan a la misma carpeta | No se sube nada para el `.es`: el `.htaccess` del `.com` ya lleva sus reglas (red de seguridad). **No es lo recomendado**: el auditor comprueba que los dos archivos dan el mismo resultado, pero en este escenario el 404 del `.es` mostraría la 404 del `.com`. |
+
+En todos los casos, **el certificado HTTPS del `.es` (con y sin www) debe seguir activo**: si caduca, `https://www.brototermic.es/…` da un error de certificado antes de llegar a la redirección. Y si el panel fuerza el HTTPS del `.es` por su cuenta, conviene desactivarlo para que `http://` dé un solo salto (detalle en `src/es/.htaccess`).
+
+### 2.5 Limpieza de la web antigua (NO el día de publicar)
+
+Solo cuando se cumplan las dos condiciones: **el formulario nuevo funciona en producción** (`envioActivo: true` y envío real recibido, §3.4) y han pasado **2 semanas** sin incidencias en Search Console:
+
+1. Comparar el listado de la copia (§1.5) con `/dist`: lo que solo está en la copia es la web antigua que sigue en el servidor.
+2. Decidir archivo por archivo: las páginas `.html` antiguas ya redirigidas se pueden retirar; las imágenes no hace falta tocarlas (`/dist` ya las incluye todas, D-011); **`contacto/bat/` se retira** (el script antiguo y su PHPMailer de versión desconocida, hallazgo A-03 de la auditoría).
+3. Retirar = mover a una carpeta **fuera del docroot** (`web-antigua-AAAA-MM-DD`), no borrar. Volver a pasar `bash tools/probar-redirecciones.sh --produccion`.
 
 ## 3. Verificaciones inmediatas en producción (primeros 30 minutos)
 
@@ -148,9 +181,9 @@ curl -sI "https://brototermic.com/images/brototermic-convertidor-se%C3%B1al.jpg"
 **Cuándo:** un fallo grave que no se arregla en 30 minutos: la web no carga, hay bucles de redirección, el formulario no envía y no hay alternativa, o páginas que deben mantenerse dan 404.
 
 **Cómo (≤ 15 minutos):**
-1. **Renombrar el `.htaccess` nuevo** (`.htaccess` → `htaccess-fallido-AAAA-MM-DD.txt`): corta las redirecciones al momento.
-2. **Restaurar la copia del apartado 1**: devolver la carpeta `web-antigua-AAAA-MM-DD` del servidor a su sitio o subir de nuevo la copia `copia-com-AAAA-MM-DD` **completa, con su `.htaccess` original**. Lo que se subió nuevo y no existía antes (por ejemplo las 4 páginas de familia) se puede dejar: no está enlazado desde la web antigua.
-3. Si se aplicó la redirección del `.es`, desactivarla.
+1. **Renombrar el `.htaccess` nuevo** (`.htaccess` → `htaccess-fallido-AAAA-MM-DD.txt`): corta las redirecciones al momento (y quita un posible error 500).
+2. **Restaurar desde la copia del apartado 1** lo que se sustituyó: las páginas `.html`, `sitemap.xml`, las imágenes y el **`.htaccess` original**. Como la web antigua no se movió (§1.6), no hay que recuperar nada más: `contacto/bat/`, `css/` y `js/` antiguos siguen en su sitio. Lo que se añadió y no existía (`/assets/`, `robots.txt`, `404.html`, las 4 familias, `contacto/enviar.php`, `gracias.html`, `error.html`) se puede dejar: la web antigua no lo enlaza.
+3. Si se subió `dist-es/.htaccess` al docroot del `.es`, restaurar el `.htaccess` que tenía (copia §1.4).
 4. Comprobar en incógnito el inicio, 3 categorías y contacto de la web antigua (`curl -sI` → 200).
 5. **No** tocar Search Console: si ya se envió el sitemap nuevo, se elimina; no se envía nada más hasta volver a publicar.
 6. Avisar al cliente y anotar en el PR la causa, la hora y lo que se hizo. Arreglar en local, volver a pasar el apartado 0 y fijar otra fecha.

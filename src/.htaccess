@@ -8,24 +8,43 @@
 #   3. http → https y www → sin www, conservando la ruta
 #   4. Reescrituras internas (sin redirección): el PDF con ñ pedido en Latin-1 (%F1)
 #
+# El .es tiene SU PROPIO .htaccess (src/es/.htaccess → dist-es/), para su docroot (docs/publicacion.md §2.4).
+# Las reglas del .es de este archivo son una red de seguridad por si el .es acabara apuntando al docroot del .com;
+# el auditor (tools/auditoria-seo.js) comprueba que los dos archivos dan el mismo resultado.
+#
 # Ningún .htaccess se publica sin pasar antes tools/probar-redirecciones.sh contra el Apache de Docker
 # (tools/apache-pruebas). Este archivo se guarda en UTF-8 SIN BOM (lleva una «ñ» en la regla del punto 4).
+#
+# SI EL HOSTING DEVUELVE UN ERROR 500 AL SUBIR ESTE ARCHIVO (docs/publicacion.md §3):
+#   1. Renombrarlo al momento (.htaccess → htaccess-500.txt): la web vuelve a responder.
+#   2. Mirar el registro de errores del panel del hosting: dice qué línea no se admite.
+#   3. Lo habitual en un hosting compartido es que AllowOverride no permita alguna directiva. Todo lo que depende
+#      de un módulo va dentro de <IfModule>, así que la causa casi siempre será AddDefaultCharset o ErrorDocument
+#      (necesitan «FileInfo», como RewriteRule: sin FileInfo no funciona ninguna redirección y hay que hablar con el
+#      hosting). Se comenta la línea, se vuelve a subir y se repite la prueba de §3.1.
 # =====================================================================
 
-Options -Indexes -MultiViews
-DirectoryIndex index.html
+# Se han quitado a propósito, porque dan un 500 si el hosting no permite su override:
+#   - «Options -Indexes -MultiViews» (AllowOverride Options): el listado de carpetas se bloquea abajo con mod_rewrite.
+#   - «DirectoryIndex index.html» (AllowOverride Indexes): index.html es el valor por defecto de Apache.
+#   - «<If>» (solo Apache ≥ 2.4): ya no hace falta, el .es tiene su propio docroot y su 404 por defecto.
+# Si el hosting los admite (probarlo antes en Docker y en el hosting), se pueden volver a poner.
 AddDefaultCharset utf-8
 
-# Página 404 propia (noindex). En el .es, el 404 por defecto de Apache: los enlaces de /404.html son
-# rutas del .com y desde el host .es llevarían a otro 404.
+# Página 404 propia (noindex). Si el .es acabara en este docroot, también la vería: es noindex y no hace daño.
 ErrorDocument 404 /404.html
-<If "%{HTTP_HOST} =~ /brototermic\.es$/i">
-  ErrorDocument 404 default
-</If>
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase /
+
+# ---------- 0. Archivos ocultos y copias de seguridad: 404 (auditoría final, M-08) ----------
+# Con mod_rewrite (ya imprescindible) y no con «Require all denied», que exige otro override (AuthConfig) y podría
+# dar un 500. Se responde 404, no 403, para no confirmar que el archivo existe.
+# Ocultos: .git/, .env, .DS_Store… salvo /.well-known/ (lo usa el hosting para renovar el certificado HTTPS).
+RewriteRule (^|/)\.(?!well-known(/|$)) - [R=404,L]
+# Copias: «pagina.html.bak», «x.old», «x.orig», «volcado.sql», «x.swp», «index.html~»
+RewriteRule (\.(bak|old|orig|sql|swp)|~)$ - [R=404,L,NC]
 
 # ---------- 1a. .com: URLs duplicadas ----------
 # /index.html y /oviedo/index.html: se comprueba %{THE_REQUEST} (lo que pidió el navegador) para no
@@ -98,6 +117,12 @@ RewriteRule ^ https://brototermic.com%1 [R=301,L,NE]
 # ---------- 4. Reescrituras internas ----------
 # El PDF con ñ también se pedía en Latin-1 (%F1) y respondía 200: se sirve el mismo archivo (sin redirección)
 RewriteRule ^docs/catalogo_ca\xf1as_pirometricas_broto-03-02-2015\.pdf$ docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf [L]
+
+# ---------- 5. Sin listado de carpetas (sustituye a «Options -Indexes») ----------
+# Una carpeta sin index.html (/images/, /docs/, /assets/, /contacto/) da 404 en lugar de mostrar sus archivos.
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME}/index.html !-f
+RewriteRule ^ - [R=404,L]
 </IfModule>
 
 # ---------- Tipos MIME ----------
@@ -109,8 +134,11 @@ RewriteRule ^docs/catalogo_ca\xf1as_pirometricas_broto-03-02-2015\.pdf$ docs/cat
 </IfModule>
 
 # ---------- Compresión ----------
+# En Apache 2.4, AddOutputFilterByType es de mod_filter: sin él daría un 500 aunque mod_deflate esté cargado
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json application/ld+json image/svg+xml
+  <IfModule mod_filter.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/xml application/javascript text/javascript application/json application/ld+json image/svg+xml
+  </IfModule>
 </IfModule>
 
 # ---------- Caché ----------
@@ -139,8 +167,25 @@ RewriteRule ^docs/catalogo_ca\xf1as_pirometricas_broto-03-02-2015\.pdf$ docs/cat
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
   </FilesMatch>
-  # Seguridad básica: sin dependencias de terceros, así que no rompe nada
+  # ---------- Cabeceras de seguridad (auditoría final, M-04) ----------
+  # Sin dependencias de terceros, así que estas no rompen nada
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+
+  # HSTS: obliga al navegador a usar siempre HTTPS. Empieza con 5 minutos (max-age=300) para poder deshacerlo rápido
+  # si el HTTPS del hosting diera problemas. Cuando §3 de docs/publicacion.md esté en verde y pase 1 semana sin
+  # incidencias, subirlo a «max-age=31536000» (1 año). NO añadir «includeSubDomains» sin comprobar antes que TODOS
+  # los subdominios (correo, webmail, etc.) tienen HTTPS. Por http el navegador ignora esta cabecera.
+  Header always set Strict-Transport-Security "max-age=300"
+
+  # CSP en modo SOLO INFORME: el navegador no bloquea nada, solo anota en la consola lo que se habría bloqueado.
+  # Permite únicamente recursos del propio dominio y el único script en línea de la web (head.html: añade la clase
+  # «js»), identificado por su hash. El JSON-LD no se ejecuta, así que la CSP no le afecta.
+  # Para activarla: revisar la consola de inicio, una categoría, contacto y /oviedo/ en producción; si no hay avisos,
+  # cambiar «Content-Security-Policy-Report-Only» por «Content-Security-Policy».
+  # SI SE CAMBIA EL SCRIPT EN LÍNEA de src/partials/head.html, hay que recalcular el hash:
+  #   node -e "console.log(require('crypto').createHash('sha256').update(\"document.documentElement.classList.add('js')\").digest('base64'))"
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
 </IfModule>

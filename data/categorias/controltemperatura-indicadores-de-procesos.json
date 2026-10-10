@@ -132,7 +132,7 @@
       "texto": "<p>Módulos de entrada salida que permiten la lectura de señales digitales y analógicas, medida de frecuencia, totalizador de pulsos y control on/off de aparatos externos. Todos los módulos están disponibles en carril DIN. La comunicación entre los módulos de entrada /salida y el sistema supervisor se basa en una comunicación serie RS-422/RS-485, con protocolo Modbus (ASCII o RTU). El software WINLOG, nos proporciona el interface para el operario en un entorno Windows para la supervisión en tiempo real.</p>",
       "specs": [],
       "img": "brototermic-sielcod1",
-      "alt": "Infrarrojo compacto IC1013NG",
+      "alt": "Módulo de adquisición de datos Sielco D1 sobre soporte para carril DIN, con bornas de conexión",
       "pdf": null
     },
     {

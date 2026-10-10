@@ -1,5 +1,6 @@
 # Uso (desde tools/apache-pruebas/):  docker compose up -d --build
-# Sirve ../../dist en http://localhost:8080 y https://localhost:8443
+# Sirve ../../dist (.com) y ../../dist-es (.es) en http://localhost:8080 y https://localhost:8443,
+# cada uno en su vhost y con su docroot, como en producción
 services:
   apache:
     build: .
@@ -8,5 +9,6 @@ services:
       - "8080:80"
       - "8443:443"
     volumes:
-      # Solo lectura: la prueba nunca modifica /dist
-      - ../../dist:/usr/local/apache2/htdocs:ro
+      # Solo lectura: la prueba nunca modifica /dist ni /dist-es
+      - ../../dist:/usr/local/apache2/htdocs-com:ro
+      - ../../dist-es:/usr/local/apache2/htdocs-es:ro
