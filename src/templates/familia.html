@@ -7,6 +7,7 @@
     <header class="pagina-cabecera{{#if pagina.imagen}} pagina-cabecera--con-imagen{{/if}}">
       <div>
         <h1>{{pagina.h1}}</h1>
+        <p class="pagina-cabecera__acceso"><a class="boton boton--secundario" href="#categorias-titulo">Ver categorías</a></p>
         <div class="entradilla">{{{pagina.intro}}}</div>
         <div class="pagina-cabecera__acciones">
           <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
@@ -18,7 +19,7 @@
     </header>
 
     <section class="seccion" aria-labelledby="categorias-titulo">
-      <h2 id="categorias-titulo">{{pagina.tituloTarjetas}}</h2>
+      <h2 id="categorias-titulo" tabindex="-1">{{pagina.tituloTarjetas}}</h2>
       {{> tarjetas}}
     </section>
 
