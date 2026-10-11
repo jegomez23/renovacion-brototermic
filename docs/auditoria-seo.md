@@ -44,7 +44,7 @@
 | `/presionhumedad-sensores-de-presion.html` | ✅ OK | 387 pal. | 54 car. | 151 car. | OK | 7/7 | 94 datos | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/presionhumedad-sondas-de-humedad.html` | ✅ OK | 590 pal. | 51 car. | 152 car. | OK | 8/8 | 105 datos | 8/8 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/privacidad.html` | ✅ OK | 3739 pal. | 36 car. | 154 car. | OK | 0/0 | 34 datos | 0/0 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
-| `/resistencias-atex.html` | ✅ OK | 604 pal. | 39 car. | 152 car. | OK | 7/7 | 71 datos | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
+| `/resistencias-atex.html` | ✅ OK | 615 pal. | 39 car. | 152 car. | OK | 7/7 | 77 datos | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/resistencias-calefaccion-industrial.html` | ✅ OK | 476 pal. | 57 car. | 148 car. | OK | 7/7 | 54 datos | 7/7 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/resistencias-calentamientoaire.html` | ✅ OK | 608 pal. | 56 car. | 149 car. | OK | 14/14 | 63 datos | 14/14 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/resistencias-especiales-a-medida.html` | ✅ OK | 453 pal. | 59 car. | 147 car. | OK | 0/0 | 27 datos | 2/2 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |

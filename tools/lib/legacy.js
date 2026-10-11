@@ -273,6 +273,11 @@ const ERRATAS_MANUALES = {
 // cualquier espacio o salto de línea del HTML. «a» vacío = el texto se elimina (decidido en el §4).
 // Solo hace falta listar lo que DESAPARECE: añadir palabras alrededor no rompe la cobertura del auditor.
 const SUSTITUCIONES = {
+  'resistencias-atex.html': [
+    // §4.7: contexto histórico de julio de 2003 y sustitución normativa; no cambia certificaciones (§4.8 y §4.10).
+    ['A partir de Julio del 2003 todos los equipos con puesta en servicio dentro de la Comunidad Europea han de cumplir por obligación con la Directiva Atex 94/9/CE.',
+      'A partir de julio de 2003, los equipos con puesta en servicio dentro de la Comunidad Europea debían cumplir la Directiva ATEX 94/9/CE. Esta directiva fue sustituida por la Directiva 2014/34/UE el 20 de abril de 2016.'],
+  ],
   'index.html': [
     // §4.1: «más de 35 años» → «desde 1982» (dato externo, en site.json → pendientes)
     ['Con más de 35 años de experiencia, compuesta por un equipo joven y dinámico que se esfuerza por dar el mejor servicio a sus clientes.',

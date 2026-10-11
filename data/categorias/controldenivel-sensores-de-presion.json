@@ -15,7 +15,7 @@
       "texto": "<p>Dimensiones reducidas.<br>Fabricado en material plástico.<br>Membrana enrasada. ø102 mm. Nitrílico.<br>Salida: Microrruptor SPDT 5A / 250V.<br>Presión de actuación: &gt;8 g.<br>Temperatura de trabajo: -10..+60 ºC.<br>Protección: IP50</p>",
       "specs": [],
       "img": "brototermic-sensorcnm10",
-      "alt": "Sensor CNM 10",
+      "alt": "Sensor CNM 10 con membrana circular y carcasa",
       "pdf": null
     },
     {
@@ -24,7 +24,7 @@
       "texto": "<p>Diseño anticondensación.<br>Fabricado en material plástico reforzado.<br>Membrana aflorante. ø155 mm. Nitrílico.<br>Salida: Microrruptor SPDT 10A / 250V.<br>Presión de actuación: &gt;60 g.<br>Temperatura: -20..+80 ºC.<br>Protección: IP53.</p>",
       "specs": [],
       "img": "brototermic-sensorcnm30",
-      "alt": "Sensor CNM 30",
+      "alt": "Sensor CNM 30 con membrana circular y aro de fijación",
       "pdf": null
     },
     {
@@ -33,7 +33,7 @@
       "texto": "<p>Aplicación general.<br>Fabricado en material plástico reforzado.<br>Membrana enrasada. ø155 mm. Nitrílico.<br>Salida: Microrruptor SPDT 10A / 250V.<br>Presión de actuación: &gt;60 g.<br>Temperatura: -20..+80 ºC.<br>Protección: IP53.<br>ATEX Grupo II, Categoría 1/2 D (polvo), Zonas 20, 21 y 22.</p>",
       "specs": [],
       "img": "brototermic-sensorcnm20ex",
-      "alt": "Sensor CNM 20 EX",
+      "alt": "Sensor CNM 20 EX con membrana circular y carcasa",
       "pdf": null
     }
   ],
