@@ -80,27 +80,36 @@ if (trim((string) ($_POST['web'] ?? '')) !== '') ir(URL_GRACIAS);
 
 // ---------- 3. Límite de envíos por IP ----------
 // Se guarda solo un hash de la IP con sal (no se puede volver a la IP) y las horas de los envíos de la última ventana.
-function dentroDelLimite(array $config): bool
+// null indica un fallo de almacenamiento; false, una solicitud que supera el límite.
+function dentroDelLimite(array $config): ?bool
 {
     $limite = (int) ($config['limite_envios'] ?? 5);
     $ventana = (int) ($config['ventana_segundos'] ?? 3600);
     $dir = $config['dir_limites'] ?? (sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'brototermic-formulario');
-    if (!is_dir($dir) && !@mkdir($dir, 0700, true)) return true; // sin carpeta temporal no se bloquea a nadie
+    if (!is_dir($dir) && !@mkdir($dir, 0700, true) && !is_dir($dir)) return null;
     $clave = hash('sha256', ($config['sal'] ?? '') . '|' . ($_SERVER['REMOTE_ADDR'] ?? ''));
     $archivo = $dir . DIRECTORY_SEPARATOR . $clave;
     $f = @fopen($archivo, 'c+');
-    if ($f === false) return true;
-    flock($f, LOCK_EX);
-    $ahora = time();
-    $envios = array_filter(array_map('intval', explode(',', (string) stream_get_contents($f))), fn($t) => $t > $ahora - $ventana);
-    $permitido = count($envios) < $limite;
-    if ($permitido) $envios[] = $ahora;
-    ftruncate($f, 0);
-    rewind($f);
-    fwrite($f, implode(',', $envios));
-    flock($f, LOCK_UN);
-    fclose($f);
-    return $permitido;
+    if ($f === false) return null;
+    try {
+        if (!@flock($f, LOCK_EX)) return null;
+        $contenido = @stream_get_contents($f);
+        if ($contenido === false || !preg_match('/^(?:[0-9]+(?:,[0-9]+)*)?$/D', $contenido)) return null;
+        $ahora = time();
+        $envios = array_filter(array_map('intval', explode(',', $contenido)), fn($t) => $t > $ahora - $ventana);
+        if (count($envios) >= $limite) return false;
+        $envios[] = $ahora;
+        $datos = implode(',', $envios);
+        // No se borra el registro anterior antes de intentar escribir el nuevo.
+        if (!@rewind($f)
+            || @fwrite($f, $datos) !== strlen($datos)
+            || !@ftruncate($f, strlen($datos))
+            || !@fflush($f)) return null;
+        return true;
+    } finally {
+        @flock($f, LOCK_UN);
+        @fclose($f);
+    }
 }
 
 // ---------- 4. Validación de los campos ----------
@@ -131,7 +140,12 @@ if (mb_strlen($telefono) > 30 || !preg_match('/^[0-9 +().\-]*$/', $telefono)) fa
 if ($mensaje === '' || mb_strlen($mensaje) > 5000) fallo('mensaje');
 if (($_POST['rgpd'] ?? '') !== 'si') fallo('rgpd');
 
-if (!dentroDelLimite($config)) fallo('limite');
+$permitido = dentroDelLimite($config);
+if ($permitido === null) {
+    error_log('enviar.php: almacenamiento del limitador no disponible');
+    fallo('configuracion');
+}
+if (!$permitido) fallo('limite');
 
 // ---------- 5. Adjunto (opcional) ----------
 // Comprueba que el contenido es de verdad del tipo que dice la extensión. finfo no reconoce siempre DWG ni DXF
