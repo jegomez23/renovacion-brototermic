@@ -65,7 +65,10 @@
     itemProductos.addEventListener('mouseleave', function () {
       if (!escritorio.matches || !conRaton.matches) return;
       clearTimeout(temporizador);
-      temporizador = setTimeout(function () { abrirPanel(false); }, 300);
+      temporizador = setTimeout(function () {
+        // El ratón no debe ocultar el panel mientras se usa con teclado.
+        if (!itemProductos.contains(document.activeElement)) abrirPanel(false);
+      }, 300);
     });
 
     // En escritorio se cierra al tabular fuera o al hacer clic fuera

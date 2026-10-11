@@ -250,6 +250,9 @@ main:focus { outline: none; } /* main recibe el foco del enlace «Saltar al cont
    La cabecera deja de ser fija para que el menú largo no tape la página. */
 html:not(.js) .cabecera { position: static; }
 html:not(.js) .cabecera__menu { display: none; }
+/* Sin JS, Productos es un enlace: no anuncia un estado de despliegue que solo controla el script. */
+.js .menu__productos-sin-js,
+html:not(.js) .menu__boton { display: none; }
 
 /* --- Menú: móvil (acordeón) --- */
 .menu {
