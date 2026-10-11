@@ -9,6 +9,7 @@
 
 - [ ] Accesos confirmados: FTP/SFTP del hosting del `.com`, Search Console del `.com` y del `.es`, DNS o hosting del `.es`. Las credenciales se guardan **fuera del repositorio**.
 - [ ] El hosting admite `.htaccess` con `mod_rewrite` y `mod_headers` (comprobado con un archivo de prueba en una carpeta temporal, que luego se borra).
+- [ ] `AllowOverride FileInfo` permite las reglas del `.com` y las del docroot propio del `.es` (`mod_alias`). Caché mediante `Cache-Control`, sin exigir `Indexes` ni `mod_expires`; comprobar que el hosting no añade cabeceras de caché contradictorias.
 - [ ] `config-formulario.php` creado en el servidor **fuera del docroot** (a partir de `src/contacto/config.example.php`), con el email de destino del cliente; `max_adjunto_mb` y `tipos` iguales a los de `site.json`. Formulario (`/contacto/enviar.php`) probado de principio a fin (A-2-03). La versión de PHP del hosting es compatible y sus límites `upload_max_filesize` y `post_max_size` son mayores que `site.formulario.maxAdjuntoMB`.
 - [ ] Docker Desktop instalado en el equipo de la Persona A y el entorno `tools/apache-pruebas/` arranca (`docker compose up -d --build`).
 - [ ] Día y hora de publicación acordados con el cliente, en horario de baja actividad y **nunca un viernes por la tarde**. Las dos personas disponibles durante las 2 horas siguientes.
@@ -37,6 +38,7 @@
 - [ ] `/index.html` → `/` y `/oviedo/index.html` → `/oviedo/` sin bucle.
 - [ ] `http://`, `www.` y `http://www.` de cualquier URL → `https://brototermic.com/<misma ruta>` en un solo salto.
 - [ ] Una URL inexistente devuelve **404** (no 200 ni redirección a la portada), también en el `.es`: solo sus 7 URLs conocidas redirigen.
+- [ ] `node tools/test-apache.js` pasa con `AllowOverride All` y `FileInfo`: rutas sensibles 404 sin `Location` por HTTP/HTTPS, página 404 propia sin redirección interna, recursos con caché y ausencia de respuestas 500. Una ruta desconocida normal puede canonicalizar primero; el destino HTTPS debe devolver 404.
 
 ### Etiquetas y SEO en la página
 - [ ] Cada página tiene un **canonical absoluto** a `https://brototermic.com/…` (sin www, sin `index.html`, sin parámetros).

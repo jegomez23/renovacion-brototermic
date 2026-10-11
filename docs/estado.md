@@ -13,7 +13,8 @@
 | **W3C** (validador Nu local) | **55/55 páginas y la hoja CSS sin errores ni advertencias** |
 | **Lighthouse móvil** (medido el 2026-10-10 en local, sin compresión ni caché del servidor) | Inicio 93 · familia 99 · categoría 99 · contacto 99 · `/oviedo/` 98. Accesibilidad, buenas prácticas y SEO: 100 en las cinco. LCP 1,9-2,3 s. Repetir en producción |
 | **SEO técnico** | Canonical en las 52 páginas, sitemap con 60 URLs (52 + 8 PDF) todas con 200, `robots.txt`, 0 páginas huérfanas, JSON-LD en todas, 404 con `noindex` |
-| **Redirecciones** | 17 reglas 301 + 404 real del resto del `.es`, en `dist/.htaccess` y en el docroot propio del `.es` (`dist-es/.htaccess`). Comprobadas con el simulador del auditor; **no probadas aún en un Apache** |
+| **Redirecciones** | 17 reglas 301 + 404 real del resto del `.es`, en `dist/.htaccess` y en el docroot propio del `.es` (`dist-es/.htaccess`). Comprobadas con el simulador del auditor; pruebas Docker y hosting pendientes |
+| **Corrección Apache propuesta** | Rama `review/jhonda-apache-fixes`, pendiente de revisión: conserva el 404 de `ErrorDocument` y usa caché compatible con `FileInfo`. Apache nativo **2.4.62**, HTTP/HTTPS locales con certificado temporal: **1.336 solicitudes correctas, 0 incorrectas** (`All`: 668; `FileInfo`: 668), cuatro hosts y 77 URLs del inventario. No valida certificados públicos ni configuración del hosting; no sustituye la prueba Docker exigida antes de publicar |
 | **Formulario** | `/contacto/enviar.php` hecho y probado en local (PHP 8.2 + capturador SMTP: 17 casos, incluidos inyección de cabeceras y adjuntos falsos). **Envío desactivado** (`envioActivo: false`) hasta tener el hosting |
 | **Seguridad** | Cabeceras (nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy, HSTS de 5 min y CSP en modo informe), archivos ocultos y copias → 404, solo se publica `/dist` y `/dist-es` (lista blanca) |
 

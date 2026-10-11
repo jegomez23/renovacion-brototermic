@@ -97,7 +97,7 @@
 ### `/` — AVISO
 
 - Keyword [POR VERIFICAR GSC]: «componentes industriales e instrumentación [POR VERIFICAR GSC]».
-- Imagen eliminada (justificada): /images/Catalogos-de-brototermic.jpg — Sustitución aprobada 2026-10-11: portada-catalogos-provisional.png combina las primeras páginas completas de los dos PDF enlazados. Miniatura provisional hasta confirmar vigencia. La imagen histórica se publica en su ruta original, sin mostrarla. Enlaces y PDF intactos.
+- Imagen eliminada (justificada): /images/Catalogos-de-brototermic.jpg — Sustitución aprobada 2026-10-11 e implementada en el bloque Catálogos del inicio con /images/portada-catalogos-provisional.png: composición de las primeras páginas completas de /docs/catalogo-instrumentacion.pdf y /docs/catalogo-Brototermic-resistencias.pdf. La miniatura ya está implementada; sigue pendiente la confirmación de vigencia de ambos catálogos por el cliente. La imagen histórica se publica en su ruta original, sin mostrarla. Enlaces y PDF intactos.
 - Imagen eliminada (justificada): /images/productos-a-medida-brototermic.jpg — Sustitución aprobada 2026-10-11 por brototermic-calefactor-inmersion.jpg, sin atribuir fabricación propia a la foto. La miniatura histórica se publica en su ruta original, sin mostrarla.
 
 ### `/contacto/contacto.html` — AVISO
@@ -131,7 +131,7 @@
 - Imagen eliminada (justificada): /oviedo/images/resistencias1-brototermic-oviedo.jpg — Miniatura de 136x136 de la portada del .es; la landing nueva no la usa.
 - Imagen eliminada (justificada): /oviedo/images/productos-a-medida-brototermic-oviedo.jpg — Miniatura de 136x136 de la portada del .es; la landing nueva no la usa.
 - Imagen eliminada (justificada): /oviedo/images/mercado-aplicacion-brototermic-oviedo.jpg — Miniatura de 136x136 de la portada del .es; la landing nueva no la usa.
-- Imagen eliminada (justificada): /oviedo/images/electticfor-brototermic-oviedo.jpg — Logo de marca en JPG (370x290). Se sustituye por el SVG oficial en el bloque de marcas; guardar como respaldo si no llegan los SVG.
+- Imagen eliminada (justificada): /oviedo/images/electticfor-brototermic-oviedo.jpg — Fotografía de resistencias ElectricFor de la web histórica de Oviedo (370x290), no un logotipo. Origen: legacy/com/brototermic.com/oviedo/images/electticfor-brototermic-oviedo.jpg. La landing nueva de Oviedo no la muestra; copia idéntica implementada en /images/portada-resistencias-electricas.jpg para la tarjeta Resistencias eléctricas del inicio, seleccionada en modeloInicio. Selección de imagen aprobada 2026-10-11; no consta confirmación comercial del cliente sobre la vigencia de los productos representados. El original y su URL se conservan.
 - Imagen eliminada (justificada): /oviedo/images/mesel-brototermic-oviedo.jpg — Logo de marca en JPG (370x290). Se sustituye por el SVG oficial en el bloque de marcas; guardar como respaldo si no llegan los SVG.
 - Imagen eliminada (justificada): /oviedo/images/disibent-brototermic-oviedo.jpg — Logo de marca en JPG (370x290). Se sustituye por el SVG oficial en el bloque de marcas; guardar como respaldo si no llegan los SVG.
 - Imagen eliminada (justificada): /oviedo/images/sanara-brototermic-oviedo.jpg — Logo de marca en JPG (370x290). Se sustituye por el SVG oficial en el bloque de marcas; guardar como respaldo si no llegan los SVG.
