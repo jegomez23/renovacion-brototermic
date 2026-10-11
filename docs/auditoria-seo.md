@@ -8,7 +8,7 @@
 
 | URL | Estado | Contenido antiguo | Title | Meta | H1 | Productos | Datos técnicos | Imágenes | PDF | Enlaces | Texto | Canonical | JSON-LD | Sitemap |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| `/` | ⚠️ AVISO | 235 pal. | ⚠️ 56 car. | 154 car. | ⚠️ sin la keyword (el H1 antiguo tampoco la tenía) | 0/0 | 4 datos | 5/5 | 2/2 | 47/47 | 100.0 % | OK | OK | OK |
+| `/` | ⚠️ AVISO | 235 pal. | ⚠️ 56 car. | 154 car. | ⚠️ sin la keyword (el H1 antiguo tampoco la tenía) | 0/0 | 4 datos | 3/5 (+2 just.) | 2/2 | 47/47 | 100.0 % | OK | OK | OK |
 | `/contacto/contacto.html` | ⚠️ AVISO | 80 pal. | ⚠️ 56 car. | 154 car. | OK | 0/0 | 6 datos | 0/0 | 0/0 | 3/3 | 100.0 % | OK | OK | OK |
 | `/controldenivel-interruptores-magneticos.html` | ✅ OK | 1032 pal. | 46 car. | 153 car. | OK | 13/13 | 246 datos | 13/13 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
 | `/controldenivel-niveles-de-flotador.html` | ✅ OK | 321 pal. | 52 car. | 146 car. | OK | 6/6 | 61 datos | 6/6 | 0/0 | 44/44 | 100.0 % | OK | OK | OK |
@@ -97,6 +97,8 @@
 ### `/` — AVISO
 
 - Keyword [POR VERIFICAR GSC]: «componentes industriales e instrumentación [POR VERIFICAR GSC]».
+- Imagen eliminada (justificada): /images/Catalogos-de-brototermic.jpg — Sustitución aprobada 2026-10-11: portada-catalogos-provisional.png combina las primeras páginas completas de los dos PDF enlazados. Miniatura provisional hasta confirmar vigencia. La imagen histórica se publica en su ruta original, sin mostrarla. Enlaces y PDF intactos.
+- Imagen eliminada (justificada): /images/productos-a-medida-brototermic.jpg — Sustitución aprobada 2026-10-11 por brototermic-calefactor-inmersion.jpg, sin atribuir fabricación propia a la foto. La miniatura histórica se publica en su ruta original, sin mostrarla.
 
 ### `/contacto/contacto.html` — AVISO
 

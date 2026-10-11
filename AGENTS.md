@@ -11,7 +11,7 @@
 >
 > **Dónde estamos, en 1 minuto: [docs/estado.md](docs/estado.md)** (qué está hecho, cómo ver la web y qué bloquea la publicación).
 >
-> Última revisión: 2026-10-10.
+> Última revisión: 2026-10-11.
 
 ## Documentos del proyecto (`/docs`)
 
@@ -405,6 +405,7 @@ Una página está lista cuando cumple todo esto:
 | 2026-10-09 | **Revisión de Codex:** sin comodín en el `.es` (301 solo URLs conocidas, 404 el resto); formulario compatible con `rd-mailform.php` y sin envío real hasta tener el hosting; `build.js` con modos `piloto` y `publicacion`; bloque de sectores solo con sectores de /legacy y sin URLs nuevas; alts de RE92 y Catálogos corregidos; menú según el patrón *Disclosure Navigation* del W3C, `prefers-reduced-motion` y prueba a 320 px. |
 | 2026-10-10 | **Página 404 propia** (`/404.html`, `noindex`, sin canonical, fuera del sitemap; `ErrorDocument` en el `.htaccess`) y **tira de logos de marcas a 990 px** con `loading="lazy"` como excepción a la regla de 480 px: aprobadas (D-010). |
 | 2026-10-10 | **Correcciones de la auditoría final (D-011):** auditor con datos técnicos exactos, cobertura por producto, 301 comprobadas contra el `.htaccess` real y pruebas de mutación obligatorias (`tools/test-auditor.js`); todas las imágenes antiguas de `/images/` y `/oviedo/images/` publicadas (ninguna URL de imagen en 404); solo se sube `/dist` y `/dist-es` (lista blanca: `tools/comprobar-publicable.js`) y la web antigua no se mueve hasta que el formulario nuevo funcione; el `.es` con docroot y `.htaccess` propios (`/dist-es`, solo `mod_alias`); `.htaccess` del `.com` sin `Options`, `DirectoryIndex` ni `<If>`; formulario con `enviar.php` (no `rd-mailform.php`); `/oviedo/` con todo su texto antiguo; alts copiados corregidos; privacidad sin el Privacy Shield como vigente. |
+| 2026-10-11 | **Imágenes aprobadas del inicio:** Productos a medida usa `brototermic-calefactor-inmersion.jpg` sin atribuir fabricación propia a la foto; las tarjetas de temperatura, nivel y resistencias usan copias nuevas de `slide-3.jpg`, `slide-4.jpg` y `oviedo/images/electticfor-brototermic-oviedo.jpg`. Selección explícita en `modeloInicio`, sin reordenar productos ni cambiar imágenes de otras páginas. Catálogos usa `portada-catalogos-provisional.png`, composición de las primeras páginas completas de los dos PDF originales, sobre blanco y sin alterar contenido ni enlaces; provisional hasta confirmar vigencia. Todos los originales y sus URLs se conservan. |
 
 ---
 

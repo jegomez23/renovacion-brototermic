@@ -788,7 +788,7 @@ function mapaWeb() {
 }
 
 // Tarjetas de las 8 familias (4 con página + 4 directas), en el orden de familias.json (inicio y /oviedo/)
-function tarjetasFamilias() {
+function tarjetasFamilias(imagenesPortada = {}) {
   return familias.map(f => {
     const esFamilia = f.tipo === 'familia';
     if (!f.resumen) error(`data/familias.json → ${f.id}: falta el «resumen» de la tarjeta`);
@@ -797,7 +797,8 @@ function tarjetasFamilias() {
       nombre: f.nombre,
       url: urlFamilia(f),
       resumen: f.resumen,
-      imagen: f.img ? imagen(f.img, `data/familias.json → ${f.id}`) : imagenDeCategoria(esFamilia ? f.categorias[0].archivo : f.archivo),
+      imagen: imagenesPortada[f.id] ? imagen(imagenesPortada[f.id], `portada → ${f.id}`)
+        : f.img ? imagen(f.img, `data/familias.json → ${f.id}`) : imagenDeCategoria(esFamilia ? f.categorias[0].archivo : f.archivo),
       nota: n ? `${n} ${esFamilia ? 'categorías' : 'productos'}` : null,
     };
   });
@@ -820,7 +821,11 @@ function modeloInicio() {
     migas: migasDe(),
     hero: hero ? { ...hero, alt: c.meta['hero-alt'] || '' } : null,
     texto: Object.fromEntries(['hero', 'empresa', 'medida', 'novedades', 'catalogos', 'marcas', 'sedes'].map(b => [b, bloque(c, b)])),
-    tarjetas: tarjetasFamilias(),
+    tarjetas: tarjetasFamilias({
+      'resistencias-electricas': 'portada-resistencias-electricas',
+      controltemperatura: 'portada-control-temperatura',
+      controldenivel: 'portada-control-nivel',
+    }),
     fundacion: site.fundacion,
     numMarcas: site.marcas.length,
     marcas: site.marcas,
@@ -828,10 +833,12 @@ function modeloInicio() {
     catalogos: site.catalogos.map(k => ({ titulo: k.titulo, url: urlPublica(k.pdf) })),
     sedes: sedes(),
     // Miniaturas de /legacy (100 × 110, decorativas: el título de cada bloque ya dice lo que es)
+    // Selección aprobada de portada: foto de catálogo sin atribución de fabricación propia y portadas PDF auténticas.
+    // La miniatura de catálogos es provisional hasta confirmar la vigencia de ambos PDF con el cliente.
     miniaturas: {
-      medida: imagen('productos-a-medida-brototermic', c.ruta),
+      medida: imagen('brototermic-calefactor-inmersion', c.ruta),
       novedades: imagen('nuevos-productos-brototermic', c.ruta),
-      catalogos: imagen('Catalogos-de-brototermic', c.ruta),
+      catalogos: imagen('portada-catalogos-provisional', c.ruta),
     },
     ogImagen: hero ? `${host}${hero.src}` : null,
   };
