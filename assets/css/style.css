@@ -556,7 +556,8 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .relacionadas__lista a:hover { border-color: var(--color-acento); background: var(--color-fondo-alt); }
 
 @media (max-width: 767px) {
-  .pagina-cabecera__acciones .boton { width: 100%; }
+  .pagina-cabecera__acciones .boton,
+  .pagina-cabecera__acceso .boton { width: 100%; }
 }
 @media (min-width: 768px) {
   .indice__lista { columns: 2; column-gap: var(--esp-7); }

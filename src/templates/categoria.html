@@ -6,6 +6,7 @@
   <div class="contenedor">
     <header class="pagina-cabecera">
       <h1>{{pagina.h1}}</h1>
+      {{#if pagina.productos}}<p class="pagina-cabecera__acceso"><a class="boton boton--secundario" href="#{{pagina.productos.0.ancla}}">Ver productos</a></p>{{/if}}
       <div class="entradilla">{{{pagina.intro}}}</div>
       <div class="pagina-cabecera__acciones">
         <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
