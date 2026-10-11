@@ -30,27 +30,27 @@
       {{> tarjetas}}
     </section>
 
-    <div class="seccion destacados">
-      <section class="destacado" aria-labelledby="medida-titulo">
-        {{#if pagina.miniaturas.medida}}<img class="destacado__imagen" src="{{pagina.miniaturas.medida.src}}" width="{{pagina.miniaturas.medida.ancho}}" height="{{pagina.miniaturas.medida.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
-        <div>
+    <div class="seccion destacados destacados--inicio">
+      <section class="destacado destacado--medida" aria-labelledby="medida-titulo">
+        {{#if pagina.miniaturas.medida}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.medida.src}}" width="{{pagina.miniaturas.medida.ancho}}" height="{{pagina.miniaturas.medida.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
+        <div class="destacado__contenido">
           <h2 class="destacado__titulo" id="medida-titulo">Productos a medida</h2>
           {{{pagina.texto.medida}}}
-          <a class="boton boton--secundario" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
+          <a class="boton boton--primario" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
         </div>
       </section>
-      <section class="destacado" aria-labelledby="novedades-titulo">
-        {{#if pagina.miniaturas.novedades}}<img class="destacado__imagen" src="{{pagina.miniaturas.novedades.src}}" width="{{pagina.miniaturas.novedades.ancho}}" height="{{pagina.miniaturas.novedades.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
-        <div>
-          <h2 class="destacado__titulo" id="novedades-titulo">Mercado y aplicación</h2>
+      <section class="destacado destacado--apoyo" aria-labelledby="novedades-titulo">
+        {{#if pagina.miniaturas.novedades}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.novedades.src}}" width="{{pagina.miniaturas.novedades.ancho}}" height="{{pagina.miniaturas.novedades.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
+        <h2 class="destacado__titulo" id="novedades-titulo">Mercado y aplicación</h2>
+        <div class="destacado__contenido">
           {{{pagina.texto.novedades}}}
           <a class="boton boton--secundario" href="/nuevos-productos.html">Nuevos productos</a>
         </div>
       </section>
-      <section class="destacado" aria-labelledby="catalogos-titulo">
-        {{#if pagina.miniaturas.catalogos}}<img class="destacado__imagen" src="{{pagina.miniaturas.catalogos.src}}" width="{{pagina.miniaturas.catalogos.ancho}}" height="{{pagina.miniaturas.catalogos.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
-        <div>
-          <h2 class="destacado__titulo" id="catalogos-titulo">Nuestros catálogos</h2>
+      <section class="destacado destacado--apoyo" aria-labelledby="catalogos-titulo">
+        {{#if pagina.miniaturas.catalogos}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.catalogos.src}}" width="{{pagina.miniaturas.catalogos.ancho}}" height="{{pagina.miniaturas.catalogos.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
+        <h2 class="destacado__titulo" id="catalogos-titulo">Nuestros catálogos</h2>
+        <div class="destacado__contenido">
           {{{pagina.texto.catalogos}}}
           <ul class="destacado__lista">
             {{#each pagina.catalogos}}<li><a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a></li>
