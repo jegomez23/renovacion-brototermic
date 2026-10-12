@@ -1,6 +1,6 @@
 # Estado del proyecto (en 1 minuto)
 
-> Última actualización: **2026-10-12** · `main` en `bbdbe79` (PR #1-#9 de la Persona B) · Rama de trabajo **`revision/complemento-b`** (plan de [revision-sesion-b.md](revision-sesion-b.md), en curso) · Etiqueta **`v0.9-preproduccion`** (punto de vuelta atrás).
+> Última actualización: **2026-10-12 (noche)** · `main` en `bbdbe79` (PR #1-#9 de la Persona B) · Rama **`revision/complemento-b`** con la PR hacia `main` pendiente de revisión (plan de [revision-sesion-b.md](revision-sesion-b.md)) · Etiqueta **`v0.9-preproduccion`** (punto de vuelta atrás).
 > Las reglas están en [AGENTS.md](../AGENTS.md); el detalle de cada hallazgo, en [auditoria-final.md](auditoria-final.md) (IDs C-, A-, M-, B-) y en [revision-sesion-b.md](revision-sesion-b.md) (IDs R-). Actualiza este documento cada vez que cambie algo de lo que dice.
 
 ## Qué está hecho
@@ -46,13 +46,19 @@ Las marcas se guardan en el navegador de cada persona: con el reparto, cada una 
 |---|---|---|
 | 1 | Bloque 1: arreglar lo roto o arriesgado (`[L]`, limitador D-015, menú B-06, alts D-014, frases sin respaldo, LF, CI, documentación) | **Hecho** |
 | 2 | Vista de los 51 borradores con el origen de cada frase en /legacy | **Hecho** (ver «Cómo revisar los borradores») |
-| 3 | Conversión: barra fija «Llamar · Presupuesto», buscador en el inicio y bloque de sectores | Pendiente (con capturas para aprobar) |
-| 4 | Imágenes del inicio: `slide-1.webp`, WebP de los banners, tarjetas de familia con recortes, foto de «Mercado y aplicación» y tarjeta «Resistencias» dentro de su marco | Pendiente (con capturas) |
-| 5 | `docs/seo-mejoras.md` | Pendiente |
-| 6 | Alts de las páginas de prioridad alta, en una hoja para aprobar | Pendiente |
-| 7 | Hero y ritmo de secciones del inicio; PR hacia `main` para que la revise la Persona B | Pendiente (con capturas) |
+| 3 | Conversión: barra fija «Llamar · Presupuesto», buscador en el inicio y bloque de sectores | **Hecho** (aprobado) |
+| 4 | Imágenes del inicio: `slide-1.webp`, WebP de los banners, tarjetas de familia con recortes, foto de «Mercado y aplicación» y tarjeta «Resistencias» dentro de su marco | **Hecho** (`tools/imagenes.js`; imágenes del inicio 356 → 233 KB en escritorio, menos en móvil) |
+| 5 | `docs/seo-mejoras.md` | **Pendiente** (aplazado por la presentación) |
+| 6 | Alts de las páginas de prioridad alta, en una hoja para aprobar | **Pendiente** (aplazado por la presentación) |
+| 7 | Hero y ritmo de secciones del inicio (D-018), CTA bajo el H1 de familias y categorías (R-14), versión de demostración (D-017) y material de presentación (`docs/presentacion/`); PR hacia `main` | **Hecho**. PR pendiente de la revisión de la Persona B |
 
 El reparto de lo pendiente entre las dos personas es una **propuesta** (tablero del apartado 6 de revision-sesion-b.md) hasta que la Persona B lo confirme.
+
+## Presentación al cliente (2026-10-13)
+
+- **Demo:** `npm run build:preview` y subir `dist-preview` a Netlify Drop ([presentacion/demo.md](presentacion/demo.md)). Lleva noindex en todo y la franja «Versión de demostración». **Nunca va al hosting real** (D-017).
+- **Material:** [presentacion/](presentacion/): `antes-despues.png` (y su HTML), `resumen.md` (cifras), `guion.md` (5 minutos) y `pendientes-cliente.md` (lo que necesitamos, sin tecnicismos).
+- **Hero de la demo:** ilustración IA con la placa tapada, solo en la demo (D-016). En producción, `slide-1`.
 
 ## Lo que bloquea la publicación
 
@@ -73,10 +79,17 @@ El reparto de lo pendiente entre las dos personas es una **propuesta** (tablero 
 - **M-05:** restringir o rotar la clave de Google Maps (y decidir si el repositorio debe seguir siendo público).
 - Datos: 1982 y la dirección de Vitoria, si la delegación de Oviedo sigue activa y su horario, catálogo de resistencias vigente, certificaciones ATEX, productos vigentes de «Nuevos productos», logos SVG y si quieren analítica.
 
+## Para después de publicar (aplazado, no bloquea)
+
+- Iconos SVG propios (franja de cifras, tarjetas de familia y sectores); cabecera de categoría a dos columnas con ficha rápida desde 1024 px; adjunto del formulario con estilo propio (bloque 3 de revision-sesion-b.md).
+- `docs/seo-mejoras.md` y los alts de las páginas de prioridad media y baja (los de prioridad alta, antes de publicar si da tiempo).
+- Retoque de fondo de las fotos que desentonan (lista del auditor B en revision-sesion-b.md) y fotos reales del cliente.
+- Documentar en detalle el diseño de D-018 en diseno.md (§3 y wireframes).
+
 ## Los siguientes 5 pasos, en orden
 
 1. **Persona B, hoy:** enviar las preguntas al cliente, pidiendo primero los accesos (C-04), y confirmar el reparto propuesto.
-2. **Persona A:** pasos 2 a 7 del plan en `revision/complemento-b` y PR hacia `main` (la revisa la Persona B).
+2. **Persona B, esta noche:** revisar y aprobar la PR de `revision/complemento-b` (no se fusiona sin su revisión; si no da tiempo, la demo sale de la rama).
 3. **Las dos personas:** tarde de borradores con la vista del paso 2 (C-01).
 4. **Con los accesos del cliente:** copia de seguridad completa, exportación de 16 meses de Search Console, escenario del `.es`, Docker y hosting (C-03), `config-formulario.php` y envío real de prueba (C-02, C-04, A-03).
 5. **`npm run build:publicacion` sin errores**, checklist completa y publicar siguiendo [publicacion.md](publicacion.md).

@@ -264,7 +264,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── README.md
 ├── .gitignore
 ├── .gitattributes       ← /legacy se guarda byte a byte; formatos binarios marcados
-├── package.json         ← SOLO scripts (dev, build, build:publicacion, test, validar): ninguna dependencia
+├── package.json         ← SOLO scripts (dev, build, build:publicacion, build:preview, preview, test, validar): ninguna dependencia
 ├── build.js             ← generador (Node ≥ 18, sin dependencias npm)            [A]
 ├── legacy/              ← copia de la web actual. VERSIONADA. SOLO LECTURA, NUNCA se edita
 │   ├── com/brototermic.com/   (incluye contacto.html, oviedo/ y sitemap.xml)
@@ -295,6 +295,8 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 │   ├── revision-borradores.js ← vista local de los borradores frase a frase, con su origen en /legacy o en los PDF (tools/salida/)
 │   ├── aprobar-borradores.js ← quita la marca de borrador de las piezas aprobadas en esa vista
 │   ├── datos/catalogos-pdf.txt ← texto de los catálogos PDF, solo para buscar orígenes
+│   ├── imagenes.js      ← recorta, tapa y exporta WebP/JPG con Chrome (recetas en datos/imagenes.json; fuentes en datos/fuentes/)
+│   ├── datos/demo/      ← imágenes SOLO de la versión de demostración (D-016)
 │   └── apache-pruebas/  ← Apache en Docker (imagen httpd): dos vhosts, .com → /dist y .es → /dist-es, como en producción
 ├── .github/             ← CI (workflows/pruebas.yml: test, W3C y PHP en cada push y PR) y plantilla de PR
 ├── data/                                                                       [B]
@@ -309,7 +311,8 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── images/              ← TODAS las imágenes públicas (se publican en /images/)      [B]
 ├── docs/                ← PDF públicos (/docs/*.pdf) + planificación del proyecto (no se publica) [B: PDF; ambos: planes]
 ├── dist/                ← salida generada por build.js: docroot del .com. NO se edita a mano. No está en git
-└── dist-es/             ← salida de build.js: docroot del .es (solo su .htaccess). No está en git
+├── dist-es/             ← salida de build.js: docroot del .es (solo su .htaccess). No está en git
+└── dist-preview/        ← versión de DEMOSTRACIÓN (build:preview, D-017): noindex, para Netlify Drop. Nunca va al hosting real. No está en git
 ```
 
 ### Reglas de la estructura
@@ -412,6 +415,7 @@ Una página está lista cuando cumple todo esto:
 | 2026-10-10 | **Página 404 propia** (`/404.html`, `noindex`, sin canonical, fuera del sitemap; `ErrorDocument` en el `.htaccess`) y **tira de logos de marcas a 990 px** con `loading="lazy"` como excepción a la regla de 480 px: aprobadas (D-010). |
 | 2026-10-10 | **Correcciones de la auditoría final (D-011):** auditor con datos técnicos exactos, cobertura por producto, 301 comprobadas contra el `.htaccess` real y pruebas de mutación obligatorias (`tools/test-auditor.js`); todas las imágenes antiguas de `/images/` y `/oviedo/images/` publicadas (ninguna URL de imagen en 404); solo se sube `/dist` y `/dist-es` (lista blanca: `tools/comprobar-publicable.js`) y la web antigua no se mueve hasta que el formulario nuevo funcione; el `.es` con docroot y `.htaccess` propios (`/dist-es`, solo `mod_alias`); `.htaccess` del `.com` sin `Options`, `DirectoryIndex` ni `<If>`; formulario con `enviar.php` (no `rd-mailform.php`); `/oviedo/` con todo su texto antiguo; alts copiados corregidos; privacidad sin el Privacy Shield como vigente. |
 | 2026-10-11 | **Imágenes aprobadas del inicio:** Productos a medida usa `brototermic-calefactor-inmersion.jpg` sin atribuir fabricación propia a la foto; las tarjetas de temperatura, nivel y resistencias usan copias nuevas de `slide-3.jpg`, `slide-4.jpg` y `oviedo/images/electticfor-brototermic-oviedo.jpg`. Selección explícita en `modeloInicio`, sin reordenar productos ni cambiar imágenes de otras páginas. Catálogos usa `portada-catalogos-provisional.png`, composición de las primeras páginas completas de los dos PDF originales, sobre blanco y sin alterar contenido ni enlaces; provisional hasta confirmar vigencia. Todos los originales y sus URLs se conservan. Detalle de las 9 PR de la Persona B en D-013. |
+| 2026-10-12 | **Presentación al cliente (D-016 a D-018):** modo `--modo=preview` → `/dist-preview` (noindex, nunca al hosting real); hero de la demo con imagen IA y la placa tapada (solo en la demo; en producción, `slide-1` con WebP y `srcset`); diseño en franjas con antetítulos, hero editorial, recortes de tarjetas y CTA bajo el H1 de familias y categorías. |
 | 2026-10-12 | **Revisión de la sesión de la Persona B** ([docs/revision-sesion-b.md](docs/revision-sesion-b.md)): plan aprobado. **Alts (D-014):** el alt empieza por el nombre y el modelo o designación de /legacy y sigue con lo que se ve (`build.js` lo comprueba). **Limitador (D-015):** si falla su almacenamiento, el envío se acepta y se anota en el log. `.htaccess` con `[L]` (no `[END]`, Apache 2.2); menú que vuelve a la versión sin JS si `menu.js` no termina; **CI en GitHub Actions** y protección de `main` con revisión obligatoria; LF en todo el repositorio. |
 
 ---
