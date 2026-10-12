@@ -119,5 +119,81 @@
     ],
     "calidad": 0.85,
     "fondo": "#ffffff"
+  },
+  {
+    "nota": "Diapositiva 2 del hero rotativo: slide-3 en WebP a 910 px (su JPG original sigue siendo el src).",
+    "entrada": "legacy/com/brototermic.com/images/slide-3.jpg",
+    "salida": "images/slide-3",
+    "anchos": [
+      910
+    ],
+    "formatos": [
+      "webp"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Diapositiva del hero rotativo a 480 px (srcset).",
+    "entrada": "legacy/com/brototermic.com/images/slide-3.jpg",
+    "salida": "images/slide-3-{ancho}",
+    "anchos": [
+      480
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Diapositiva 3 del hero rotativo: slide-4 en WebP a 910 px (su JPG original sigue siendo el src).",
+    "entrada": "legacy/com/brototermic.com/images/slide-4.jpg",
+    "salida": "images/slide-4",
+    "anchos": [
+      910
+    ],
+    "formatos": [
+      "webp"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Diapositiva del hero rotativo a 480 px (srcset).",
+    "entrada": "legacy/com/brototermic.com/images/slide-4.jpg",
+    "salida": "images/slide-4-{ancho}",
+    "anchos": [
+      480
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Tira de marcas en gris: se funde con la de color al pasar el ratón (solo opacity).",
+    "entrada": "legacy/com/brototermic.com/images/brototermic-marcas-representadas.jpg",
+    "salida": "images/brototermic-marcas-representadas-gris",
+    "anchos": [
+      990
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.85,
+    "gris": true
+  },
+  {
+    "nota": "Tira de marcas en color, en WebP.",
+    "entrada": "legacy/com/brototermic.com/images/brototermic-marcas-representadas.jpg",
+    "salida": "images/brototermic-marcas-representadas",
+    "anchos": [
+      990
+    ],
+    "formatos": [
+      "webp"
+    ],
+    "calidad": 0.85
   }
 ]

@@ -211,3 +211,12 @@
   - **Familias y categorías:** franja suave con las migas y, **bajo el H1, «Pedir presupuesto» y «Ver los N productos ↓»** (R-14): la CTA se ve al abrir la página en móvil.
   - En móvil se oculta la tira de logos de marcas (quedan los nombres). Pie con la línea de acento y enlaces sin subrayar hasta pasar el ratón.
 - **Documentos:** diseno.md (pendiente de redactar en detalle: ver estado.md).
+
+## D-019 · 2026-10-12 · Efectos: hero rotativo, microinteracciones y aparición al hacer scroll
+
+- **Origen:** responsable del proyecto (presentación al cliente).
+- **Reglas:** solo `transform` y `opacity`; 150-300 ms en interacciones; el foco de teclado recibe el mismo efecto que el hover; en táctil nada depende del hover; con `prefers-reduced-motion`, nada se mueve; sin JS todo se ve (solo se oculta lo que el JS marca).
+- **Hero rotativo:** el texto y el único H1 no cambian; rota la imagen (slide-1 o la de la demo, slide-3 y slide-4, fotos reales sin ampliar) con fundido cada 6,5 s y zoom lento 1 → 1,06. Las diapositivas 2 y 3 van en un `<template>` y se añaden tras la carga. Botón de pausa (WCAG 2.2.2); pausa con el ratón o el foco dentro y con la pestaña oculta. Indicador decorativo de 3 líneas. Tamaño por proporción: CLS 0.
+- **Microinteracciones:** tarjetas que se elevan con la foto a 1,04 dentro del marco; flecha que avanza y brillo en los botones; subrayado cian que crece en los enlaces sueltos; tira de marcas de gris a color (dos imágenes y opacity; en táctil, siempre en color); megamenú con fundido y 4 px; cabecera que se compacta al bajar (la franja sale por arriba con transform, sin cambiar el flujo).
+- **Aparición al hacer scroll:** fundido y 12 px, una vez, escalonada 60 ms, con IntersectionObserver y sin leer medidas (una primera versión con `getBoundingClientRect` por elemento forzaba un recálculo del diseño en cada uno y disparaba el TBT). Nada en la primera pantalla ni en el hero.
+- `tools/capturas.js`: la espera de carga se hace desde Node; con el JS de la página desactivado, el `addEventListener` inyectado no se ejecutaba y la captura sin JS se colgaba.

@@ -258,6 +258,125 @@
   if (escritorio.addEventListener) escritorio.addEventListener('change', alCambiarDeTamano);
   else if (escritorio.addListener) escritorio.addListener(alCambiarDeTamano);
 
+  /* ---------- 7. Efectos (solo transform y opacity). Con movimiento reducido: ninguno. Sin JS: nada oculto ---------- */
+  var sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var conObservador = 'IntersectionObserver' in window;
+
+  // 7a. Cabecera compacta al bajar: un testigo invisible de 120 px arriba del todo; cuando sale de pantalla, se compacta
+  if (cabecera && conObservador) {
+    var testigo = document.createElement('div');
+    testigo.setAttribute('aria-hidden', 'true');
+    testigo.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:120px;pointer-events:none';
+    document.body.insertBefore(testigo, document.body.firstChild);
+    new IntersectionObserver(function (entradas) {
+      cabecera.classList.toggle('cabecera--compacta', !entradas[0].isIntersecting);
+    }).observe(testigo);
+  }
+
+  // 7b. Hero rotativo: el texto no cambia; rota la imagen de fondo con fundido y un zoom lento. Las diapositivas 2 y 3
+  // se añaden tras la carga (no compiten con el LCP). Pausa con el botón (WCAG 2.2.2), al pasar el ratón, con el foco
+  // dentro del hero y con la pestaña oculta.
+  var hero = document.querySelector('[data-hero-rotativo]');
+  if (hero && !sinMovimiento) {
+    var iniciarHero = function () {
+      var plantilla = hero.querySelector('template.hero__mas');
+      if (!plantilla) return;
+      hero.insertBefore(plantilla.content.cloneNode(true), plantilla);
+      var diapos = lista('.hero__diapositiva', hero);
+      var marcas = lista('.hero__indicador i', hero);
+      var control = hero.querySelector('.hero__control');
+      var boton = hero.querySelector('.hero__pausa');
+      var textoBoton = boton.querySelector('.visualmente-oculto');
+      var seccion = hero.closest('.hero') || hero;
+      var actual = 0;
+      var reloj = null;
+      var pausadoPorUsuario = false;
+      var motivosQuieto = { raton: false, foco: false, oculta: false };
+      var INTERVALO = 6500;
+
+      var pintar = function () {
+        diapos.forEach(function (d, i) { d.classList.toggle('hero__diapositiva--activa', i === actual); });
+        marcas.forEach(function (m, i) { m.classList.toggle('activo', i === actual); });
+      };
+      var siguiente = function () {
+        var anterior = diapos[actual];
+        actual = (actual + 1) % diapos.length;
+        anterior.classList.add('hero__diapositiva--saliendo');
+        pintar();
+        // Cuando la anterior ya no se ve, su zoom vuelve a empezar (para la próxima vuelta) sin que se note
+        setTimeout(function () {
+          anterior.classList.remove('hero__diapositiva--saliendo');
+          var img = anterior.querySelector('img');
+          img.style.animation = 'none';
+          void img.offsetWidth;
+          img.style.animation = '';
+        }, 1300);
+      };
+      var quieto = function () { return pausadoPorUsuario || motivosQuieto.raton || motivosQuieto.foco || motivosQuieto.oculta; };
+      var actualizar = function () {
+        clearInterval(reloj);
+        hero.classList.toggle('hero--quieto', quieto());
+        if (!quieto()) reloj = setInterval(siguiente, INTERVALO);
+      };
+
+      control.hidden = false;
+      hero.classList.add('hero--anima');
+      pintar();
+      actualizar();
+
+      boton.addEventListener('click', function () {
+        pausadoPorUsuario = !pausadoPorUsuario;
+        hero.classList.toggle('hero--pausado', pausadoPorUsuario);
+        textoBoton.textContent = pausadoPorUsuario ? 'Reanudar el cambio de imagen' : 'Pausar el cambio de imagen';
+        actualizar();
+      });
+      seccion.addEventListener('mouseenter', function () { motivosQuieto.raton = true; actualizar(); });
+      seccion.addEventListener('mouseleave', function () { motivosQuieto.raton = false; actualizar(); });
+      seccion.addEventListener('focusin', function () { motivosQuieto.foco = true; actualizar(); });
+      seccion.addEventListener('focusout', function (e) {
+        if (!seccion.contains(e.relatedTarget)) { motivosQuieto.foco = false; actualizar(); }
+      });
+      document.addEventListener('visibilitychange', function () { motivosQuieto.oculta = document.hidden; actualizar(); });
+    };
+    if (document.readyState === 'complete') iniciarHero();
+    else window.addEventListener('load', iniciarHero);
+  }
+
+  // 7c. Aparición al hacer scroll: fundido y 12 px de subida, una sola vez, escalonado 60 ms entre hermanos.
+  // Solo lo que está fuera de la primera pantalla (no retrasa el LCP) y nada dentro del hero.
+  if (!sinMovimiento && conObservador) {
+    var SELECTOR = '.confianza li, .tarjeta, .sector, .medida__interior, .destacado, .marcas__lista, .sobre-nosotros, .sedes__tarjeta, ' +
+      '.producto, .hermanas, .relacionadas, .cta__interior, .bloque-medida, .valores__lista > *';
+    var porPadre = new Map();
+    var observador = new IntersectionObserver(function (entradas) {
+      entradas.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        observador.unobserve(el);
+        el.setAttribute('data-revelar', 'visto');
+        // Al acabar, se quitan la marca y el retardo: las transiciones propias (hover) vuelven a mandar
+        setTimeout(function () { el.removeAttribute('data-revelar'); el.style.removeProperty('--retardo'); }, 900);
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    // Primera pasada SIN leer medidas (nada de getBoundingClientRect: forzaría un recálculo del diseño por elemento):
+    // el observador dice qué está fuera de la pantalla inicial y solo eso se oculta para aparecer después
+    var inicial = new IntersectionObserver(function (entradas) {
+      inicial.disconnect();
+      entradas.forEach(function (e) {
+        if (e.isIntersecting) return;
+        var el = e.target;
+        var n = porPadre.get(el.parentNode) || 0;
+        porPadre.set(el.parentNode, n + 1);
+        el.style.setProperty('--retardo', Math.min(n, 5) * 60 + 'ms');
+        el.setAttribute('data-revelar', 'pendiente');
+        observador.observe(el);
+      });
+    });
+    lista(SELECTOR, document.querySelector('main') || document).forEach(function (el) {
+      if (!el.closest('.hero')) inicial.observe(el);
+    });
+  }
+
   // Última línea: el menú ya funciona. Sin esta marca, el script de head.html vuelve a la versión sin JS al cargar.
   raiz.classList.add('menu-listo');
 })();

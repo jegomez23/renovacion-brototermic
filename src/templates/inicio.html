@@ -20,10 +20,19 @@
           <p class="hero__telefono">o llama al <a href="tel:{{menu.telPrincipal}}">{{menu.telefonoPrincipal}}</a></p>
         </div>
       </div>
-      {{#if pagina.hero}}<picture class="hero__imagen{{#if pagina.hero.fondoBlanco}} hero__imagen--fondo-blanco{{/if}}">
-        <source type="image/webp" srcset="{{pagina.hero.srcsetWebp}}" sizes="{{pagina.hero.sizes}}">
-        <img src="{{pagina.hero.src}}" srcset="{{pagina.hero.srcsetJpg}}" sizes="{{pagina.hero.sizes}}" width="{{pagina.hero.ancho}}" height="{{pagina.hero.alto}}" alt="{{pagina.hero.alt}}" fetchpriority="high">
-      </picture>{{/if}}
+      {{! Fondo rotativo: el texto y el H1 no cambian; solo rota la imagen. Las diapositivas 2 y 3 van en un <template>
+          y el JS las añade tras la carga (no retrasan el LCP). Sin JS o con movimiento reducido: la primera, fija. }}
+      {{#if pagina.hero}}<div class="hero__imagen" data-hero-rotativo>
+        <picture class="hero__diapositiva hero__diapositiva--activa{{#if pagina.hero.fondoBlanco}} hero__diapositiva--contener{{/if}}">
+          <source type="image/webp" srcset="{{pagina.hero.srcsetWebp}}" sizes="{{pagina.hero.sizes}}">
+          <img src="{{pagina.hero.src}}" srcset="{{pagina.hero.srcsetJpg}}" sizes="{{pagina.hero.sizes}}" width="{{pagina.hero.ancho}}" height="{{pagina.hero.alto}}" alt="{{pagina.hero.alt}}" fetchpriority="high">
+        </picture>
+        {{#if pagina.diapositivas}}<template class="hero__mas">{{#each pagina.diapositivas}}<picture class="hero__diapositiva hero__diapositiva--contener"><source type="image/webp" srcset="{{srcsetWebp}}" sizes="{{sizes}}"><img src="{{src}}" srcset="{{srcsetJpg}}" sizes="{{sizes}}" width="{{ancho}}" height="{{alto}}" alt="" decoding="async"></picture>{{/each}}</template>
+        <div class="hero__control" hidden>
+          <span class="hero__indicador" aria-hidden="true"><i></i><i></i><i></i></span>
+          <button class="hero__pausa" type="button"><svg class="icono hero__icono-pausa" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M7 5h4v14H7zm6 0h4v14h-4z"/></svg><svg class="icono hero__icono-play" aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M8 5v14l11-7z"/></svg><span class="visualmente-oculto">Pausar el cambio de imagen</span></button>
+        </div>{{/if}}
+      </div>{{/if}}
     </div>
   </section>
 
@@ -114,7 +123,12 @@
       <p class="antetitulo"><span class="antetitulo__num">04</span>Marcas</p>
       <h2 id="marcas-titulo">Nuestras marcas representadas</h2>
       {{{pagina.texto.marcas}}}
-      {{#if pagina.marcasImagen}}<img class="marcas__imagen" src="{{pagina.marcasImagen.src}}" width="{{pagina.marcasImagen.ancho}}" height="{{pagina.marcasImagen.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
+      {{! Tira de logos: la versión en gris encima de la de color; al pasar el ratón la gris se desvanece (solo opacity).
+          En táctil, siempre en color. }}
+      {{#if pagina.marcasImagen}}<div class="marcas__imagen">
+        <picture>{{#if pagina.marcasImagen.webp}}<source type="image/webp" srcset="{{pagina.marcasImagen.webp}}">{{/if}}<img src="{{pagina.marcasImagen.src}}" width="{{pagina.marcasImagen.ancho}}" height="{{pagina.marcasImagen.alto}}" alt="" loading="lazy" decoding="async"></picture>
+        {{#if pagina.marcasGris}}<picture class="marcas__gris">{{#if pagina.marcasGris.webp}}<source type="image/webp" srcset="{{pagina.marcasGris.webp}}">{{/if}}<img src="{{pagina.marcasGris.src}}" width="{{pagina.marcasGris.ancho}}" height="{{pagina.marcasGris.alto}}" alt="" loading="lazy" decoding="async"></picture>{{/if}}
+      </div>{{/if}}
       <ul class="marcas__lista">
         {{#each pagina.marcas}}<li>{{nombre}}</li>
         {{/each}}

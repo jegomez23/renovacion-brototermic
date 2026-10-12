@@ -831,7 +831,7 @@ function tarjetasFamilias() {
 // publicada). Demostración (modo preview): la imagen de tools/datos/demo a 480/910/1600 px (D-016), nunca en producción.
 function heroInicio(c) {
   const srcset = (base, anchos, ext) => anchos.map(a => `${base}-${a}.${ext} ${a}w`).join(', ');
-  const sizes = '(min-width: 1280px) 640px, (min-width: 768px) 52vw, 100vw';
+  const sizes = '100vw'; // el hero va a todo el ancho
   if (PREVIA) {
     const anchos = [480, 910, 1600];
     const base = '/images/demo/hero-calefactor-inmersion';
@@ -847,6 +847,19 @@ function heroInicio(c) {
   return { src: '/images/slide-1.jpg', ancho: m.ancho, alto: m.alto,
     srcsetJpg: '/images/slide-1-480.jpg 480w, /images/slide-1.jpg 910w',
     srcsetWebp: '/images/slide-1-480.webp 480w, /images/slide-1.webp 910w', sizes, fondoBlanco: true, alt: c.meta['hero-alt'] || '' };
+}
+// Diapositivas 2 y 3 del hero rotativo (fotos reales de /legacy, sin ampliar: el controlador TKC con su sonda y la
+// gama de sensores de nivel). Van en un <template>: el JS las añade tras la carga; sin JS o con movimiento reducido,
+// solo se ve la primera. Decorativas (alt vacío): el hero ya tiene su alt y el texto no cambia.
+function diapositivasHero() {
+  const sizes = '100vw';
+  return ['slide-3', 'slide-4'].map(n => {
+    for (const f of [`${n}.webp`, `${n}-480.webp`, `${n}-480.jpg`]) {
+      if (!fs.existsSync(path.join(RAIZ, 'images', f))) error(`images/${f} no existe (node tools/imagenes.js ${n})`);
+    }
+    return { src: `/images/${n}.jpg`, ancho: 910, alto: 426, sizes,
+      srcsetJpg: `/images/${n}-480.jpg 480w, /images/${n}.jpg 910w`, srcsetWebp: `/images/${n}-480.webp 480w, /images/${n}.webp 910w` };
+  });
 }
 
 // Inicio: los textos salen de content/inicio.html (bloques); tarjetas, marcas, catálogos y sedes, de /data
@@ -865,12 +878,14 @@ function modeloInicio() {
     h1: c.meta.h1,
     migas: migasDe(),
     hero,
+    diapositivas: diapositivasHero(),
     texto: Object.fromEntries(['hero', 'empresa', 'medida', 'novedades', 'catalogos', 'marcas', 'sedes'].map(b => [b, bloque(c, b)])),
     tarjetas: tarjetasFamilias(),
     fundacion: site.fundacion,
     numMarcas: site.marcas.length,
     marcas: site.marcas,
     marcasImagen: imagen('brototermic-marcas-representadas', c.ruta),
+    marcasGris: imagen('brototermic-marcas-representadas-gris', c.ruta),
     catalogos: site.catalogos.map(k => ({ titulo: k.titulo, url: urlPublica(k.pdf) })),
     sectores: sectoresInicio(),
     sedes: sedes(),

@@ -5,7 +5,7 @@
 //   node tools/imagenes.js                 → procesa todas las recetas
 //   node tools/imagenes.js portada-nivel   → solo las que contienen ese texto en «salida»
 //
-// Receta: { entrada, salida (ruta sin extensión, con {ancho}), recorte: {x,y,w,h}, placas: [{x,y,w,h,r,color}],
+// Receta: { entrada, salida (ruta sin extensión, con {ancho}), recorte: {x,y,w,h}, placas: [{x,y,w,h,r,color}], gris: true,
 //           anchos: [480, 910], formatos: ["webp","jpg"], calidad: 0.82 }
 // Reglas (AGENTS.md §5): nunca amplía (un ancho mayor que el recorte se omite); «placas» solo tapa con un color liso
 // (textos o rótulos que no se pueden publicar); no toca forma ni color del producto.
@@ -38,6 +38,7 @@ const PROCESAR = `async (src, r) => {
     const c = document.createElement('canvas'); c.width = ancho; c.height = Math.round(rc.h * ancho / rc.w);
     const x = c.getContext('2d'); x.imageSmoothingQuality = 'high';
     if (r.fondo) { x.fillStyle = r.fondo; x.fillRect(0, 0, c.width, c.height); }
+    if (r.gris) x.filter = 'grayscale(1)';
     x.drawImage(base, 0, 0, c.width, c.height);
     salida[ancho] = { alto: c.height };
     for (const f of r.formatos) salida[ancho][f] = c.toDataURL(f === 'jpg' ? 'image/jpeg' : 'image/' + f, r.calidad || 0.82);

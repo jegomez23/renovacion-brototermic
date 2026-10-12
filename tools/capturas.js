@@ -89,8 +89,10 @@ async function main() {
     await enviar('Emulation.setScriptExecutionDisabled', { value: sinJs });
     await enviar('Page.navigate', { url: BASE + RUTA });
     await espera(400);
-    await evaluar('new Promise(r => document.readyState === "complete" ? r() : addEventListener("load", r))');
-    await evaluar('document.fonts.ready.then(() => true)');
+    // Se espera desde aquí, preguntando: con el JS de la página desactivado, Chrome no ejecuta un addEventListener
+    // («load») inyectado, y si la página tardaba más de 400 ms la captura sin JS se quedaba colgada
+    for (let i = 0; i < 100 && (await evaluar('document.readyState')) !== 'complete'; i++) await espera(100);
+    if (!sinJs) await evaluar('document.fonts.ready.then(() => true)');
     await espera(300);
   };
   // fueraDeVentana: captureBeyondViewport. Chrome redimensiona la ventana un instante, salta la media query de
