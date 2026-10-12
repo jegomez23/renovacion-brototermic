@@ -10,6 +10,11 @@
   var conRaton = window.matchMedia('(hover: hover) and (pointer: fine)');
   var lista = function (selector, base) { return Array.prototype.slice.call((base || document).querySelectorAll(selector)); };
   var expandido = function (boton) { return Boolean(boton) && boton.getAttribute('aria-expanded') === 'true'; };
+  // ¿Hay dentro de «base» un elemento con foco de teclado? Los navegadores sin :focus-visible lanzan un error en
+  // querySelector: entonces basta con que el foco esté dentro.
+  var focoDeTeclado = function (base) {
+    try { return Boolean(base.querySelector(':focus-visible')); } catch (e) { return base.contains(document.activeElement); }
+  };
 
   /* ---------- 1. Menú móvil (botón ☰) ---------- */
   var cabecera = document.querySelector('.cabecera');
@@ -66,8 +71,9 @@
       if (!escritorio.matches || !conRaton.matches) return;
       clearTimeout(temporizador);
       temporizador = setTimeout(function () {
-        // El ratón no debe ocultar el panel mientras se usa con teclado.
-        if (!itemProductos.contains(document.activeElement)) abrirPanel(false);
+        // El ratón no debe ocultar el panel mientras se usa con teclado. Un clic también da el foco al botón:
+        // por eso se mira :focus-visible (foco de teclado, o el buscador) y no solo dónde está el foco.
+        if (!focoDeTeclado(itemProductos)) abrirPanel(false);
       }, 300);
     });
 
@@ -192,4 +198,7 @@
   };
   if (escritorio.addEventListener) escritorio.addEventListener('change', alCambiarDeTamano);
   else if (escritorio.addListener) escritorio.addListener(alCambiarDeTamano);
+
+  // Última línea: el menú ya funciona. Sin esta marca, el script de head.html vuelve a la versión sin JS al cargar.
+  raiz.classList.add('menu-listo');
 })();

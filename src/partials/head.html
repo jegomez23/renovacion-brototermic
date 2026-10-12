@@ -18,8 +18,10 @@
 {{! Solo se precarga Lora 700 (la del H1, lo primero que se ve); crossorigin es obligatorio en fuentes aunque sean del mismo dominio }}
 <link rel="preload" href="/assets/fonts/lora-700.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{recursos.css}}">
-{{! Marca que hay JS antes de pintar: evita que el menú se vea desplegado un instante en móvil }}
-<script>document.documentElement.classList.add('js')</script>
+{{! Marca que hay JS antes de pintar: evita que el menú se vea desplegado un instante en móvil. Si menu.js no llega a
+    terminar (404, red, error), al cargar la página se quita la marca y queda la versión sin JS (auditoría final B-06).
+    Si se cambia este script, hay que cambiar su hash en la CSP de src/.htaccess: build.js lo comprueba. }}
+<script>var r=document.documentElement;r.classList.add('js');addEventListener('load',function(){r.classList.contains('menu-listo')||r.classList.remove('js')})</script>
 <script src="{{recursos.js}}" defer></script>
 {{> schema}}
 </head>

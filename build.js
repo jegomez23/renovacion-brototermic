@@ -1082,8 +1082,17 @@ function main() {
     nConservadas++;
   }
   const nPdf = copiarDirectorio(path.join(RAIZ, 'docs'), path.join(DIST, 'docs'), f => f.toLowerCase().endsWith('.pdf'));
-  if (fs.existsSync(path.join(RAIZ, 'src', '.htaccess'))) fs.copyFileSync(path.join(RAIZ, 'src', '.htaccess'), path.join(DIST, '.htaccess'));
-  else pendiente('src/.htaccess aún no existe (tarea A-1-09): /dist sale sin redirecciones.');
+  if (fs.existsSync(path.join(RAIZ, 'src', '.htaccess'))) {
+    fs.copyFileSync(path.join(RAIZ, 'src', '.htaccess'), path.join(DIST, '.htaccess'));
+    // La CSP solo admite el script en línea de head.html por su hash: si cambia el script, el hash debe cambiar
+    const enLinea = fs.readFileSync(path.join(RAIZ, 'src', 'partials', 'head.html'), 'utf8').match(/<script>([\s\S]*?)<\/script>/);
+    if (enLinea) {
+      const hash = `'sha256-${crypto.createHash('sha256').update(enLinea[1]).digest('base64')}'`;
+      if (!fs.readFileSync(path.join(RAIZ, 'src', '.htaccess'), 'utf8').includes(hash)) {
+        error(`src/.htaccess: la CSP no tiene el hash del script en línea de src/partials/head.html; debe ser ${hash}`);
+      }
+    }
+  } else pendiente('src/.htaccess aún no existe (tarea A-1-09): /dist sale sin redirecciones.');
   // Script del formulario (AGENTS.md §2): SOLO enviar.php. config.example.php no se publica; la configuración real
   // vive en el servidor, fuera del docroot. Mientras envioActivo sea false, el botón está desactivado.
   fs.copyFileSync(path.join(RAIZ, 'src', 'contacto', 'enviar.php'), path.join(DIST, 'contacto', 'enviar.php'));
