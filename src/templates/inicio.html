@@ -18,6 +18,18 @@
   </section>
 
   <div class="contenedor">
+    {{! Buscador de categorías (revision-sesion-b.md, decisión 4). Las categorías ya están en el HTML del megamenú:
+        el JS las lee de ahí y pinta los resultados, sin repetir los 39 enlaces. Sin JS, enlace al mapa web. }}
+    <section class="buscador-inicio" aria-label="Buscar productos">
+      <div class="buscador buscador--inicio" data-buscador-inicio hidden>
+        <label class="buscador__etiqueta" for="buscar-inicio">¿Qué necesitas? Busca una categoría de producto</label>
+        <input class="buscador__campo" id="buscar-inicio" type="search" autocomplete="off" spellcheck="false" placeholder="Ej.: resistencia de cartucho, termopar, flotador" aria-describedby="buscar-inicio-estado">
+        <p class="buscador__estado" id="buscar-inicio-estado" role="status"></p>
+        <ul class="buscador__resultados" hidden></ul>
+      </div>
+      <p class="buscador-inicio__sin-js"><a href="/mapa-web.html">Ver todas las categorías de producto</a></p>
+    </section>
+
     <ul class="confianza" aria-label="BROTOTERMIC en cifras">
       <li><strong>Desde {{pagina.fundacion}}</strong> distribución industrial</li>
       <li><strong>{{pagina.numMarcas}} marcas</strong> representadas</li>
@@ -29,6 +41,15 @@
       <h2 id="familias-titulo">Familias de producto</h2>
       {{> tarjetas}}
     </section>
+
+    {{! Sectores: solo los de /legacy y sin URLs nuevas; cada uno lleva a la categoría de la que sale el dato (arquitectura.md) }}
+    {{#if pagina.sectores}}<section class="seccion sectores" aria-labelledby="sectores-titulo">
+      <h2 id="sectores-titulo">Sectores y aplicaciones</h2>
+      <ul class="sectores__lista">
+        {{#each pagina.sectores}}<li class="sector"><span class="sector__nombre">{{nombre}}</span> <a class="sector__enlace" href="{{url}}">{{destino}}</a></li>
+        {{/each}}
+      </ul>
+    </section>{{/if}}
 
     <div class="seccion destacados destacados--inicio">
       <section class="destacado destacado--medida" aria-labelledby="medida-titulo">

@@ -187,6 +187,65 @@
     });
   }
 
+  /* ---------- 4b. Buscador del inicio: busca en las categorías del megamenú y pinta los resultados debajo ---------- */
+  var buscadorInicio = document.querySelector('[data-buscador-inicio]');
+  var panelCategorias = document.getElementById('panel-productos');
+  if (buscadorInicio && panelCategorias) {
+    var campoInicio = buscadorInicio.querySelector('.buscador__campo');
+    var estadoInicio = buscadorInicio.querySelector('.buscador__estado');
+    var resultados = buscadorInicio.querySelector('.buscador__resultados');
+    var sinTildes = function (s) { return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
+    var categorias = lista('.megamenu__lista a[data-buscar]', panelCategorias).map(function (a) {
+      var titulo = a.closest('.megamenu__grupo').querySelector('.megamenu__titulo');
+      return { url: a.getAttribute('href'), nombre: a.textContent.trim(), familia: titulo ? titulo.textContent.trim() : '',
+        texto: sinTildes(a.textContent + ' ' + a.getAttribute('data-buscar')) };
+    });
+    var avisoInicio = null;
+    var buscarInicio = function () {
+      var palabras = sinTildes(campoInicio.value.trim()).split(/\s+/).filter(Boolean);
+      var halladas = !palabras.length ? [] : categorias.filter(function (c) {
+        return palabras.every(function (p) { return c.texto.indexOf(p) !== -1; });
+      });
+      resultados.textContent = '';
+      halladas.forEach(function (c) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        var familia = document.createElement('span');
+        a.href = c.url;
+        a.textContent = c.nombre;
+        familia.className = 'buscador__familia';
+        familia.textContent = c.familia === c.nombre ? '' : c.familia;
+        a.appendChild(familia);
+        li.appendChild(a);
+        resultados.appendChild(li);
+      });
+      resultados.hidden = halladas.length === 0;
+      clearTimeout(avisoInicio);
+      avisoInicio = setTimeout(function () {
+        var n = halladas.length;
+        estadoInicio.textContent = !palabras.length ? ''
+          : n === 0 ? 'Ninguna categoría coincide. Prueba con otra palabra o pídenos presupuesto: también fabricamos a medida.'
+          : n === 1 ? '1 categoría encontrada. Pulsa Intro para ir a ella.'
+          : n + ' categorías encontradas. Pulsa Tab para recorrerlas.';
+      }, 300);
+      return halladas;
+    };
+    buscadorInicio.hidden = false; // solo se muestra si este JS funciona
+    campoInicio.addEventListener('input', buscarInicio);
+    campoInicio.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && campoInicio.value) {
+        campoInicio.value = '';
+        buscarInicio();
+      } else if (e.key === 'Enter') {
+        var halladas = buscarInicio();
+        if (halladas.length === 1) {
+          e.preventDefault();
+          window.location.href = halladas[0].url;
+        }
+      }
+    });
+  }
+
   /* ---------- 5. Índice de productos: plegado de entrada en móvil ---------- */
   var indice = document.querySelector('.indice');
   if (indice && !escritorio.matches) indice.open = false;

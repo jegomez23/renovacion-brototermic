@@ -184,6 +184,17 @@ Cada componente tiene su descripción, sus variantes y su comportamiento en móv
 - **Descripción:** campo «Buscar una categoría» arriba del panel «Productos» (megamenú y acordeón). Filtra al escribir, sin tildes ni mayúsculas, con todas las palabras escritas («resistencias aire»). Busca en el rótulo, el H1 y la keyword de cada categoría (`plan-paginas.csv`), así que «termopar» encuentra «Sondas de temperatura». Las familias sin resultados se ocultan y las que tienen resultados se despliegan (`aria-expanded="true"`). El número de resultados se anuncia con `role="status"`. Si solo queda uno, Intro lleva a él. Esc vacía el campo y un segundo Esc cierra el panel.
 - **Sin JS:** no aparece (viene con `hidden` y el JS lo muestra). Todos los enlaces siguen en el HTML.
 
+### 3.16 Barra fija «Llamar · Pedir presupuesto» en móvil (2026-10-12, revision-sesion-b.md, decisión 2)
+- **Descripción:** por debajo de 768 px, una barra al pie de la pantalla con dos botones de 48 px: «Llamar» (`tel:`, contorno azul) y «Pedir presupuesto» (primario, a `/contacto/contacto.html#formulario`). En `/oviedo/` llama a Oviedo; en el resto, a Vitoria. No sale en las páginas de `/contacto/`.
+- **Cómo funciona:** es el último elemento del `body`, con `position: sticky; bottom: 0`. Se queda pegada abajo mientras hay página debajo y, al final, ocupa su sitio después del pie: nunca tapa contenido. `scroll-padding-bottom` evita que tape el elemento que recibe el foco (WCAG 2.4.11). Respeta la zona segura del iPhone (`env(safe-area-inset-bottom)`). Sin JS funciona igual.
+
+### 3.17 Buscador del inicio (2026-10-12, decisión 4)
+- **Descripción:** bajo el hero, el mismo buscador del §3.15 en grande («¿Qué necesitas? Busca una categoría de producto»). Los resultados salen en una lista de enlaces debajo del campo, con su familia (debajo en móvil, a la derecha desde 768 px). Intro con un solo resultado lleva a él; Esc vacía el campo.
+- **Sin repetir enlaces:** lee las categorías del megamenú, que ya están en el HTML de la página. Sin JS no aparece y en su lugar se ve el enlace «Ver todas las categorías de producto» (mapa web).
+
+### 3.18 Bloque de sectores (2026-10-12)
+- **Descripción:** «Sectores y aplicaciones» en el inicio, después de las familias: los 9 sectores de la tabla de `arquitectura.md` (todos aparecen en /legacy), cada uno con un enlace a la categoría de la que sale el dato, con su H1 como texto. Una columna en móvil y 3 × 3 desde 768 px. Datos en `site.json → sectores`; `build.js` da error si una categoría no existe.
+
 ### Ajustes del piloto sobre esta especificación
 - **Marco de la foto de producto en blanco** con borde `#dadada`, no en `#f1f1f1`: las fotos de /legacy tienen fondo blanco y con gris se vería un recuadro. La foto no se amplía con CSS: se muestra a su tamaño real dentro del marco 4:3 (`contain`). **Aprobado en el HITO-1**, igual que el buscador.
 - **Accesibilidad del menú:** sigue el patrón *Disclosure Navigation Menu* del W3C (APG): «Productos», ☰ y cada familia del acordeón son `<button>` con `aria-expanded` y `aria-controls`; los enlaces son enlaces normales (sin `role="menu"` ni `menuitem`); Esc cierra el panel abierto y devuelve el foco a su botón; el foco nunca queda atrapado. `prefers-reduced-motion: reduce` anula las transiciones y el scroll suave.

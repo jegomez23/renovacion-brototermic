@@ -410,7 +410,16 @@ function modeloMenu(rutaActual) {
     email: vitoria.email,
     logo,
     logoFondoOscuro,
+    barraMovil: barraMovil(rutaActual),
   };
+}
+
+// Barra fija «Llamar · Pedir presupuesto» en móvil (revision-sesion-b.md, decisión 2): en todas las páginas salvo las
+// de /contacto/ (ya son el formulario). En /oviedo/ llama a la delegación de Oviedo; en el resto, a Vitoria.
+function barraMovil(rutaActual) {
+  if (rutaActual.startsWith('/contacto/')) return null;
+  const sede = rutaActual === '/oviedo/' ? site.sedes.find(s => s.id === 'oviedo') : vitoria;
+  return { tel: sede.tel, telefono: sede.telefono, localidad: sede.localidad.replace(/-Gasteiz$/, '') };
 }
 
 const presupuestoUrl = nombre => `/contacto/contacto.html?producto=${encodeURIComponent(nombre)}#formulario`;
@@ -839,6 +848,7 @@ function modeloInicio() {
     marcas: site.marcas,
     marcasImagen: imagen('brototermic-marcas-representadas', c.ruta),
     catalogos: site.catalogos.map(k => ({ titulo: k.titulo, url: urlPublica(k.pdf) })),
+    sectores: sectoresInicio(),
     sedes: sedes(),
     // Miniaturas de /legacy (100 × 110, decorativas: el título de cada bloque ya dice lo que es)
     // Selección aprobada de portada: foto de catálogo sin atribución de fabricación propia y portadas PDF auténticas.
@@ -853,6 +863,16 @@ function modeloInicio() {
   if (!pagina.hero?.alt) error(`${c.ruta}: falta «hero-alt» (alt de slide-1) en los metadatos`);
   pagina.schema = schemaPagina(pagina, { organizacion: schemaOrganizacion(), nodos: site.sedes.map(schemaSede) });
   return pagina;
+}
+
+// Bloque de sectores del inicio (arquitectura.md, «Bloque de sectores»): solo sectores que aparecen en /legacy, sin
+// URLs nuevas; cada uno enlaza a la página existente de la que sale el dato, con su H1 como texto del enlace.
+function sectoresInicio() {
+  return (site.sectores || []).map((s, i) => {
+    const ruta = path.join(RAIZ, 'data', 'categorias', `${s.categoria}.json`);
+    if (!s.nombre || !fs.existsSync(ruta)) { error(`data/site.json → sectores[${i}]: falta el nombre o no existe data/categorias/${s.categoria}.json`); return null; }
+    return { nombre: s.nombre, url: `/${s.categoria}.html`, destino: JSON.parse(fs.readFileSync(ruta, 'utf8')).h1 };
+  }).filter(Boolean);
 }
 
 // Formulario de presupuesto (contacto y /oviedo/): todo sale de site.json → formulario

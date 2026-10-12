@@ -712,6 +712,43 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   .pie__lista a { min-height: 2rem; }
 }
 
+/* Barra fija «Llamar · Pedir presupuesto» (solo < 768 px; revision-sesion-b.md, decisión 2).
+   Es el último elemento del body con position: sticky: se queda pegada abajo mientras hay página debajo y, al
+   llegar al final, ocupa su sitio después del pie, así que nunca tapa contenido. scroll-padding-bottom evita que
+   tape un elemento que recibe el foco con el teclado (WCAG 2.4.11). */
+.barra-movil { display: none; }
+@media (max-width: 767px) {
+  html { scroll-padding-bottom: calc(var(--alto-barra) + var(--esp-4)); }
+  .barra-movil {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--esp-2);
+    padding: var(--esp-2) var(--margen-lateral) calc(var(--esp-2) + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--color-borde);
+    background: var(--color-fondo);
+    box-shadow: 0 -4px 16px rgba(29, 53, 108, 0.12);
+  }
+  .barra-movil__accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--esp-2);
+    min-height: 48px;
+    padding-inline: var(--esp-3);
+    border: 2px solid var(--color-primario);
+    border-radius: var(--radio-s);
+    color: var(--color-primario);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .barra-movil__accion--presupuesto { background: var(--color-primario); color: var(--color-blanco); }
+  .barra-movil__accion:active { box-shadow: inset 0 0 0 2px currentColor; }
+}
+
 /* ---------- 12. Movimiento reducido e impresión ---------- */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
@@ -721,7 +758,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 }
 /* Al imprimir una ficha: solo el contenido, sin menú, laterales ni CTA */
 @media print {
-  .cabecera, .indice, .categoria__lateral, .cta, .producto__accion, .pie__columnas, .saltar { display: none !important; }
+  .cabecera, .indice, .categoria__lateral, .cta, .producto__accion, .pie__columnas, .saltar, .barra-movil { display: none !important; }
   .pie { padding: 0; background: none; color: #000; }
   .producto { break-inside: avoid; }
   a { color: inherit; text-decoration: none; }
@@ -834,6 +871,57 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   /* Deja espacio a «Fabricación» sin reducir su tipografía ni partir la palabra a 320 px. */
   .confianza li { padding-inline: var(--esp-2); }
 }
+/* Buscador del inicio: el mismo componente que el del megamenú, más grande y con la lista de resultados debajo */
+.buscador-inicio { margin-top: var(--esp-6); }
+.buscador--inicio { max-width: 40rem; padding: 0; }
+.buscador--inicio .buscador__etiqueta { font-size: var(--texto-base); }
+.buscador--inicio .buscador__campo { min-height: 52px; border-width: 2px; border-color: var(--color-primario); font-size: 1.0625rem; }
+.buscador__resultados {
+  margin: var(--esp-2) 0 0;
+  padding: 0;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  background: var(--color-fondo);
+  box-shadow: var(--sombra-2);
+  list-style: none;
+}
+.buscador__resultados li + li { border-top: 1px solid var(--color-fondo-alt); }
+.buscador__resultados a {
+  display: flex;
+  flex-direction: column;   /* en móvil, la familia siempre debajo; desde 768 px, a la derecha */
+  justify-content: center;
+  gap: 0 var(--esp-3);
+  min-height: 44px;
+  padding: var(--esp-2) var(--esp-4);
+  font-weight: 600;
+  text-decoration: none;
+}
+.buscador__resultados a:hover, .buscador__resultados a:focus-visible { background: var(--color-fondo-destacado); }
+.buscador__familia { color: var(--color-texto-secundario); font-size: var(--texto-pequeno); font-weight: 400; }
+@media (min-width: 768px) {
+  .buscador__resultados a { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+.buscador-inicio__sin-js { margin: 0; }
+.js .buscador-inicio__sin-js { display: none; }
+
+/* Sectores del inicio: el sector y, debajo, la categoría de /legacy de la que sale el dato */
+/* Una columna en móvil y 3 × 3 desde 768 px (son 9 sectores: sin huecos) */
+.sectores__lista { display: grid; gap: var(--esp-2); margin: 0; padding: 0; list-style: none; }
+@media (min-width: 768px) { .sectores__lista { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--esp-3); } }
+.sector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  padding: var(--esp-3) var(--esp-4);
+  border: 1px solid var(--color-borde);
+  border-top: 3px solid var(--color-acento);
+  border-radius: var(--radio-s);
+  background: var(--color-fondo);
+}
+.sector__nombre { color: var(--color-primario-oscuro); font-family: var(--fuente-titulos); font-size: 1.125rem; font-weight: 700; line-height: 1.3; }
+.sector__enlace { font-size: var(--texto-pequeno); }
+.sector__enlace::after { content: " →"; }
+
 .destacados { display: grid; gap: var(--esp-5); }
 .destacado {
   display: grid;
