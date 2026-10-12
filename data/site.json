@@ -73,6 +73,7 @@
     { "titulo": "Catálogo de instrumentación", "pdf": "/docs/catalogo-instrumentacion.pdf", "familias": ["controltemperatura", "controldenivel", "presionhumedad"] },
     { "titulo": "Catálogo de resistencias calefactoras", "pdf": "/docs/catalogo-Brototermic-resistencias.pdf", "familias": ["resistencias-electricas"] }
   ],
+  "efectos": { "heroRotativo": true, "aparicionScroll": true },
   "formulario": {
     "accion": "/contacto/enviar.php",
     "envioActivo": false,

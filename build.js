@@ -336,9 +336,19 @@ function imagen(nombre, contexto) {
 // =====================================================================
 // 6. Modelo común: menú, pie y recursos
 // =====================================================================
+// Interruptor de efectos (site.json → efectos): un efecto en false sale del CSS y del JS publicados, quitando el
+// bloque entre «@efecto:nombre» y «@fin:nombre». El ?v= se calcula sobre lo publicado, así la caché se renueva.
+function filtrarEfectos(texto) {
+  for (const [nombre, activo] of Object.entries(site.efectos || {})) {
+    if (activo === false) texto = texto.replace(new RegExp(`/\\* @efecto:${nombre}\\b[\\s\\S]*?/\\* @fin:${nombre} \\*/`, 'g'), '');
+  }
+  return texto;
+}
+const publicado = rel => filtrarEfectos(fs.readFileSync(path.join(RAIZ, rel), 'utf8'));
+const hashTexto = t => crypto.createHash('sha256').update(t).digest('hex').slice(0, 10);
 const recursos = {
-  css: `/assets/css/style.css?v=${hashArchivo(path.join(RAIZ, 'assets/css/style.css'))}`,
-  js: `/assets/js/menu.js?v=${hashArchivo(path.join(RAIZ, 'assets/js/menu.js'))}`,
+  css: `/assets/css/style.css?v=${hashTexto(publicado('assets/css/style.css'))}`,
+  js: `/assets/js/menu.js?v=${hashTexto(publicado('assets/js/menu.js'))}`,
   jsFormulario: `/assets/js/formulario.js?v=${hashArchivo(path.join(RAIZ, 'assets/js/formulario.js'))}`,
 };
 // Dos logos: para fondo claro (cabecera blanca) y el original para fondo oscuro (pie)
@@ -878,7 +888,7 @@ function modeloInicio() {
     h1: c.meta.h1,
     migas: migasDe(),
     hero,
-    diapositivas: diapositivasHero(),
+    diapositivas: site.efectos?.heroRotativo === false ? [] : diapositivasHero(),
     texto: Object.fromEntries(['hero', 'empresa', 'medida', 'novedades', 'catalogos', 'marcas', 'sedes'].map(b => [b, bloque(c, b)])),
     tarjetas: tarjetasFamilias(),
     fundacion: site.fundacion,
@@ -1142,6 +1152,7 @@ function main() {
 
   // Copia de recursos: /assets, /images y solo los .pdf de /docs, con su nombre exacto
   const nAssets = copiarDirectorio(path.join(RAIZ, 'assets'), path.join(DIST, 'assets'));
+  for (const rel of ['assets/css/style.css', 'assets/js/menu.js']) fs.writeFileSync(path.join(DIST, rel), publicado(rel));
   const nImagenes = copiarDirectorio(path.join(RAIZ, 'images'), path.join(DIST, 'images'));
   // Imágenes antiguas que la web nueva ya no muestra, pero cuya URL puede estar indexada (decisión D-011): se
   // publican igual, sin enlazar, para que nunca den 404. Se copian de /legacy (copia byte a byte de la web actual);

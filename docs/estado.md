@@ -54,11 +54,22 @@ Las marcas se guardan en el navegador de cada persona: con el reparto, cada una 
 
 El reparto de lo pendiente entre las dos personas es una **propuesta** (tablero del apartado 6 de revision-sesion-b.md) hasta que la Persona B lo confirme.
 
+## Hoy (2026-10-12) en `revision/complemento-b`
+
+Bloque 1 de la revisión (CI, `[L]`, limitador D-015, menú sin JS, alts D-014), vista de borradores, barra fija, buscador y sectores, imágenes del inicio, diseño en franjas (D-018), CTA bajo el H1 (R-14), hero rotativo y microinteracciones (D-019), versión de demostración (D-017) y material de la presentación. **La PR hacia `main` está pendiente de revisión por la Persona B: no se fusiona sin ella.**
+
+**Interruptor de efectos:** `site.json → efectos` (`heroRotativo`, `aparicionScroll`). Si PageSpeed da menos de 90, se pone el efecto en `false` y se hace el build: sale del HTML, del CSS y del JS sin tocar código.
+
 ## Presentación al cliente (2026-10-13)
 
 - **Demo:** `npm run build:preview` y subir `dist-preview` a Netlify Drop ([presentacion/demo.md](presentacion/demo.md)). Lleva noindex en todo y la franja «Versión de demostración». **Nunca va al hosting real** (D-017).
 - **Material:** [presentacion/](presentacion/): `antes-despues.png` (y su HTML), `resumen.md` (cifras), `guion.md` (5 minutos) y `pendientes-cliente.md` (lo que necesitamos, sin tecnicismos).
 - **Hero de la demo:** ilustración IA con la placa tapada, solo en la demo (D-016). En producción, `slide-1`.
+
+## Lo pendiente para publicar, en resumen
+
+- **Cliente:** accesos (hosting, Search Console y el `.es`), email de destino del formulario y catálogo de resistencias vigente (más el resto de [presentacion/pendientes-cliente.md](presentacion/pendientes-cliente.md)).
+- **Equipo:** revisar los 51 borradores con `node tools/revision-borradores.js`; `docs/seo-mejoras.md`; medir en PageSpeed; los alts, después de publicar.
 
 ## Lo que bloquea la publicación
 

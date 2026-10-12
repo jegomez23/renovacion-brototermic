@@ -17,7 +17,8 @@
 | | Web actual | Web nueva |
 |---|---|---|
 | **Móvil** | No se adapta (diseño de escritorio de 1150 px) | Diseñada primero para el móvil, de 320 px en adelante, con botones fijos **Llamar** y **Pedir presupuesto** |
-| **Lighthouse móvil: rendimiento** (inicio · categoría · contacto) | 78 · 94 · **30** | 71-96 (varía con la carga del equipo de medida) · **97** · **97** |
+| **Lighthouse móvil: rendimiento** (inicio · categoría · contacto) | 78 · 94 · **30** | Pendiente de medir en PageSpeed (servidores de Google) |
+| **Estabilidad visual (CLS)** | — | **0** en las tres páginas |
 | **Lighthouse móvil: accesibilidad** | 72 · 92 · 77 | **100 · 100 · 100** |
 | **Lighthouse móvil: buenas prácticas** | 71 · 71 · 86 | **100 · 100 · 100** |
 | **Lighthouse móvil: SEO** | 82 · 100 · 91 | **100 · 100 · 100** |
@@ -26,7 +27,7 @@
 | **Pedir presupuesto** | Formulario sin adjuntos | Formulario con **adjunto** (plano, foto, PDF, DWG, DXF) y el producto ya rellenado desde su ficha |
 | **Buscar un producto** | Navegando por menús | **Buscador** en el inicio y en el menú («termopar», «cartucho», «flotador»…) |
 
-La web actual se midió en producción (`brototermic.com`); la nueva, en local, sin la compresión ni la caché del servidor. Se repetirá en producción el día de publicar.
+La web actual se midió en producción (`brototermic.com`). El rendimiento de la nueva se mide en PageSpeed Insights sobre la versión de demostración, porque las mediciones en el equipo local variaban con su carga; se repetirá en producción el día de publicar.
 
 ## Seguridad y privacidad
 

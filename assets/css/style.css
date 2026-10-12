@@ -1274,6 +1274,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .hero__diapositiva img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; transform-origin: 60% 50%; }
 /* Fotos de fondo blanco (slide-1, 3 y 4): enteras y fundidas con el gris del hero */
 .hero__diapositiva--contener img { object-fit: contain; padding: var(--esp-3) var(--margen-lateral); mix-blend-mode: multiply; }
+/* @efecto:heroRotativo (build.js lo quita si site.json → efectos.heroRotativo es false) */
 /* Ken Burns: zoom muy lento (1 → 1,06) solo en la diapositiva activa y solo si el JS lo activa */
 .hero--anima .hero__diapositiva img { animation: hero-zoom 8s linear forwards; animation-play-state: paused; }
 /* La activa y la que se está yendo siguen su zoom (sin saltos durante el fundido); en pausa, todo quieto */
@@ -1311,6 +1312,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .hero__pausa:hover, .hero__pausa:focus-visible { transform: scale(1.08); }
 .hero__icono-play, .hero--pausado .hero__icono-pausa { display: none; }
 .hero--pausado .hero__icono-play { display: block; }
+/* @fin:heroRotativo */
 @media (min-width: 768px) {
   .hero__imagen { aspect-ratio: 21 / 9; }
 }
@@ -1441,10 +1443,12 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   .cabecera--compacta { transform: translateY(calc(-1 * var(--alto-franja))); }
 }
 
+/* @efecto:aparicionScroll (build.js lo quita si site.json → efectos.aparicionScroll es false) */
 /* --- Aparición al hacer scroll: solo lo que el JS marca (fuera de la primera pantalla) --- */
 [data-revelar="pendiente"] { opacity: 0; transform: translateY(12px); }
 [data-revelar] { transition: opacity 500ms var(--suave), transform 500ms var(--suave); transition-delay: var(--retardo, 0ms); }
 [data-revelar="visto"] { opacity: 1; transform: none; }
+/* @fin:aparicionScroll */
 
 /* --- Movimiento reducido: nada se mueve; los cambios de color y opacidad se mantienen --- */
 @media (prefers-reduced-motion: reduce) {

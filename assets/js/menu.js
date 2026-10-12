@@ -273,6 +273,7 @@
     }).observe(testigo);
   }
 
+  /* @efecto:heroRotativo (build.js lo quita si site.json → efectos.heroRotativo es false) */
   // 7b. Hero rotativo: el texto no cambia; rota la imagen de fondo con fundido y un zoom lento. Las diapositivas 2 y 3
   // se añaden tras la carga (no compiten con el LCP). Pausa con el botón (WCAG 2.2.2), al pasar el ratón, con el foco
   // dentro del hero y con la pestaña oculta.
@@ -342,6 +343,9 @@
     else window.addEventListener('load', iniciarHero);
   }
 
+  /* @fin:heroRotativo */
+
+  /* @efecto:aparicionScroll (build.js lo quita si site.json → efectos.aparicionScroll es false) */
   // 7c. Aparición al hacer scroll: fundido y 12 px de subida, una sola vez, escalonado 60 ms entre hermanos.
   // Solo lo que está fuera de la primera pantalla (no retrasa el LCP) y nada dentro del hero.
   if (!sinMovimiento && conObservador) {
@@ -376,6 +380,8 @@
       if (!el.closest('.hero')) inicial.observe(el);
     });
   }
+
+  /* @fin:aparicionScroll */
 
   // Última línea: el menú ya funciona. Sin esta marca, el script de head.html vuelve a la versión sin JS al cargar.
   raiz.classList.add('menu-listo');
