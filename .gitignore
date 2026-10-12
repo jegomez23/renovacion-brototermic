@@ -5,6 +5,9 @@ legacy-*.log
 dist/
 dist-es/
 
+# Salidas locales de las herramientas (vista de revisión de borradores, hojas de alts…): no se versionan
+tools/salida/
+
 # Validador W3C local (npm run validar): se descarga aparte, no va en el repositorio
 tools/vnu/
 

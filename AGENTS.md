@@ -292,6 +292,9 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 │   ├── probar-redirecciones.sh
 │   ├── test-apache.js   ← regresión contra un Apache local (127.0.0.1, http y https, AllowOverride All y FileInfo)
 │   ├── test-limitador.php ← pruebas PHP del límite por IP de enviar.php (D-015); las ejecuta el CI
+│   ├── revision-borradores.js ← vista local de los borradores frase a frase, con su origen en /legacy o en los PDF (tools/salida/)
+│   ├── aprobar-borradores.js ← quita la marca de borrador de las piezas aprobadas en esa vista
+│   ├── datos/catalogos-pdf.txt ← texto de los catálogos PDF, solo para buscar orígenes
 │   └── apache-pruebas/  ← Apache en Docker (imagen httpd): dos vhosts, .com → /dist y .es → /dist-es, como en producción
 ├── .github/             ← CI (workflows/pruebas.yml: test, W3C y PHP en cada push y PR) y plantilla de PR
 ├── data/                                                                       [B]

@@ -26,12 +26,26 @@ Con Node ≥ 18: `npm run dev` y abrir **http://localhost:8000/** (se reconstruy
 
 `npm run build:publicacion` **falla hoy, y es lo correcto**: quedan 51 textos en borrador y el envío del formulario desactivado.
 
+## Cómo revisar los borradores (C-01)
+
+1. `node tools/revision-borradores.js` y abrir `tools/salida/revision-borradores.html` en el navegador (con `npm run dev` en marcha, el enlace de cada pieza abre su página).
+2. Cada pieza muestra, frase a frase, el fragmento de /legacy o de los catálogos PDF más parecido, con su archivo:
+   - **rojo:** sin origen claro, o con una palabra que no está en ningún sitio (subrayado rojo);
+   - **ámbar:** origen parcial, palabras que no están en su página antigua (subrayado de puntos) o afirmaciones sensibles (stock, plazos, certificaciones, normas, años…);
+   - **verde:** el resto.
+
+   Hoy: 73 rojas, 298 ámbar y 287 verdes en 658 frases. La herramienta acerca la evidencia; **decide la persona**.
+3. Corregir en `/data` o `/content` lo que haga falta (con `npm run dev` se ve al guardar), marcar «Aprobada» y, al final, «Exportar».
+4. Guardar lo exportado en un archivo y ejecutar `node tools/aprobar-borradores.js aprobadas.txt --simular`. Si es correcto, repetir sin `--simular`. Después, `npm run test` y commit.
+
+Las marcas se guardan en el navegador de cada persona: con el reparto, cada una exporta solo sus piezas.
+
 ## En curso: plan de revision-sesion-b.md (rama `revision/complemento-b`)
 
 | Paso | Qué | Estado |
 |---|---|---|
 | 1 | Bloque 1: arreglar lo roto o arriesgado (`[L]`, limitador D-015, menú B-06, alts D-014, frases sin respaldo, LF, CI, documentación) | **Hecho** |
-| 2 | Vista de los 51 borradores con el origen de cada frase en /legacy | Pendiente |
+| 2 | Vista de los 51 borradores con el origen de cada frase en /legacy | **Hecho** (ver «Cómo revisar los borradores») |
 | 3 | Conversión: barra fija «Llamar · Presupuesto», buscador en el inicio y bloque de sectores | Pendiente (con capturas para aprobar) |
 | 4 | Imágenes del inicio: `slide-1.webp`, WebP de los banners, tarjetas de familia con recortes, foto de «Mercado y aplicación» y tarjeta «Resistencias» dentro de su marco | Pendiente (con capturas) |
 | 5 | `docs/seo-mejoras.md` | Pendiente |
