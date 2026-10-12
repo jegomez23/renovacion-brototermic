@@ -465,8 +465,25 @@ function auditarReglasGenerales(ctx, F) {
     ['https://brototermic.com/empresa.html~', 404],
   ];
   const detalles = casos.flatMap(([u, e, d]) => comprobarUrl(u, e, d, ctx, F));
+  // La 404 propia (ErrorDocument) se sirve con una subpetición interna que vuelve a pasar por el .htaccess:
+  // debe servir /404.html tal cual, sin redirigir (p. ej. a https) ni volver a dar 404, también por http (D-013, PR #7)
+  const erroresInternos = [
+    'http://brototermic.com/.env',
+    'http://www.brototermic.com/backup.sql',
+    'https://brototermic.com/.git/HEAD',
+    'https://brototermic.com/esta-pagina-no-existe.html',
+  ];
+  const texto = F.leer('/.htaccess') || '';
+  for (const u of erroresInternos) {
+    const r = H.simularErrorDocument(texto, u, ctx.dist);
+    if (!r) { detalles.push('dist/.htaccess: falta «ErrorDocument 404»'); break; }
+    if (r.estado !== 200 || !/404\.html$/.test(r.archivo || '')) {
+      detalles.push(`dist/.htaccess: la 404 propia de ${u} da ${r.estado} ${r.location || ''} (esperado 200 con /404.html, sin redirección)`);
+    }
+  }
+  const total = casos.length + erroresInternos.length;
   const estado = detalles.length ? 'ERROR' : 'OK';
-  return { url: '.htaccess (reglas generales)', tipo: 'redirección', estado, checks: { url: { estado, texto: `${casos.length - detalles.length}/${casos.length} casos` } }, detalles };
+  return { url: '.htaccess (reglas generales)', tipo: 'redirección', estado, checks: { url: { estado, texto: `${total - detalles.length}/${total} casos` } }, detalles };
 }
 
 // ---------- Auditoría de un archivo (PDF, sitemap, robots) ----------

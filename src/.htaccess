@@ -41,8 +41,10 @@ RewriteBase /
 # ErrorDocument conserva el 404 original. Su petición interna no debe volver a ejecutar las redirecciones
 # históricas ni la canonicalización, que usa THE_REQUEST (la ruta original, incluso si era un archivo oculto).
 # Solo se exime /404.html cuando Apache lo sirve como documento de error; una petición directa sigue las reglas.
+# [L] y no [END]: sin sustitución («-») no hay segunda pasada, así que hacen lo mismo, y [END] no existe antes de
+# Apache 2.3.9 (daría un 500 en toda la web). El auditor comprueba esta subpetición (simularErrorDocument).
 RewriteCond %{ENV:REDIRECT_STATUS} =404
-RewriteRule ^404\.html$ - [END]
+RewriteRule ^404\.html$ - [L]
 
 # ---------- 0. Archivos ocultos y copias de seguridad: 404 (auditoría final, M-08) ----------
 # Con mod_rewrite (ya imprescindible) y no con «Require all denied», que exige otro override (AuthConfig) y podría

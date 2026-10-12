@@ -111,6 +111,16 @@ function ejecutar({ modo = 'piloto' } = {}) {
     if (!ok) fallos.push(`«quitar una redirección»: ${urlRed} da ${r.estado}`);
   }
 
+  // 404 propia: sin la exención de ErrorDocument, la subpetición de /404.html por http se redirigiría a https
+  const sinExencion = htaccess.replace(/^RewriteRule \^404\\\.html\$ - \[(L|END)\]$/m, '# (exención borrada por la prueba)');
+  if (sinExencion === htaccess) fallos.push('«quitar la exención del 404»: no se encuentra la regla de /404.html en dist/.htaccess');
+  else {
+    const r = auditar({ modo: 'piloto', urls: ['.htaccess'], sobrescribir: { '/.htaccess': sinExencion } }).filas[0];
+    const ok = r.estado === 'ERROR';
+    resultados.push({ mutacion: 'quitar la exención del 404 propio', url: '.htaccess (reglas generales)', chequeo: 'url', detectada: ok });
+    if (!ok) fallos.push(`«quitar la exención del 404»: las reglas generales dan ${r.estado}`);
+  }
+
   // Área de contenido antigua ilegible: debe ser ERROR, nunca «100 % conservado»
   const urlArea = candidatas.find(c => c.plantilla === 'categoria')?.url;
   if (urlArea) {
