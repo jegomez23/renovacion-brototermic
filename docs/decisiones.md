@@ -118,3 +118,66 @@
 - **`tools/servir.js` (B-09):** solo escucha en 127.0.0.1, no deja salir de `/dist` (ni a carpetas hermanas) y responde la 404 propia.
 - **`.htaccess` (M-04 y M-08)**, todo sin riesgo de 500: Permissions-Policy; **HSTS con `max-age=300`** (se sube a un año tras una semana sin incidencias en producción; sin `includeSubDomains` hasta comprobar los subdominios); **CSP en modo `Content-Security-Policy-Report-Only`** (solo `'self'` y el hash del único script en línea; se activa tras revisar la consola en producción); archivos ocultos (salvo `/.well-known/`) y copias de seguridad → 404 con mod_rewrite, no con `Require` (que exige otro override).
 - **Documentos:** README.md, AGENTS.md (§7), `docs/boceto/README.md`, auditoria-final.md (estados de M-04, M-07, M-08 y B-09).
+
+## D-013 · 2026-10-11/12 · Sesión de la Persona B (PR #1-#9)
+
+- **Origen:** la Persona B, en 9 PR desde las ramas `review/jhonda-*`. El responsable del proyecto las fusionó el 11 y el 12 de octubre **sin revisión registrada en GitHub**. Se registran aquí a posteriori, a partir de la revisión de [revision-sesion-b.md](revision-sesion-b.md); las que esa revisión propone cambiar lo indican.
+- **Decisiones, por PR:**
+  - **PR #1:**
+    - Las tarjetas de resistencias, temperatura y nivel del inicio usan copias idénticas de `oviedo/images/electticfor-brototermic-oviedo.jpg` (370 × 290), `slide-3.jpg` y `slide-4.jpg` (910 × 426) con `alt=""`, seleccionadas en `build.js → modeloInicio`.
+    - «Productos a medida» usa `brototermic-calefactor-inmersion.jpg`, sin atribuir fabricación propia a la foto.
+    - «Catálogos» usa `portada-catalogos-provisional.png` (las portadas de los dos PDF), provisional hasta que el cliente confirme la vigencia de los catálogos.
+    - Las imágenes que salen del inicio siguen publicadas en su URL (filas `ELIMINAR` en plan-imagenes.csv).
+    - En el pie móvil se quita el logo y los teléfonos y emails tienen zona táctil de 44 px.
+    - *Revisión R-06, R-07 y R-09: se propone sustituir los banners de 910 px por miniaturas recortadas y llevar la selección a los datos.*
+  - **PR #2:**
+    - La mención genérica a la Directiva 94/9/CE de `resistencias-atex` se actualiza con la 2014/34/UE (plan-contenido §4, fila 7, y `SUSTITUCIONES` de `tools/lib/legacy.js`), sin tocar ninguna certificación de producto (§4, filas 8-10). Cierra B-02 de auditoria-final.md.
+    - Se corrige la errata «Se pude» → «Se puede» (sondastemperatura).
+    - Se reescriben 21 alts en `controltemperatura-sondastemperatura`, `resistencias-atex` y `controldenivel-sensores-de-presion`.
+    - *Revisión R-04: 5 pierden el modelo o el nombre, ver D-014.*
+  - **PR #3:**
+    - Sin JS, «Productos» es un enlace a `/mapa-web.html` y no un botón con `aria-expanded`.
+    - El panel no se cierra con `mouseleave` si el foco está dentro.
+  - **PR #4:**
+    - Los botones no cambian con el ratón si están desactivados (`:not(:disabled)`) y tienen estado `:active`.
+    - El `summary` del índice recupera su marcador nativo.
+  - **PR #5:** botón «Ver productos» (categorías) y «Ver categorías» (familias) bajo el H1, con `tabindex="-1"` en el destino. *Revisión R-14: se propone sustituirlo por «Pedir presupuesto» + enlace «Ver los N productos ↓».*
+  - **PR #6:**
+    - El limitador por IP de `enviar.php` pasa de *fail-open* a *fail-closed*: si el almacenamiento falla, el envío se rechaza (`error.html#configuracion`) y se anota en `error_log`.
+    - Pruebas en `tools/test-limitador.php`.
+    - *Revisión R-05: se propone hacer obligatoria la carpeta del limitador y dar al usuario un mensaje con el teléfono.*
+  - **PR #7:**
+    - El `.htaccess` del `.com` deja `mod_expires` y gestiona la caché solo con `Cache-Control` (`mod_headers`): un año para CSS, JS y WOFF2; 30 días para imágenes y PDF; 1 h para XML, TXT, JSON y manifest; `no-cache` para HTML. Motivo: `ExpiresActive` y `ExpiresByType` exigen `AllowOverride Indexes` y, con `FileInfo`, daban un 500 en toda la web.
+    - `/404.html` queda fuera de las reglas cuando la sirve `ErrorDocument` (`REDIRECT_STATUS=404`).
+    - Prueba de regresión `tools/test-apache.js` (Apache 2.4.62 nativo, `All` y `FileInfo`: 1.336 peticiones correctas). No sustituye a la prueba en Docker.
+    - *Revisión R-03: `[END]` → `[L]` por compatibilidad con Apache 2.2.*
+  - **PR #8:** en el móvil del inicio (y solo ahí), las 8 tarjetas de familia pasan a formato compacto (miniatura de 88 px y título en la misma fila).
+  - **PR #9:**
+    - «Productos a medida» pasa a ser el bloque principal del inicio, con el botón primario «Fabricación a medida».
+    - «Mercado y aplicación» y «Catálogos» quedan como bloques de apoyo, solo en el inicio (`/oviedo/` conserva el componente compartido).
+- **Documentos:**
+  - Ya actualizados en las PR: AGENTS.md §11, plan-imagenes.csv, plan-contenido.md §4, checklist-publicacion.md y tools/apache-pruebas/README.md.
+  - Pendientes (revision-sesion-b.md, tarea 1.7): AGENTS.md §5 y §7, estado.md, auditoria-final.md, diseno.md, arquitectura.md y boceto/README.md.
+
+## D-014 · 2026-10-12 · Regla de los textos alternativos: el modelo, siempre
+
+- **Origen:** responsable del proyecto, a partir de la revisión de la PR #2 (revision-sesion-b.md, R-04). Aprobada con el plan de revision-sesion-b.md el 2026-10-12.
+- **Contexto:** de los 21 alts reescritos en la PR #2, 16 conservan el modelo o el nombre, pero 5 lo pierden: PTC, NTC, RTD, «propósito general» y «ATEX». Los alts que empiezan por «Esquema de…» o que describen solo el aspecto desplazan el nombre del producto. Los modelos y las designaciones son búsquedas reales del público (AGENTS.md §1), también en Google Imágenes.
+- **Regla:**
+  - El alt **empieza por el nombre del producto y, si existe, su modelo o designación** (referencia, tipo como PTC, NTC, Pt100 o RTD, o la marca de la gama), **tal como figuran en /legacy**.
+  - Sigue **lo que se ve** en la foto: forma, elementos distinguibles y, si es un dibujo o un render, se dice al final («…, dibujo técnico»).
+  - Solo datos de /legacy o de los catálogos (AGENTS.md §4). Sin «BROTOTERMIC» y sin repetir el mismo alt en fotos distintas.
+  - Una misma imagen usada en dos páginas lleva el mismo alt.
+  - Ejemplos: «Sensor PTC con bulbo metálico y cable negro de dos conductores»; «Termorresistencia RTD de propósito general con cable y muelle protector, dibujo técnico»; «Aerotermo portátil ATEX MFH con rejilla circular y patas».
+- **Cómo se comprueba:** `build.js` avisará si el alt de un producto no contiene el código de modelo que aparece en su nombre (tarea 1.3 de revision-sesion-b.md).
+- **Documentos:** AGENTS.md §5, datos.md (campo `alt`) y plan-imagenes.csv.
+
+## D-015 · 2026-10-12 · Limitador del formulario: si falla su almacenamiento, el envío se acepta
+
+- **Origen:** responsable del proyecto, al aprobar el plan de [revision-sesion-b.md](revision-sesion-b.md). **Sustituye en parte a la PR #6** (D-013).
+- **Contexto:** la PR #6 cambió el limitador por IP de `enviar.php` de *fail-open* a *fail-closed*: si su almacenamiento falla (carpeta que no se puede crear o escribir, bloqueo o registro ilegible), el envío se rechazaba con `error.html#configuracion`. Es el criterio habitual en un control de seguridad, y la PR resolvió además errores reales de E/S (escribir antes de truncar, `flock` con `finally`, registro validado). La revisión (R-05) vio el efecto secundario: en un hosting compartido, con `open_basedir` o un `/tmp` no escribible, **todas** las peticiones de presupuesto se rechazarían, y el usuario vería un mensaje que no explica qué ha pasado.
+- **Decisión:** si el almacenamiento falla, el envío **se acepta** y se anota en el log de PHP («almacenamiento del limitador no disponible; el envío se acepta sin límite por IP»). Siguen activos el campo trampa, la casilla RGPD, la validación de todos los campos, la comprobación de `Origin` y la del adjunto. Si el almacenamiento funciona, el límite por IP se aplica igual que antes.
+- **Por qué:** el objetivo número 1 de la web es generar peticiones de presupuesto (AGENTS.md §1). Perder una petición es peor que dejar pasar algo de spam durante una avería, que además queda registrada y se puede corregir.
+- **Se conserva de la PR #6:** el control de errores de E/S y su detección (`dentroDelLimite()` devuelve `null`) y las pruebas de `tools/test-limitador.php`, ampliadas: con cada fallo inyectado, el envío se acepta, se envía 1 correo y queda la línea en el log; con el almacenamiento roto, el campo trampa y la casilla RGPD siguen funcionando. El CI las ejecuta.
+- **Configuración:** `config.example.php` recomienda `dir_limites` en una carpeta propia fuera del docroot; la checklist de publicación lo comprueba.
+- **Documentos:** `src/contacto/enviar.php`, `src/contacto/config.example.php`, `content/error.html` (mensaje de `#configuracion` con remisión al teléfono y al email), `tools/test-limitador.php`, checklist-publicacion.md y AGENTS.md §2 y §11.
