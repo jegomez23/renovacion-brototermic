@@ -80,7 +80,8 @@ if (trim((string) ($_POST['web'] ?? '')) !== '') ir(URL_GRACIAS);
 
 // ---------- 3. Límite de envíos por IP ----------
 // Se guarda solo un hash de la IP con sal (no se puede volver a la IP) y las horas de los envíos de la última ventana.
-// null indica un fallo de almacenamiento; false, una solicitud que supera el límite.
+// null indica un fallo de almacenamiento (el envío se acepta y se anota en el log, D-015); false, una solicitud
+// que supera el límite.
 function dentroDelLimite(array $config): ?bool
 {
     $limite = (int) ($config['limite_envios'] ?? 5);
@@ -140,12 +141,14 @@ if (mb_strlen($telefono) > 30 || !preg_match('/^[0-9 +().\-]*$/', $telefono)) fa
 if ($mensaje === '' || mb_strlen($mensaje) > 5000) fallo('mensaje');
 if (($_POST['rgpd'] ?? '') !== 'si') fallo('rgpd');
 
+// Si el almacenamiento del limitador falla, el envío SE ACEPTA y se deja constancia en el log (D-015): perder una
+// petición de presupuesto es peor que algo de spam, y el campo trampa y la validación de arriba siguen activos.
 $permitido = dentroDelLimite($config);
 if ($permitido === null) {
-    error_log('enviar.php: almacenamiento del limitador no disponible');
-    fallo('configuracion');
+    error_log('enviar.php: almacenamiento del limitador no disponible; el envío se acepta sin límite por IP (D-015)');
+} elseif (!$permitido) {
+    fallo('limite');
 }
-if (!$permitido) fallo('limite');
 
 // ---------- 5. Adjunto (opcional) ----------
 // Comprueba que el contenido es de verdad del tipo que dice la extensión. finfo no reconoce siempre DWG ni DXF
