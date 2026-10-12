@@ -38,6 +38,12 @@ ErrorDocument 404 /404.html
 RewriteEngine On
 RewriteBase /
 
+# ErrorDocument conserva el 404 original. Su petición interna no debe volver a ejecutar las redirecciones
+# históricas ni la canonicalización, que usa THE_REQUEST (la ruta original, incluso si era un archivo oculto).
+# Solo se exime /404.html cuando Apache lo sirve como documento de error; una petición directa sigue las reglas.
+RewriteCond %{ENV:REDIRECT_STATUS} =404
+RewriteRule ^404\.html$ - [END]
+
 # ---------- 0. Archivos ocultos y copias de seguridad: 404 (auditoría final, M-08) ----------
 # Con mod_rewrite (ya imprescindible) y no con «Require all denied», que exige otro override (AuthConfig) y podría
 # dar un 500. Se responde 404, no 403, para no confirmar que el archivo existe.
@@ -142,30 +148,22 @@ RewriteRule ^ - [R=404,L]
 </IfModule>
 
 # ---------- Caché ----------
-# CSS y JS llevan ?v=<hash> en la URL (build.js): se pueden guardar un año. Imágenes, fuentes y PDF, un mes.
+# CSS y JS llevan ?v=<hash> en la URL (build.js): se pueden guardar un año, igual que las fuentes. Imágenes y PDF, un mes.
 # El HTML se revalida siempre, para que una corrección se vea al momento.
-<IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresDefault "access plus 1 hour"
-  ExpiresByType text/html "access plus 0 seconds"
-  ExpiresByType text/css "access plus 1 year"
-  ExpiresByType application/javascript "access plus 1 year"
-  ExpiresByType text/javascript "access plus 1 year"
-  ExpiresByType font/woff2 "access plus 1 year"
-  ExpiresByType image/jpeg "access plus 1 month"
-  ExpiresByType image/png "access plus 1 month"
-  ExpiresByType image/gif "access plus 1 month"
-  ExpiresByType image/webp "access plus 1 month"
-  ExpiresByType image/svg+xml "access plus 1 month"
-  ExpiresByType image/x-icon "access plus 1 month"
-  ExpiresByType application/pdf "access plus 1 month"
-</IfModule>
+# Se usa solo mod_headers (override FileInfo). ExpiresActive/ExpiresByType requieren Indexes incluso dentro
+# de IfModule: un hosting con FileInfo devolvía 500. Cache-Control es la única política de caché de este archivo.
 <IfModule mod_headers.c>
   <FilesMatch "\.(css|js|woff2)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
   <FilesMatch "\.html$">
     Header set Cache-Control "no-cache"
+  </FilesMatch>
+  <FilesMatch "\.(jpe?g|png|gif|webp|svg|ico|pdf)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  <FilesMatch "\.(xml|txt|json|webmanifest)$">
+    Header set Cache-Control "public, max-age=3600"
   </FilesMatch>
   # ---------- Cabeceras de seguridad (auditoría final, M-04) ----------
   # Sin dependencias de terceros, así que estas no rompen nada
