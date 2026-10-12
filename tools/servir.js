@@ -8,7 +8,11 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const DIST = path.join(__dirname, '..', 'dist');
+// --carpeta=dist-preview: sirve la versión de demostración (node build.js --modo=preview) en lugar de /dist
+const argCarpeta = process.argv.find(a => a.startsWith('--carpeta='));
+const CARPETA = argCarpeta ? argCarpeta.slice(10) : 'dist';
+if (!['dist', 'dist-preview'].includes(CARPETA)) { console.error('Solo se sirve dist o dist-preview'); process.exit(1); }
+const DIST = path.join(__dirname, '..', CARPETA);
 const TIPOS = {
   '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8',
@@ -45,6 +49,6 @@ function servir(puerto = 8000, alEscuchar = () => {}) {
 module.exports = { servir };
 
 if (require.main === module) {
-  const puerto = Number(process.argv[2]) || 8000;
-  servir(puerto, () => console.log(`Sirviendo /dist en http://localhost:${puerto}/  (Ctrl+C para parar)`));
+  const puerto = Number(process.argv.slice(2).find(a => /^\d+$/.test(a))) || 8000;
+  servir(puerto, () => console.log(`Sirviendo /${CARPETA} en http://localhost:${puerto}/  (Ctrl+C para parar)`));
 }

@@ -2,21 +2,27 @@
 <body>
 {{> cabecera}}
 <main id="contenido" tabindex="-1">
+  <div class="franja-cabecera">
   {{> migas}}
   <div class="contenedor">
     <header class="pagina-cabecera{{#if pagina.imagen}} pagina-cabecera--con-imagen{{/if}}">
       <div>
         <h1>{{pagina.h1}}</h1>
-        <p class="pagina-cabecera__acceso"><a class="boton boton--secundario" href="#categorias-titulo">Ver categorías</a></p>
-        <div class="entradilla">{{{pagina.intro}}}</div>
-        <div class="pagina-cabecera__acciones">
+        <p class="pagina-cabecera__cta">
           <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+          <a class="enlace-bajar" href="#categorias-titulo">Ver las {{pagina.tarjetas.length}} categorías</a>
+        </p>
+        <div class="entradilla">{{{pagina.intro}}}</div>
+        {{#if pagina.catalogos}}<div class="pagina-cabecera__acciones">
           {{#each pagina.catalogos}}<a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a>
           {{/each}}
-        </div>
+        </div>{{/if}}
       </div>
       {{#if pagina.imagen}}<picture class="pagina-cabecera__imagen">{{#if pagina.imagen.webp}}<source type="image/webp" srcset="{{pagina.imagen.webp}}">{{/if}}<img src="{{pagina.imagen.src}}" width="{{pagina.imagen.ancho}}" height="{{pagina.imagen.alto}}" alt="{{pagina.imagen.alt}}" fetchpriority="high"></picture>{{/if}}
     </header>
+  </div>
+  </div>
+  <div class="contenedor">
 
     <section class="seccion" aria-labelledby="categorias-titulo">
       <h2 id="categorias-titulo" tabindex="-1">{{pagina.tituloTarjetas}}</h2>

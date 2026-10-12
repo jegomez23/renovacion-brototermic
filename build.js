@@ -17,15 +17,19 @@ const crypto = require('crypto');
 const L = require('./tools/lib/legacy');
 
 const RAIZ = __dirname;
-const DIST = path.join(RAIZ, 'dist');         // docroot del .com
-const DIST_ES = path.join(RAIZ, 'dist-es');   // docroot del .es: solo su .htaccess (301 al .com y 404 para el resto)
 const argModo = process.argv.find(a => a.startsWith('--modo='));
 const MODO = process.argv.includes('--publicar') ? 'publicacion' : argModo ? argModo.slice(7) : 'piloto';
-if (!['piloto', 'publicacion'].includes(MODO)) {
-  console.error(`ERROR  modo desconocido «${MODO}»: usa --modo=piloto o --modo=publicacion`);
+if (!['piloto', 'publicacion', 'preview'].includes(MODO)) {
+  console.error(`ERROR  modo desconocido «${MODO}»: usa --modo=piloto, --modo=publicacion o --modo=preview`);
   process.exit(1);
 }
 const PUBLICAR = MODO === 'publicacion';
+// Modo «preview» (D-017): versión de DEMOSTRACIÓN para enseñar al cliente en un hosting estático (Netlify Drop,
+// Cloudflare Pages). Sale en /dist-preview, con noindex/nofollow en todas las páginas, robots.txt «Disallow: /», la
+// franja «Versión de demostración», sin .htaccess ni PHP y con el hero de demostración (D-016). NUNCA va al hosting real.
+const PREVIA = MODO === 'preview';
+const DIST = path.join(RAIZ, PREVIA ? 'dist-preview' : 'dist'); // docroot del .com (o de la demo)
+const DIST_ES = path.join(RAIZ, 'dist-es');   // docroot del .es: solo su .htaccess (301 al .com y 404 para el resto)
 const SIN_AUDITORIA = process.argv.includes('--sin-auditoria');
 if (SIN_AUDITORIA && PUBLICAR) {
   console.error('ERROR  --sin-auditoria no se admite en modo publicación: la auditoría SEO es obligatoria para publicar');
@@ -805,20 +809,44 @@ function mapaWeb() {
 }
 
 // Tarjetas de las 8 familias (4 con página + 4 directas), en el orden de familias.json (inicio y /oviedo/)
-function tarjetasFamilias(imagenesPortada = {}) {
+// Imagen de la tarjeta: «imgTarjeta» de familias.json (recortes de tools/datos/imagenes.json; revision-sesion-b.md,
+// R-06 y R-09), si no «img», y si no la foto del primer producto. La misma en el inicio y en /oviedo/.
+function tarjetasFamilias() {
   return familias.map(f => {
     const esFamilia = f.tipo === 'familia';
     if (!f.resumen) error(`data/familias.json → ${f.id}: falta el «resumen» de la tarjeta`);
     const n = esFamilia ? f.categorias.length : categorias.get(f.archivo)?.datos?.productos.length || 0;
+    const img = f.imgTarjeta || f.img;
     return {
       nombre: f.nombre,
       url: urlFamilia(f),
       resumen: f.resumen,
-      imagen: imagenesPortada[f.id] ? imagen(imagenesPortada[f.id], `portada → ${f.id}`)
-        : f.img ? imagen(f.img, `data/familias.json → ${f.id}`) : imagenDeCategoria(esFamilia ? f.categorias[0].archivo : f.archivo),
+      imagen: img ? imagen(img, `data/familias.json → ${f.id}`) : imagenDeCategoria(esFamilia ? f.categorias[0].archivo : f.archivo),
       nota: n ? `${n} ${esFamilia ? 'categorías' : 'productos'}` : null,
     };
   });
+}
+
+// Hero del inicio con srcset (WebP + JPG). Producción: slide-1 a 480 y 910 px (D-004; su URL antigua sigue
+// publicada). Demostración (modo preview): la imagen de tools/datos/demo a 480/910/1600 px (D-016), nunca en producción.
+function heroInicio(c) {
+  const srcset = (base, anchos, ext) => anchos.map(a => `${base}-${a}.${ext} ${a}w`).join(', ');
+  const sizes = '(min-width: 1280px) 640px, (min-width: 768px) 52vw, 100vw';
+  if (PREVIA) {
+    const anchos = [480, 910, 1600];
+    const base = '/images/demo/hero-calefactor-inmersion';
+    const m = medidasImagen(path.join(RAIZ, 'tools', 'datos', 'demo', 'hero-calefactor-inmersion-1600.jpg'));
+    return { src: `${base}-910.jpg`, ancho: m.ancho, alto: m.alto, srcsetJpg: srcset(base, anchos, 'jpg'), srcsetWebp: srcset(base, anchos, 'webp'),
+      sizes, fondoBlanco: false, alt: 'Ilustración de un calefactor de inmersión con brida, caja de conexiones roja y haz de tubos calefactores' };
+  }
+  // El src y la versión de 910 px son la URL indexada /images/slide-1.jpg; el srcset añade la de 480 px y el WebP
+  for (const n of ['slide-1.webp', 'slide-1-480.webp', 'slide-1-480.jpg']) {
+    if (!fs.existsSync(path.join(RAIZ, 'images', n))) error(`images/${n} no existe (node tools/imagenes.js slide-1)`);
+  }
+  const m = medidasImagen(path.join(RAIZ, 'images', 'slide-1.jpg')) || { ancho: 910, alto: 426 };
+  return { src: '/images/slide-1.jpg', ancho: m.ancho, alto: m.alto,
+    srcsetJpg: '/images/slide-1-480.jpg 480w, /images/slide-1.jpg 910w',
+    srcsetWebp: '/images/slide-1-480.webp 480w, /images/slide-1.webp 910w', sizes, fondoBlanco: true, alt: c.meta['hero-alt'] || '' };
 }
 
 // Inicio: los textos salen de content/inicio.html (bloques); tarjetas, marcas, catálogos y sedes, de /data
@@ -828,7 +856,7 @@ function modeloInicio() {
   for (const campo of ['title', 'meta', 'h1']) if (!c.meta[campo]) error(`${c.ruta}: falta «${campo}» en los metadatos`);
   if (c.meta.borrador === 'si') pendiente(`${c.ruta}: sigue marcado como borrador (lo quita la Persona B al revisarlo)`);
   comprobarPlan(c.ruta, 'index.html', c.meta);
-  const hero = imagen('slide-1', c.ruta);
+  const hero = heroInicio(c);
   const pagina = {
     ruta: '/',
     canonical: `${host}/`,
@@ -836,13 +864,9 @@ function modeloInicio() {
     meta: c.meta.meta,
     h1: c.meta.h1,
     migas: migasDe(),
-    hero: hero ? { ...hero, alt: c.meta['hero-alt'] || '' } : null,
+    hero,
     texto: Object.fromEntries(['hero', 'empresa', 'medida', 'novedades', 'catalogos', 'marcas', 'sedes'].map(b => [b, bloque(c, b)])),
-    tarjetas: tarjetasFamilias({
-      'resistencias-electricas': 'portada-resistencias-electricas',
-      controltemperatura: 'portada-control-temperatura',
-      controldenivel: 'portada-control-nivel',
-    }),
+    tarjetas: tarjetasFamilias(),
     fundacion: site.fundacion,
     numMarcas: site.marcas.length,
     marcas: site.marcas,
@@ -850,15 +874,15 @@ function modeloInicio() {
     catalogos: site.catalogos.map(k => ({ titulo: k.titulo, url: urlPublica(k.pdf) })),
     sectores: sectoresInicio(),
     sedes: sedes(),
-    // Miniaturas de /legacy (100 × 110, decorativas: el título de cada bloque ya dice lo que es)
-    // Selección aprobada de portada: foto de catálogo sin atribución de fabricación propia y portadas PDF auténticas.
-    // La miniatura de catálogos es provisional hasta confirmar la vigencia de ambos PDF con el cliente.
+    // Miniaturas decorativas (el título de cada bloque ya dice lo que es): foto de producto sin atribuir fabricación
+    // propia (D-013), el chiller ENR de nuevos productos en lugar de la foto de archivo (decisión 6 de
+    // revision-sesion-b.md) y las portadas de los dos PDF (provisional hasta confirmar su vigencia con el cliente).
     miniaturas: {
       medida: imagen('brototermic-calefactor-inmersion', c.ruta),
-      novedades: imagen('nuevos-productos-brototermic', c.ruta),
-      catalogos: imagen('portada-catalogos-provisional', c.ruta),
+      novedades: imagen('equipos-de-refrigeracion', c.ruta),
+      catalogos: imagen('portada-catalogos-260', c.ruta),
     },
-    ogImagen: hero ? `${host}${hero.src}` : null,
+    ogImagen: hero && !PREVIA ? `${host}${hero.src}` : null,
   };
   if (!pagina.hero?.alt) error(`${c.ruta}: falta «hero-alt» (alt de slide-1) en los metadatos`);
   pagina.schema = schemaPagina(pagina, { organizacion: schemaOrganizacion(), nodos: site.sedes.map(schemaSede) });
@@ -987,7 +1011,7 @@ function modeloContenido(slug, archivo) {
 // =====================================================================
 // /dist y /dist-es se vacían enteros: solo deben contener lo que se sube al servidor (tools/comprobar-publicable.js)
 function limpiarDist() {
-  for (const dir of [DIST, DIST_ES]) {
+  for (const dir of PREVIA ? [DIST] : [DIST, DIST_ES]) {
     fs.mkdirSync(dir, { recursive: true });
     for (const e of fs.readdirSync(dir)) fs.rmSync(path.join(dir, e), { recursive: true, force: true });
   }
@@ -1015,8 +1039,11 @@ function validarHtml(pagina, html, generadas) {
   if (/callto:/i.test(html)) error(`${c}: contiene un enlace callto: (usar tel:+34…)`);
 
   const ids = new Set([...html.matchAll(/\sid="([^"]+)"/g)].map(m => m[1]));
-  for (const m of html.matchAll(/\s(?:href|src|srcset)="([^"]+)"/g)) {
-    const url = m[1].replace(/&amp;/g, '&');
+  // srcset: «url 480w, url 910w» → una URL por candidata
+  const urls = [...html.matchAll(/\s(href|src|srcset)="([^"]+)"/g)]
+    .flatMap(m => (m[1] === 'srcset' ? m[2].split(',').map(x => x.trim().split(/\s+/)[0]) : [m[2]]));
+  for (const original of urls) {
+    const url = original.replace(/&amp;/g, '&');
     if (/^(https?:|mailto:|tel:|data:)/.test(url)) continue;
     if (url.startsWith('#')) {
       if (!ids.has(url.slice(1))) error(`${c}: el ancla ${url} no existe en la página`);
@@ -1025,7 +1052,10 @@ function validarHtml(pagina, html, generadas) {
     if (!url.startsWith('/')) { error(`${c}: enlace relativo «${url}» (las rutas deben ser absolutas desde la raíz)`); continue; }
     const ruta = decodeURI(url.split(/[?#]/)[0]);
     if (IMAGENES_CONSERVADAS.has(ruta)) continue; // imagen antigua conservada (D-011): build.js la copia de /legacy
-    if (ruta.startsWith('/assets/') || ruta.startsWith('/images/')) {
+    if (ruta.startsWith('/images/demo/')) {
+      // Hero de la demostración (D-016): vive en tools/datos/demo y solo existe en modo preview
+      if (!PREVIA || !fs.existsSync(path.join(RAIZ, 'tools', 'datos', 'demo', ruta.slice('/images/demo/'.length)))) error(`${c}: no existe ${ruta}`);
+    } else if (ruta.startsWith('/assets/') || ruta.startsWith('/images/')) {
       if (!fs.existsSync(path.join(RAIZ, ruta))) error(`${c}: no existe ${ruta}`);
     } else if (ruta.startsWith('/docs/')) {
       if (!ruta.endsWith('.pdf') || !fs.existsSync(path.join(RAIZ, ruta))) error(`${c}: el PDF ${ruta} no existe en /docs`);
@@ -1090,7 +1120,7 @@ function main() {
   const generadas = new Set(paginas.map(p => p.pagina.ruta));
   const anio = new Date().getFullYear();
   for (const { plantilla, pagina } of paginas) {
-    const html = renderizar(plantilla, { site, pagina, menu: modeloMenu(pagina.ruta), recursos, anio });
+    const html = renderizar(plantilla, { site, pagina, menu: modeloMenu(pagina.ruta), recursos, anio, previa: PREVIA });
     validarHtml(pagina, html, generadas);
     escribir(pagina.ruta, html);
   }
@@ -1110,6 +1140,18 @@ function main() {
     nConservadas++;
   }
   const nPdf = copiarDirectorio(path.join(RAIZ, 'docs'), path.join(DIST, 'docs'), f => f.toLowerCase().endsWith('.pdf'));
+  if (PREVIA) {
+    // Demostración: hero de demostración (D-016), cabecera noindex también en HTTP (_headers lo entienden Netlify y
+    // Cloudflare Pages), robots.txt que lo bloquea todo y nada más: ni .htaccess, ni PHP, ni sitemap, ni /dist-es
+    copiarDirectorio(path.join(RAIZ, 'tools', 'datos', 'demo'), path.join(DIST, 'images', 'demo'));
+    fs.writeFileSync(path.join(DIST, '_headers'), '/*\n  X-Robots-Tag: noindex, nofollow\n');
+    fs.writeFileSync(path.join(DIST, 'robots.txt'), 'User-agent: *\nDisallow: /\n');
+    for (const a of avisos) console.log(`  AVISO  ${a}`);
+    for (const e of errores) console.log(`  ERROR  ${e}`);
+    console.log(`build.js (modo preview) → /dist-preview: ${generadas.size} páginas de DEMOSTRACIÓN (noindex). No se sube nunca al hosting real.`);
+    if (errores.length) process.exitCode = 1;
+    return;
+  }
   if (fs.existsSync(path.join(RAIZ, 'src', '.htaccess'))) {
     fs.copyFileSync(path.join(RAIZ, 'src', '.htaccess'), path.join(DIST, '.htaccess'));
     // La CSP solo admite el script en línea de head.html por su hash: si cambia el script, el hash debe cambiar

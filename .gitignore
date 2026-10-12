@@ -4,6 +4,8 @@ legacy-*.log
 # Salida generada por build.js (no se edita a mano): docroot del .com y docroot del .es
 dist/
 dist-es/
+# Versión de demostración (node build.js --modo=preview, D-017): NUNCA va al hosting real
+dist-preview/
 
 # Salidas locales de las herramientas (vista de revisión de borradores, hojas de alts…): no se versionan
 tools/salida/

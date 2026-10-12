@@ -849,9 +849,6 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   #familias .tarjeta__nota { grid-column: 1 / -1; grid-row: 3; margin: 0; }
 }
 
-.hero { padding-block: var(--esp-6) var(--esp-7); background: linear-gradient(180deg, var(--color-fondo) 0%, var(--color-fondo-alt) 100%); }
-.hero__interior { display: grid; gap: var(--esp-6); align-items: center; }
-.hero__imagen img { width: 100%; max-width: 910px; margin-inline: auto; }
 .confianza {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -964,8 +961,6 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .sede-datos { margin: var(--esp-4) 0; line-height: 1.8; }
 .sede-datos a { display: inline-block; min-height: 44px; line-height: 44px; }
 @media (min-width: 768px) {
-  .hero { padding-block: var(--esp-7) var(--esp-8); }
-  .hero__interior { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
   .confianza { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (min-width: 1280px) {
@@ -1125,3 +1120,144 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .categoria__productos > .cuerpo { margin-bottom: var(--esp-6); }
 /* Pie: el logo original tiene «Broto» en marino y no se lee sobre #1d356c; va el logo para fondo claro sobre una placa blanca */
 .pie__logo { padding: var(--esp-2) var(--esp-3); border-radius: var(--radio-s); background: var(--color-blanco); }
+
+/* ---------- 15. Ritmo y carácter (2026-10-12, revision-sesion-b.md paso 7) ----------
+   Franjas a todo el ancho que alternan blanco, #f5f6f8 y #1d356c; antetítulos numerados con la línea de acento cian;
+   hero con jerarquía fuerte y tarjetas con elevación sutil (≤ 150 ms; sin movimiento con prefers-reduced-motion). */
+:root { --color-fondo-suave: #f5f6f8; } /* gris industrial muy claro: texto #404751 encima 8,7:1 */
+
+.banda { padding-block: var(--esp-8); }
+.banda--suave { background: var(--color-fondo-suave); }
+.banda--oscura { background: var(--color-primario-oscuro); color: var(--color-fondo-destacado); }
+.banda--oscura h2 { color: var(--color-blanco); }
+.banda--oscura a:not(.boton) { color: var(--color-blanco); }
+.banda--oscura a:not(.boton):hover { text-decoration-color: var(--color-acento-2); }
+
+/* Antetítulo: «01 · Catálogo». El número en monoespaciada y separado por la línea de acento */
+.antetitulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  margin: 0 0 var(--esp-3);
+  color: var(--color-primario);
+  font: 700 0.8125rem/1.3 var(--fuente-texto);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.antetitulo__num { padding-right: var(--esp-3); border-right: 2px solid var(--color-acento); font-family: var(--fuente-mono); letter-spacing: 0; }
+.antetitulo__linea { flex: none; width: 2.5rem; height: 3px; border-radius: 2px; background: var(--color-acento); }
+.antetitulo--claro, .antetitulo--claro .antetitulo__num { color: var(--color-acento-2); } /* #2dccf0 sobre #1d356c: 6,4:1 */
+
+/* Botón grande (hero y franjas) */
+.boton--grande { min-height: 52px; padding: var(--esp-3) var(--esp-6); font-size: 1.0625rem; }
+
+/* --- Hero: imagen arriba en móvil y a la derecha, a sangre, desde 1024 px. El texto siempre sobre fondo liso --- */
+.hero { overflow: hidden; background: var(--color-fondo-suave); }
+.hero__interior { display: grid; }
+.hero__imagen { display: block; order: -1; }
+.hero__imagen img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: 30% 50%; }
+/* slide-1 tiene fondo blanco: se ve entera y el blanco se funde con el fondo del hero */
+.hero__imagen--fondo-blanco img { aspect-ratio: auto; object-fit: contain; mix-blend-mode: multiply; }
+.hero__texto { padding: var(--esp-6) var(--margen-lateral) var(--esp-7); }
+.hero h1 { max-width: 20ch; margin-bottom: var(--esp-4); font-size: clamp(2rem, 1.5rem + 1.9vw, 3rem); line-height: 1.08; letter-spacing: -0.01em; }
+.hero .entradilla { max-width: 34rem; margin-bottom: var(--esp-5); color: var(--color-texto); }
+.hero__acciones { display: flex; flex-wrap: wrap; gap: var(--esp-3); }
+.hero__telefono { margin: var(--esp-4) 0 0; color: var(--color-texto-secundario); }
+.hero__telefono a { font-weight: 700; }
+@media (max-width: 767px) {
+  .hero__acciones .boton { flex: 1 1 100%; }
+}
+@media (min-width: 768px) {
+  .hero__imagen img { aspect-ratio: 21 / 9; }
+  .hero__imagen--fondo-blanco img { aspect-ratio: auto; max-width: 910px; margin-inline: auto; }
+  .hero__texto { padding: var(--esp-7) max(var(--margen-lateral), calc((100% - var(--ancho-contenido)) / 2)) var(--esp-8); }
+}
+/* Desde 1024 px: titular a la izquierda y entradilla + botones a la derecha; debajo, la imagen a todo el ancho
+   (es panorámica: en una columna lateral solo se vería la mitad del producto) */
+@media (min-width: 1024px) {
+  .hero__texto {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    gap: var(--esp-8);
+    padding-block: var(--esp-8) var(--esp-7);
+  }
+  .hero h1 { margin-bottom: 0; }
+  .hero .entradilla { font-size: var(--texto-base); }
+  .hero__imagen { order: 1; }
+  .hero__imagen img { aspect-ratio: auto; max-height: 34rem; object-position: 50% 55%; }
+  .hero__imagen--fondo-blanco img { max-height: none; padding-bottom: var(--esp-6); }
+}
+
+/* --- Buscador y cifras: una fila limpia bajo el hero --- */
+.confianza { margin: var(--esp-7) 0; }
+.confianza li { padding: var(--esp-4) 0 0; border-left: 0; border-top: 3px solid var(--color-acento); background: none; }
+.confianza strong { font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem); }
+
+/* --- Tarjetas: elevación sutil y una barra de acento arriba al pasar el ratón --- */
+.tarjeta { transition: box-shadow var(--transicion), border-color var(--transicion), transform var(--transicion); }
+.tarjeta:hover { transform: translateY(-3px); box-shadow: inset 0 3px 0 var(--color-acento), var(--sombra-2); }
+.tarjeta__nota {
+  color: var(--color-primario);
+  font: 600 0.75rem/1.4 var(--fuente-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.sector { transition: border-color var(--transicion), transform var(--transicion), box-shadow var(--transicion); }
+.sector:hover { transform: translateY(-2px); border-color: var(--color-acento); box-shadow: var(--sombra-2); }
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta:hover, .sector:hover { transform: none; }
+}
+
+/* --- Fabricación a medida: franja oscura --- */
+.medida__interior { display: grid; gap: var(--esp-6); align-items: center; }
+.medida__marco {
+  display: grid;
+  place-items: center;
+  max-width: 22rem;
+  aspect-ratio: 4 / 3;
+  padding: var(--esp-5);
+  border-radius: var(--radio-m);
+  background: var(--color-blanco);
+  box-shadow: 0 0 0 6px rgba(54, 175, 224, 0.25);
+}
+.medida__marco img { width: auto; max-height: 100%; object-fit: contain; }
+.medida__titulo { font-size: var(--texto-h2); }
+.medida__texto p { max-width: var(--ancho-lectura); }
+.medida__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: var(--esp-3) var(--esp-5); margin-top: var(--esp-5); }
+.medida__enlace { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+@media (min-width: 768px) {
+  .medida__interior { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--esp-8); }
+}
+
+/* --- Marcas y sedes --- */
+.banda--suave .marcas__lista li { background: var(--color-blanco); }
+.banda--suave .marcas__imagen { padding: var(--esp-3); border-radius: var(--radio-m); background: var(--color-blanco); }
+.sedes__tarjeta { border-top: 3px solid var(--color-acento); background: var(--color-blanco); box-shadow: var(--sombra-1); }
+.sedes__nombre { font-family: var(--fuente-titulos); }
+@media (max-width: 767px) {
+  .marcas__imagen { display: none; } /* en móvil los logos medían ~23 px: quedan los nombres (R-27) */
+}
+
+/* --- CTA de presupuesto y pie --- */
+.cta { margin-top: 0; border-top: 3px solid var(--color-acento); }
+.pie { border-top: 4px solid var(--color-acento); }
+.pie a { text-decoration: none; }
+.pie a:hover, .pie a:focus-visible { text-decoration: underline; }
+.pie__titulo { color: var(--color-acento-2); letter-spacing: 0.1em; }
+
+/* --- Cabecera de familias y categorías: franja suave con las migas y la CTA bajo el H1 (R-14) --- */
+.franja-cabecera { margin-bottom: var(--esp-7); padding-bottom: var(--esp-2); border-bottom: 1px solid var(--color-borde); background: var(--color-fondo-suave); }
+.franja-cabecera .pagina-cabecera { padding-bottom: var(--esp-6); }
+.franja-cabecera h1 { position: relative; padding-top: var(--esp-4); }
+.franja-cabecera h1::before { content: ""; position: absolute; top: 0; left: 0; width: 2.5rem; height: 3px; border-radius: 2px; background: var(--color-acento); }
+.pagina-cabecera__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--esp-2) var(--esp-5); margin: 0 0 var(--esp-5); }
+.enlace-bajar { display: inline-flex; align-items: center; gap: var(--esp-1); min-height: 44px; font-weight: 600; }
+.enlace-bajar::after { content: "↓"; }
+@media (max-width: 767px) {
+  .pagina-cabecera__cta .boton { flex: 1 1 100%; }
+  .pagina-cabecera__cta .enlace-bajar { margin-inline: auto; }
+}
+
+/* Versión de demostración (modo preview, D-017): franja discreta arriba. #5c4400 sobre #fff4ce: 8,9:1 */
+.aviso-demo { margin: 0; padding: var(--esp-1) var(--margen-lateral); background: #fff4ce; color: #5c4400; font-size: var(--texto-pequeno); font-weight: 600; text-align: center; }

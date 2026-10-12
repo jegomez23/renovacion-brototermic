@@ -2,86 +2,116 @@
 <body>
 {{> cabecera}}
 <main id="contenido" tabindex="-1">
-  {{! Hero: la única imagen que se sirve a más de 480 px (HITO-1); sin lazy y con prioridad alta (LCP) }}
+  {{! Hero: imagen con srcset (480/910/1600), sin lazy y con prioridad alta (LCP). El texto va sobre fondo liso:
+      contraste AA garantizado a cualquier ancho. }}
   <section class="hero">
-    <div class="contenedor hero__interior">
+    <div class="hero__interior">
       <div class="hero__texto">
-        <h1>{{pagina.h1}}</h1>
-        <div class="entradilla">{{{pagina.texto.hero}}}</div>
-        <div class="pagina-cabecera__acciones">
-          <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
-          <a class="boton boton--secundario" href="#familias">Ver productos</a>
+        <div class="hero__titular">
+          <p class="antetitulo"><span class="antetitulo__linea" aria-hidden="true"></span>Distribuciones industriales · Instrumentación</p>
+          <h1>{{pagina.h1}}</h1>
+        </div>
+        <div class="hero__detalle">
+          <div class="entradilla">{{{pagina.texto.hero}}}</div>
+          <div class="hero__acciones">
+            <a class="boton boton--primario boton--grande" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+            <a class="boton boton--secundario boton--grande" href="#familias">Ver productos</a>
+          </div>
+          <p class="hero__telefono">o llama al <a href="tel:{{menu.telPrincipal}}">{{menu.telefonoPrincipal}}</a></p>
         </div>
       </div>
-      {{#if pagina.hero}}<picture class="hero__imagen">{{#if pagina.hero.webp}}<source type="image/webp" srcset="{{pagina.hero.webp}}">{{/if}}<img src="{{pagina.hero.src}}" width="{{pagina.hero.ancho}}" height="{{pagina.hero.alto}}" alt="{{pagina.hero.alt}}" fetchpriority="high"></picture>{{/if}}
+      {{#if pagina.hero}}<picture class="hero__imagen{{#if pagina.hero.fondoBlanco}} hero__imagen--fondo-blanco{{/if}}">
+        <source type="image/webp" srcset="{{pagina.hero.srcsetWebp}}" sizes="{{pagina.hero.sizes}}">
+        <img src="{{pagina.hero.src}}" srcset="{{pagina.hero.srcsetJpg}}" sizes="{{pagina.hero.sizes}}" width="{{pagina.hero.ancho}}" height="{{pagina.hero.alto}}" alt="{{pagina.hero.alt}}" fetchpriority="high">
+      </picture>{{/if}}
     </div>
   </section>
 
-  <div class="contenedor">
-    {{! Buscador de categorías (revision-sesion-b.md, decisión 4). Las categorías ya están en el HTML del megamenú:
-        el JS las lee de ahí y pinta los resultados, sin repetir los 39 enlaces. Sin JS, enlace al mapa web. }}
-    <section class="buscador-inicio" aria-label="Buscar productos">
-      <div class="buscador buscador--inicio" data-buscador-inicio hidden>
-        <label class="buscador__etiqueta" for="buscar-inicio">¿Qué necesitas? Busca una categoría de producto</label>
-        <input class="buscador__campo" id="buscar-inicio" type="search" autocomplete="off" spellcheck="false" placeholder="Ej.: resistencia de cartucho, termopar, flotador" aria-describedby="buscar-inicio-estado">
-        <p class="buscador__estado" id="buscar-inicio-estado" role="status"></p>
-        <ul class="buscador__resultados" hidden></ul>
-      </div>
-      <p class="buscador-inicio__sin-js"><a href="/mapa-web.html">Ver todas las categorías de producto</a></p>
-    </section>
+  <div class="banda">
+    <div class="contenedor">
+      {{! Buscador de categorías (revision-sesion-b.md, decisión 4). Las categorías ya están en el HTML del megamenú:
+          el JS las lee de ahí y pinta los resultados, sin repetir los 39 enlaces. Sin JS, enlace al mapa web. }}
+      <section class="buscador-inicio" aria-label="Buscar productos">
+        <div class="buscador buscador--inicio" data-buscador-inicio hidden>
+          <label class="buscador__etiqueta" for="buscar-inicio">¿Qué necesitas? Busca una categoría de producto</label>
+          <input class="buscador__campo" id="buscar-inicio" type="search" autocomplete="off" spellcheck="false" placeholder="Ej.: resistencia de cartucho, termopar, flotador" aria-describedby="buscar-inicio-estado">
+          <p class="buscador__estado" id="buscar-inicio-estado" role="status"></p>
+          <ul class="buscador__resultados" hidden></ul>
+        </div>
+        <p class="buscador-inicio__sin-js"><a href="/mapa-web.html">Ver todas las categorías de producto</a></p>
+      </section>
 
-    <ul class="confianza" aria-label="BROTOTERMIC en cifras">
-      <li><strong>Desde {{pagina.fundacion}}</strong> distribución industrial</li>
-      <li><strong>{{pagina.numMarcas}} marcas</strong> representadas</li>
-      <li><strong>Fabricación</strong> a medida</li>
-      <li><strong>Vitoria y Oviedo</strong> dos sedes</li>
-    </ul>
+      <ul class="confianza" aria-label="BROTOTERMIC en cifras">
+        <li><strong>Desde {{pagina.fundacion}}</strong> distribución industrial</li>
+        <li><strong>{{pagina.numMarcas}} marcas</strong> representadas</li>
+        <li><strong>Fabricación</strong> a medida</li>
+        <li><strong>Vitoria y Oviedo</strong> dos sedes</li>
+      </ul>
 
-    <section class="seccion" id="familias" aria-labelledby="familias-titulo">
-      <h2 id="familias-titulo">Familias de producto</h2>
-      {{> tarjetas}}
-    </section>
+      <section class="seccion" id="familias" aria-labelledby="familias-titulo">
+        <p class="antetitulo"><span class="antetitulo__num">01</span>Catálogo</p>
+        <h2 id="familias-titulo">Familias de producto</h2>
+        {{> tarjetas}}
+      </section>
+    </div>
+  </div>
 
-    {{! Sectores: solo los de /legacy y sin URLs nuevas; cada uno lleva a la categoría de la que sale el dato (arquitectura.md) }}
-    {{#if pagina.sectores}}<section class="seccion sectores" aria-labelledby="sectores-titulo">
+  {{! Sectores: solo los de /legacy y sin URLs nuevas; cada uno lleva a la categoría de la que sale el dato (arquitectura.md) }}
+  {{#if pagina.sectores}}<section class="banda banda--suave sectores" aria-labelledby="sectores-titulo">
+    <div class="contenedor">
+      <p class="antetitulo"><span class="antetitulo__num">02</span>Aplicaciones</p>
       <h2 id="sectores-titulo">Sectores y aplicaciones</h2>
       <ul class="sectores__lista">
         {{#each pagina.sectores}}<li class="sector"><span class="sector__nombre">{{nombre}}</span> <a class="sector__enlace" href="{{url}}">{{destino}}</a></li>
         {{/each}}
       </ul>
-    </section>{{/if}}
-
-    <div class="seccion destacados destacados--inicio">
-      <section class="destacado destacado--medida" aria-labelledby="medida-titulo">
-        {{#if pagina.miniaturas.medida}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.medida.src}}" width="{{pagina.miniaturas.medida.ancho}}" height="{{pagina.miniaturas.medida.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
-        <div class="destacado__contenido">
-          <h2 class="destacado__titulo" id="medida-titulo">Productos a medida</h2>
-          {{{pagina.texto.medida}}}
-          <a class="boton boton--primario" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
-        </div>
-      </section>
-      <section class="destacado destacado--apoyo" aria-labelledby="novedades-titulo">
-        {{#if pagina.miniaturas.novedades}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.novedades.src}}" width="{{pagina.miniaturas.novedades.ancho}}" height="{{pagina.miniaturas.novedades.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
-        <h2 class="destacado__titulo" id="novedades-titulo">Mercado y aplicación</h2>
-        <div class="destacado__contenido">
-          {{{pagina.texto.novedades}}}
-          <a class="boton boton--secundario" href="/nuevos-productos.html">Nuevos productos</a>
-        </div>
-      </section>
-      <section class="destacado destacado--apoyo" aria-labelledby="catalogos-titulo">
-        {{#if pagina.miniaturas.catalogos}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.catalogos.src}}" width="{{pagina.miniaturas.catalogos.ancho}}" height="{{pagina.miniaturas.catalogos.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
-        <h2 class="destacado__titulo" id="catalogos-titulo">Nuestros catálogos</h2>
-        <div class="destacado__contenido">
-          {{{pagina.texto.catalogos}}}
-          <ul class="destacado__lista">
-            {{#each pagina.catalogos}}<li><a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a></li>
-            {{/each}}
-          </ul>
-        </div>
-      </section>
     </div>
+  </section>{{/if}}
 
-    <section class="seccion marcas" aria-labelledby="marcas-titulo">
+  <section class="banda banda--oscura medida" aria-labelledby="medida-titulo">
+    <div class="contenedor medida__interior">
+      {{#if pagina.miniaturas.medida}}<div class="medida__marco"><img src="{{pagina.miniaturas.medida.src}}" width="{{pagina.miniaturas.medida.ancho}}" height="{{pagina.miniaturas.medida.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
+      <div class="medida__texto">
+        <p class="antetitulo antetitulo--claro"><span class="antetitulo__num">03</span>Fabricación a medida</p>
+        <h2 class="medida__titulo" id="medida-titulo">Productos a medida</h2>
+        {{{pagina.texto.medida}}}
+        <div class="medida__acciones">
+          <a class="boton boton--claro boton--grande" href="/fabricaciones-a-medida.html">Fabricación a medida</a>
+          <a class="medida__enlace" href="/contacto/contacto.html#formulario">Envíanos tu plano o una foto</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="banda">
+    <div class="contenedor">
+      <div class="destacados destacados--inicio">
+        <section class="destacado destacado--apoyo" aria-labelledby="novedades-titulo">
+          {{#if pagina.miniaturas.novedades}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.novedades.src}}" width="{{pagina.miniaturas.novedades.ancho}}" height="{{pagina.miniaturas.novedades.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
+          <h2 class="destacado__titulo" id="novedades-titulo">Mercado y aplicación</h2>
+          <div class="destacado__contenido">
+            {{{pagina.texto.novedades}}}
+            <a class="boton boton--secundario" href="/nuevos-productos.html">Nuevos productos</a>
+          </div>
+        </section>
+        <section class="destacado destacado--apoyo" aria-labelledby="catalogos-titulo">
+          {{#if pagina.miniaturas.catalogos}}<div class="destacado__marco"><img class="destacado__imagen" src="{{pagina.miniaturas.catalogos.src}}" width="{{pagina.miniaturas.catalogos.ancho}}" height="{{pagina.miniaturas.catalogos.alto}}" alt="" loading="lazy" decoding="async"></div>{{/if}}
+          <h2 class="destacado__titulo" id="catalogos-titulo">Nuestros catálogos</h2>
+          <div class="destacado__contenido">
+            {{{pagina.texto.catalogos}}}
+            <ul class="destacado__lista">
+              {{#each pagina.catalogos}}<li><a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a></li>
+              {{/each}}
+            </ul>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <section class="banda banda--suave marcas" aria-labelledby="marcas-titulo">
+    <div class="contenedor">
+      <p class="antetitulo"><span class="antetitulo__num">04</span>Marcas</p>
       <h2 id="marcas-titulo">Nuestras marcas representadas</h2>
       {{{pagina.texto.marcas}}}
       {{#if pagina.marcasImagen}}<img class="marcas__imagen" src="{{pagina.marcasImagen.src}}" width="{{pagina.marcasImagen.ancho}}" height="{{pagina.marcasImagen.alto}}" alt="" loading="lazy" decoding="async">{{/if}}
@@ -89,21 +119,27 @@
         {{#each pagina.marcas}}<li>{{nombre}}</li>
         {{/each}}
       </ul>
-    </section>
+    </div>
+  </section>
 
-    <section class="seccion sobre-nosotros" aria-labelledby="empresa-titulo">
-      <div class="sobre-nosotros__texto">
-        <h2 id="empresa-titulo">Sobre nosotros</h2>
-        {{{pagina.texto.empresa}}}
-        <a class="boton boton--secundario" href="/empresa.html">Conoce nuestra historia</a>
-      </div>
-    </section>
+  <div class="banda">
+    <div class="contenedor">
+      <section class="sobre-nosotros" aria-labelledby="empresa-titulo">
+        <div class="sobre-nosotros__texto">
+          <p class="antetitulo"><span class="antetitulo__num">05</span>Empresa</p>
+          <h2 id="empresa-titulo">Sobre nosotros</h2>
+          {{{pagina.texto.empresa}}}
+          <a class="boton boton--secundario" href="/empresa.html">Conoce nuestra historia</a>
+        </div>
+      </section>
 
-    <section class="seccion" aria-labelledby="sedes-titulo">
-      <h2 id="sedes-titulo">Dónde estamos</h2>
-      {{{pagina.texto.sedes}}}
-      {{> sedes}}
-    </section>
+      <section class="seccion" aria-labelledby="sedes-titulo">
+        <p class="antetitulo"><span class="antetitulo__num">06</span>Sedes</p>
+        <h2 id="sedes-titulo">Dónde estamos</h2>
+        {{{pagina.texto.sedes}}}
+        {{> sedes}}
+      </section>
+    </div>
   </div>
   {{> cta-presupuesto}}
 </main>

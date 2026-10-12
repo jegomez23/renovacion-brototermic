@@ -181,3 +181,33 @@
 - **Se conserva de la PR #6:** el control de errores de E/S y su detección (`dentroDelLimite()` devuelve `null`) y las pruebas de `tools/test-limitador.php`, ampliadas: con cada fallo inyectado, el envío se acepta, se envía 1 correo y queda la línea en el log; con el almacenamiento roto, el campo trampa y la casilla RGPD siguen funcionando. El CI las ejecuta.
 - **Configuración:** `config.example.php` recomienda `dir_limites` en una carpeta propia fuera del docroot; la checklist de publicación lo comprueba.
 - **Documentos:** `src/contacto/enviar.php`, `src/contacto/config.example.php`, `content/error.html` (mensaje de `#configuracion` con remisión al teléfono y al email), `tools/test-limitador.php`, checklist-publicacion.md y AGENTS.md §2 y §11.
+
+## D-016 · 2026-10-12 · Hero de la versión de demostración: imagen generada con IA, con la placa tapada
+
+- **Origen:** responsable del proyecto, para la presentación al cliente del 2026-10-13.
+- **Contexto:** la imagen propuesta para el hero (`tools/datos/fuentes/hero-demo-calefactor-ia.png`) es el calefactor de `slide-1` redibujado con IA. Su placa tenía marcados inventados o ilegibles (CE, «ATEX 2036X», tensión) y llevaba incrustado el rótulo «PRECISIÓN · CALOR · CONTROL». AGENTS.md §5 no permite IA para cambiar un producto ni sus rótulos.
+- **Decisión:** se usa **solo en la versión de demostración** (modo `preview`, D-017), con la placa tapada por una superficie lisa y el rótulo fuera del encuadre (receta en `tools/datos/imagenes.json`). Su alt dice que es una ilustración. **En producción el hero sigue siendo `slide-1`** (D-004), ahora con WebP y `srcset` 480/910.
+- **Pendiente:** si se quiere esta estética en producción, hace falta una foto real o una imagen de ambiente que no muestre un producto concreto del catálogo.
+
+## D-017 · 2026-10-12 · Modo de build «preview»: versión de demostración que nunca va al hosting real
+
+- **Origen:** responsable del proyecto (presentación al cliente).
+- **Decisión:** `node build.js --modo=preview` genera `/dist-preview` (en `.gitignore`):
+  - `noindex, nofollow` en **todas** las páginas, cabecera HTTP `X-Robots-Tag` en `_headers` (Netlify y Cloudflare Pages) y `robots.txt` con `Disallow: /`;
+  - franja «Versión de demostración» arriba;
+  - sin `.htaccess`, sin `enviar.php`, sin sitemap y sin `/dist-es`; el hero de la D-016;
+  - no ejecuta el auditor ni la lista blanca de publicación (no es lo que se publica).
+- **Nunca se sube al hosting del cliente.** Se publica en un hosting estático aparte (Netlify Drop) solo para enseñarla, y se borra después. `tools/comprobar-publicable.js` sigue revisando solo `/dist` y `/dist-es`.
+- `node tools/servir.js 8001 --carpeta=dist-preview` la sirve en local.
+
+## D-018 · 2026-10-12 · Diseño: franjas, antetítulos numerados, hero editorial y CTA bajo el H1
+
+- **Origen:** responsable del proyecto (paso 7 de revision-sesion-b.md, adelantado para la presentación).
+- **Decisiones:**
+  - **Inicio en franjas** a todo el ancho que alternan blanco, `#f5f6f8` (token nuevo `--color-fondo-suave`, pedido por el responsable) y `#1d356c` (fabricación a medida). Antetítulos «01 · Catálogo», «02 · Aplicaciones»… con la línea de acento cian.
+  - **Hero:** antetítulo con el lema del logo («Distribuciones industriales · Instrumentación»), H1 grande en Lora, entradilla, dos botones grandes y el teléfono. En móvil, la imagen arriba; desde 1024 px, titular y botones en dos columnas y la imagen debajo a todo el ancho. El texto va siempre sobre fondo liso (contraste AA).
+  - **Tarjetas** con elevación de 3 px y barra cian al pasar el ratón (150 ms; sin movimiento con `prefers-reduced-motion`). El número de categorías o productos, como etiqueta técnica.
+  - **Tarjetas de familia** con recortes de las fotos de /legacy (`imgTarjeta` en familias.json, también en `/oviedo/`); «Mercado y aplicación» con el chiller ENR en lugar de la foto de archivo.
+  - **Familias y categorías:** franja suave con las migas y, **bajo el H1, «Pedir presupuesto» y «Ver los N productos ↓»** (R-14): la CTA se ve al abrir la página en móvil.
+  - En móvil se oculta la tira de logos de marcas (quedan los nombres). Pie con la línea de acento y enlaces sin subrayar hasta pasar el ratón.
+- **Documentos:** diseno.md (pendiente de redactar en detalle: ver estado.md).

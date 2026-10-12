@@ -2,18 +2,25 @@
 <body>
 {{> cabecera}}
 <main id="contenido" tabindex="-1">
+  <div class="franja-cabecera">
   {{> migas}}
   <div class="contenedor">
     <header class="pagina-cabecera">
       <h1>{{pagina.h1}}</h1>
-      {{#if pagina.productos}}<p class="pagina-cabecera__acceso"><a class="boton boton--secundario" href="#{{pagina.productos.0.ancla}}">Ver productos</a></p>{{/if}}
-      <div class="entradilla">{{{pagina.intro}}}</div>
-      <div class="pagina-cabecera__acciones">
+      {{! CTA justo bajo el H1: visible al abrir la página en móvil sin desplazarse (revision-sesion-b.md, R-14) }}
+      <p class="pagina-cabecera__cta">
         <a class="boton boton--primario" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+        {{#if pagina.productos}}<a class="enlace-bajar" href="#{{pagina.productos.0.ancla}}">Ver los {{pagina.productos.length}} productos</a>{{/if}}
+      </p>
+      <div class="entradilla">{{{pagina.intro}}}</div>
+      {{#if pagina.documentos}}<div class="pagina-cabecera__acciones">
         {{#each pagina.documentos}}<a class="enlace-pdf" href="{{url}}">{{titulo}} <span class="etiqueta-pdf">PDF</span></a>
         {{/each}}
-      </div>
+      </div>{{/if}}
     </header>
+  </div>
+  </div>
+  <div class="contenedor">
 
     {{#if pagina.productos}}
     {{! <details> se pliega y despliega sin JS; el JS solo lo cierra al cargar en móvil }}
