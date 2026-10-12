@@ -526,6 +526,14 @@ function modeloCategoria(archivo, { datos, familia }) {
     }
     if (p.img && !p.alt) error(`${c}: tiene imagen y no tiene alt`);
     if (p.alt && /BROTOTERMIC/i.test(p.alt)) aviso(`${c}: el alt no debe incluir «BROTOTERMIC»`);
+    // D-014: el alt lleva el modelo o la designación que aparece en el nombre (CNM 10, PTC, IP44, ATEX…)
+    if (p.img && p.alt) {
+      const codigos = `${p.nombre} ${p.modelo || ''}`.split(/[\s/,()·]+/).map(t => t.replace(/[.:;]+$/, ''))
+        .filter(t => /[A-Z]{2,}|\d/.test(t) && /^[A-Z0-9][A-Za-z0-9.-]*$/.test(t));
+      const plano = s => s.toLowerCase().replace(/[\s-]/g, '');
+      const faltan = codigos.filter(t => !plano(p.alt).includes(plano(t)));
+      if (faltan.length) pendiente(`${c}: el alt no contiene ${faltan.join(', ')} (D-014: el alt empieza por el nombre y el modelo)`);
+    }
     revisarEtiquetas(p.texto || '', c);
     // Ancla única: «copa-sumergible», y «-2», «-3»… si el nombre se repite
     let ancla = slug(p.nombre) || `producto-${i + 1}`;
