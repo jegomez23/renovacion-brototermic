@@ -1239,7 +1239,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .hero .entradilla { max-width: 34rem; margin-bottom: var(--esp-5); color: var(--color-texto); }
 .hero__acciones { display: flex; flex-wrap: wrap; gap: var(--esp-3); }
 .hero__telefono { margin: var(--esp-4) 0 0; color: var(--color-texto-secundario); }
-.hero__telefono a { font-weight: 700; }
+.hero__telefono a { font-weight: 700; text-decoration-line: underline; text-underline-offset: 0.2em; }
 @media (max-width: 767px) {
   .hero__acciones .boton { flex: 1 1 100%; }
 }
@@ -1421,11 +1421,11 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .boton:disabled::after { opacity: 0.5; }
 
 /* --- Enlaces sueltos: subrayado cian que crece desde la izquierda --- */
-.enlace-bajar, .sector__enlace, .medida__enlace, .hero__telefono a, .pie__lista a, .sedes__mapa, .hermanas__todas {
+.enlace-bajar, .sector__enlace, .medida__enlace, .pie__lista a, .sedes__mapa, .hermanas__todas {
   position: relative;
   text-decoration: none;
 }
-.enlace-bajar::before, .sector__enlace::before, .medida__enlace::before, .hero__telefono a::before, .pie__lista a::before, .sedes__mapa::before, .hermanas__todas::before {
+.enlace-bajar::before, .sector__enlace::before, .medida__enlace::before, .pie__lista a::before, .sedes__mapa::before, .hermanas__todas::before {
   content: "";
   position: absolute;
   left: 0;
@@ -1441,7 +1441,6 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .enlace-bajar:hover::before, .enlace-bajar:focus-visible::before,
 .sector__enlace:hover::before, .sector__enlace:focus-visible::before, .sector:hover .sector__enlace::before,
 .medida__enlace:hover::before, .medida__enlace:focus-visible::before,
-.hero__telefono a:hover::before, .hero__telefono a:focus-visible::before,
 .pie__lista a:hover::before, .pie__lista a:focus-visible::before,
 .sedes__mapa:hover::before, .sedes__mapa:focus-visible::before,
 .hermanas__todas:hover::before, .hermanas__todas:focus-visible::before { transform: scaleX(1); }
