@@ -26,7 +26,7 @@
         "9. Pasta dura refractaria."
       ],
       "img": "brototermic-cartuchosaltacarga",
-      "alt": "Cartuchos de alta carga",
+      "alt": "Cartucho alta carga con sección longitudinal, componentes numerados y dos cables rojos, dibujo técnico",
       "pdf": null
     },
     {
@@ -45,7 +45,7 @@
         "9. Pasta dura refractaria."
       ],
       "img": "brototermic-cartuchosbajacarga",
-      "alt": "Cartuchos de baja carga",
+      "alt": "Cartucho baja carga con sección longitudinal y componentes numerados, dibujo técnico",
       "pdf": null
     },
     {
@@ -60,7 +60,7 @@
         "5. Cable conductor."
       ],
       "img": "brototermic-cartuchosmicrowatt",
-      "alt": "Microwatt",
+      "alt": "Microwatt con cuerpo tubular seccionado y cable de salida, dibujo técnico",
       "pdf": null
     },
     {
@@ -69,7 +69,7 @@
       "texto": "<p>Los cartuchos se pueden construir con sonda incorporada, en cualquier punto del cartucho a petición del cliente. Las ventajas de incorporar sondas son innumerables por ejemplo alarga la vida del cartucho considerablemente, precisión de temperatura localizada, ahorro energético, donde no se pueda alojar una sonda convencional por problemas de espacio.</p>",
       "specs": [],
       "img": "brototermic-microwatt",
-      "alt": "Cartuchos con termopar",
+      "alt": "Cartuchos con termopar, sección interior y cables de distintos colores, dibujo técnico",
       "pdf": null
     },
     {
@@ -78,7 +78,7 @@
       "texto": "<p>Consiste en un cartucho comprimido de alto rendimiento, con la máxima calidad en materiales, con la particularidad de ser capaz de expandirse por si solo, gracias a la forma de horquilla tensionada en un punto que le permiten la expansión y retracción del cartucho.<br>Las Resistencias de cartucho expansible solucionan los dos grandes problemas que tienen los cartuchos convencionales comprimidos de alta carga, la durabilidad por deficiente ajuste y la extracción por buen ajuste, mejorando la precisión térmica con cientos de acabados y terminaciones para todo tipo de industria.</p>",
       "specs": [],
       "img": "brototermic-cartuchosexpan",
-      "alt": "Cartuchos con expan",
+      "alt": "Cartuchos expan con forma de horquilla, uno amarillo y otro negro, con cables de salida",
       "pdf": null
     }
   ],
