@@ -19,12 +19,12 @@
     </div>
     <div class="campo">
       <label for="f-email">Email <span aria-hidden="true">*</span></label>
-      <input id="f-email" name="email" type="email" autocomplete="email" required maxlength="150" aria-describedby="f-email-error">
+      <input id="f-email" name="email" type="email" inputmode="email" autocomplete="email" spellcheck="false" required maxlength="150" aria-describedby="f-email-error">
       <p class="campo__error" id="f-email-error" hidden></p>
     </div>
     <div class="campo">
       <label for="f-telefono">Teléfono</label>
-      <input id="f-telefono" name="phone" type="tel" autocomplete="tel" maxlength="30">
+      <input id="f-telefono" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="30">
     </div>
   </div>
   <div class="campo">
@@ -35,9 +35,13 @@
   </div>
   <div class="campo">
     <label for="f-adjunto">Plano o foto (opcional)</label>
-    <input id="f-adjunto" name="adjunto" type="file" accept="{{pagina.form.accept}}" aria-describedby="f-adjunto-ayuda f-adjunto-error">
-    <p class="campo__ayuda" id="f-adjunto-ayuda">{{pagina.form.tiposTexto}}. Máximo {{pagina.form.maxMB}} MB.</p>
-    <p class="campo__error" id="f-adjunto-error" hidden></p>
+    <div class="adjunto" data-adjunto>
+      <p class="adjunto__instruccion" data-adjunto-arrastre hidden>Arrastra aquí un archivo o selecciónalo con el botón.</p>
+      <input id="f-adjunto" name="adjunto" type="file" accept="{{pagina.form.accept}}" aria-describedby="f-adjunto-ayuda f-adjunto-error">
+      <p class="campo__ayuda" id="f-adjunto-ayuda">{{pagina.form.tiposTexto}}. Máximo {{pagina.form.maxMB}}&nbsp;MB. Un solo archivo.</p>
+      <p class="adjunto__nombre" data-adjunto-nombre aria-live="polite" aria-atomic="true">Ningún archivo seleccionado.</p>
+    </div>
+    <p class="campo__error" id="f-adjunto-error" aria-live="polite" hidden></p>
   </div>
   {{! Campo trampa: oculto por CSS (no type=hidden); si llega relleno, el servidor descarta el envío }}
   <div class="campo-trampa" aria-hidden="true">

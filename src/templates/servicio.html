@@ -1,11 +1,26 @@
 {{> head}}
 <body>
 {{> cabecera}}
+{{> iconos-industriales}}
 <main id="contenido" tabindex="-1">
   {{> migas}}
   <div class="contenedor">
-    <article class="contenido">
-      <h1>{{pagina.h1}}</h1>
+      <header class="servicio-cabecera">
+        <div>
+          <h1 id="servicio-titulo">{{pagina.h1}}</h1>
+          <div class="servicio-cabecera__acciones">
+            <a class="boton boton--primario" href="/contacto/contacto.html#formulario"><svg class="icono-industrial" aria-hidden="true" focusable="false"><use href="#icono-plano"></use></svg>Pedir presupuesto</a>
+            <a class="boton boton--secundario" href="tel:{{menu.telPrincipal}}"><svg class="icono-industrial" aria-hidden="true" focusable="false"><use href="#icono-telefono"></use></svg>Llamar al {{menu.telefonoPrincipal}}</a>
+          </div>
+        </div>
+        <picture class="servicio-cabecera__ambiente">
+          <source type="image/webp" media="(min-resolution: 2dppx)" srcset="/images/ambiente-metal-reflejos-960.webp">
+          <source type="image/webp" srcset="/images/ambiente-metal-reflejos-480.webp">
+          <source media="(min-resolution: 2dppx)" srcset="/images/ambiente-metal-reflejos-960.jpg">
+          <img src="/images/ambiente-metal-reflejos-480.jpg" width="480" height="320" alt="Detalle de chapa metálica con reflejos azules, imagen de ambiente" fetchpriority="high" decoding="async">
+        </picture>
+      </header>
+    <article class="contenido" aria-labelledby="servicio-titulo">
       {{{pagina.contenido}}}
     </article>
     {{#if pagina.sedes}}

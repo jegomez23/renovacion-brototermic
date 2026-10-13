@@ -1,0 +1,192 @@
+{
+  "fecha": "2026-10-13T01:59:36.188Z",
+  "resultados": [
+    {
+      "nombre": "inicio",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "inicio",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "inicio",
+      "ancho": 768,
+      "scroll": 768,
+      "imagenes": 0
+    },
+    {
+      "nombre": "inicio",
+      "ancho": 1280,
+      "scroll": 1280,
+      "imagenes": 0
+    },
+    {
+      "nombre": "categoria",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "categoria",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "categoria",
+      "ancho": 768,
+      "scroll": 768,
+      "imagenes": 0
+    },
+    {
+      "nombre": "categoria",
+      "ancho": 1280,
+      "scroll": 1280,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones",
+      "ancho": 768,
+      "scroll": 768,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones",
+      "ancho": 1280,
+      "scroll": 1280,
+      "imagenes": 0
+    },
+    {
+      "nombre": "empresa",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "empresa",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "empresa",
+      "ancho": 768,
+      "scroll": 768,
+      "imagenes": 0
+    },
+    {
+      "nombre": "empresa",
+      "ancho": 1280,
+      "scroll": 1280,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 768,
+      "scroll": 768,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 1280,
+      "scroll": 1280,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 768,
+      "scroll": 768,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 1280,
+      "scroll": 1280,
+      "imagenes": 0
+    },
+    {
+      "pruebasAdjunto": [
+        {
+          "nombre": "selector PDF y anuncio",
+          "ok": true
+        },
+        {
+          "nombre": "extension rechazada",
+          "ok": true
+        },
+        {
+          "nombre": "tamano rechazado",
+          "ok": true
+        },
+        {
+          "nombre": "drop PDF",
+          "ok": true
+        },
+        {
+          "nombre": "drop multiple vacia seleccion",
+          "ok": true
+        },
+        {
+          "nombre": "error persiste al validar",
+          "ok": true
+        },
+        {
+          "nombre": "nombre largo",
+          "ok": true
+        },
+        {
+          "nombre": "envio sigue inactivo",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "sinJs": {
+        "inputVisible": true,
+        "arrastreOculto": true
+      }
+    }
+  ],
+  "incidencias": []
+}

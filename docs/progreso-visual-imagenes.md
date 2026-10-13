@@ -34,13 +34,16 @@ La textura se mantiene separada de las fotografías de catálogo. No representa 
 - [Plan de mejoras SEO](seo-mejoras.md), con riesgo, fuentes, enlazado existente, páginas escasas, imágenes y SEO local; [inventario de 97 rutas altas](inventario-visual-imagenes.md).
 - La aprobación humana de las intros y legales sigue pendiente, conforme a AGENTS.md §4. No se ejecuta `aprobar-borradores.js` sobre una lista ficticia de aprobaciones.
 
-## Verificación en curso
+## Verificación del bloque independiente
 
 - Línea base real: `npm run test` en verde, 70 OK / 8 AVISO / 0 ERROR, 10/10 mutaciones y 60 URLs del sitemap con 200.
 - Chrome: antes y después a 390/1280 px, 24 combinaciones por fase (seis páginas × 320/390/768/1280), sin desbordes, errores JS, imágenes rotas ni terceros. El adjunto se comprueba con selector, arrastre, múltiples archivos, tamaño, extensión, nombre largo, envío inactivo y navegación sin JS.
 - W3C local: 55 HTML y CSS sin errores ni advertencias después de los cambios de servicios/adjunto. Nu descargado como herramienta local ignorada por Git; sin dependencias nuevas del proyecto.
 - La primera prueba detectó que `build.js` de main interpreta una lista `srcset` como un archivo. Se adaptó la cabecera nueva a fuentes individuales por resolución, con proporción exacta 480 × 320 / 960 × 640. El generador de Juan no se modifica.
-- Lighthouse local móvil se guarda al cierre; **no equivale a PageSpeed Insights de la demo pública**. Se ha solicitado su URL.
+- [Lighthouse local móvil](imagenes-antes-despues/lighthouse/resumen.json): inicio 97, inmersión/contacto/fabricaciones/empresa 99; accesibilidad 100 y CLS 0 en las cinco. Una medición por página con Chrome/Lighthouse 13.5.0, sin caché ni compresión Apache. **No equivale a PageSpeed Insights de la demo pública**. Se ha solicitado su URL, aún no recibida.
+- Inicio: LCP 2,55 s; se repetirá con el WebP de Juan y el hosting definitivo. Empresa: buenas prácticas 96 por la foto histórica de 260 × 178 px en pantalla de alta densidad; no se amplía ni se inventa detalle. Los informes completos explican la limitación.
+- `npm run test`, `npm run validar` y `npm run build` están en verde. `npm run build:preview` se intentó y devuelve «Missing script», porque el modo D-017 todavía no está en main. No se declara en verde ni se importa fuera de su rama.
+- [19 alts de prioridad alta](alts-visual-prioridad-alta.md), [revisión de interfaz](revision-interfaz-visual.md) y [24 capturas](imagenes-antes-despues/index.html). Los alts y las tres correcciones se comprobaron con la suite global antes del commit.
 
 ## Dependencias que requieren la integración de Juan
 
@@ -63,4 +66,4 @@ npm run validar
 npm run build
 ```
 
-Los scripts de tratamiento usan `sips`, `cwebp`, `dwebp`/`djpeg` locales y no añaden librerías al sitio. Las capturas requieren Chrome y Node ≥22. En este equipo la validación usa `JAVA=/private/tmp/broto-vnu/runtime/vnu-runtime-image/bin/java`, porque no había un runtime Java instalado.
+Los scripts de tratamiento usan `sips`, `cwebp`, `dwebp`/`djpeg` locales y no añaden librerías al sitio. Las capturas requieren Chrome y Node ≥22. Como no había Java instalado, Nu se descargó con su runtime en `tools/vnu/vnu-runtime-image` (ignorado por Git): `npm run validar` ya funciona sin variables especiales. El sitio sigue sin dependencias nuevas en el navegador o en package.json.

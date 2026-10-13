@@ -1,0 +1,15 @@
+
+> brototermic-web@0.9.0 validar
+> node tools/validar.js
+
+Validador: tools/vnu/vnu-runtime-image
+55 páginas en tandas de 10 + la hoja CSS
+  tanda 1 (10 páginas): sin errores ni advertencias
+  tanda 2 (10 páginas): sin errores ni advertencias
+  tanda 3 (10 páginas): sin errores ni advertencias
+  tanda 4 (10 páginas): sin errores ni advertencias
+  tanda 5 (10 páginas): sin errores ni advertencias
+  tanda 6 (5 páginas): sin errores ni advertencias
+  assets/css/style.css: sin errores ni advertencias
+
+W3C: 55 páginas y la hoja CSS sin errores ni advertencias.

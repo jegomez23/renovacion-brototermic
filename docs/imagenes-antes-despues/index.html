@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>BROTOTERMIC: evidencias antes y después</title>
+  <style>
+    body{margin:auto;padding:24px;max-width:1400px;font:16px/1.6 system-ui;color:#404751;background:white}h1,h2{color:#1d356c}a{color:#004c9a}button,select{font:inherit;min-height:44px;padding:8px 12px;background:white;color:#1d356c;border:1px solid #72767c;border-radius:4px}button{cursor:pointer}button[aria-pressed=true]{background:#004c9a;color:white}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #004c9a;outline-offset:4px}.controles{display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:16px 0}.comparacion{display:grid;gap:24px;grid-template-columns:repeat(2,minmax(0,1fr))}figure{margin:0;min-width:0}figcaption{font-weight:700;padding:8px 0}img{display:block;width:100%;height:auto;border:1px solid #dadada}.solo{grid-template-columns:minmax(0,1fr)}[hidden]{display:none!important}@media(max-width:767px){.comparacion{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Imágenes y mejoras interiores</h1>
+    <p>Evidencia local del bloque independiente de <code>mejora/visual-imagenes</code>. Los ambientes de familia y Oviedo están preparados; su integración espera los cambios de Juan. Los tres ensayos de retoque quedan rechazados. No se sustituyen originales.</p>
+    <nav aria-label="Evidencias"><a href="ambientes/index.html">Siete ambientes y pesos</a> · <a href="piloto/index.html">Tres propuestas de retoque rechazadas</a> · <a href="lighthouse/resumen.json">Lighthouse local móvil</a> · <a href="../progreso-visual-imagenes.md">Progreso y pendientes</a></nav>
+    <div class="controles">
+      <label>Página <select id="pagina"><option value="fabricaciones">Fabricaciones a medida</option><option value="empresa">Empresa</option><option value="contacto">Contacto y adjunto</option><option value="categoria">Categoría y especificaciones</option><option value="oviedo">Oviedo y adjunto</option><option value="inicio">Inicio, control de regresión</option></select></label>
+      <label>Ancho <select id="ancho"><option value="1280">1280 px</option><option value="390">390 px</option></select></label>
+      <button id="comparar" type="button" aria-pressed="true">Comparar</button>
+      <button id="antes" type="button" aria-pressed="false">Solo antes</button>
+      <button id="despues" type="button" aria-pressed="false">Solo después</button>
+    </div>
+    <p id="estado" aria-live="polite">Fabricaciones a medida, 1280 px.</p>
+    <div class="comparacion" id="paneles">
+      <figure id="panel-antes"><figcaption>Antes, main bbdbe79</figcaption><img id="img-antes" src="plantillas/antes-fabricaciones-1280.png" alt="Página de fabricaciones a medida antes del bloque visual" width="1280" height="3023"></figure>
+      <figure id="panel-despues"><figcaption>Después, bloque independiente</figcaption><img id="img-despues" src="plantillas/despues-fabricaciones-1280.png" alt="Página de fabricaciones a medida después del bloque visual" width="1280" height="3310"></figure>
+    </div>
+    <p>Las capturas se conservan completas en <a href="plantillas/antes-resultados.json">resultado antes</a> y <a href="plantillas/despues-resultados.json">resultado después</a>. La interfaz nueva funciona también con el JavaScript de la página desactivado. Esta galería local necesita JavaScript para cambiar la selección; las imágenes iniciales siguen visibles sin él.</p>
+  </main>
+  <script>
+    const medidas={"antes-categoria-1280.png":{"ancho":1280,"alto":6714},"antes-categoria-390.png":{"ancho":390,"alto":12536},"antes-contacto-1280.png":{"ancho":1280,"alto":2264},"antes-contacto-390.png":{"ancho":390,"alto":4644},"antes-empresa-1280.png":{"ancho":1280,"alto":3783},"antes-empresa-390.png":{"ancho":390,"alto":6163},"antes-fabricaciones-1280.png":{"ancho":1280,"alto":3023},"antes-fabricaciones-390.png":{"ancho":390,"alto":4862},"antes-inicio-1280.png":{"ancho":1280,"alto":4922},"antes-inicio-390.png":{"ancho":390,"alto":8379},"antes-oviedo-1280.png":{"ancho":1280,"alto":4622},"antes-oviedo-390.png":{"ancho":390,"alto":9970},"despues-categoria-1280.png":{"ancho":1280,"alto":6714},"despues-categoria-390.png":{"ancho":390,"alto":12536},"despues-contacto-1280.png":{"ancho":1280,"alto":2233},"despues-contacto-390.png":{"ancho":390,"alto":4789},"despues-empresa-1280.png":{"ancho":1280,"alto":4070},"despues-empresa-390.png":{"ancho":390,"alto":6607},"despues-fabricaciones-1280.png":{"ancho":1280,"alto":3310},"despues-fabricaciones-390.png":{"ancho":390,"alto":5305},"despues-inicio-1280.png":{"ancho":1280,"alto":4922},"despues-inicio-390.png":{"ancho":390,"alto":8379},"despues-oviedo-1280.png":{"ancho":1280,"alto":4742},"despues-oviedo-390.png":{"ancho":390,"alto":10116}};
+    const pagina=document.getElementById('pagina'),ancho=document.getElementById('ancho');
+    let modo='comparar';
+    function actualizar(){
+      for(const fase of ['antes','despues']){
+        const img=document.getElementById('img-'+fase);
+        const m=medidas[fase+"-"+pagina.value+"-"+ancho.value+".png"];img.width=m.ancho;img.height=m.alto;
+        img.src='plantillas/'+fase+'-'+pagina.value+'-'+ancho.value+'.png';
+        img.alt=pagina.selectedOptions[0].textContent+', '+fase+', '+ancho.value+' píxeles';
+        document.getElementById('panel-'+fase).hidden=modo!=='comparar'&&modo!==fase;
+      }
+      document.getElementById('paneles').classList.toggle('solo',modo!=='comparar');
+      for(const b of ['comparar','antes','despues'])document.getElementById(b).setAttribute('aria-pressed',String(modo===b));
+      document.getElementById('estado').textContent=pagina.selectedOptions[0].textContent+', '+ancho.value+' px.';
+    }
+    pagina.addEventListener('change',actualizar);ancho.addEventListener('change',actualizar);
+    for(const b of ['comparar','antes','despues'])document.getElementById(b).addEventListener('click',()=>{modo=b;actualizar();});
+  </script>
+</body>
+</html>

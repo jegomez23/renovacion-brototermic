@@ -19,20 +19,27 @@
   var maxBytes = Number(form.getAttribute('data-max-mb')) * 1024 * 1024;
   var tipos = (form.getAttribute('data-tipos') || '').split(',').map(function (t) { return t.trim().toLowerCase(); });
   var resumen = form.querySelector('.formulario__error-resumen');
+  var errorArrastre = '';
+
+  function errorDeArchivo(archivo) {
+    var extension = (archivo.name.match(/\.[^.]+$/) || [''])[0].toLowerCase();
+    if (tipos.indexOf(extension) === -1) return 'Ese tipo de archivo no se admite. Adjunta un archivo ' + tipos.join(', ') + '.';
+    if (archivo.size > maxBytes) return 'El archivo pesa más de ' + form.getAttribute('data-max-mb') + ' MB.';
+    return '';
+  }
 
   function errorDe(campo) {
     if (campo.type === 'checkbox') return campo.required && !campo.checked ? 'Tienes que aceptar la política de privacidad para enviar la solicitud.' : '';
+    if (campo.type === 'file') {
+      if (errorArrastre) return errorArrastre;
+      if (campo.files && campo.files.length > 1) return 'Adjunta un solo archivo. Selecciona el plano o la foto que quieres enviar.';
+      return campo.files && campo.files[0] ? errorDeArchivo(campo.files[0]) : '';
+    }
     var valor = campo.value.trim();
     if (campo.required && !valor) {
       return { name: 'Escribe tu nombre.', email: 'Escribe tu email.', message: 'Escribe tu mensaje.' }[campo.name] || 'Este campo es obligatorio.';
     }
     if (campo.type === 'email' && valor && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valor)) return 'El email no parece correcto. Ejemplo: nombre@empresa.com';
-    if (campo.type === 'file' && campo.files && campo.files[0]) {
-      var archivo = campo.files[0];
-      var extension = (archivo.name.match(/\.[^.]+$/) || [''])[0].toLowerCase();
-      if (tipos.indexOf(extension) === -1) return 'Ese tipo de archivo no se admite. Adjunta un archivo ' + tipos.join(', ') + '.';
-      if (archivo.size > maxBytes) return 'El archivo pesa más de ' + form.getAttribute('data-max-mb') + ' MB.';
-    }
     return '';
   }
 
@@ -54,6 +61,86 @@
       if (campo.getAttribute('aria-invalid') === 'true' || campo.type === 'file') mostrar(campo, errorDe(campo));
     });
   });
+
+  /* ---------- 3. Adjunto: input nativo y arrastre opcional ---------- */
+  var adjunto = form.querySelector('[name="adjunto"]');
+  var zona = form.querySelector('[data-adjunto]');
+  var nombreArchivo = form.querySelector('[data-adjunto-nombre]');
+  var instruccion = form.querySelector('[data-adjunto-arrastre]');
+
+  function actualizarAdjunto() {
+    var archivo = adjunto.files && adjunto.files[0];
+    nombreArchivo.textContent = archivo ? 'Archivo seleccionado: ' + archivo.name : 'Ningún archivo seleccionado.';
+    zona.classList.toggle('adjunto--error', !!errorDe(adjunto));
+    mostrar(adjunto, errorDe(adjunto));
+  }
+
+  if (adjunto && zona && nombreArchivo && instruccion) {
+    nombreArchivo.hidden = false;
+    actualizarAdjunto();
+    adjunto.addEventListener('change', function () {
+      errorArrastre = '';
+      actualizarAdjunto();
+    });
+    form.addEventListener('reset', function () {
+      window.setTimeout(function () { errorArrastre = ''; actualizarAdjunto(); }, 0);
+    });
+
+    // Comprobamos la asignación real de FileList antes de anunciar el arrastre.
+    var admiteArrastre = false;
+    try {
+      var prueba = document.createElement('input');
+      prueba.type = 'file';
+      prueba.files = new DataTransfer().files;
+      admiteArrastre = prueba.files.length === 0 && 'ondrop' in zona;
+    } catch (error) { /* El selector nativo sigue disponible. */ }
+
+    if (admiteArrastre) {
+      instruccion.hidden = false;
+      var profundidad = 0;
+
+      function contieneArchivos(evento) {
+        return evento.dataTransfer && Array.prototype.indexOf.call(evento.dataTransfer.types || [], 'Files') !== -1;
+      }
+
+      zona.addEventListener('dragenter', function (evento) {
+        if (!contieneArchivos(evento)) return;
+        evento.preventDefault();
+        profundidad += 1;
+        zona.classList.add('adjunto--arrastrando');
+      });
+      zona.addEventListener('dragover', function (evento) {
+        if (!contieneArchivos(evento)) return;
+        evento.preventDefault();
+        evento.dataTransfer.dropEffect = 'copy';
+      });
+      zona.addEventListener('dragleave', function () {
+        profundidad = Math.max(0, profundidad - 1);
+        if (!profundidad) zona.classList.remove('adjunto--arrastrando');
+      });
+      zona.addEventListener('drop', function (evento) {
+        if (!contieneArchivos(evento)) return;
+        evento.preventDefault();
+        profundidad = 0;
+        zona.classList.remove('adjunto--arrastrando');
+        var archivos = evento.dataTransfer.files;
+        var carpeta = Array.prototype.some.call(evento.dataTransfer.items || [], function (item) {
+          var entrada = item.webkitGetAsEntry && item.webkitGetAsEntry();
+          return entrada && entrada.isDirectory;
+        });
+        errorArrastre = carpeta || !archivos.length
+          ? 'Adjunta un archivo, no una carpeta. Selecciona un plano o una foto.'
+          : archivos.length > 1 ? 'Adjunta un solo archivo. Selecciona el plano o la foto que quieres enviar.' : errorDeArchivo(archivos[0]);
+        // Rechazamos todo el lote: nunca enviamos una selección anterior por accidente.
+        adjunto.value = '';
+        if (!errorArrastre) {
+          try { adjunto.files = archivos; }
+          catch (error) { errorArrastre = 'Selecciona el archivo con el botón. Tu navegador no permite adjuntarlo al arrastrarlo.'; }
+        }
+        actualizarAdjunto();
+      });
+    }
+  }
 
   form.addEventListener('submit', function (evento) {
     var errores = campos.map(function (campo) {
