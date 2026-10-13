@@ -13,12 +13,12 @@
             <a class="boton boton--secundario" href="tel:{{menu.telPrincipal}}"><svg class="icono-industrial" aria-hidden="true" focusable="false"><use href="#icono-telefono"></use></svg>Llamar al {{menu.telefonoPrincipal}}</a>
           </div>
         </div>
-        <picture class="servicio-cabecera__ambiente">
+        {{#if pagina.ambiente}}{{> ambiente-industrial}}{{else}}<picture class="servicio-cabecera__ambiente">
           <source type="image/webp" media="(min-resolution: 2dppx)" srcset="/images/ambiente-metal-reflejos-960.webp">
           <source type="image/webp" srcset="/images/ambiente-metal-reflejos-480.webp">
           <source media="(min-resolution: 2dppx)" srcset="/images/ambiente-metal-reflejos-960.jpg">
           <img src="/images/ambiente-metal-reflejos-480.jpg" width="480" height="320" alt="Detalle de chapa metálica con reflejos azules, imagen de ambiente" fetchpriority="high" decoding="async">
-        </picture>
+        </picture>{{/if}}
       </header>
     <article class="contenido" aria-labelledby="servicio-titulo">
       {{{pagina.contenido}}}

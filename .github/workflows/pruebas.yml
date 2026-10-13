@@ -1,0 +1,64 @@
+# CI del proyecto (revision-sesion-b.md, R-01): las mismas comprobaciones que se piden antes de cada commit.
+# No publica nada ni usa secretos: solo lee el repositorio. Es el check obligatorio de la protección de main.
+name: Pruebas
+
+on:
+  push:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pruebas-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pruebas:
+    name: test, W3C y formulario
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Build en modo piloto, pruebas de mutación + auditor SEO en modo publicación, sitemap/canonical/404 y lista
+      # blanca de lo publicable. En Linux, además, las rutas distinguen mayúsculas como en el Apache del hosting.
+      - name: npm run test
+        run: npm run test
+
+      - name: Regresiones de menú y adjunto (Chrome, Node 22)
+        run: npm run test:interfaz
+
+      - name: El informe del auditor (docs/auditoria-seo.md) está al día
+        run: |
+          if ! git diff --quiet -- docs/auditoria-seo.md; then
+            git diff --stat -- docs/auditoria-seo.md
+            echo "::error file=docs/auditoria-seo.md::No coincide con lo que genera el auditor: ejecuta npm run test y súbelo en el mismo commit."
+            exit 1
+          fi
+
+      # Validador Nu (el de validator.w3.org). Solo se publica como versión «latest»; el paquete de Linux trae su Java.
+      - name: npm run validar (W3C)
+        run: |
+          curl -sSfL -o "$RUNNER_TEMP/vnu.linux.zip" https://github.com/validator/validator/releases/download/latest/vnu.linux.zip
+          unzip -q "$RUNNER_TEMP/vnu.linux.zip" -d tools/vnu
+          npm run validar
+
+      # enviar.php: límite por IP y D-015 (si falla el almacenamiento, el envío se acepta y queda en el log).
+      # PHP viene instalado en la imagen ubuntu-latest de GitHub.
+      - name: Pruebas del limitador del formulario (PHP)
+        run: |
+          php --version
+          php -m | grep -qi mbstring || { echo "::error::Falta la extensión mbstring de PHP"; exit 1; }
+          php tools/test-limitador.php
+
+      - name: Ninguna prueba ha dejado archivos versionados modificados
+        run: |
+          git status --porcelain
+          test -z "$(git status --porcelain)"

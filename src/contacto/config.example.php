@@ -34,7 +34,9 @@ return [
     'ventana_segundos' => 3600,
     // Sal para el hash de la IP (cualquier texto largo y aleatorio; NO es una contraseña, pero no se publica)
     'sal' => 'cambiar-por-un-texto-aleatorio-largo',
-    // Carpeta para el límite de envíos (opcional; por defecto, la temporal del sistema)
+    // Carpeta para el límite de envíos. Recomendado: una carpeta propia FUERA del docroot en la que PHP pueda escribir
+    // (por defecto, la temporal del sistema, que en un hosting compartido puede no ser escribible o ser compartida).
+    // Si no se puede usar, el envío se acepta igualmente sin límite por IP y queda anotado en el log de PHP (D-015).
     // 'dir_limites' => '/ruta/fuera/del/docroot/limites-formulario',
 
     // Orígenes desde los que se acepta el envío (cabecera Origin del navegador)

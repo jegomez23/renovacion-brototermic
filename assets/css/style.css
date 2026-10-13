@@ -712,6 +712,43 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   .pie__lista a { min-height: 2rem; }
 }
 
+/* Barra fija «Llamar · Pedir presupuesto» (solo < 768 px; revision-sesion-b.md, decisión 2).
+   Es el último elemento del body con position: sticky: se queda pegada abajo mientras hay página debajo y, al
+   llegar al final, ocupa su sitio después del pie, así que nunca tapa contenido. scroll-padding-bottom evita que
+   tape un elemento que recibe el foco con el teclado (WCAG 2.4.11). */
+.barra-movil { display: none; }
+@media (max-width: 767px) {
+  html { scroll-padding-bottom: calc(var(--alto-barra) + var(--esp-4)); }
+  .barra-movil {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--esp-2);
+    padding: var(--esp-2) var(--margen-lateral) calc(var(--esp-2) + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--color-borde);
+    background: var(--color-fondo);
+    box-shadow: 0 -4px 16px rgba(29, 53, 108, 0.12);
+  }
+  .barra-movil__accion {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--esp-2);
+    min-height: 48px;
+    padding-inline: var(--esp-3);
+    border: 2px solid var(--color-primario);
+    border-radius: var(--radio-s);
+    color: var(--color-primario);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .barra-movil__accion--presupuesto { background: var(--color-primario); color: var(--color-blanco); }
+  .barra-movil__accion:active { box-shadow: inset 0 0 0 2px currentColor; }
+}
+
 /* ---------- 12. Movimiento reducido e impresión ---------- */
 @media (prefers-reduced-motion: no-preference) {
   html { scroll-behavior: smooth; }
@@ -721,7 +758,7 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 }
 /* Al imprimir una ficha: solo el contenido, sin menú, laterales ni CTA */
 @media print {
-  .cabecera, .indice, .categoria__lateral, .cta, .producto__accion, .pie__columnas, .saltar { display: none !important; }
+  .cabecera, .indice, .categoria__lateral, .cta, .producto__accion, .pie__columnas, .saltar, .barra-movil { display: none !important; }
   .pie { padding: 0; background: none; color: #000; }
   .producto { break-inside: avoid; }
   a { color: inherit; text-decoration: none; }
@@ -763,7 +800,11 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   border-radius: var(--radio-s);
   background: var(--color-blanco);
 }
-.tarjeta__imagen img { width: auto; max-height: 100%; object-fit: contain; }
+/* El <picture> ocupa todo el marco: así max-height: 100% limita de verdad (una foto más alta que 4:3, como la de
+   resistencias de 370 × 290, se salía del marco; revision-sesion-b.md, R-07). Nunca se amplía. */
+.tarjeta__imagen { overflow: hidden; }
+.tarjeta__imagen > picture { display: grid; place-items: center; width: 100%; height: 100%; min-height: 0; }
+.tarjeta__imagen img { width: auto; max-width: 100%; max-height: 100%; object-fit: contain; }
 .tarjeta__titulo { margin-bottom: var(--esp-2); }
 .tarjeta__enlace { color: var(--color-primario-oscuro); text-decoration: none; }
 .tarjeta__enlace::after { content: ""; position: absolute; inset: 0; border-radius: var(--radio-m); }
@@ -812,9 +853,6 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   #familias .tarjeta__nota { grid-column: 1 / -1; grid-row: 3; margin: 0; }
 }
 
-.hero { padding-block: var(--esp-6) var(--esp-7); background: linear-gradient(180deg, var(--color-fondo) 0%, var(--color-fondo-alt) 100%); }
-.hero__interior { display: grid; gap: var(--esp-6); align-items: center; }
-.hero__imagen img { width: 100%; max-width: 910px; margin-inline: auto; }
 .confianza {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -834,6 +872,57 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
   /* Deja espacio a «Fabricación» sin reducir su tipografía ni partir la palabra a 320 px. */
   .confianza li { padding-inline: var(--esp-2); }
 }
+/* Buscador del inicio: el mismo componente que el del megamenú, más grande y con la lista de resultados debajo */
+.buscador-inicio { margin-top: var(--esp-6); }
+.buscador--inicio { max-width: 40rem; padding: 0; }
+.buscador--inicio .buscador__etiqueta { font-size: var(--texto-base); }
+.buscador--inicio .buscador__campo { min-height: 52px; border-width: 2px; border-color: var(--color-primario); font-size: 1.0625rem; }
+.buscador__resultados {
+  margin: var(--esp-2) 0 0;
+  padding: 0;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  background: var(--color-fondo);
+  box-shadow: var(--sombra-2);
+  list-style: none;
+}
+.buscador__resultados li + li { border-top: 1px solid var(--color-fondo-alt); }
+.buscador__resultados a {
+  display: flex;
+  flex-direction: column;   /* en móvil, la familia siempre debajo; desde 768 px, a la derecha */
+  justify-content: center;
+  gap: 0 var(--esp-3);
+  min-height: 44px;
+  padding: var(--esp-2) var(--esp-4);
+  font-weight: 600;
+  text-decoration: none;
+}
+.buscador__resultados a:hover, .buscador__resultados a:focus-visible { background: var(--color-fondo-destacado); }
+.buscador__familia { color: var(--color-texto-secundario); font-size: var(--texto-pequeno); font-weight: 400; }
+@media (min-width: 768px) {
+  .buscador__resultados a { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+.buscador-inicio__sin-js { margin: 0; }
+.js .buscador-inicio__sin-js { display: none; }
+
+/* Sectores del inicio: el sector y, debajo, la categoría de /legacy de la que sale el dato */
+/* Una columna en móvil y 3 × 3 desde 768 px (son 9 sectores: sin huecos) */
+.sectores__lista { display: grid; gap: var(--esp-2); margin: 0; padding: 0; list-style: none; }
+@media (min-width: 768px) { .sectores__lista { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--esp-3); } }
+.sector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-1);
+  padding: var(--esp-3) var(--esp-4);
+  border: 1px solid var(--color-borde);
+  border-top: 3px solid var(--color-acento);
+  border-radius: var(--radio-s);
+  background: var(--color-fondo);
+}
+.sector__nombre { color: var(--color-primario-oscuro); font-family: var(--fuente-titulos); font-size: 1.125rem; font-weight: 700; line-height: 1.3; }
+.sector__enlace { font-size: var(--texto-pequeno); }
+.sector__enlace::after { content: " →"; }
+
 .destacados { display: grid; gap: var(--esp-5); }
 .destacado {
   display: grid;
@@ -876,8 +965,6 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .sede-datos { margin: var(--esp-4) 0; line-height: 1.8; }
 .sede-datos a { display: inline-block; min-height: 44px; line-height: 44px; }
 @media (min-width: 768px) {
-  .hero { padding-block: var(--esp-7) var(--esp-8); }
-  .hero__interior { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); }
   .confianza { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (min-width: 1280px) {
@@ -1097,6 +1184,13 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .servicio-cabecera__acciones .boton { gap: var(--esp-2); }
 .servicio-cabecera__ambiente { display: block; max-width: 440px; }
 .servicio-cabecera__ambiente img { width: 100%; height: auto; border-radius: var(--radio-s); }
+.ambiente-industrial { margin: 0; width: 100%; max-width: 440px; }
+.ambiente-industrial picture { display: block; }
+.ambiente-industrial img { display: block; width: 100%; height: auto; border-radius: var(--radio-s); }
+.ambiente-seccion { display: grid; gap: var(--esp-6); align-items: center; margin-bottom: var(--esp-6); }
+@media (min-width: 768px) {
+  .ambiente-seccion { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+}
 .producto__modelo { font-variant-numeric: tabular-nums; }
 .specs tbody tr:nth-child(even) td { background: var(--color-fondo-alt); }
 .specs td { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
@@ -1105,4 +1199,343 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 }
 @media (min-width: 768px) {
   .servicio-cabecera { grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); }
+}
+
+/* ---------- 15. Ritmo y carácter (2026-10-12, revision-sesion-b.md paso 7) ----------
+   Franjas a todo el ancho que alternan blanco, #f5f6f8 y #1d356c; antetítulos numerados con la línea de acento cian;
+   hero con jerarquía fuerte y tarjetas con elevación sutil (≤ 150 ms; sin movimiento con prefers-reduced-motion). */
+:root { --color-fondo-suave: #f5f6f8; } /* gris industrial muy claro: texto #404751 encima 8,7:1 */
+
+.banda { padding-block: var(--esp-8); }
+.banda--suave { background: var(--color-fondo-suave); }
+.banda--oscura { background: var(--color-primario-oscuro); color: var(--color-fondo-destacado); }
+.banda--oscura h2 { color: var(--color-blanco); }
+.banda--oscura a:not(.boton) { color: var(--color-blanco); }
+.banda--oscura a:not(.boton):hover { text-decoration-color: var(--color-acento-2); }
+
+/* Antetítulo: «01 · Catálogo». El número en monoespaciada y separado por la línea de acento */
+.antetitulo {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  margin: 0 0 var(--esp-3);
+  color: var(--color-primario);
+  font: 700 0.8125rem/1.3 var(--fuente-texto);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.antetitulo__num { padding-right: var(--esp-3); border-right: 2px solid var(--color-acento); font-family: var(--fuente-mono); letter-spacing: 0; }
+.antetitulo__linea { flex: none; width: 2.5rem; height: 3px; border-radius: 2px; background: var(--color-acento); }
+.antetitulo--claro, .antetitulo--claro .antetitulo__num { color: var(--color-acento-2); } /* #2dccf0 sobre #1d356c: 6,4:1 */
+
+/* Botón grande (hero y franjas) */
+.boton--grande { min-height: 52px; padding: var(--esp-3) var(--esp-6); font-size: 1.0625rem; }
+
+/* --- Hero: imagen arriba en móvil y a la derecha, a sangre, desde 1024 px. El texto siempre sobre fondo liso --- */
+.hero { overflow: hidden; background: var(--color-fondo-suave); }
+.hero__interior { display: grid; }
+.hero__texto { padding: var(--esp-6) var(--margen-lateral) var(--esp-7); }
+.hero h1 { max-width: 20ch; margin-bottom: var(--esp-4); font-size: clamp(2rem, 1.5rem + 1.9vw, 3rem); line-height: 1.08; letter-spacing: -0.01em; }
+.hero .entradilla { max-width: 34rem; margin-bottom: var(--esp-5); color: var(--color-texto); }
+.hero__acciones { display: flex; flex-wrap: wrap; gap: var(--esp-3); }
+.hero__telefono { margin: var(--esp-4) 0 0; color: var(--color-texto-secundario); }
+.hero__telefono a { font-weight: 700; text-decoration-line: underline; text-underline-offset: 0.2em; }
+@media (max-width: 767px) {
+  .hero__acciones .boton { flex: 1 1 100%; }
+}
+@media (min-width: 768px) {
+  .hero__texto { padding: var(--esp-7) max(var(--margen-lateral), calc((100% - var(--ancho-contenido)) / 2)) var(--esp-8); }
+}
+/* Desde 1024 px: titular a la izquierda y entradilla + botones a la derecha; debajo, la imagen a todo el ancho
+   (es panorámica: en una columna lateral solo se vería la mitad del producto) */
+@media (min-width: 1024px) {
+  .hero__texto {
+    display: grid;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+    gap: var(--esp-8);
+    padding-block: var(--esp-8) var(--esp-7);
+  }
+  .hero h1 { margin-bottom: 0; }
+  .hero .entradilla { font-size: var(--texto-base); }
+}
+
+/* --- Buscador y cifras: una fila limpia bajo el hero --- */
+.confianza { margin: var(--esp-7) 0; }
+.confianza li { padding: var(--esp-4) 0 0; border-left: 0; border-top: 3px solid var(--color-acento); background: none; }
+.confianza strong { font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem); }
+
+/* --- Tarjetas: elevación sutil y una barra de acento arriba al pasar el ratón --- */
+.tarjeta { transition: box-shadow var(--transicion), border-color var(--transicion), transform var(--transicion); }
+.tarjeta:hover { transform: translateY(-3px); box-shadow: inset 0 3px 0 var(--color-acento), var(--sombra-2); }
+.tarjeta__nota {
+  color: var(--color-primario);
+  font: 600 0.75rem/1.4 var(--fuente-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.sector { transition: border-color var(--transicion), transform var(--transicion), box-shadow var(--transicion); }
+.sector:hover { transform: translateY(-2px); border-color: var(--color-acento); box-shadow: var(--sombra-2); }
+@media (prefers-reduced-motion: reduce) {
+  .tarjeta:hover, .sector:hover { transform: none; }
+}
+
+/* --- Fabricación a medida: franja oscura --- */
+.medida__interior { display: grid; gap: var(--esp-6); align-items: center; }
+.medida__marco {
+  display: grid;
+  place-items: center;
+  max-width: 22rem;
+  aspect-ratio: 4 / 3;
+  padding: var(--esp-5);
+  border-radius: var(--radio-m);
+  background: var(--color-blanco);
+  box-shadow: 0 0 0 6px rgba(54, 175, 224, 0.25);
+}
+.medida__marco img { width: auto; max-height: 100%; object-fit: contain; }
+.medida__titulo { font-size: var(--texto-h2); }
+.medida__texto p { max-width: var(--ancho-lectura); }
+.medida__acciones { display: flex; flex-wrap: wrap; align-items: center; gap: var(--esp-3) var(--esp-5); margin-top: var(--esp-5); }
+.medida__enlace { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+@media (min-width: 768px) {
+  .medida__interior { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: var(--esp-8); }
+}
+
+/* --- Marcas y sedes --- */
+.banda--suave .marcas__lista li { background: var(--color-blanco); }
+.banda--suave .marcas__imagen { padding: var(--esp-3); border-radius: var(--radio-m); background: var(--color-blanco); }
+.sedes__tarjeta { border-top: 3px solid var(--color-acento); background: var(--color-blanco); box-shadow: var(--sombra-1); }
+.sedes__nombre { font-family: var(--fuente-titulos); }
+@media (max-width: 767px) {
+  .marcas__imagen { display: none; } /* en móvil los logos medían ~23 px: quedan los nombres (R-27) */
+}
+
+/* --- CTA de presupuesto y pie --- */
+.cta { margin-top: 0; border-top: 3px solid var(--color-acento); }
+.pie { border-top: 4px solid var(--color-acento); }
+.pie a { text-decoration: none; }
+.pie a:hover, .pie a:focus-visible { text-decoration: underline; }
+.pie__titulo { color: var(--color-acento-2); letter-spacing: 0.1em; }
+
+/* --- Cabecera de familias y categorías: franja suave con las migas y la CTA bajo el H1 (R-14) --- */
+.franja-cabecera { margin-bottom: var(--esp-7); padding-bottom: var(--esp-2); border-bottom: 1px solid var(--color-borde); background: var(--color-fondo-suave); }
+.franja-cabecera .pagina-cabecera { padding-bottom: var(--esp-6); }
+.franja-cabecera h1 { position: relative; padding-top: var(--esp-4); }
+.franja-cabecera h1::before { content: ""; position: absolute; top: 0; left: 0; width: 2.5rem; height: 3px; border-radius: 2px; background: var(--color-acento); }
+.pagina-cabecera__cta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--esp-2) var(--esp-5); margin: 0 0 var(--esp-5); }
+.enlace-bajar { display: inline-flex; align-items: center; gap: var(--esp-1); min-height: 44px; font-weight: 600; }
+.enlace-bajar::after { content: "↓"; }
+@media (max-width: 767px) {
+  .pagina-cabecera__cta .boton { flex: 1 1 100%; }
+  .pagina-cabecera__cta .enlace-bajar { margin-inline: auto; }
+}
+
+/* Versión de demostración (modo preview, D-017): franja discreta arriba. #5c4400 sobre #fff4ce: 8,9:1 */
+.aviso-demo { margin: 0; padding: var(--esp-1) var(--margen-lateral); background: #fff4ce; color: #5c4400; font-size: var(--texto-pequeno); font-weight: 600; text-align: center; }
+
+/* ---------- 16. Vida: hero rotativo, microinteracciones y aparición al hacer scroll (2026-10-12) ----------
+   Reglas: solo transform y opacity; 150-300 ms en interacciones; el foco de teclado recibe lo mismo que el hover;
+   en táctil nada depende del hover; con prefers-reduced-motion, nada se mueve (bloque final de esta sección).
+   Sin JS todo se ve igual: lo que se anima solo se oculta cuando el JS lo marca (data-revelar, .hero--anima). */
+:root {
+  --suave: cubic-bezier(0.22, 0.61, 0.36, 1);    /* salida suave */
+  --interaccion: 200ms var(--suave);
+  --alto-franja: 2.125rem;                       /* franja azul de la cabecera (≥ 768 px) */
+}
+
+/* --- Hero: pila de diapositivas con fundido cruzado; tamaño fijo por proporción (CLS 0) --- */
+.hero__imagen { position: relative; display: block; order: -1; overflow: hidden; aspect-ratio: 16 / 9; }
+.hero__diapositiva { position: absolute; inset: 0; display: block; opacity: 0; transition: opacity 1200ms var(--suave); }
+.hero__diapositiva--activa { opacity: 1; }
+.hero__diapositiva img { width: 100%; height: 100%; object-fit: cover; object-position: 30% 50%; transform-origin: 60% 50%; }
+/* Fotos de fondo blanco (slide-1, 3 y 4): enteras y fundidas con el gris del hero */
+.hero__diapositiva--contener img { object-fit: contain; padding: var(--esp-3) var(--margen-lateral); mix-blend-mode: multiply; }
+/* @efecto:heroRotativo (build.js lo quita si site.json → efectos.heroRotativo es false) */
+/* Ken Burns: zoom muy lento (1 → 1,06) solo en la diapositiva activa y solo si el JS lo activa */
+.hero--anima .hero__diapositiva img { animation: hero-zoom 8s linear forwards; animation-play-state: paused; }
+/* La activa y la que se está yendo siguen su zoom (sin saltos durante el fundido); en pausa, todo quieto */
+.hero--anima .hero__diapositiva--activa img, .hero--anima .hero__diapositiva--saliendo img { animation-play-state: running; }
+.hero--quieto .hero__diapositiva img { animation-play-state: paused !important; }
+@keyframes hero-zoom { from { transform: scale(1); } to { transform: scale(1.06); } }
+
+.hero__control {
+  position: absolute;
+  right: var(--margen-lateral);
+  bottom: var(--esp-3);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+.hero__control[hidden] { display: none; }
+.hero__indicador { display: flex; gap: 6px; }
+.hero__indicador i { display: block; width: 22px; height: 3px; border-radius: 2px; background: var(--color-primario-oscuro); opacity: 0.25; transition: opacity 300ms var(--suave); }
+.hero__indicador i.activo { opacity: 1; background: var(--color-acento); }
+.hero__pausa {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-borde);
+  border-radius: 50%;
+  background: var(--color-blanco);
+  color: var(--color-primario);
+  box-shadow: var(--sombra-1);
+  cursor: pointer;
+  transition: transform var(--interaccion);
+}
+.hero__pausa:hover, .hero__pausa:focus-visible { transform: scale(1.08); }
+.hero__icono-play, .hero--pausado .hero__icono-pausa { display: none; }
+.hero--pausado .hero__icono-play { display: block; }
+/* @fin:heroRotativo */
+@media (min-width: 768px) {
+  .hero__imagen { aspect-ratio: 21 / 9; }
+}
+@media (min-width: 1024px) {
+  .hero__imagen { order: 1; aspect-ratio: auto; height: 32rem; }
+  .hero__diapositiva img { object-position: 50% 55%; }
+  .hero__diapositiva--contener img { padding: var(--esp-5) 0 var(--esp-6); }
+  .hero__control { right: max(var(--margen-lateral), calc((100vw - var(--ancho-contenido)) / 2)); bottom: var(--esp-5); }
+}
+
+/* --- Botones: flecha que avanza y un brillo que cruza el primario --- */
+.boton { position: relative; overflow: hidden; isolation: isolate; }
+.boton--primario::after, .boton--secundario::after, .boton--claro::after {
+  content: "→";
+  content: "→" / "";              /* decorativa: los lectores de pantalla no la leen */
+  display: inline-block;
+  transition: transform var(--interaccion);
+}
+.boton:not(:disabled):hover::after, .boton:focus-visible::after { transform: translateX(4px); }
+.boton--primario::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.28) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 600ms var(--suave);
+}
+.boton--primario:not(:disabled):hover::before, .boton--primario:focus-visible::before { transform: translateX(100%); }
+.boton:disabled::after { opacity: 0.5; }
+
+/* --- Enlaces sueltos: subrayado cian que crece desde la izquierda --- */
+.enlace-bajar, .sector__enlace, .medida__enlace, .pie__lista a, .sedes__mapa, .hermanas__todas {
+  position: relative;
+  text-decoration: none;
+}
+.enlace-bajar::before, .sector__enlace::before, .medida__enlace::before, .pie__lista a::before, .sedes__mapa::before, .hermanas__todas::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.35em;
+  height: 2px;
+  background: var(--color-acento);
+  transform: scaleX(0.25);
+  transform-origin: left;
+  transition: transform var(--interaccion);
+}
+.pie__lista a::before { transform: scaleX(0); }
+.enlace-bajar:hover::before, .enlace-bajar:focus-visible::before,
+.sector__enlace:hover::before, .sector__enlace:focus-visible::before, .sector:hover .sector__enlace::before,
+.medida__enlace:hover::before, .medida__enlace:focus-visible::before,
+.pie__lista a:hover::before, .pie__lista a:focus-visible::before,
+.sedes__mapa:hover::before, .sedes__mapa:focus-visible::before,
+.hermanas__todas:hover::before, .hermanas__todas:focus-visible::before { transform: scaleX(1); }
+.pie a:hover, .pie a:focus-visible { text-decoration: none; }
+.enlace-bajar::after { transition: transform var(--interaccion); }
+.enlace-bajar:hover::after, .enlace-bajar:focus-visible::after { transform: translateY(3px); }
+
+/* --- Tarjetas de familia y fotos de producto: la foto se acerca un poco dentro de su marco --- */
+.tarjeta__imagen img, .producto__imagen img, .medida__marco img { transition: transform 300ms var(--suave); }
+.tarjeta:hover .tarjeta__imagen img, .tarjeta:focus-within .tarjeta__imagen img { transform: scale(1.04); }
+.tarjeta:focus-within { transform: translateY(-3px); box-shadow: inset 0 3px 0 var(--color-acento), var(--sombra-2); }
+.producto__imagen { overflow: hidden; transition: box-shadow 300ms var(--suave); }
+.producto:hover .producto__imagen, .producto:focus-within .producto__imagen { box-shadow: var(--sombra-2); }
+.producto:hover .producto__imagen img, .producto:focus-within .producto__imagen img { transform: scale(1.04); }
+.medida__marco { overflow: hidden; }
+.medida:hover .medida__marco img { transform: scale(1.04); }
+.sector:focus-within { transform: translateY(-2px); border-color: var(--color-acento); box-shadow: var(--sombra-2); }
+.destacado, .sedes__tarjeta { transition: transform var(--interaccion), box-shadow var(--interaccion); }
+.destacado:hover, .destacado:focus-within, .sedes__tarjeta:hover, .sedes__tarjeta:focus-within { transform: translateY(-2px); box-shadow: var(--sombra-2); }
+
+/* --- Cifras de confianza: la línea cian se alarga y el texto sube 2 px --- */
+.confianza li { position: relative; border-top-color: var(--color-borde); }
+.confianza li::before {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-acento);
+  transform: scaleX(0.3);
+  transform-origin: left;
+  transition: transform 300ms var(--suave);
+}
+.confianza strong { transition: transform var(--interaccion); }
+.confianza li:hover::before { transform: scaleX(1); }
+.confianza li:hover strong { transform: translateY(-2px); }
+
+/* --- Logos de marcas: de gris a color (solo opacity). En táctil, siempre en color --- */
+.marcas__imagen { position: relative; max-width: 990px; }
+.marcas__imagen img { display: block; width: 100%; height: auto; }
+.marcas__gris { position: absolute; inset: var(--esp-3); display: none; transition: opacity 300ms var(--suave); }
+@media (hover: hover) and (pointer: fine) {
+  .marcas__gris { display: block; }
+  .marcas:hover .marcas__gris, .marcas:focus-within .marcas__gris { opacity: 0; }
+}
+
+/* --- Megamenú: aparece con fundido y 4 px de desplazamiento --- */
+@keyframes aparecer-panel { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+@media (min-width: 768px) {
+  .js .menu__boton[aria-expanded="true"] + .megamenu,
+  html:not(.js) .menu__item--productos:hover > .megamenu,
+  html:not(.js) .menu__item--productos:focus-within > .megamenu { animation: aparecer-panel 200ms var(--suave); }
+}
+
+/* --- Cabecera compacta al bajar: la franja azul sale por arriba (transform, sin cambiar la altura en el flujo),
+   el logo se reduce un poco y aparece una sombra (opacity). Sin saltos: el contenido no se mueve. --- */
+.cabecera::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -12px;
+  height: 12px;
+  background: linear-gradient(rgba(29, 53, 108, 0.14), transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 250ms var(--suave);
+}
+.cabecera, .cabecera__logo img { transition: transform 250ms var(--suave); }
+.cabecera__logo img { transform-origin: left center; }
+.cabecera--compacta::after { opacity: 1; }
+.cabecera--compacta .cabecera__logo img { transform: scale(0.88); }
+@media (min-width: 768px) {
+  .cabecera--compacta { transform: translateY(calc(-1 * var(--alto-franja))); }
+}
+
+/* @efecto:aparicionScroll (build.js lo quita si site.json → efectos.aparicionScroll es false) */
+/* --- Aparición al hacer scroll: solo lo que el JS marca (fuera de la primera pantalla) --- */
+[data-revelar="pendiente"] { opacity: 0; transform: translateY(12px); }
+[data-revelar] { transition: opacity 500ms var(--suave), transform 500ms var(--suave); transition-delay: var(--retardo, 0ms); }
+[data-revelar="visto"] { opacity: 1; transform: none; }
+/* @fin:aparicionScroll */
+
+/* --- Movimiento reducido: nada se mueve; los cambios de color y opacidad se mantienen --- */
+@media (prefers-reduced-motion: reduce) {
+  .hero--anima .hero__diapositiva img { animation: none; }
+  .boton::after, .boton::before, .enlace-bajar::after, .tarjeta__imagen img, .producto__imagen img, .medida__marco img,
+  .tarjeta, .sector, .destacado, .sedes__tarjeta, .confianza strong, .cabecera, .cabecera__logo img, .hero__pausa { transform: none !important; }
+  .boton--primario::before { display: none; }
+  .megamenu { animation: none !important; }
+  [data-revelar] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+@media print {
+  [data-revelar] { opacity: 1 !important; transform: none !important; }
+  .hero__control { display: none; }
 }

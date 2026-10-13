@@ -1,0 +1,74 @@
+[
+  {
+    "ruta": "/resistencias-electricas.html",
+    "fecha": "2026-10-13T07:31:54.510Z",
+    "performance": 98,
+    "accessibility": 100,
+    "lcp": 2326.5842000000002,
+    "cls": 0,
+    "bytes": 261887
+  },
+  {
+    "ruta": "/controltemperatura.html",
+    "fecha": "2026-10-13T07:32:00.532Z",
+    "performance": 97,
+    "accessibility": 100,
+    "lcp": 2402.1626,
+    "cls": 0,
+    "bytes": 312569
+  },
+  {
+    "ruta": "/controldenivel.html",
+    "fecha": "2026-10-13T07:32:06.534Z",
+    "performance": 98,
+    "accessibility": 100,
+    "lcp": 2327.0861000000004,
+    "cls": 0,
+    "bytes": 308704
+  },
+  {
+    "ruta": "/presionhumedad.html",
+    "fecha": "2026-10-13T07:32:12.489Z",
+    "performance": 98,
+    "accessibility": 100,
+    "lcp": 2251.8893,
+    "cls": 0,
+    "bytes": 266240
+  },
+  {
+    "ruta": "/fabricaciones-a-medida.html",
+    "fecha": "2026-10-13T07:32:18.354Z",
+    "performance": 97,
+    "accessibility": 100,
+    "lcp": 2476.1126999999997,
+    "cls": 0,
+    "bytes": 287803
+  },
+  {
+    "ruta": "/oviedo/",
+    "fecha": "2026-10-13T07:32:24.231Z",
+    "performance": 97,
+    "accessibility": 100,
+    "lcp": 2476.5869,
+    "cls": 0,
+    "bytes": 364882
+  },
+  {
+    "ruta": "/contacto/contacto.html",
+    "fecha": "2026-10-13T07:32:30.247Z",
+    "performance": 98,
+    "accessibility": 100,
+    "lcp": 2251.1063999999997,
+    "cls": 0,
+    "bytes": 245454
+  },
+  {
+    "ruta": "/",
+    "fecha": "2026-10-13T07:32:36.107Z",
+    "performance": 95,
+    "accessibility": 100,
+    "lcp": 2776.844,
+    "cls": 0,
+    "bytes": 329538
+  }
+]

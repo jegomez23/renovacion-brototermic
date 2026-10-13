@@ -1,0 +1,6 @@
+{{#if pagina.ambiente}}<figure class="ambiente-industrial">
+  <picture>
+    <source type="image/webp" srcset="{{pagina.ambiente.srcsetWebp}}" sizes="{{pagina.ambiente.sizes}}">
+    <img src="{{pagina.ambiente.src}}" srcset="{{pagina.ambiente.srcsetJpg}}" sizes="{{pagina.ambiente.sizes}}" width="{{pagina.ambiente.ancho}}" height="{{pagina.ambiente.alto}}" alt="{{pagina.ambiente.alt}}" decoding="async"{{#if pagina.ambiente.diferida}} loading="lazy"{{else}} fetchpriority="high"{{/if}}>
+  </picture>
+</figure>{{/if}}

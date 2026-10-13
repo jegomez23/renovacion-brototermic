@@ -2,15 +2,20 @@
 // archivo REAL (dist/.htaccess y dist-es/.htaccess) y no solo contra redirecciones.csv.
 //
 // Interpreta solo el subconjunto que usa este proyecto:
-//   mod_rewrite: RewriteEngine, RewriteBase, RewriteCond (%{HTTP_HOST}, %{THE_REQUEST}, %{HTTPS}, %{REQUEST_FILENAME};
-//                [NC], [OR], «!», «!=on», -d, -f), RewriteRule (patrón, «-» o destino con $n y %n; [R=nnn], [L], [NE], [NC])
+//   mod_rewrite: RewriteEngine, RewriteBase, RewriteCond (%{HTTP_HOST}, %{THE_REQUEST}, %{HTTPS}, %{REQUEST_FILENAME},
+//                %{ENV:…}; [NC], [OR], «!», «!=on», -d, -f), RewriteRule (patrón, «-» o destino con $n y %n; [R=nnn],
+//                [L], [END] (en un .htaccess, igual que [L]), [NE], [NC])
 //   mod_alias:   Redirect y RedirectMatch (con código 3xx y destino, o 404/410 sin destino)
+//   core:        ErrorDocument 404 (simularErrorDocument: la subpetición interna que hace Apache tras un 404)
 //   <IfModule> se considera presente (se comprueba lo que haría el hosting con los módulos cargados).
+// Un flag fuera de esta lista detiene el simulador: no puede dar por buena una regla que no entiende.
 // NO es Apache: no sustituye a tools/probar-redirecciones.sh en Docker ni a la prueba en el hosting.
 // Sin dependencias: solo módulos nativos de Node.
 'use strict';
 const fs = require('fs');
 const path = require('path');
+
+const FLAGS_CONOCIDOS = /^(NC|OR|L|END|NE|R(=\d{3})?)$/;
 
 function convertirRegex(patron, nc) {
   // Las expresiones de Apache (PCRE) que usamos son compatibles con las de JS; \xf1 = byte Latin-1 «ñ»
@@ -25,7 +30,12 @@ function leerReglas(texto) {
     if (!linea || linea.startsWith('#')) continue;
     const partes = linea.match(/("[^"]*"|\S+)/g).map(p => p.replace(/^"|"$/g, ''));
     const [dir, ...args] = partes;
-    const flags = s => (s && /^\[.*\]$/.test(s) ? s.slice(1, -1).split(',').map(f => f.trim()) : []);
+    const flags = s => {
+      const lista = s && /^\[.*\]$/.test(s) ? s.slice(1, -1).split(',').map(f => f.trim()) : [];
+      const raro = lista.find(f => !FLAGS_CONOCIDOS.test(f));
+      if (raro) throw new Error(`tools/lib/htaccess.js no conoce el flag [${raro}] de «${linea}»: añádelo al simulador antes de usarlo`);
+      return lista;
+    };
     if (dir === 'RewriteCond') {
       const [variable, patron, f] = args;
       conds.push({ variable, patron, flags: flags(f) });
@@ -45,7 +55,10 @@ function leerReglas(texto) {
 
 // Evalúa una condición; devuelve {ok, grupos}
 function evaluarCond(c, vars) {
-  const valor = c.variable.replace(/%\{(\w+)\}/g, (_, v) => vars[v] ?? '');
+  // %{ENV:X}: variables de entorno de la petición (REDIRECT_STATUS en la subpetición de ErrorDocument); vacías si no hay
+  const valor = c.variable
+    .replace(/%\{ENV:(\w+)\}/g, (_, v) => vars.ENV[v] ?? '')
+    .replace(/%\{(\w+)\}/g, (_, v) => vars[v] ?? '');
   const nc = c.flags.includes('NC');
   let patron = c.patron, negar = false;
   if (patron.startsWith('!')) { negar = true; patron = patron.slice(1); }
@@ -64,12 +77,14 @@ function evaluarCond(c, vars) {
 
 // Simula UNA petición contra un .htaccess. url: URL absoluta tal como la pide el navegador (con %xx).
 // docroot: carpeta que sirve ese host. Devuelve { estado, location } o { estado: 200, archivo }.
-function simular(textoHtaccess, url, docroot) {
+// opciones.env (variables de entorno) y opciones.theRequest: solo para simularErrorDocument.
+function simular(textoHtaccess, url, docroot, opciones = {}) {
   const u = new URL(url);
   const vars = {
     HTTP_HOST: u.host,
     HTTPS: u.protocol === 'https:' ? 'on' : 'off',
-    THE_REQUEST: `GET ${u.pathname}${u.search} HTTP/1.1`,
+    THE_REQUEST: opciones.theRequest || `GET ${u.pathname}${u.search} HTTP/1.1`,
+    ENV: opciones.env || {},
   };
   let rutaUrl;
   try { rutaUrl = decodeURIComponent(u.pathname); } catch { rutaUrl = unescape(u.pathname); }
@@ -106,16 +121,31 @@ function simular(textoHtaccess, url, docroot) {
     const r3 = r.flags.find(f => /^R(=\d+)?$/.test(f));
     const codigo = r3 ? Number((r3.split('=')[1]) || 302) : null;
     if (codigo && (codigo < 300 || codigo > 399)) return { estado: codigo };
-    if (r.destino === '-') { if (r.flags.includes('L')) break; continue; }
+    // En un .htaccess, [END] y [L] paran igual cuando no hay sustitución («-»): no hay segunda pasada
+    const parar = r.flags.includes('L') || r.flags.includes('END');
+    if (r.destino === '-') { if (parar) break; continue; }
     const destino = r.destino.replace(/\$(\d)/g, (_, n) => m[n] || '').replace(/%(\d)/g, (_, n) => grupos[n] || '');
     if (codigo) return { estado: codigo, location: /^https?:/.test(destino) ? destino : `https://${u.host}/${destino.replace(/^\//, '')}` };
     // Reescritura interna: se sirve otro archivo, sin redirección
     ruta = destino.replace(/^\//, '');
-    if (r.flags.includes('L')) break;
+    if (parar) break;
   }
   let archivo = path.join(docroot, ruta);
   if (ruta === '' || ruta.endsWith('/')) archivo = path.join(archivo, 'index.html');
   return fs.existsSync(archivo) && fs.statSync(archivo).isFile() ? { estado: 200, archivo } : { estado: 404 };
 }
 
-module.exports = { simular, leerReglas };
+// Tras un 404, Apache sirve «ErrorDocument 404 /404.html» con una subpetición INTERNA que vuelve a pasar por el
+// .htaccess: mismo host y HTTPS, THE_REQUEST de la petición ORIGINAL y REDIRECT_STATUS=404.
+// Devuelve el resultado de esa subpetición (debe ser { estado: 200, archivo: …404.html }), o null si no hay ErrorDocument.
+function simularErrorDocument(textoHtaccess, url, docroot) {
+  const m = textoHtaccess.match(/^\s*ErrorDocument\s+404\s+(\/\S+)/m);
+  if (!m) return null;
+  const u = new URL(url);
+  return simular(textoHtaccess, `${u.protocol}//${u.host}${m[1]}`, docroot, {
+    env: { REDIRECT_STATUS: '404' },
+    theRequest: `GET ${u.pathname}${u.search} HTTP/1.1`,
+  });
+}
+
+module.exports = { simular, simularErrorDocument, leerReglas };

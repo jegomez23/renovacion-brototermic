@@ -1,0 +1,131 @@
+{
+  "metodo": "gzip sin pérdida; gunzip -c archivo.json.gz permite leer el JSON original",
+  "informes": [
+    {
+      "archivo": "antes-controldenivel.json.gz",
+      "bytesOriginal": 727282,
+      "bytesComprimido": 443464,
+      "sha256Original": "c56a1cd7b69916843f8c06f644a6749c449225830e57f3b68f014120625bd451"
+    },
+    {
+      "archivo": "antes-fabricaciones-a-medida.json.gz",
+      "bytesOriginal": 627110,
+      "bytesComprimido": 357969,
+      "sha256Original": "c20b165eacebd84bba6fc004b53c2e26accbde6b3edba0f55cad828bc7da9314"
+    },
+    {
+      "archivo": "antes-inicio-.json.gz",
+      "bytesOriginal": 746934,
+      "bytesComprimido": 447023,
+      "sha256Original": "fb8e69573f92d2c243b0cb0f5760e8fe7a3f7e3eebfc5d87935a31a2ae83fee5"
+    },
+    {
+      "archivo": "antes-oviedo.json.gz",
+      "bytesOriginal": 732053,
+      "bytesComprimido": 440370,
+      "sha256Original": "6a9e7ebb915704afc3503247457a04a5bd7e2797a68a9be34666019ea64ad461"
+    },
+    {
+      "archivo": "despues-controldenivel.json.gz",
+      "bytesOriginal": 746187,
+      "bytesComprimido": 456589,
+      "sha256Original": "1e432ecfc86bfc8382346012a33c6ee7dbcce2286e84cdf67b16382f7834112b"
+    },
+    {
+      "archivo": "despues-fabricaciones-a-medida.json.gz",
+      "bytesOriginal": 672871,
+      "bytesComprimido": 393562,
+      "sha256Original": "5c0cc9cbd8b5b97e2edeaddb4b0ce9eab590b2c556b5121566ae6084aef50bce"
+    },
+    {
+      "archivo": "despues-inicial-controldenivel.json.gz",
+      "bytesOriginal": 745804,
+      "bytesComprimido": 456607,
+      "sha256Original": "9cc88080fd6f49fa0af352adeea22d74ec70eae6ba5e2981547bcfaf3544d963"
+    },
+    {
+      "archivo": "despues-inicial-fabricaciones-a-medida.json.gz",
+      "bytesOriginal": 672771,
+      "bytesComprimido": 393535,
+      "sha256Original": "6b1edf094d6d5598b3e585bf5db3c12f7ed40c9a0bccdd3eacd1d57dd334d797"
+    },
+    {
+      "archivo": "despues-inicial-oviedo.json.gz",
+      "bytesOriginal": 747752,
+      "bytesComprimido": 451695,
+      "sha256Original": "d2ef48b840f34715d7e1eb7174122d15044197cfd679651cacc91d55f629a3ca"
+    },
+    {
+      "archivo": "despues-oviedo.json.gz",
+      "bytesOriginal": 747818,
+      "bytesComprimido": 451759,
+      "sha256Original": "d021d5eafb5f9ade9407254dc79ba3599e1f6e04cb1f790369d36205d262dbf1"
+    },
+    {
+      "archivo": "final-.json.gz",
+      "bytesOriginal": 747032,
+      "bytesComprimido": 446626,
+      "sha256Original": "72efc9ce274b60979edc4f4b0b7b208a3dd5f5c9d3579cefa44254afc3666e2a"
+    },
+    {
+      "archivo": "final-contactocontacto.json.gz",
+      "bytesOriginal": 600514,
+      "bytesComprimido": 348127,
+      "sha256Original": "56e8960270e7a2745714131321feb8ba99f899cd487184ecaa273d068ca2953f"
+    },
+    {
+      "archivo": "final-controldenivel.json.gz",
+      "bytesOriginal": 746467,
+      "bytesComprimido": 456411,
+      "sha256Original": "31ce076be8a209255f0c0eb7ed3f03002bf8e76c27f3c8539cdb2f51e966fdda"
+    },
+    {
+      "archivo": "final-controltemperatura.json.gz",
+      "bytesOriginal": 778209,
+      "bytesComprimido": 476525,
+      "sha256Original": "6e0663054275f6452a58e567a119e292eaf8a433696192929ce0654ceb0f4959"
+    },
+    {
+      "archivo": "final-fabricaciones-a-medida.json.gz",
+      "bytesOriginal": 672863,
+      "bytesComprimido": 393501,
+      "sha256Original": "f36f0a1d3cc5b756be6aaa4a1d36cab9e9da6cb7963cc880f95a7edd63283ab2"
+    },
+    {
+      "archivo": "final-oviedo.json.gz",
+      "bytesOriginal": 747650,
+      "bytesComprimido": 451645,
+      "sha256Original": "0136f4b31b0cb08c9f05cb2c9f7f96a27caadd73da074a0328bda14f864bebdf"
+    },
+    {
+      "archivo": "final-presionhumedad.json.gz",
+      "bytesOriginal": 695642,
+      "bytesComprimido": 418869,
+      "sha256Original": "8b22af04e535c8fda876c3fddc1e70a919713c52eb77a29148cf386bb3e2de99"
+    },
+    {
+      "archivo": "final-resistencias-electricas.json.gz",
+      "bytesOriginal": 756529,
+      "bytesComprimido": 458857,
+      "sha256Original": "076a27fff98f6efde8f0cba55eb03498bea7c26e0c4a70af5733e447d1f9b6ee"
+    },
+    {
+      "archivo": "optimizado-controldenivel.json.gz",
+      "bytesOriginal": 745501,
+      "bytesComprimido": 456472,
+      "sha256Original": "b20a094570e813938cb56ef6469b1023bf70aafa6a837213ca71ddb697e8a10d"
+    },
+    {
+      "archivo": "optimizado-fabricaciones-a-medida.json.gz",
+      "bytesOriginal": 672803,
+      "bytesComprimido": 393536,
+      "sha256Original": "156962b4677ad25952105bf6893a8d62038e6fd6df75633340cb6861edb751f6"
+    },
+    {
+      "archivo": "optimizado-oviedo.json.gz",
+      "bytesOriginal": 747824,
+      "bytesComprimido": 451743,
+      "sha256Original": "01c16159c4cb1d5de7f2f28707ac52e045d8c93cddd369ff2d8ffa92531391f2"
+    }
+  ]
+}

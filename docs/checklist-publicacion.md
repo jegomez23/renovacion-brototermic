@@ -11,6 +11,7 @@
 - [ ] El hosting admite `.htaccess` con `mod_rewrite` y `mod_headers` (comprobado con un archivo de prueba en una carpeta temporal, que luego se borra).
 - [ ] `AllowOverride FileInfo` permite las reglas del `.com` y las del docroot propio del `.es` (`mod_alias`). Caché mediante `Cache-Control`, sin exigir `Indexes` ni `mod_expires`; comprobar que el hosting no añade cabeceras de caché contradictorias.
 - [ ] `config-formulario.php` creado en el servidor **fuera del docroot** (a partir de `src/contacto/config.example.php`), con el email de destino del cliente; `max_adjunto_mb` y `tipos` iguales a los de `site.json`. Formulario (`/contacto/enviar.php`) probado de principio a fin (A-2-03). La versión de PHP del hosting es compatible y sus límites `upload_max_filesize` y `post_max_size` son mayores que `site.formulario.maxAdjuntoMB`.
+- [ ] `dir_limites` de `config-formulario.php` apunta a una carpeta propia **fuera del docroot** en la que PHP puede escribir: tras el envío de prueba existe en ella un archivo con nombre de hash, y el log de PHP **no** tiene la línea «almacenamiento del limitador no disponible» (si la tiene, el formulario funciona pero sin límite por IP, D-015).
 - [ ] Docker Desktop instalado en el equipo de la Persona A y el entorno `tools/apache-pruebas/` arranca (`docker compose up -d --build`).
 - [ ] Día y hora de publicación acordados con el cliente, en horario de baja actividad y **nunca un viernes por la tarde**. Las dos personas disponibles durante las 2 horas siguientes.
 

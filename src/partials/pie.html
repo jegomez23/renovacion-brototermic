@@ -49,3 +49,8 @@
     </ul>
   </div>
 </footer>
+{{! Barra fija en móvil (< 768 px): sticky al final del body, así nunca tapa el pie. No sale en /contacto/. }}
+{{#if menu.barraMovil}}<nav class="barra-movil" aria-label="Contacto rápido">
+  <a class="barra-movil__accion" href="tel:{{menu.barraMovil.tel}}"><svg class="icono" aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>Llamar<span class="visualmente-oculto"> a {{menu.barraMovil.localidad}}: {{menu.barraMovil.telefono}}</span></a>
+  <a class="barra-movil__accion barra-movil__accion--presupuesto" href="/contacto/contacto.html#formulario">Pedir presupuesto</a>
+</nav>{{/if}}
