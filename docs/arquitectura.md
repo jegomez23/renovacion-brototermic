@@ -93,7 +93,7 @@ Todas las URLs son absolutas sobre `https://brototermic.com`. Las marcadas como 
 | Posición | Etiqueta | Destino |
 |---|---|---|
 | Logo | (logo BROTOTERMIC) | `/` |
-| 1 | Productos ▾ | Abre el megamenú. No es un enlace: cada familia tiene el suyo dentro del panel. |
+| 1 | Productos ▾ | Abre el megamenú. Con JS no es un enlace: cada familia tiene el suyo dentro del panel. Sin JS (o si `menu.js` falla) es un enlace a `/mapa-web.html` (PR #3, D-013). |
 | 2 | Fabricación a medida | `/fabricaciones-a-medida.html` |
 | 3 | Empresa | `/empresa.html` |
 | 4 | Asturias | `/oviedo/` |

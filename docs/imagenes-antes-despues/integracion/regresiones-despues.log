@@ -1,0 +1,21 @@
+
+> brototermic-web@0.9.0 test:interfaz
+> node tools/test-regresiones-interfaz.js
+
+OK búsqueda sensor devuelve categorías visibles
+OK Intro en familia conserva todos los resultados
+OK grupos coincidentes declaran expansión y bloqueo temporal
+OK clic en familia conserva todos los resultados
+OK vaciar búsqueda recupera acordeón y controles
+OK rechazo de mal.exe
+OK recuperación disponible tras rechazo
+OK continuar sin adjunto con teclado permite validar
+OK rechazo de uno.pdf, dos.pdf
+OK recuperación disponible tras rechazo
+OK continuar sin adjunto con teclado permite validar
+OK PDF válido conserva archivo y valida
+OK envío real sigue inactivo
+OK quitar adjunto no oculta otros errores
+OK sin JS conserva input nativo y oculta control mejorado
+OK sin JS conserva acceso a las 39 categorías
+OK sin errores JS, HTTP ni terceros

@@ -28,18 +28,18 @@
 | Sectores «Plástico, Tratamientos térmicos y galvánicos, Alimentación, Química, Fundición» | Solo los sectores que aparecen en /legacy (arquitectura.md, «Bloque de sectores»): «Fundición» no está |
 | Enlace «Aviso legal» en el pie | En /legacy el aviso legal va dentro de `privacidad.html`; no hay página propia |
 
-## Diferencias importantes entre los bocetos y lo construido (2026-10-10)
+## Diferencias importantes entre los bocetos y lo construido (2026-10-10, actualizado el 2026-10-12)
 
-Se apuntan para decidir; **no se han corregido**.
+Se apuntaron para decidir el 2026-10-10. Las que se han resuelto o decidido después lo indican.
 
-1. **Buscador visible bajo el hero.** El boceto lo pone en el inicio, a la vista; lo construido solo tiene el buscador de categorías dentro del megamenú (diseno.md §3.15).
-2. **Bloque de sectores industriales.** Está en el boceto y especificado en arquitectura.md («Bloque de sectores»), pero no está construido ni en el inicio ni en las familias.
-3. **Familias en móvil.** El boceto las muestra como una lista desplegable con miniatura; lo construido usa las mismas tarjetas con foto que en escritorio, en una columna (página más larga en móvil).
-4. **Botón fijo «Llamar» en móvil.** Está en el boceto; lo construido no lo tiene (el teléfono está en la cabecera y en la CTA).
+1. **Buscador visible bajo el hero.** **Resuelta el 2026-10-12** (diseno.md §3.17): buscador bajo el hero, con los resultados debajo.
+2. **Bloque de sectores industriales.** **Resuelta el 2026-10-12** (diseno.md §3.18): «Sectores y aplicaciones» en el inicio, solo con los 9 sectores de /legacy, cada uno enlazado a su categoría. Sin iconos (pasan a después de publicar).
+3. **Familias en móvil.** **Decidida el 2026-10-12** (revision-sesion-b.md, decisión 1): se mantiene la lista compacta de la PR #8 (miniatura de 88 px y título) en lugar del desplegable: cada familia tiene su página con intro y el megamenú ya lista las categorías.
+4. **Botón fijo «Llamar» en móvil.** **Resuelta el 2026-10-12** (diseno.md §3.16): barra fija «Llamar · Pedir presupuesto» por debajo de 768 px.
 5. **Hero.** El boceto usa una foto grande que llega al borde, con antetítulo y el rótulo «Precisión · Calor · Control»; lo construido usa `slide-1` a su tamaño real (910 px, D-004) junto al texto, sin antetítulo ni rótulo.
 6. **Iconos.** El boceto lleva iconos en la franja de confianza y en las tarjetas de familia; lo construido no lleva iconos (solo texto y foto).
 7. **Tarjetas de familia.** El boceto añade un enlace «Ver productos →»; lo construido hace clicable toda la tarjeta desde el título (y muestra el número de categorías o productos).
-8. **Bloque de fabricación a medida.** El boceto tiene foto propia, 3 ventajas y un botón «Adjuntar archivo»; lo construido tiene la miniatura y el texto de /legacy y el botón «Fabricación a medida» (las ventajas no están en /legacy).
+8. **Bloque de fabricación a medida.** Desde la PR #9 es el bloque principal del inicio, con el botón primario «Fabricación a medida». Siguen sin ponerse las 3 ventajas del boceto (no están en /legacy).
 9. **Marcas.** El boceto muestra logos; lo construido muestra los nombres en texto y la tira de logos antigua (`brototermic-marcas-representadas.jpg`) hasta que lleguen los SVG.
 10. **Menú.** El boceto: Inicio · Empresa · Productos · Fabricación a medida · Contacto, sin franja superior. Lo construido: Productos · Fabricación a medida · Empresa · Asturias · Contacto, con la franja azul de teléfonos y email (D-002) y el enlace a la landing de Asturias.
 11. **Pie.** El boceto tiene 4 columnas con «Quiénes somos» y «Marcas»; lo construido tiene catálogos PDF, productos, empresa y las dos sedes con dirección completa (NAP).

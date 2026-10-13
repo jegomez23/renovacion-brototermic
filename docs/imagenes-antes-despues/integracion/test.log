@@ -1,0 +1,100 @@
+
+> brototermic-web@0.9.0 test
+> node tools/test.js
+
+
+=== 1. build (modo piloto) ===
+test-auditor: 11/11 mutaciones detectadas.
+Auditoría SEO: 70 OK · 8 AVISO · 0 ERROR
+build.js (modo piloto) → /dist: 55 página(s), 6 archivos de /assets, 351 imágenes (+45 antiguas conservadas sin enlazar), 8 PDF; /dist-es: .htaccess del .es.
+  AVISO  site.json → formulario.envioActivo es false: el formulario no enviará nada hasta tener acceso al hosting.
+  AVISO  content/inicio.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/familias.json → resistencias-electricas: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/familias.json → controltemperatura: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/familias.json → controldenivel: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/familias.json → presionhumedad: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-inmersion.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-calentamientoaire.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-flexibles.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-infrarrojos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-tipo-cartucho.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-tipo-abrazadera.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-planas.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-calefaccion-industrial.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-atex.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-especiales-a-medida.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/resistencias-mantas-calefactoras.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-sondastemperatura.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-convertidores.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-cables-compensacion.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-indicadores-de-procesos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-videoregistradores.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-dataloggers.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-panelespc-software.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-accesorios-sondas.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-sensores-infrarrojos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-termometros.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-termostatos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-equipos-de-medicion.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controltemperatura-reles-estado-solido.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-niveles-de-flotador.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-interruptores-magneticos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-sensores-conductivos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-sensores-capacitivos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-transductores-magneticos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-sensores-de-presion.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-sensores-de-ultrasonidos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-niveles-rotativos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/controldenivel-reles-de-nivel.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/presionhumedad-sondas-de-humedad.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/presionhumedad-sensores-de-presion.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/ventilacion.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/equipos-perifericos.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/equiposderefrigeracion-refrigeradores-chillers.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  data/categorias/hornos-industriales.json: sigue marcado como _borrador (lo quita la Persona B al revisarlo)
+  AVISO  content/empresa.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  content/fabricaciones-a-medida.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  content/nuevos-productos.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  content/privacidad.html: [REVISIÓN CLIENTE] Revisión general de la política de privacidad y del aviso legal por el asesor del cliente.
+  AVISO  content/privacidad.html: [REVISIÓN CLIENTE] §4.19: confirmar si existe un «grupo BROTOTERMIC»; si no existe, se quitan todas sus menciones de este texto.
+  AVISO  content/privacidad.html: [REVISIÓN CLIENTE] Dirección: dato externo «C/ Pintor Mauro Ortiz de Urbina, 7 bajo» pendiente de confirmar (AGENTS.md §12, pendiente 4).
+  AVISO  content/privacidad.html: [REVISIÓN CLIENTE] §4.20: tratamiento de los archivos adjuntos del formulario. Falta que el cliente indique cuánto tiempo conserva los correos con adjuntos.
+  AVISO  content/privacidad.html: [REVISIÓN CLIENTE] Transferencias internacionales: el texto de /legacy justificaba la transferencia a Microsoft con el acuerdo Privacy Shield, que el TJUE anuló en 2020 (sentencia Schrems II). Se ha quitado esa justificación y se describe solo el hecho (plan-contenido.md §4.24, decisión D-011). El asesor del cliente debe indicar la base de la transferencia (por ejemplo, el Marco de Privacidad de Datos UE-EE. UU. de 2023 o cláusulas contractuales tipo) y revisar el párrafo siguiente, que la basa en el consentimiento.
+  AVISO  content/privacidad.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  content/cookies.html: [REVISIÓN CLIENTE] Comprobar que sigue siendo cierto al publicar: si se añade analítica, mapas incrustados o reCAPTCHA, hay que describir sus cookies y valorar el banner (AGENTS.md §12, pendiente 10).
+  AVISO  content/cookies.html: [REVISIÓN CLIENTE] Revisión general de la política de cookies por el asesor del cliente (plan-contenido.md §4).
+  AVISO  content/cookies.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  content/contacto.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  content/oviedo.html: sigue marcado como borrador (lo quita la Persona B al revisarlo)
+  AVISO  Dato externo pendiente de confirmar por el cliente: site.fundacion
+  AVISO  Dato externo pendiente de confirmar por el cliente: site.sedes.vitoria.direccion
+
+Sin errores (61 avisos).
+
+=== 2. test-auditor + auditor SEO (modo publicación) ===
+test-auditor: 11 mutaciones detectadas.
+Auditoría SEO (modo publicacion): 70 OK · 8 AVISO · 0 ERROR → docs/auditoria-seo.md
+
+=== 3. comprobar-dist ===
+1. sitemap.xml: 60 URLs (52 páginas + 8 PDF) · respuestas: 60 × 200
+2. robots.txt:
+     User-agent: *
+     Allow: /
+
+     Sitemap: https://brototermic.com/sitemap.xml
+3. canonical: 52 de 52 páginas indexables con un canonical absoluto igual a su URL
+4. 404.html: noindex sí · canonical no · en sitemap no · ErrorDocument en .htaccess sí
+5. páginas huérfanas: 0 (la página menos enlazada recibe enlaces desde 51 páginas)
+
+Todo correcto.
+
+=== 4. comprobar-publicable ===
+/dist y /dist-es: 470 archivos, todos publicables.
+
+=== Resumen de npm run test ===
+ok     1. build (modo piloto)
+ok     2. test-auditor + auditor SEO (modo publicación)
+ok     3. comprobar-dist
+ok     4. comprobar-publicable
+
+Todo correcto.

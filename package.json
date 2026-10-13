@@ -12,6 +12,9 @@
     "build": "node build.js",
     "build:publicacion": "node build.js --modo=publicacion",
     "test": "node tools/test.js",
-    "validar": "node tools/validar.js"
+    "test:interfaz": "node tools/test-regresiones-interfaz.js",
+    "validar": "node tools/validar.js",
+    "build:preview": "node build.js --modo=preview",
+    "preview": "node tools/servir.js 8001 --carpeta=dist-preview"
   }
 }

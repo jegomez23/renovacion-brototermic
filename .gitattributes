@@ -1,3 +1,8 @@
+# Texto: LF en el repositorio Y en la copia de trabajo, en Windows también (evita que «npm run test» deje
+# docs/auditoria-seo.md como modificado solo por los fines de línea; revision-sesion-b.md, R-26).
+# Las reglas de abajo mandan sobre esta: /legacy byte a byte y binarios sin tocar.
+* text=auto eol=lf
+
 # /legacy es una copia de la web antigua: se guarda byte a byte, sin convertir fines de línea
 legacy/** -text
 

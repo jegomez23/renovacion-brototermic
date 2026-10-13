@@ -1,0 +1,29 @@
+[
+  {
+    "ruta": "/controldenivel.html",
+    "fecha": "2026-10-13T07:28:25.521Z",
+    "performance": 98,
+    "accessibility": 100,
+    "lcp": 2326.5504,
+    "cls": 0,
+    "bytes": 308652
+  },
+  {
+    "ruta": "/fabricaciones-a-medida.html",
+    "fecha": "2026-10-13T07:28:31.545Z",
+    "performance": 97,
+    "accessibility": 100,
+    "lcp": 2477.0765,
+    "cls": 0,
+    "bytes": 287751
+  },
+  {
+    "ruta": "/oviedo/",
+    "fecha": "2026-10-13T07:28:37.420Z",
+    "performance": 97,
+    "accessibility": 100,
+    "lcp": 2477.1103,
+    "cls": 0,
+    "bytes": 364830
+  }
+]

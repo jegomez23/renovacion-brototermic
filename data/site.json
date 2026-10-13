@@ -58,10 +58,22 @@
     { "nombre": "Remberg", "logo": null },
     { "nombre": "Amco", "logo": null }
   ],
+  "sectores": [
+    { "nombre": "Industria alimentaria", "categoria": "resistencias-inmersion" },
+    { "nombre": "Industria farmacéutica", "categoria": "controldenivel-sensores-capacitivos" },
+    { "nombre": "Industria química y petroquímica", "categoria": "resistencias-atex" },
+    { "nombre": "Galvanotecnia", "categoria": "resistencias-inmersion" },
+    { "nombre": "Enotecnia", "categoria": "resistencias-inmersion" },
+    { "nombre": "Transformación de termoplásticos", "categoria": "equipos-perifericos" },
+    { "nombre": "Industria papelera, textil y del plástico", "categoria": "controltemperatura-sensores-infrarrojos" },
+    { "nombre": "Sector agropecuario", "categoria": "resistencias-infrarrojos" },
+    { "nombre": "Salas de servidores y museos", "categoria": "presionhumedad-sondas-de-humedad" }
+  ],
   "catalogos": [
     { "titulo": "Catálogo de instrumentación", "pdf": "/docs/catalogo-instrumentacion.pdf", "familias": ["controltemperatura", "controldenivel", "presionhumedad"] },
     { "titulo": "Catálogo de resistencias calefactoras", "pdf": "/docs/catalogo-Brototermic-resistencias.pdf", "familias": ["resistencias-electricas"] }
   ],
+  "efectos": { "heroRotativo": true, "aparicionScroll": true },
   "formulario": {
     "accion": "/contacto/enviar.php",
     "envioActivo": false,

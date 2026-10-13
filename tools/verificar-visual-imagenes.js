@@ -13,7 +13,11 @@ const salida = path.resolve(process.argv[3] || 'docs/imagenes-antes-despues/plan
 const chromePath = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const base = 'http://127.0.0.1:8879';
 const pausa = ms => new Promise(r => setTimeout(r, ms));
-const paginas = [['inicio', '/'], ['categoria', '/resistencias-inmersion.html'], ['fabricaciones', '/fabricaciones-a-medida.html'], ['empresa', '/empresa.html'], ['contacto', '/contacto/contacto.html'], ['oviedo', '/oviedo/']];
+const integracion = process.argv.includes('--integracion');
+const paginas = integracion
+  ? ['resistencias-electricas', 'controltemperatura', 'controldenivel', 'presionhumedad', 'fabricaciones-a-medida', 'oviedo', 'contacto'].map(n => [n, n === 'oviedo' ? '/oviedo/' : n === 'contacto' ? '/contacto/contacto.html' : '/' + n + '.html'])
+  : [['inicio', '/'], ['categoria', '/resistencias-inmersion.html'], ['fabricaciones', '/fabricaciones-a-medida.html'], ['empresa', '/empresa.html'], ['contacto', '/contacto/contacto.html'], ['oviedo', '/oviedo/']];
+const anchos = integracion ? [320, 390, 768, 1280, 1440] : [320, 390, 768, 1280];
 async function main() {
   fs.mkdirSync(salida, { recursive: true });
   const servidor = await new Promise(r => servir(8879, r));
@@ -48,10 +52,13 @@ async function main() {
       return r.result.value;
     };
     await Promise.all(['Page.enable', 'Runtime.enable', 'Network.enable'].map(m => enviar(m)));
+    // Capturas estables: no dejar secciones pendientes de animación fuera del viewport.
+    if (integracion) await enviar('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
     const resultados = [];
-    for (const [nombre, ruta] of paginas) for (const ancho of [320, 390, 768, 1280]) {
+    for (const [nombre, ruta] of paginas) for (const ancho of anchos) {
       await enviar('Emulation.setDeviceMetricsOverride', { width: ancho, height: 900, deviceScaleFactor: 1, mobile: ancho < 768 });
       await enviar('Page.navigate', { url: base + ruta });
+      await pausa(200);
       for (let n = 0; n < 60 && await evaluar('document.readyState') !== 'complete'; n++) await pausa(100);
       await evaluar('document.fonts.ready.then(() => true)');
       await evaluar('Promise.all([...document.images].map(i => { i.loading="eager"; return i.decode().catch(() => {}); })).then(() => true)');
@@ -80,7 +87,7 @@ async function main() {
         arrastrar([archivo('arrastre.pdf')]);check('drop PDF',input.files[0]?.name==='arrastre.pdf' && !input.hasAttribute('aria-invalid'));
         arrastrar([archivo('uno.pdf'),archivo('dos.pdf')]);check('drop multiple vacia seleccion',input.files.length===0 && error.textContent.includes('un solo archivo'));
         const form=document.querySelector('form');const submit=new Event('submit',{bubbles:true,cancelable:true});form.dispatchEvent(submit);check('error persiste al validar',submit.defaultPrevented && error.textContent.includes('un solo archivo'));
-        seleccionar(archivo('plano-con-un-nombre-'+('largo-'.repeat(30))+'.pdf'));check('nombre largo',document.documentElement.scrollWidth===innerWidth);
+        seleccionar(archivo('plano-con-un-nombre-'+('largo-'.repeat(30))+'.pdf'));check('nombre largo',document.documentElement.scrollWidth<=innerWidth);
         check('envio sigue inactivo',form.querySelector('[type="submit"]').disabled);
         form.reset();return tests;
       })()`);
@@ -97,7 +104,7 @@ async function main() {
     }
     if (incidencias.length) throw Error(incidencias.join('\n'));
     fs.writeFileSync(path.join(salida, `${etapa}-resultados.json`), JSON.stringify({ fecha: new Date().toISOString(), resultados, incidencias }, null, 2) + '\n');
-    console.log(`${etapa}: ${paginas.length * 4} combinaciones sin desborde, errores JS, imágenes rotas ni terceros; capturas a 390/1280.`);
+    console.log(`${etapa}: ${paginas.length * anchos.length} combinaciones sin desborde, errores JS, imágenes rotas ni terceros; capturas a 390/1280.`);
   } finally { if (ws) ws.close(); chrome.kill(); servidor.close(); }
 }
 main().catch(e => { console.error(e); process.exitCode = 1; });

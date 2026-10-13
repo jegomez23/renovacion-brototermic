@@ -1,0 +1,15 @@
+OK búsqueda sensor devuelve categorías visibles
+FALLO Intro en familia conserva todos los resultados
+FALLO grupos coincidentes declaran expansión y bloqueo temporal
+FALLO clic en familia conserva todos los resultados
+OK vaciar búsqueda recupera acordeón y controles
+OK rechazo de mal.exe
+FALLO recuperación disponible tras rechazo
+OK rechazo de uno.pdf, dos.pdf
+FALLO recuperación disponible tras rechazo
+OK PDF válido conserva archivo y valida
+OK envío real sigue inactivo
+OK quitar adjunto no oculta otros errores
+FALLO sin JS conserva input nativo y oculta control mejorado
+OK sin JS conserva acceso a las 39 categorías
+OK sin errores JS, HTTP ni terceros

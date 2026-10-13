@@ -67,17 +67,30 @@
   var zona = form.querySelector('[data-adjunto]');
   var nombreArchivo = form.querySelector('[data-adjunto-nombre]');
   var instruccion = form.querySelector('[data-adjunto-arrastre]');
+  var quitarAdjunto = form.querySelector('[data-adjunto-quitar]');
 
   function actualizarAdjunto() {
     var archivo = adjunto.files && adjunto.files[0];
     nombreArchivo.textContent = archivo ? 'Archivo seleccionado: ' + archivo.name : 'Ningún archivo seleccionado.';
     zona.classList.toggle('adjunto--error', !!errorDe(adjunto));
     mostrar(adjunto, errorDe(adjunto));
+    if (quitarAdjunto) quitarAdjunto.hidden = !archivo && !errorDe(adjunto);
   }
 
   if (adjunto && zona && nombreArchivo && instruccion) {
     nombreArchivo.hidden = false;
     actualizarAdjunto();
+    if (quitarAdjunto) quitarAdjunto.addEventListener('click', function () {
+      adjunto.value = '';
+      errorArrastre = '';
+      actualizarAdjunto();
+      if (resumen && !resumen.hidden) {
+        var restantes = campos.filter(function (campo) { return !!errorDe(campo); }).length;
+        resumen.hidden = restantes === 0;
+        resumen.textContent = restantes === 1 ? 'Revisa 1 campo del formulario.' : 'Revisa ' + restantes + ' campos del formulario.';
+      }
+      adjunto.focus();
+    });
     adjunto.addEventListener('change', function () {
       errorArrastre = '';
       actualizarAdjunto();

@@ -1,0 +1,216 @@
+{
+  "fecha": "2026-10-13T07:26:07.717Z",
+  "resultados": [
+    {
+      "nombre": "resistencias-electricas",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "resistencias-electricas",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "resistencias-electricas",
+      "ancho": 768,
+      "scroll": 753,
+      "imagenes": 0
+    },
+    {
+      "nombre": "resistencias-electricas",
+      "ancho": 1280,
+      "scroll": 1265,
+      "imagenes": 0
+    },
+    {
+      "nombre": "resistencias-electricas",
+      "ancho": 1440,
+      "scroll": 1425,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controltemperatura",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controltemperatura",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controltemperatura",
+      "ancho": 768,
+      "scroll": 753,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controltemperatura",
+      "ancho": 1280,
+      "scroll": 1265,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controltemperatura",
+      "ancho": 1440,
+      "scroll": 1425,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controldenivel",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controldenivel",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controldenivel",
+      "ancho": 768,
+      "scroll": 753,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controldenivel",
+      "ancho": 1280,
+      "scroll": 1265,
+      "imagenes": 0
+    },
+    {
+      "nombre": "controldenivel",
+      "ancho": 1440,
+      "scroll": 1425,
+      "imagenes": 0
+    },
+    {
+      "nombre": "presionhumedad",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "presionhumedad",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "presionhumedad",
+      "ancho": 768,
+      "scroll": 753,
+      "imagenes": 0
+    },
+    {
+      "nombre": "presionhumedad",
+      "ancho": 1280,
+      "scroll": 1265,
+      "imagenes": 0
+    },
+    {
+      "nombre": "presionhumedad",
+      "ancho": 1440,
+      "scroll": 1425,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones-a-medida",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones-a-medida",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones-a-medida",
+      "ancho": 768,
+      "scroll": 753,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones-a-medida",
+      "ancho": 1280,
+      "scroll": 1265,
+      "imagenes": 0
+    },
+    {
+      "nombre": "fabricaciones-a-medida",
+      "ancho": 1440,
+      "scroll": 1425,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 768,
+      "scroll": 753,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 1280,
+      "scroll": 1265,
+      "imagenes": 0
+    },
+    {
+      "nombre": "oviedo",
+      "ancho": 1440,
+      "scroll": 1425,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 320,
+      "scroll": 320,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 390,
+      "scroll": 390,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 768,
+      "scroll": 753,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 1280,
+      "scroll": 1265,
+      "imagenes": 0
+    },
+    {
+      "nombre": "contacto",
+      "ancho": 1440,
+      "scroll": 1425,
+      "imagenes": 0
+    }
+  ],
+  "incidencias": []
+}

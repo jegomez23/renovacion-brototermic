@@ -1,0 +1,44 @@
+[
+  {
+    "pagina": "resistencias-electricas.html",
+    "todasLasVariantes": true,
+    "alt": true,
+    "identificada": true,
+    "dimensiones": true
+  },
+  {
+    "pagina": "controltemperatura.html",
+    "todasLasVariantes": true,
+    "alt": true,
+    "identificada": true,
+    "dimensiones": true
+  },
+  {
+    "pagina": "controldenivel.html",
+    "todasLasVariantes": true,
+    "alt": true,
+    "identificada": true,
+    "dimensiones": true
+  },
+  {
+    "pagina": "presionhumedad.html",
+    "todasLasVariantes": true,
+    "alt": true,
+    "identificada": true,
+    "dimensiones": true
+  },
+  {
+    "pagina": "fabricaciones-a-medida.html",
+    "todasLasVariantes": true,
+    "alt": true,
+    "identificada": true,
+    "dimensiones": true
+  },
+  {
+    "pagina": "oviedo/",
+    "todasLasVariantes": true,
+    "alt": true,
+    "identificada": true,
+    "dimensiones": true
+  }
+]

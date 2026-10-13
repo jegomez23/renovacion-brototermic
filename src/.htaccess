@@ -41,8 +41,10 @@ RewriteBase /
 # ErrorDocument conserva el 404 original. Su petición interna no debe volver a ejecutar las redirecciones
 # históricas ni la canonicalización, que usa THE_REQUEST (la ruta original, incluso si era un archivo oculto).
 # Solo se exime /404.html cuando Apache lo sirve como documento de error; una petición directa sigue las reglas.
+# [L] y no [END]: sin sustitución («-») no hay segunda pasada, así que hacen lo mismo, y [END] no existe antes de
+# Apache 2.3.9 (daría un 500 en toda la web). El auditor comprueba esta subpetición (simularErrorDocument).
 RewriteCond %{ENV:REDIRECT_STATUS} =404
-RewriteRule ^404\.html$ - [END]
+RewriteRule ^404\.html$ - [L]
 
 # ---------- 0. Archivos ocultos y copias de seguridad: 404 (auditoría final, M-08) ----------
 # Con mod_rewrite (ya imprescindible) y no con «Require all denied», que exige otro override (AuthConfig) y podría
@@ -180,10 +182,11 @@ RewriteRule ^ - [R=404,L]
 
   # CSP en modo SOLO INFORME: el navegador no bloquea nada, solo anota en la consola lo que se habría bloqueado.
   # Permite únicamente recursos del propio dominio y el único script en línea de la web (head.html: añade la clase
-  # «js»), identificado por su hash. El JSON-LD no se ejecuta, así que la CSP no le afecta.
+  # «js» y la quita si menu.js no llega a terminar), identificado por su hash. El JSON-LD no se ejecuta, así que la
+  # CSP no le afecta.
   # Para activarla: revisar la consola de inicio, una categoría, contacto y /oviedo/ en producción; si no hay avisos,
   # cambiar «Content-Security-Policy-Report-Only» por «Content-Security-Policy».
-  # SI SE CAMBIA EL SCRIPT EN LÍNEA de src/partials/head.html, hay que recalcular el hash:
-  #   node -e "console.log(require('crypto').createHash('sha256').update(\"document.documentElement.classList.add('js')\").digest('base64'))"
-  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'sha256-Du+OJKJSbdUgz5nrHeWWINvez6XKDDU/tyj/5c2uvwo='; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+  # SI SE CAMBIA EL SCRIPT EN LÍNEA de src/partials/head.html, hay que poner aquí su nuevo hash: build.js da ERROR
+  # si no coincide y muestra el valor correcto (sha256 en base64 del contenido exacto entre <script> y </script>).
+  Header always set Content-Security-Policy-Report-Only "default-src 'self'; script-src 'self' 'sha256-dk/iQZDIwG4+leXHtmu8eufYued7UaLaEJitweq3RIU=';style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
 </IfModule>

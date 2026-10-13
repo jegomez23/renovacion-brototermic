@@ -11,7 +11,7 @@
 >
 > **Dónde estamos, en 1 minuto: [docs/estado.md](docs/estado.md)** (qué está hecho, cómo ver la web y qué bloquea la publicación).
 >
-> Última revisión: 2026-10-11.
+> Última revisión: 2026-10-12.
 
 ## Documentos del proyecto (`/docs`)
 
@@ -126,7 +126,7 @@ El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/a
     - **Casilla RGPD** obligatoria: sin ella, el envío se rechaza también en el servidor.
     - Cabeceras de correo saneadas (sin saltos de línea en nombre, email ni asunto, para evitar la inyección de cabeceras), sin mostrar errores de PHP al usuario y sin credenciales en el repositorio (si hace falta SMTP, la configuración vive en el servidor, fuera de `/dist`).
     - Sin JS funciona igual: el formulario hace un POST normal y el script devuelve una página de éxito o de error. Con JS, solo se mejora la validación en el navegador.
-    - **Límite de envíos por IP** (se guarda solo un hash de la IP con sal, nunca la IP).
+    - **Límite de envíos por IP** (se guarda solo un hash de la IP con sal, nunca la IP). Si su almacenamiento falla, el envío **se acepta** y se anota en el log: perder una petición de presupuesto es peor que algo de spam (D-015).
     - Responde siempre con una redirección a `/contacto/gracias.html` o a `/contacto/error.html#motivo` (páginas noindex): igual con y sin JS.
     - Sin reCAPTCHA ni servicios de terceros.
 - **Generador mínimo `build.js`** (Node ≥ 18, **sin dependencias npm**: solo `fs`, `path` y otros módulos nativos). Combina `/src`, `/data`, `/content`, `/assets`, `/images` y los PDF de `/docs`, y escribe HTML estático en `/dist`.
@@ -220,7 +220,7 @@ Especificación completa en [docs/schema.md](docs/schema.md). Resumen:
   - **Retoque manual solo en 3 fotos del piloto con dominante de color**, y únicamente en **fondo e iluminación** (nunca forma, rótulos ni color del producto): `brototermic-industriaalimentaria`, `brototermic-calefactores` y `brototermic-liquidos-noagresivos` (medidas: [docs/plan-imagenes.csv](docs/plan-imagenes.csv)). El archivo retocado conserva el nombre y las medidas.
   - **Hero del inicio:** `slide-1` se sirve a **910 px** (su tamaño real), con `slide-1.webp` y `slide-1.jpg` de respaldo, sin `loading="lazy"`. Única excepción además del hero: la **tira de logos de marcas** del inicio (`brototermic-marcas-representadas.jpg`, 990 × 80), con `loading="lazy"`, hasta que lleguen los SVG de las marcas (decisión del 2026-10-10, [docs/decisiones.md](docs/decisiones.md) D-010).
   - Las fotos mejores que pueda dar el cliente o los fabricantes (pregunta 21) sustituyen a las originales con el mismo nombre: la URL no cambia, así que no afecta al SEO.
-- Todas las `<img>` llevan **`width` y `height`**, **`loading="lazy"` excepto la imagen principal (hero)**, que lleva `fetchpriority="high"`, y un **`alt` descriptivo real** (qué producto es y qué se ve), sin «BROTOTERMIC, S.L.». Los alts propuestos están en [docs/plan-imagenes.csv](docs/plan-imagenes.csv) y se revisan con la imagen delante.
+- Todas las `<img>` llevan **`width` y `height`**, **`loading="lazy"` excepto la imagen principal (hero)**, que lleva `fetchpriority="high"`, y un **`alt` descriptivo real** (qué producto es y qué se ve), sin «BROTOTERMIC, S.L.». **El alt empieza por el nombre del producto y su modelo o designación tal como figuran en /legacy** (CNM 10, PTC, Pt100, IP44…) y sigue con lo que se ve; si es un dibujo o un render, se dice al final (D-014; `build.js` avisa si falta el modelo del nombre, y al publicar es error). Una misma foto lleva el mismo alt en todas las páginas. Los alts propuestos están en [docs/plan-imagenes.csv](docs/plan-imagenes.csv) (sincronizado con `data/`) y se revisan con la imagen delante.
 - **IA solo para RETOCAR** (fondo, nitidez, ampliación). **Nunca para inventar un producto** ni cambiar su forma, sus rótulos o su color. Las imágenes de ambiente o de portada sí pueden generarse, siempre que no muestren un producto concreto como si fuera del catálogo.
 - **Logo y logos de marcas en SVG cuando sea posible.** En /legacy no hay ningún SVG: el logo es `images/logo.png` (385 × 89, para fondo oscuro). El SVG se ha pedido al cliente.
 - **Nombres de archivo nuevos:** minúsculas, con guiones, sin tildes ni ñ.
@@ -264,7 +264,7 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── README.md
 ├── .gitignore
 ├── .gitattributes       ← /legacy se guarda byte a byte; formatos binarios marcados
-├── package.json         ← SOLO scripts (dev, build, build:publicacion, test, validar): ninguna dependencia
+├── package.json         ← SOLO scripts (dev, build, build:publicacion, build:preview, preview, test, validar): ninguna dependencia
 ├── build.js             ← generador (Node ≥ 18, sin dependencias npm)            [A]
 ├── legacy/              ← copia de la web actual. VERSIONADA. SOLO LECTURA, NUNCA se edita
 │   ├── com/brototermic.com/   (incluye contacto.html, oviedo/ y sitemap.xml)
@@ -290,7 +290,15 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 │   ├── lib/htaccess.js  ← simulador del subconjunto de .htaccess que usamos (el auditor comprueba las 301 contra el archivo real)
 │   ├── importar-legacy.js
 │   ├── probar-redirecciones.sh
+│   ├── test-apache.js   ← regresión contra un Apache local (127.0.0.1, http y https, AllowOverride All y FileInfo)
+│   ├── test-limitador.php ← pruebas PHP del límite por IP de enviar.php (D-015); las ejecuta el CI
+│   ├── revision-borradores.js ← vista local de los borradores frase a frase, con su origen en /legacy o en los PDF (tools/salida/)
+│   ├── aprobar-borradores.js ← quita la marca de borrador de las piezas aprobadas en esa vista
+│   ├── datos/catalogos-pdf.txt ← texto de los catálogos PDF, solo para buscar orígenes
+│   ├── imagenes.js      ← recorta, tapa y exporta WebP/JPG con Chrome (recetas en datos/imagenes.json; fuentes en datos/fuentes/)
+│   ├── datos/demo/      ← imágenes SOLO de la versión de demostración (D-016)
 │   └── apache-pruebas/  ← Apache en Docker (imagen httpd): dos vhosts, .com → /dist y .es → /dist-es, como en producción
+├── .github/             ← CI (workflows/pruebas.yml: test, W3C y PHP en cada push y PR) y plantilla de PR
 ├── data/                                                                       [B]
 │   ├── site.json        ← empresa, sedes, marcas, catálogos, formulario
 │   ├── familias.json    ← familias, categorías y orden del megamenú
@@ -303,7 +311,8 @@ Especificación completa (tokens, componentes y wireframes) en [docs/diseno.md](
 ├── images/              ← TODAS las imágenes públicas (se publican en /images/)      [B]
 ├── docs/                ← PDF públicos (/docs/*.pdf) + planificación del proyecto (no se publica) [B: PDF; ambos: planes]
 ├── dist/                ← salida generada por build.js: docroot del .com. NO se edita a mano. No está en git
-└── dist-es/             ← salida de build.js: docroot del .es (solo su .htaccess). No está en git
+├── dist-es/             ← salida de build.js: docroot del .es (solo su .htaccess). No está en git
+└── dist-preview/        ← versión de DEMOSTRACIÓN (build:preview, D-017): noindex, para Netlify Drop. Nunca va al hosting real. No está en git
 ```
 
 ### Reglas de la estructura
@@ -405,7 +414,9 @@ Una página está lista cuando cumple todo esto:
 | 2026-10-09 | **Revisión de Codex:** sin comodín en el `.es` (301 solo URLs conocidas, 404 el resto); formulario compatible con `rd-mailform.php` y sin envío real hasta tener el hosting; `build.js` con modos `piloto` y `publicacion`; bloque de sectores solo con sectores de /legacy y sin URLs nuevas; alts de RE92 y Catálogos corregidos; menú según el patrón *Disclosure Navigation* del W3C, `prefers-reduced-motion` y prueba a 320 px. |
 | 2026-10-10 | **Página 404 propia** (`/404.html`, `noindex`, sin canonical, fuera del sitemap; `ErrorDocument` en el `.htaccess`) y **tira de logos de marcas a 990 px** con `loading="lazy"` como excepción a la regla de 480 px: aprobadas (D-010). |
 | 2026-10-10 | **Correcciones de la auditoría final (D-011):** auditor con datos técnicos exactos, cobertura por producto, 301 comprobadas contra el `.htaccess` real y pruebas de mutación obligatorias (`tools/test-auditor.js`); todas las imágenes antiguas de `/images/` y `/oviedo/images/` publicadas (ninguna URL de imagen en 404); solo se sube `/dist` y `/dist-es` (lista blanca: `tools/comprobar-publicable.js`) y la web antigua no se mueve hasta que el formulario nuevo funcione; el `.es` con docroot y `.htaccess` propios (`/dist-es`, solo `mod_alias`); `.htaccess` del `.com` sin `Options`, `DirectoryIndex` ni `<If>`; formulario con `enviar.php` (no `rd-mailform.php`); `/oviedo/` con todo su texto antiguo; alts copiados corregidos; privacidad sin el Privacy Shield como vigente. |
-| 2026-10-11 | **Imágenes aprobadas del inicio:** Productos a medida usa `brototermic-calefactor-inmersion.jpg` sin atribuir fabricación propia a la foto; las tarjetas de temperatura, nivel y resistencias usan copias nuevas de `slide-3.jpg`, `slide-4.jpg` y `oviedo/images/electticfor-brototermic-oviedo.jpg`. Selección explícita en `modeloInicio`, sin reordenar productos ni cambiar imágenes de otras páginas. Catálogos usa `portada-catalogos-provisional.png`, composición de las primeras páginas completas de los dos PDF originales, sobre blanco y sin alterar contenido ni enlaces; provisional hasta confirmar vigencia. Todos los originales y sus URLs se conservan. |
+| 2026-10-11 | **Imágenes aprobadas del inicio:** Productos a medida usa `brototermic-calefactor-inmersion.jpg` sin atribuir fabricación propia a la foto; las tarjetas de temperatura, nivel y resistencias usan copias nuevas de `slide-3.jpg`, `slide-4.jpg` y `oviedo/images/electticfor-brototermic-oviedo.jpg`. Selección explícita en `modeloInicio`, sin reordenar productos ni cambiar imágenes de otras páginas. Catálogos usa `portada-catalogos-provisional.png`, composición de las primeras páginas completas de los dos PDF originales, sobre blanco y sin alterar contenido ni enlaces; provisional hasta confirmar vigencia. Todos los originales y sus URLs se conservan. Detalle de las 9 PR de la Persona B en D-013. |
+| 2026-10-12 | **Presentación al cliente (D-016 a D-018):** modo `--modo=preview` → `/dist-preview` (noindex, nunca al hosting real); hero de la demo con imagen IA y la placa tapada (solo en la demo; en producción, `slide-1` con WebP y `srcset`); diseño en franjas con antetítulos, hero editorial, recortes de tarjetas y CTA bajo el H1 de familias y categorías. |
+| 2026-10-12 | **Revisión de la sesión de la Persona B** ([docs/revision-sesion-b.md](docs/revision-sesion-b.md)): plan aprobado. **Alts (D-014):** el alt empieza por el nombre y el modelo o designación de /legacy y sigue con lo que se ve (`build.js` lo comprueba). **Limitador (D-015):** si falla su almacenamiento, el envío se acepta y se anota en el log. `.htaccess` con `[L]` (no `[END]`, Apache 2.2); menú que vuelve a la versión sin JS si `menu.js` no termina; **CI en GitHub Actions** y protección de `main` con revisión obligatoria; LF en todo el repositorio. |
 
 ---
 

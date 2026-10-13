@@ -1,12 +1,19 @@
 <?php
 // php tools/test-limitador.php: pruebas aisladas del código real, sin servidor ni correo real.
-// Compatible con PHP 7.4. Los fallos de E/S se inyectan en un namespace de pruebas.
+// Compatible con PHP 7.4. Los fallos de E/S se inyectan en un namespace de pruebas. Se ejecuta en el CI.
+// Criterio (D-015): si el almacenamiento del limitador falla, dentroDelLimite() devuelve null y el envío SE ACEPTA,
+// con una línea en el log; el campo trampa y la validación de los campos siguen funcionando igual.
 declare(strict_types=1);
 namespace PruebaLimitador;
 
 $modo = '';
 $correos = 0;
 $respuesta = [];
+$registro = [];
+function error_log($mensaje) {
+    $GLOBALS['registro'][] = (string) $mensaje;
+    return true; // Capturador: no escribe en el log del sistema.
+}
 function mkdir($ruta, $permisos = 0777, $recursivo = false) {
     return $GLOBALS['modo'] === 'mkdir' ? false : \mkdir($ruta, $permisos, $recursivo);
 }
@@ -75,14 +82,16 @@ function limpiar(string $dir): void {
 $fuente = file_get_contents(__DIR__ . '/../src/contacto/enviar.php');
 $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 if (($argv[1] ?? '') === '--post') {
-    $modo = $argv[2];
+    // Caso «fallo+variante»: el fallo de E/S que se inyecta (o «normal») y, opcionalmente, una variante del formulario
+    [$modo, $variante] = array_pad(explode('+', $argv[2], 2), 2, '');
+    if ($modo === 'honeypot' || $modo === 'rgpd') { $variante = $modo; $modo = ''; }
     \putenv('BROTOTERMIC_FORMULARIO_CONFIG=' . $argv[3]);
     $_SERVER['REQUEST_METHOD'] = 'POST';
     $_POST = ['name' => 'Prueba local', 'email' => 'prueba@example.invalid', 'message' => 'Prueba aislada', 'rgpd' => 'si'];
-    if ($modo === 'honeypot') $_POST['web'] = 'robot';
-    if ($modo === 'rgpd') unset($_POST['rgpd']);
+    if ($variante === 'honeypot') $_POST['web'] = 'robot';
+    if ($variante === 'rgpd') unset($_POST['rgpd']);
     \register_shutdown_function(function () {
-        echo json_encode(['respuesta' => $GLOBALS['respuesta'], 'correos' => $GLOBALS['correos']]);
+        echo json_encode(['respuesta' => $GLOBALS['respuesta'], 'correos' => $GLOBALS['correos'], 'registro' => $GLOBALS['registro']]);
     });
     // Se ejecuta el endpoint real con header() y mail() sustituidos únicamente en este proceso.
     $codigo = str_replace(['<?php', 'declare(strict_types=1);'], '', $fuente);
@@ -148,12 +157,25 @@ try {
     $configArchivo = $raiz . '/config.php';
     $c = config($raiz . '/endpoint') + ['destino' => 'destino@example.invalid', 'remitente' => 'web@example.invalid'];
     \file_put_contents($configArchivo, '<?php return ' . var_export($c, true) . ';');
-    foreach (['mkdir', 'fopen', 'flock', 'lectura', 'rewind', 'escritura', 'parcial', 'ftruncate', 'fflush', 'rgpd', 'honeypot', 'normal'] as $caso) {
+    $fallosAlmacenamiento = ['mkdir', 'fopen', 'flock', 'lectura', 'rewind', 'escritura', 'parcial', 'ftruncate', 'fflush'];
+    // D-015: con el almacenamiento roto, el envío se acepta (gracias + 1 correo) y queda una línea en el log
+    foreach ($fallosAlmacenamiento as $caso) {
         $r = json_decode(resultado(proceso(['--post', $caso, $configArchivo])), true);
-        $destino = $caso === 'rgpd' ? '/contacto/error.html#rgpd'
-            : (in_array($caso, ['normal', 'honeypot'], true) ? '/contacto/gracias.html' : '/contacto/error.html#configuracion');
+        comprobar(in_array(['Location: /contacto/gracias.html', 303], $r['respuesta'], true), 'fallo de almacenamiento acepta el envío: ' . $caso);
+        comprobar($r['correos'] === 1, 'fallo de almacenamiento envía el correo: ' . $caso);
+        comprobar((bool) preg_grep('/limitador no disponible/', $r['registro']), 'fallo de almacenamiento queda en el log: ' . $caso);
+    }
+    // Con el almacenamiento roto, el campo trampa y la validación siguen actuando
+    foreach (['mkdir+honeypot' => '/contacto/gracias.html', 'fopen+rgpd' => '/contacto/error.html#rgpd'] as $caso => $destino) {
+        $r = json_decode(resultado(proceso(['--post', $caso, $configArchivo])), true);
+        comprobar(in_array(['Location: ' . $destino, 303], $r['respuesta'], true), 'respuesta controlada: ' . $caso);
+        comprobar($r['correos'] === 0, 'sin correo: ' . $caso);
+    }
+    foreach (['rgpd' => '/contacto/error.html#rgpd', 'honeypot' => '/contacto/gracias.html', 'normal' => '/contacto/gracias.html'] as $caso => $destino) {
+        $r = json_decode(resultado(proceso(['--post', $caso, $configArchivo])), true);
         comprobar(in_array(['Location: ' . $destino, 303], $r['respuesta'], true), 'respuesta controlada: ' . $caso);
         comprobar($r['correos'] === ($caso === 'normal' ? 1 : 0), 'correo capturado o ausente: ' . $caso);
+        comprobar($r['registro'] === [], 'sin anotaciones en el log: ' . $caso);
     }
     for ($i = 0; $i < 4; $i++) resultado(proceso(['--post', 'normal', $configArchivo]));
     $r = json_decode(resultado(proceso(['--post', 'normal', $configArchivo])), true);

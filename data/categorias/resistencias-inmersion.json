@@ -13,7 +13,7 @@
       "texto": "<p>Resistencias blindadas en tubo de cobre niquelado o acero inoxidable, con tapón roscado de acoplamiento. Monofásicas, trifásicas. Caperuza de protección IP40.</p>",
       "specs": [],
       "img": "brototermic-resistenciainmersion",
-      "alt": "Seis resistencias de inmersión blindadas en U, de distintas longitudes, con tapón roscado de latón y caperuza negra",
+      "alt": "Modelos NA, OV y T: seis resistencias de inmersión blindadas en U, de distintas longitudes, con tapón roscado de latón y caperuza negra",
       "pdf": null
     },
     {
@@ -22,7 +22,7 @@
       "texto": "<p>Resistencias blindadas en tubo de cobre niquelado o acero inoxidable, con tapón roscado de acoplamiento. Trifásicas, caperuza de protección IP40, varias potencias y medidas.</p>",
       "specs": [],
       "img": "brototermic-resistenciatrifasica",
-      "alt": "Tres resistencias de inmersión trifásicas con tres elementos en U y tapón roscado de latón",
+      "alt": "Modelos DP, ED y ET: tres resistencias de inmersión trifásicas con tres elementos en U y tapón roscado de latón",
       "pdf": null
     },
     {
@@ -130,7 +130,7 @@
       "texto": "<p>Resistencias de calentamiento tipo sumergidor con caja de conexiones IP44 que incorpora un termostato de regulación de temperatura de rearme automático y un limitador de seguridad de rearme manual. Gama para agua y para aceite.</p>",
       "specs": [],
       "img": "brototermic-cajaconexiones",
-      "alt": "Resistencia sumergidora en forma de serpentín con caja de conexiones gris y cable de alimentación",
+      "alt": "Resistencia sumergidora en serpentín con caja de conexiones IP44 gris y cable de alimentación",
       "pdf": null
     }
   ],

@@ -1,0 +1,199 @@
+[
+  {
+    "nota": "Hero SOLO de la versión de demostración (D-016): imagen generada con IA a partir de slide-1. Se recorta el rótulo incrustado «PRECISIÓN · CALOR · CONTROL» (franja superior) y se tapa la placa del producto, que tenía marcados inventados (CE, ATEX, tensión).",
+    "entrada": "tools/datos/fuentes/hero-demo-calefactor-ia.png",
+    "salida": "tools/datos/demo/hero-calefactor-inmersion-{ancho}",
+    "recorte": {
+      "x": 0,
+      "y": 132,
+      "w": 1833,
+      "h": 726
+    },
+    "placas": [
+      {
+        "x": 248,
+        "y": 364,
+        "w": 238,
+        "h": 200,
+        "r": 26,
+        "color": "#e7e7e5"
+      }
+    ],
+    "anchos": [
+      480,
+      910,
+      1600
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.8
+  },
+  {
+    "nota": "Hero de producción (D-004): slide-1.webp a 910 px. slide-1.jpg original sigue siendo el src (URL indexada).",
+    "entrada": "legacy/com/brototermic.com/images/slide-1.jpg",
+    "salida": "images/slide-1",
+    "anchos": [
+      910
+    ],
+    "formatos": [
+      "webp"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Hero de producción a 480 px para móvil (srcset).",
+    "entrada": "legacy/com/brototermic.com/images/slide-1.jpg",
+    "salida": "images/slide-1-{ancho}",
+    "anchos": [
+      480
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Tarjeta Control de temperatura del inicio: controlador y sonda de slide-3, sin ampliar.",
+    "entrada": "legacy/com/brototermic.com/images/slide-3.jpg",
+    "salida": "images/portada-control-temperatura-{ancho}",
+    "recorte": {
+      "x": 60,
+      "y": 10,
+      "w": 800,
+      "h": 410
+    },
+    "anchos": [
+      480
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Tarjeta Control de nivel del inicio: los 4 sensores de la derecha de slide-4 (con el flotador verde), sin ampliar.",
+    "entrada": "legacy/com/brototermic.com/images/slide-4.jpg",
+    "salida": "images/portada-control-nivel-{ancho}",
+    "recorte": {
+      "x": 500,
+      "y": 60,
+      "w": 404,
+      "h": 295
+    },
+    "anchos": [
+      400
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Tarjeta Resistencias eléctricas del inicio: la foto de resistencias ElectricFor de /oviedo/, en WebP a su tamaño.",
+    "entrada": "legacy/com/brototermic.com/oviedo/images/electticfor-brototermic-oviedo.jpg",
+    "salida": "images/portada-resistencias-electricas-{ancho}",
+    "anchos": [
+      370
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Miniatura de catálogos: la composición de las portadas de los dos PDF, en JPG/WebP (era un PNG de 44 KB).",
+    "entrada": "tools/datos/fuentes/portada-catalogos-provisional.png",
+    "salida": "images/portada-catalogos-{ancho}",
+    "anchos": [
+      260
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.85,
+    "fondo": "#ffffff"
+  },
+  {
+    "nota": "Diapositiva 2 del hero rotativo: slide-3 en WebP a 910 px (su JPG original sigue siendo el src).",
+    "entrada": "legacy/com/brototermic.com/images/slide-3.jpg",
+    "salida": "images/slide-3",
+    "anchos": [
+      910
+    ],
+    "formatos": [
+      "webp"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Diapositiva del hero rotativo a 480 px (srcset).",
+    "entrada": "legacy/com/brototermic.com/images/slide-3.jpg",
+    "salida": "images/slide-3-{ancho}",
+    "anchos": [
+      480
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Diapositiva 3 del hero rotativo: slide-4 en WebP a 910 px (su JPG original sigue siendo el src).",
+    "entrada": "legacy/com/brototermic.com/images/slide-4.jpg",
+    "salida": "images/slide-4",
+    "anchos": [
+      910
+    ],
+    "formatos": [
+      "webp"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Diapositiva del hero rotativo a 480 px (srcset).",
+    "entrada": "legacy/com/brototermic.com/images/slide-4.jpg",
+    "salida": "images/slide-4-{ancho}",
+    "anchos": [
+      480
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.82
+  },
+  {
+    "nota": "Tira de marcas en gris: se funde con la de color al pasar el ratón (solo opacity).",
+    "entrada": "legacy/com/brototermic.com/images/brototermic-marcas-representadas.jpg",
+    "salida": "images/brototermic-marcas-representadas-gris",
+    "anchos": [
+      990
+    ],
+    "formatos": [
+      "webp",
+      "jpg"
+    ],
+    "calidad": 0.85,
+    "gris": true
+  },
+  {
+    "nota": "Tira de marcas en color, en WebP.",
+    "entrada": "legacy/com/brototermic.com/images/brototermic-marcas-representadas.jpg",
+    "salida": "images/brototermic-marcas-representadas",
+    "anchos": [
+      990
+    ],
+    "formatos": [
+      "webp"
+    ],
+    "calidad": 0.85
+  }
+]
