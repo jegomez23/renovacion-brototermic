@@ -1,0 +1,95 @@
+{
+  "nombre": "industriaalimentaria",
+  "estado": "RECHAZADA",
+  "motivo": "La propuesta recrea tubos, reflejos y conexiones en una imagen de mayor resolución. No conserva los píxeles históricos del producto.",
+  "fuenteHistorica": "legacy/com/brototermic.com/images/brototermic-industriaalimentaria.jpg",
+  "fuenteGenerada": "fuentes/exec-ceea8ef7-c1d7-4161-8ca5-0b084956e742.png",
+  "herramientas": [
+    "sips (reescalado/PNG/JPG)",
+    "djpeg (JPEG a RGB)",
+    "cwebp lossless -exact y dwebp (PNG a RGB)",
+    "Node nativo (máscara, diferencias, SHA-256, PNG)"
+  ],
+  "fuenteGeneradaMedidas": {
+    "ancho": 1560,
+    "alto": 1008
+  },
+  "originalMedidas": {
+    "ancho": 260,
+    "alto": 168
+  },
+  "comparacionMedidas": {
+    "ancho": 260,
+    "alto": 168
+  },
+  "transformacionComparacion": "sips --resampleHeightWidth 168 260; cuadro completo, sin recorte ni registro geométrico. Se normaliza para comparar, no es retoque aprobado.",
+  "mascara": {
+    "tipo": "rectangulo conservador de protección, NO segmentación exacta",
+    "zona": {
+      "x": 35,
+      "y": 0,
+      "ancho": 200,
+      "alto": 168
+    },
+    "blanco": "zona protegida, incluye fondo",
+    "negro": "zona no incluida",
+    "pixelesProtegidos": 33600
+  },
+  "comparacionAntesDeJpg": {
+    "totalPixeles": 43680,
+    "pixelesDistintos": 43440,
+    "pixelesDistintosEnZonaProtegida": 33531,
+    "porcentajeDistintosEnZonaProtegida": 99.7946,
+    "diferenciaAbsolutaMediaPorCanal": 35.874,
+    "maximaDiferenciaPorCanal": 241,
+    "criterio": "diferencia RGB exacta > 0; incluye cambios de fondo y remuestreo; no mide únicamente producto"
+  },
+  "exportacionJpg": {
+    "calidadSips": 90,
+    "pixelesDistintosRespectoPngNormalizado": 21169,
+    "nota": "Pérdida de codificación cuantificada por separado, no atribuida al retoque."
+  },
+  "hashes": {
+    "originalFuente": {
+      "bytes": 11353,
+      "sha256": "e83dd3ed2c862c9c3f25d070a657236cb60f5aa010839dcc09c26db90d20a8b0"
+    },
+    "copiaOriginal": {
+      "bytes": 11353,
+      "sha256": "e83dd3ed2c862c9c3f25d070a657236cb60f5aa010839dcc09c26db90d20a8b0"
+    },
+    "propuestaFuente": {
+      "bytes": 1163517,
+      "sha256": "8c9c4a7435eee19a7d70abb3eb0229e4cb014b0cf816fde60908e6da55aa0483"
+    },
+    "copiaPropuestaFuente": {
+      "bytes": 1163517,
+      "sha256": "8c9c4a7435eee19a7d70abb3eb0229e4cb014b0cf816fde60908e6da55aa0483"
+    },
+    "normalizadaPng": {
+      "bytes": 35999,
+      "sha256": "ed1c4b2242f07c1c19712beb7e83184637247d918ad51f5ed0b3e889d6558662"
+    },
+    "normalizadaJpg": {
+      "bytes": 12155,
+      "sha256": "eefe9d60d526721a8f926102eeb6e170344f0cdee334f1776c49264bb1b57acf"
+    },
+    "mascara": {
+      "bytes": 1115,
+      "sha256": "26aa5fd14115cbac228fd871ff102be212c2896ba0c1e91492787f1eaf0c1100"
+    },
+    "diferencias": {
+      "bytes": 47083,
+      "sha256": "5696bc7f8e51e65df4ec727621010335a2954a710c2e6a4c55aff1a669fcc46b"
+    },
+    "diferenciasExportacionJpg": {
+      "bytes": 15912,
+      "sha256": "0d3228d21bd4d5a2c417fce85d547c587e4e8a44ab7d1455a7dadc3b128fd024"
+    },
+    "bufferOriginalRgb": "9264ec491546e3812f269ca0fcb31e660e60a9c1338a7dc96849996e5a85575d",
+    "bufferNormalizadoRgb": "e69fd93adca133b4b5e9ae690ebc300689040ef6b700a8956f019f291f1fc71e",
+    "bufferJpgRgb": "c03542c6a909af04898eafd74cc7d8369ad2f5f6e810a35087b59f3f522beff7"
+  },
+  "limiteDeLaPrueba": "La máscara contiene fondo y el remuestreo aporta diferencias. Los conteos no prueban por sí solos modificación del producto. El rechazo combina inspección visual de original/propuesta fuente y prohibición de ampliación generativa. No sustituye una revisión comercial.",
+  "sustitucionCatalogo": false
+}
