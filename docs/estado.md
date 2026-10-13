@@ -1,7 +1,29 @@
 # Estado del proyecto (en 1 minuto)
 
-> Última actualización: **2026-10-10** · Rama `main` · Etiqueta **`v0.9-preproduccion`** (punto de vuelta atrás).
+> Actualización del bloque visual: **2026-10-13**, rama `mejora/visual-imagenes`, base `origin/main` `bbdbe79`. El estado general de las tablas anteriores procede del 2026-10-10; no sustituye las decisiones de `revision/complemento-b`, todavía sin integrar. Etiqueta **`v0.9-preproduccion`**: punto de vuelta atrás.
 > Las reglas están en [AGENTS.md](../AGENTS.md); el detalle de cada hallazgo, en [auditoria-final.md](auditoria-final.md) (los IDs de abajo son los suyos). Actualiza este documento cada vez que cambie algo de lo que dice.
+
+## Avance independiente para la entrega
+
+- **7 ambientes reales generados**, revisados a tamaño original, con 42 JPG/WebP a 480/960/1280 px. Una textura ya se utiliza en empresa, fabricación y novedades; los ambientes específicos de familias, fabricación y Oviedo quedan preparados hasta integrar a Juan. Todos los originales conservados.
+- **3 propuestas de retoque rechazadas** por recrear el producto. Se conservan fuentes, máscaras y mapas; cero sustituciones. No se declaran retoques terminados.
+- Cabecera de servicios a dos columnas, sprite SVG propio, filas alternas de especificaciones y adjunto con arrastre progresivo, nombre anunciado y selector nativo sin JS.
+- **25 borradores revisados con evidencia histórica**, tres correcciones aplicadas y **19 alts** revisados en tres categorías de prioridad alta. No se quitan marcas de borrador sin aprobación humana.
+- [Galería antes/después](imagenes-antes-despues/index.html), [registro para reanudar](progreso-visual-imagenes.md), [plan SEO](seo-mejoras.md) e [inventario de imágenes](inventario-visual-imagenes.md).
+
+| Lighthouse local móvil, 2026-10-13 | Rendimiento | Accesibilidad | CLS |
+|---|---:|---:|---:|
+| Inicio | 97 | 100 | 0 |
+| Inmersión | 99 | 100 | 0 |
+| Contacto | 99 | 100 | 0 |
+| Fabricaciones | 99 | 100 | 0 |
+| Empresa | 99 | 100 | 0 |
+
+[Informes completos y entorno](imagenes-antes-despues/lighthouse/resumen.json): una medición por página, Chrome local sin caché/compresión Apache. No son cifras de PageSpeed de la demo pública. LCP del inicio 2,55 s: pendiente de repetir con el WebP y hosting definitivos. Buenas prácticas de empresa: 96 por la resolución de `brototermic-historia.jpg` en pantalla de alta densidad; se conserva su tamaño real conforme a AGENTS.md §5.
+
+**Comprobaciones del bloque:** `npm run test`, `npm run validar` y `npm run build` en verde; auditor 70 OK / 8 AVISO / 0 ERROR y 10/10 mutaciones; W3C 55 HTML + CSS sin mensajes. Chrome: 24 combinaciones por fase y ocho escenarios de adjunto, sin desbordes ni terceros; capturas a 390/1280 px.
+
+**Pendiente de coordinación:** `revision/complemento-b` aún no pertenece al historial de `origin/main`; no se fusiona ni se incluyen sus commits en esta rama. `npm run build:preview` falla por script inexistente hasta integrar D-017. Falta la URL pública de la demo para PageSpeed Insights. Las familias/cabecera de categoría, la integración de sus ambientes y los iconos restantes se continúan después de actualizar desde main de forma segura. La aprobación humana de textos y retoques permanece pendiente. La PR entregará este bloque independiente para revisión de la Persona A, sin fusionar main.
 
 ## Qué está hecho
 

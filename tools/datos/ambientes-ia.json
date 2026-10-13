@@ -1,0 +1,327 @@
+{
+  "fecha": "2026-10-13",
+  "herramienta": "image_gen.imagegen",
+  "restricciones": "Sin productos del catálogo, sedes reales, texto legible, placas, logos ni símbolos CE/ATEX. Paleta #004c9a, #1d356c y acento #36afe0.",
+  "imagenes": [
+    {
+      "nombre": "ambiente-resistencias-taller",
+      "fuente": "exec-241497ef-49a0-4403-959a-2f1e55e3113c.png",
+      "destino": "resistencias-electricas.html",
+      "alt": "Banco metálico con reflejos cálidos en un taller industrial genérico, imagen de ambiente",
+      "recorte": {
+        "alto": 672,
+        "ancho": 1536,
+        "y": 352,
+        "x": 0
+      },
+      "revision100": "Revisada en resolución original; sin texto, logos ni marcas. La de resistencias se recorta para excluir la señal desenfocada del fondo.",
+      "fuenteSHA256": "8cb84c8e0c65f83888b62a0be04f044b32d3810abb915ee01661b31f78de8657",
+      "fuenteMedidas": {
+        "ancho": 1536,
+        "alto": 1024
+      },
+      "variantes": [
+        {
+          "ancho": 480,
+          "alto": 210,
+          "jpg": "/images/ambiente-resistencias-taller-480.jpg",
+          "webp": "/images/ambiente-resistencias-taller-480.webp",
+          "bytesJpg": 33331,
+          "bytesWebp": 11600,
+          "shaJpg": "4dcf42650546df436d614cf02273ee01e10dfba9b8c11001b7430390c44d64d9",
+          "shaWebp": "926afc5a15a4508004f640cdc61636d4077eab5b6c089dd7c4e71f9400c14884"
+        },
+        {
+          "ancho": 960,
+          "alto": 420,
+          "jpg": "/images/ambiente-resistencias-taller-960.jpg",
+          "webp": "/images/ambiente-resistencias-taller-960.webp",
+          "bytesJpg": 97742,
+          "bytesWebp": 30090,
+          "shaJpg": "ede7f3d47e703685a6c88cffa7a1ad584c242786c0ff36ef5d0539b84902261d",
+          "shaWebp": "22e76a1849486c8ed25683c89c609f85b26a1285805f0548194a1e3748578fb3"
+        },
+        {
+          "ancho": 1280,
+          "alto": 560,
+          "jpg": "/images/ambiente-resistencias-taller-1280.jpg",
+          "webp": "/images/ambiente-resistencias-taller-1280.webp",
+          "bytesJpg": 151505,
+          "bytesWebp": 44250,
+          "shaJpg": "8c2fe726f0e9d6e70697e4bca75df855034a88ab86320c91258b39870c957e14",
+          "shaWebp": "948e37d4c83f189cd54834f75d6d2694f2c990431f88a0fe6c4bb6d26ffa9567"
+        }
+      ]
+    },
+    {
+      "nombre": "ambiente-temperatura-proceso",
+      "fuente": "exec-1a910dd1-3ffc-4533-a8ce-86834b913cfe.png",
+      "destino": "controltemperatura.html",
+      "alt": "Estructuras azules y tuberías metálicas en una nave de proceso genérica, imagen de ambiente",
+      "recorte": null,
+      "revision100": "Revisada en resolución original; sin texto, logos ni marcas. La de resistencias se recorta para excluir la señal desenfocada del fondo.",
+      "fuenteSHA256": "f22b0fbc1e64a4a1be1557310b1646679fd0800058c1070eb2460c8df3c8d113",
+      "fuenteMedidas": {
+        "ancho": 1536,
+        "alto": 1024
+      },
+      "variantes": [
+        {
+          "ancho": 480,
+          "alto": 320,
+          "jpg": "/images/ambiente-temperatura-proceso-480.jpg",
+          "webp": "/images/ambiente-temperatura-proceso-480.webp",
+          "bytesJpg": 62344,
+          "bytesWebp": 23824,
+          "shaJpg": "098ce88763b5108717756629594a31c0fdd67631e06e2f42269d725dd8521af5",
+          "shaWebp": "fd848aadbf9725df2141a34d8015bfcf8d964b8ba031340406816776c1cad446"
+        },
+        {
+          "ancho": 960,
+          "alto": 640,
+          "jpg": "/images/ambiente-temperatura-proceso-960.jpg",
+          "webp": "/images/ambiente-temperatura-proceso-960.webp",
+          "bytesJpg": 193858,
+          "bytesWebp": 66242,
+          "shaJpg": "3a477aecbaaa39936d732ab5b5424ed738d660eca70ec3f63ab5efc77cec9cc1",
+          "shaWebp": "f7418688e8452fb0844b7e1dd4f1f74c172a8d2205b8867845f083cd6c9fea61"
+        },
+        {
+          "ancho": 1280,
+          "alto": 853,
+          "jpg": "/images/ambiente-temperatura-proceso-1280.jpg",
+          "webp": "/images/ambiente-temperatura-proceso-1280.webp",
+          "bytesJpg": 306803,
+          "bytesWebp": 96218,
+          "shaJpg": "a0741ca51d36a3a090aafa6493f93819689b4b699021575e3c1942e437db6d25",
+          "shaWebp": "06fd6cc3427f817fa9d35e6c081a58dc5cbff293369e8316119303a3aefb3356"
+        }
+      ]
+    },
+    {
+      "nombre": "ambiente-nivel-depositos",
+      "fuente": "exec-acf78260-2371-4724-9d0e-45f2033cba21.png",
+      "destino": "controldenivel.html",
+      "alt": "Depósitos metálicos y tuberías en una instalación industrial genérica, imagen de ambiente",
+      "recorte": null,
+      "revision100": "Revisada en resolución original; sin texto, logos ni marcas. La de resistencias se recorta para excluir la señal desenfocada del fondo.",
+      "fuenteSHA256": "3435d80dcd1cd10f712d63d8716eab21504094a04ad7aa881d71e6bf59c69d08",
+      "fuenteMedidas": {
+        "ancho": 1536,
+        "alto": 1024
+      },
+      "variantes": [
+        {
+          "ancho": 480,
+          "alto": 320,
+          "jpg": "/images/ambiente-nivel-depositos-480.jpg",
+          "webp": "/images/ambiente-nivel-depositos-480.webp",
+          "bytesJpg": 68865,
+          "bytesWebp": 29704,
+          "shaJpg": "4ea685af52aa68c29eae8642061a53ece5c876a54e88c665c6c5b157184c7b69",
+          "shaWebp": "ab2e41fe0d531a6ebd8b75073b78d14db99cc5af216d1e341eb07e6707e6e75b"
+        },
+        {
+          "ancho": 960,
+          "alto": 640,
+          "jpg": "/images/ambiente-nivel-depositos-960.jpg",
+          "webp": "/images/ambiente-nivel-depositos-960.webp",
+          "bytesJpg": 236940,
+          "bytesWebp": 89474,
+          "shaJpg": "e96fc5199e45819d08e111d6f5d6c49c696f5de2d7567296dda9c597490458e2",
+          "shaWebp": "743bf4c96c611acca2d9df543bcddcd5d160f09b0671a7c4a22fc73101a1a436"
+        },
+        {
+          "ancho": 1280,
+          "alto": 853,
+          "jpg": "/images/ambiente-nivel-depositos-1280.jpg",
+          "webp": "/images/ambiente-nivel-depositos-1280.webp",
+          "bytesJpg": 383756,
+          "bytesWebp": 134092,
+          "shaJpg": "5334961977ffcb1b0e727f4b64e6b31cf1e9bc3bf807ca30e663c4fff1b812d0",
+          "shaWebp": "fb31d05d6fc66516503f7f4830f5f659cfbf5852f034979f67cd4c9e16c0a2ae"
+        }
+      ]
+    },
+    {
+      "nombre": "ambiente-presion-humedad-tuberia",
+      "fuente": "exec-fbc736b3-f9b6-41a8-9aeb-6c4c561db7cf.png",
+      "destino": "presionhumedad.html",
+      "alt": "Gotas de condensación sobre un codo metálico de tubería, imagen de ambiente",
+      "recorte": null,
+      "revision100": "Revisada en resolución original; sin texto, logos ni marcas. La de resistencias se recorta para excluir la señal desenfocada del fondo.",
+      "fuenteSHA256": "c9e27f5e1c88eb4369f189b3beb0dcad6b86e83f858c0bd8127f89826cd4d4ae",
+      "fuenteMedidas": {
+        "ancho": 1536,
+        "alto": 1024
+      },
+      "variantes": [
+        {
+          "ancho": 480,
+          "alto": 320,
+          "jpg": "/images/ambiente-presion-humedad-tuberia-480.jpg",
+          "webp": "/images/ambiente-presion-humedad-tuberia-480.webp",
+          "bytesJpg": 56495,
+          "bytesWebp": 22490,
+          "shaJpg": "a86c006cabe2a9b6313eace4526645e1b35d63c1e3966ad82675891c6e4fb535",
+          "shaWebp": "ba1c038bb8514d4a6431a14cc689e52364895dbecaf1ecb1816121cb2071bc52"
+        },
+        {
+          "ancho": 960,
+          "alto": 640,
+          "jpg": "/images/ambiente-presion-humedad-tuberia-960.jpg",
+          "webp": "/images/ambiente-presion-humedad-tuberia-960.webp",
+          "bytesJpg": 180029,
+          "bytesWebp": 63792,
+          "shaJpg": "16a2e4b236f03a8dd7c48109baa4d32e5af5ea74987cbac5bad342ccf0c8fe4e",
+          "shaWebp": "b5b05de6bd588e585b30f4a70f8c767bad85a2ab2c2e47b9f4262e9db58ca707"
+        },
+        {
+          "ancho": 1280,
+          "alto": 853,
+          "jpg": "/images/ambiente-presion-humedad-tuberia-1280.jpg",
+          "webp": "/images/ambiente-presion-humedad-tuberia-1280.webp",
+          "bytesJpg": 290609,
+          "bytesWebp": 95814,
+          "shaJpg": "985ed423f96721611680832fb3310d28842b542bde75b2933f75c9ced252c982",
+          "shaWebp": "ca8dae68e8f2506c86e69e34433e6d270c61918d437a6f911dfa4ac7521256db"
+        }
+      ]
+    },
+    {
+      "nombre": "ambiente-fabricacion-plano",
+      "fuente": "exec-7dde5217-0725-4931-8398-c4f713baa23c.png",
+      "destino": "fabricaciones-a-medida.html",
+      "alt": "Material metálico y papel sin anotaciones sobre una mesa de taller genérica, imagen de ambiente",
+      "recorte": null,
+      "revision100": "Revisada en resolución original; sin texto, logos ni marcas. La de resistencias se recorta para excluir la señal desenfocada del fondo.",
+      "fuenteSHA256": "e50a0506df53d18773184b6b63b289b6662b0b08ab3d27979e6bc904551e18a0",
+      "fuenteMedidas": {
+        "ancho": 1536,
+        "alto": 1024
+      },
+      "variantes": [
+        {
+          "ancho": 480,
+          "alto": 320,
+          "jpg": "/images/ambiente-fabricacion-plano-480.jpg",
+          "webp": "/images/ambiente-fabricacion-plano-480.webp",
+          "bytesJpg": 46358,
+          "bytesWebp": 15890,
+          "shaJpg": "ff0ee25f2bc8813ab764f498c3d7d2ee8d39b4da0bcfbd3619cb3ba29b4716e4",
+          "shaWebp": "811682e5aa8b7ce7332778a713d25e7622d5f6528f5c05ed4f39154a0710e94f"
+        },
+        {
+          "ancho": 960,
+          "alto": 640,
+          "jpg": "/images/ambiente-fabricacion-plano-960.jpg",
+          "webp": "/images/ambiente-fabricacion-plano-960.webp",
+          "bytesJpg": 131291,
+          "bytesWebp": 37550,
+          "shaJpg": "3dc86de185217b5080343cb7a16a99256ef1137c73352f9488d2fadb99815808",
+          "shaWebp": "3c6cc288f89f97ce62c3ce11dedd500f36af73b597c1127326b95650cc62ef15"
+        },
+        {
+          "ancho": 1280,
+          "alto": 853,
+          "jpg": "/images/ambiente-fabricacion-plano-1280.jpg",
+          "webp": "/images/ambiente-fabricacion-plano-1280.webp",
+          "bytesJpg": 203945,
+          "bytesWebp": 54904,
+          "shaJpg": "c2b7934358e39f9b0416428e5dfc85e5e9fc0ec29075aceff0e524818097cca9",
+          "shaWebp": "406d6a2bd701a6d8797d73aec9664201a870d57607812f034a489cf6112e468f"
+        }
+      ]
+    },
+    {
+      "nombre": "ambiente-metal-reflejos",
+      "fuente": "exec-dd38af6f-047e-49c0-a44c-18489714f1fc.png",
+      "destino": "empresa.html y servicios",
+      "alt": "Detalle de chapa metálica con reflejos azules, imagen de ambiente",
+      "recorte": null,
+      "revision100": "Revisada en resolución original; sin texto, logos ni marcas. La de resistencias se recorta para excluir la señal desenfocada del fondo.",
+      "fuenteSHA256": "603b67fafa5337423c082b0dc340a459130eaf1860844c5520ccba9b958f74b9",
+      "fuenteMedidas": {
+        "ancho": 1536,
+        "alto": 1024
+      },
+      "variantes": [
+        {
+          "ancho": 480,
+          "alto": 320,
+          "jpg": "/images/ambiente-metal-reflejos-480.jpg",
+          "webp": "/images/ambiente-metal-reflejos-480.webp",
+          "bytesJpg": 35647,
+          "bytesWebp": 8768,
+          "shaJpg": "941bd6d0a77db0b80819aa79538f0af3bcd3915d10b18b77af4daaa94b975f4b",
+          "shaWebp": "5b6024694497af256dad43ee7f805e0ce9430e72c3c2caa5e18c8f9397bbec21"
+        },
+        {
+          "ancho": 960,
+          "alto": 640,
+          "jpg": "/images/ambiente-metal-reflejos-960.jpg",
+          "webp": "/images/ambiente-metal-reflejos-960.webp",
+          "bytesJpg": 122158,
+          "bytesWebp": 28034,
+          "shaJpg": "4de2ca15bd8330fb9db2f5b6ff33c68222596903b13516ceea12c6840860b5f2",
+          "shaWebp": "341ee8773c1be28027e99d9a62a90570e48025d1f60e9b9260acf2db47b66d3b"
+        },
+        {
+          "ancho": 1280,
+          "alto": 853,
+          "jpg": "/images/ambiente-metal-reflejos-1280.jpg",
+          "webp": "/images/ambiente-metal-reflejos-1280.webp",
+          "bytesJpg": 201253,
+          "bytesWebp": 44304,
+          "shaJpg": "5887969bd6eaa3360f6224d31c3d030fbb8a46e055862e882304cfa06c6c04f3",
+          "shaWebp": "74a7d3d76f37730251906ee81d4a19ba66ff6328aea42e36f62e0f4b8978c102"
+        }
+      ]
+    },
+    {
+      "nombre": "ambiente-oviedo-taller",
+      "fuente": "exec-ab3b79fa-186c-47fa-ba04-a8cd248ea67d.png",
+      "destino": "oviedo/",
+      "alt": "Estructuras azules y material metálico en un taller genérico, imagen de ambiente",
+      "recorte": null,
+      "revision100": "Revisada en resolución original sin texto, placas ni logos. Regenerada tras rechazar una primera versión con placas pequeñas en maquinaria. No representa la sede de Oviedo.",
+      "fuenteSHA256": "42a86e9cae8bd87fdb2fc43cda5343ec142ac5ca7d316fcd2b7817fe5d445c47",
+      "fuenteMedidas": {
+        "ancho": 1536,
+        "alto": 1024
+      },
+      "variantes": [
+        {
+          "ancho": 480,
+          "alto": 320,
+          "jpg": "/images/ambiente-oviedo-taller-480.jpg",
+          "webp": "/images/ambiente-oviedo-taller-480.webp",
+          "bytesJpg": 74099,
+          "bytesWebp": 31268,
+          "shaJpg": "4335b7f7ea754a8abbe5ddaf81f128ee0df1351d3390d1e248cfae6143275d57",
+          "shaWebp": "3b9bb999e58b7835b269af1ec466b21273cc1ec35e57d7b72a6795682d6cc7de"
+        },
+        {
+          "ancho": 960,
+          "alto": 640,
+          "jpg": "/images/ambiente-oviedo-taller-960.jpg",
+          "webp": "/images/ambiente-oviedo-taller-960.webp",
+          "bytesJpg": 244482,
+          "bytesWebp": 90090,
+          "shaJpg": "bd8f1d85697e152b70b88fa432d6ea7d22a0ae730107dfde2584eb592ee0f249",
+          "shaWebp": "8240eba67fe344f4196f6fbd5dc655cc77627f8a1e26b71088b44fd1fbc12f6b"
+        },
+        {
+          "ancho": 1280,
+          "alto": 853,
+          "jpg": "/images/ambiente-oviedo-taller-1280.jpg",
+          "webp": "/images/ambiente-oviedo-taller-1280.webp",
+          "bytesJpg": 395587,
+          "bytesWebp": 136430,
+          "shaJpg": "cd21604ce047432558075519bc89991b9ac7242d51f15917b792cd765f19657f",
+          "shaWebp": "88e7ad5b6769aac9ed50c8144603d331b80f53b46cd8c00c603951f98ca7c6e8"
+        }
+      ]
+    }
+  ]
+}

@@ -1037,3 +1037,72 @@ a.megamenu__titulo:hover { text-decoration: underline; text-decoration-color: va
 .categoria__productos > .cuerpo { margin-bottom: var(--esp-6); }
 /* Pie: el logo original tiene «Broto» en marino y no se lee sobre #1d356c; va el logo para fondo claro sobre una placa blanca */
 .pie__logo { padding: var(--esp-2) var(--esp-3); border-radius: var(--radio-s); background: var(--color-blanco); }
+
+/* Mejora visual independiente: servicios y adjunto (2026-10-13). */
+/* Adjunto progresivo: el selector nativo permanece visible con y sin JavaScript. */
+.formulario .adjunto {
+  min-width: 0;
+  padding: var(--esp-4);
+  border: 1px dashed var(--color-borde-control);
+  border-radius: var(--radio-s);
+  background: var(--color-blanco);
+}
+.formulario .adjunto:focus-within,
+.formulario .adjunto--arrastrando {
+  border-color: var(--color-primario);
+  box-shadow: inset 3px 0 0 var(--color-primario);
+}
+.formulario .adjunto--arrastrando { background: var(--color-fondo-destacado); }
+.formulario .adjunto--error { border-color: var(--color-error); }
+.adjunto__instruccion {
+  margin: 0 0 var(--esp-3);
+  color: var(--color-primario-oscuro);
+  font-weight: 600;
+}
+.formulario .adjunto input[type="file"] {
+  max-width: 100%;
+  padding: var(--esp-2);
+}
+.formulario .adjunto input[aria-invalid="true"] { border: 1px solid var(--color-error); }
+.formulario .adjunto input::file-selector-button {
+  min-height: 44px;
+  margin-inline-end: var(--esp-2);
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--color-primario);
+  border-radius: var(--radio-s);
+  background: var(--color-blanco);
+  color: var(--color-primario);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.formulario .adjunto input::file-selector-button:hover {
+  background: var(--color-fondo-destacado);
+  color: var(--color-primario-oscuro);
+}
+.adjunto__nombre {
+  min-height: 1.5em;
+  margin: var(--esp-2) 0 0;
+  color: var(--color-primario-oscuro);
+  font-size: var(--texto-pequeno);
+  overflow-wrap: anywhere;
+}
+
+/* Servicio: material industrial como imagen de ambiente, texto siempre sobre blanco. */
+.iconos-industriales { position: absolute; overflow: hidden; }
+.icono-industrial { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.servicio-cabecera { display: grid; gap: var(--esp-6); align-items: center; padding-block: var(--esp-5) var(--esp-6); border-bottom: 1px solid var(--color-borde); }
+.servicio-cabecera h1 { max-width: 20ch; margin-bottom: var(--esp-5); text-wrap: balance; }
+.servicio-cabecera__acciones { display: flex; flex-wrap: wrap; gap: var(--esp-3); }
+.servicio-cabecera__acciones .boton { gap: var(--esp-2); }
+.servicio-cabecera__ambiente { display: block; max-width: 440px; }
+.servicio-cabecera__ambiente img { width: 100%; height: auto; border-radius: var(--radio-s); }
+.producto__modelo { font-variant-numeric: tabular-nums; }
+.specs tbody tr:nth-child(even) td { background: var(--color-fondo-alt); }
+.specs td { font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+@media (max-width: 767px) {
+  .servicio-cabecera__acciones .boton { width: 100%; }
+}
+@media (min-width: 768px) {
+  .servicio-cabecera { grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); }
+}

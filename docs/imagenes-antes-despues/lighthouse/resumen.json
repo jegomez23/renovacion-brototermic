@@ -1,0 +1,90 @@
+{
+  "entorno": "Lighthouse local, móvil simulado; sin compresión/caché Apache. Una medición por página. No es PageSpeed Insights de una demo pública.",
+  "mediciones": [
+    {
+      "nombre": "inicio",
+      "ruta": "/",
+      "fecha": "2026-10-13T02:08:34.523Z",
+      "version": "13.5.0",
+      "formFactor": "mobile",
+      "puntuaciones": {
+        "performance": 97,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "CLS": 0,
+      "LCP_ms": 2552.6962,
+      "TBT_ms": 0,
+      "peso_bytes": 437251
+    },
+    {
+      "nombre": "categoria",
+      "ruta": "/resistencias-inmersion.html",
+      "fecha": "2026-10-13T02:08:44.819Z",
+      "version": "13.5.0",
+      "formFactor": "mobile",
+      "puntuaciones": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "CLS": 0,
+      "LCP_ms": 2102.1143,
+      "TBT_ms": 0,
+      "peso_bytes": 227211
+    },
+    {
+      "nombre": "contacto",
+      "ruta": "/contacto/contacto.html",
+      "fecha": "2026-10-13T02:08:55.052Z",
+      "version": "13.5.0",
+      "formFactor": "mobile",
+      "puntuaciones": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "CLS": 0,
+      "LCP_ms": 2027.1799999999998,
+      "TBT_ms": 0,
+      "peso_bytes": 211719
+    },
+    {
+      "nombre": "fabricaciones",
+      "ruta": "/fabricaciones-a-medida.html",
+      "fecha": "2026-10-13T02:09:05.248Z",
+      "version": "13.5.0",
+      "formFactor": "mobile",
+      "puntuaciones": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "CLS": 0,
+      "LCP_ms": 2177.2297,
+      "TBT_ms": 0,
+      "peso_bytes": 225042
+    },
+    {
+      "nombre": "empresa",
+      "ruta": "/empresa.html",
+      "fecha": "2026-10-13T02:09:15.348Z",
+      "version": "13.5.0",
+      "formFactor": "mobile",
+      "puntuaciones": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "CLS": 0,
+      "LCP_ms": 1952.5872,
+      "TBT_ms": 0,
+      "peso_bytes": 193845
+    }
+  ]
+}
