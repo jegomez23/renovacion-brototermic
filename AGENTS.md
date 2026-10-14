@@ -11,7 +11,7 @@
 >
 > **Dónde estamos, en 1 minuto: [docs/estado.md](docs/estado.md)** (qué está hecho, cómo ver la web y qué bloquea la publicación).
 >
-> Última revisión: 2026-10-12.
+> Última revisión: 2026-10-13.
 
 ## Documentos del proyecto (`/docs`)
 
@@ -26,7 +26,7 @@
 | [docs/plan-contenido.md](docs/plan-contenido.md) | Plantilla de intro con ejemplo real, **prompt estándar para IA**, lista de erratas y textos desactualizados con su propuesta |
 | [docs/schema.md](docs/schema.md) | JSON-LD de cada tipo de página: campos y de dónde sale cada dato |
 | [docs/plan-imagenes.csv](docs/plan-imagenes.csv) | Qué hacer con cada imagen (ORIGINAL / CONVERTIR / SUSTITUIR / ELIMINAR), si lleva retoque manual, prioridad y alt propuesto |
-| [docs/redirecciones.csv](docs/redirecciones.csv) | Las 17 reglas 301 (validadas: sin cadenas ni bucles) y la regla 404 del resto del `.es` |
+| [docs/redirecciones.csv](docs/redirecciones.csv) | Las 18 reglas 301 (validadas: sin cadenas ni bucles) y la regla 404 del resto del `.es` |
 | [docs/inventario-urls.csv](docs/inventario-urls.csv) | **Control de la migración:** cada URL antigua o nueva con su estado (MANTENER / REDIRIGIR / NUEVA) y destino |
 | [docs/inventario-imagenes.csv](docs/inventario-imagenes.csv) | Todas las imágenes de contenido de /legacy con su alt actual y las páginas donde se usan |
 | [docs/checklist-publicacion.md](docs/checklist-publicacion.md) | Comprobaciones antes y después de publicar, Search Console, copia de seguridad y vuelta atrás |
@@ -147,14 +147,15 @@ El árbol completo con las 39 categorías está en [docs/arquitectura.md](docs/a
 
 - **NO se renombra ni se borra ningún archivo `.html` existente.** Cada página nueva usa EXACTAMENTE el mismo nombre de archivo y la misma ruta que la antigua.
 - **Los PDF se mantienen exactamente con su nombre y su ruta actuales, sin copias.** También los que llevan ñ (`catalogo_cañas_pirometricas_broto-03-02-2015.pdf`) o espacios (`DISPLAYS DIGITALES PROGRAMABLES BROTOTERMIC HR.pdf`). En el HTML se enlazan con la URL bien codificada (`ca%C3%B1as`, `%20`). Lo mismo para la imagen `brototermic-convertidor-señal.jpg`.
-- Solo cambian las URLs duplicadas, cada una con su **301** a la versión buena: `/index.html` → `/`, `/contacto.html` → `/contacto/contacto.html`, las páginas antiguas de `/oviedo/` → `/oviedo/` (sus legales → `/privacidad.html` y `/cookies.html`), las URLs **conocidas** del `.es` → su equivalente en el `.com`, más HTTPS y el host sin www. La lista completa (17 reglas 301, validadas sin cadenas ni bucles, y 1 regla 404) está en [docs/redirecciones.csv](docs/redirecciones.csv). En la columna `origen`, `*://(www.)dominio` significa «http y https, con y sin www», y `/*` significa «cualquier otra ruta».
+- Solo cambian las URLs duplicadas, cada una con su **301** a la versión buena: `/index.html` → `/`, `/contacto.html` → `/contacto/contacto.html`, las páginas antiguas de `/oviedo/` → `/oviedo/` (sus legales → `/privacidad.html` y `/cookies.html`), las URLs **conocidas** del `.es` → su equivalente en el `.com`, más HTTPS y el host sin www. La lista completa (18 reglas 301, validadas sin cadenas ni bucles, y 1 regla 404) está en [docs/redirecciones.csv](docs/redirecciones.csv). En la columna `origen`, `*://(www.)dominio` significa «http y https, con y sin www», y `/*` significa «cualquier otra ruta».
 - **Sin comodín en el `.es`** (decisión del 2026-10-09, revisión de Codex): solo las URLs del `.es` que existían (las 7 del inventario) redirigen con 301. **Cualquier otra URL del `.es` devuelve 404**: ni se redirige a ciegas a `/oviedo/` (Google lo trataría como un «soft 404») ni se sirve el contenido del `.com` con el host `.es` (contenido duplicado).
+- **Rutas recuperadas del ZIP (D-020, 2026-10-13):** cinco variantes exactas de mayúsculas en imágenes/PDF se sirven con reescrituras internas y los mismos bytes, sin renombrar ni duplicar originales. `/docs/catalogo-resistencias-calefactoras.pdf` se genera desde el PDF idéntico de `/legacy/com/brototermic.com/oviedo/docs/`, sin añadirlo al menú ni al sitemap ni decidir su vigencia. `/oviedo/contacto-brototermic-oviedo.html` devuelve 301 directa a `/oviedo/`. Los registros y credenciales del ZIP nunca se incorporan. Detalle y pendientes del hosting en [docs/auditoria-zip-original.md](docs/auditoria-zip-original.md).
 - Reglas del `.htaccess`:
   - Las reglas específicas van **antes** que las de host y protocolo, y su destino ya es la URL final (`https://brototermic.com/…`). Así ninguna URL encadena dos redirecciones.
   - `/index.html` y `/oviedo/index.html` se redirigen comprobando `%{THE_REQUEST}`, para no entrar en bucle con `DirectoryIndex`.
   - Una URL inexistente devuelve 404, nunca una redirección a la portada.
 - **Auditor de paridad SEO (`node tools/auditoria-seo.js` → [docs/auditoria-seo.md](docs/auditoria-seo.md)):** compara cada URL de /legacy con /dist: URL o 301 válido **en el `.htaccess` real** (`dist/.htaccess` y `dist-es/.htaccess`), title (keyword y «Vitoria»), meta, H1, todos los productos, **datos técnicos idénticos producto a producto** (cifras, unidades, rangos, modelos, IP y teléfonos, sin tolerancia y en los dos sentidos; las intros no pueden traer ninguno que no esté en /legacy), todas las imágenes de contenido (las eliminadas, justificadas en `plan-imagenes.csv`), PDF, enlaces internos, cobertura del texto antiguo (≥ 95 %, frase a frase y en las categorías producto a producto, aceptando solo las correcciones de `plan-contenido.md` §3 y §4), canonical, JSON-LD y sitemap. Si no encuentra el contenido de la página antigua, es ERROR. **Antes de dar por buena una auditoría, `tools/test-auditor.js` estropea páginas a propósito (10 mutaciones) y comprueba que el auditor las detecta; si no, el build falla en cualquier modo** (D-011). `build.js` lo ejecuta siempre; **en modo publicación, cualquier ERROR detiene el build.** Es la red de seguridad del proyecto: ninguna página se da por buena si el auditor no la deja en OK.
-- **[docs/inventario-urls.csv](docs/inventario-urls.csv) es el control de la migración:** 77 filas (57 MANTENER, 15 REDIRIGIR, 5 NUEVA). Antes de publicar:
+- **[docs/inventario-urls.csv](docs/inventario-urls.csv) es el control de la migración:** 84 filas (63 MANTENER, 16 REDIRIGIR, 5 NUEVA). Antes de publicar:
   - cada URL `MANTENER` existe en `/dist`;
   - cada `REDIRIGIR` tiene su regla, y no queda ningún `[POR VERIFICAR]` en `destino_301`.
 

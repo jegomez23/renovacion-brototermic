@@ -2,7 +2,7 @@
 
 > Generado por `node tools/auditoria-seo.js` (modo **publicacion**). **No se edita a mano.** Compara cada URL de /legacy con su equivalente en /dist: que exista (o tenga un 301 válido **en el .htaccess real**), que conserve title, H1, productos, imágenes, PDF, enlaces internos y el texto (cobertura ≥ 95 %), que los **datos técnicos** (cifras, unidades, rangos, modelos) sean idénticos producto a producto, y que tenga canonical, JSON-LD y presencia en sitemap.xml. Antes de auditar, `tools/test-auditor.js` comprueba que el auditor detecta las mutaciones conocidas.
 
-**Resultado:** 70 OK · 8 AVISO · 0 ERROR (78 filas: las URLs del inventario y las reglas generales del .htaccess).
+**Resultado:** 77 OK · 8 AVISO · 0 ERROR (85 filas: las URLs del inventario y las reglas generales del .htaccess).
 
 ## Páginas generadas
 
@@ -90,6 +90,13 @@
 | `.es /politica-de-privacidad-brototermic-oviedo.html` | redirección | ✅ OK | 301 → https://brototermic.com/privacidad.html · .htaccess OK |
 | `.es /docs/catalogo-instrumentacion.pdf` | redirección | ✅ OK | 301 → https://brototermic.com/docs/catalogo-instrumentacion.pdf · .htaccess OK |
 | `.es /docs/catalogo-resistencias-calefactoras.pdf` | redirección | ⚠️ AVISO | 301 → https://brototermic.com/docs/catalogo-Brototermic-resistencias.pdf · .htaccess OK |
+| `/docs/DISPLAYS%20DIGITALES%20PROGRAMABLES%20BROTOTERMIC%20HR.PDF` | archivo | ✅ OK | existe |
+| `/docs/catalogo-resistencias-calefactoras.pdf` | archivo | ✅ OK | existe |
+| `/images/brototermic-control-telefonico-gsm.jpg` | archivo | ✅ OK | existe |
+| `/images/brototermic-cronotermostato-semanal-radiofrecuencia.jpg` | archivo | ✅ OK | existe |
+| `/oviedo/images/ebm-papst-brototermic-oviedo.jpg` | archivo | ✅ OK | existe |
+| `/oviedo/images/eliwell-papst-brototermic-oviedo.jpg` | archivo | ✅ OK | existe |
+| `/oviedo/contacto-brototermic-oviedo.html` | redirección | ✅ OK | 301 → https://brototermic.com/oviedo/ · .htaccess OK |
 | `.htaccess (reglas generales)` | redirección | ✅ OK | 24/24 casos |
 
 ## Detalles
@@ -145,7 +152,7 @@
 
 ### `/oviedo/docs/catalogo-resistencias-calefactoras.pdf` — AVISO
 
-- Destino pendiente de confirmar: Catálogo equivalente [POR VERIFICAR con el cliente cuál es el vigente: el de /oviedo/ es de 2024 y el de /docs/ de 2021; no son idénticos].
+- Destino pendiente de confirmar: Catálogo equivalente [POR VERIFICAR con el cliente cuál es el vigente: ambos PDF del ZIP tienen metadatos de julio de 2017 pero bytes distintos; las fechas no acreditan vigencia].
 
 ### `.es /docs/catalogo-resistencias-calefactoras.pdf` — AVISO
 

@@ -116,6 +116,15 @@ async function main() {
     await comprobar('https://brototermic.com' + ruta, 200, null, { mime, cache, seguridad: true });
   }
   const pdf = path.join(RAIZ, 'dist/docs/catalogo_cañas_pirometricas_broto-03-02-2015.pdf');
+  // D-020: no basta un 200 en macOS; comprobar también bytes, MIME y caché tras la reescritura.
+  const { aliases, catalogo, contacto } = require('./test-rutas-historicas');
+  for (const [alias, destino] of [...aliases, [catalogo, catalogo]]) {
+    await comprobar('https://brototermic.com/' + encodeURI(alias), 200, null, {
+      archivo: path.join(RAIZ, 'dist', destino), mime: /\.pdf$/i.test(alias) ? 'application/pdf' : 'image/jpeg',
+      cache: 'public, max-age=2592000', seguridad: true,
+    });
+  }
+  await redireccion('http://www.brototermic.com/' + contacto + '?origen=prueba%20local', 'https://brototermic.com/oviedo/?origen=prueba%20local');
   for (const ruta of ['/docs/catalogo_ca%F1as_pirometricas_broto-03-02-2015.pdf', '/docs/catalogo_ca%C3%B1as_pirometricas_broto-03-02-2015.pdf']) {
     await redireccion('http://www.brototermic.com' + ruta + '?origen=prueba%20local', 'https://brototermic.com' + ruta + '?origen=prueba%20local');
     await comprobar('https://brototermic.com' + ruta, 200, null, { archivo: pdf, cache: 'public, max-age=2592000' });

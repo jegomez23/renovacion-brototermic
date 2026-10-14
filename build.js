@@ -1185,6 +1185,12 @@ function main() {
     nConservadas++;
   }
   const nPdf = copiarDirectorio(path.join(RAIZ, 'docs'), path.join(DIST, 'docs'), f => f.toLowerCase().endsWith('.pdf'));
+  // D-020: conservar esta URL histórica con los bytes ya presentes en /legacy; no elegir catálogo vigente.
+  // No se añade al menú ni al sitemap, ni se importa el ZIP ni se duplica el PDF en el repositorio.
+  fs.copyFileSync(
+    path.join(RAIZ, 'legacy/com/brototermic.com/oviedo/docs/catalogo-resistencias-calefactoras.pdf'),
+    path.join(DIST, 'docs/catalogo-resistencias-calefactoras.pdf')
+  );
   if (PREVIA) {
     // Demostración: hero de demostración (D-016), cabecera noindex también en HTTP (_headers lo entienden Netlify y
     // Cloudflare Pages), robots.txt que lo bloquea todo y nada más: ni .htaccess, ni PHP, ni sitemap, ni /dist-es
@@ -1254,7 +1260,7 @@ function main() {
   }
   for (const p of site.pendientes || []) aviso(`Dato externo pendiente de confirmar por el cliente: site.${p}`);
 
-  console.log(`build.js (modo ${MODO}) → /dist: ${generadas.size} página(s), ${nAssets} archivos de /assets, ${nImagenes} imágenes (+${nConservadas} antiguas conservadas sin enlazar), ${nPdf} PDF; /dist-es: .htaccess del .es.`);
+  console.log(`build.js (modo ${MODO}) → /dist: ${generadas.size} página(s), ${nAssets} archivos de /assets, ${nImagenes} imágenes (+${nConservadas} antiguas conservadas sin enlazar), ${nPdf} PDF + 1 histórico sin enlazar; /dist-es: .htaccess del .es.`);
   // Lo que se sube al servidor: solo lo publicable (lista blanca). Cualquier otro archivo es error en cualquier modo.
   for (const p of require('./tools/comprobar-publicable.js').comprobar().problemas) error(`No publicable: ${p}`);
   for (const a of avisos) console.log(`  AVISO  ${a}`);
