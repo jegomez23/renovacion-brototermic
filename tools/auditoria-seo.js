@@ -489,7 +489,8 @@ function auditarReglasGenerales(ctx, F) {
 // ---------- Auditoría de un archivo (PDF, sitemap, robots) ----------
 function auditarArchivo(fila, ctx, F) {
   const ruta = decodeURIComponent(new URL(fila.url).pathname);
-  const existe = F.existe(ruta);
+  const existe = ruta in ctx.sobrescribir ? F.existe(ruta)
+    : H.simular(F.leer('/.htaccess') || '', fila.url, ctx.dist).estado === 200;
   const estado = existe ? 'OK' : (fila.estado === 'NUEVA' && ctx.modo !== 'publicacion' ? 'AVISO' : 'ERROR');
   return { url: fila.url, tipo: 'archivo', estado, checks: { url: { estado, texto: existe ? 'existe' : 'falta en /dist' } }, detalles: [] };
 }

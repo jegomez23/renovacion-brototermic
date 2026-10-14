@@ -1,17 +1,25 @@
 # Estado del proyecto (en 1 minuto)
 
-> Última actualización: **2026-10-13**. Integración local sin commit en **`integracion/juan-pr10`**, basada en `origin/main` `a65c984` (PR #10 fusionada), con `origin/revision/complemento-b` `ada1d14` (PR #11). La rama original de Juan permanece intacta. Esta integración no está publicada ni fusionada en main. Etiqueta **`v0.9-preproduccion`**: punto de vuelta atrás.
+> Última actualización: **2026-10-14**. Las PR #11 y #12 están integradas en `main` (`1cc455b`). Correcciones del ZIP en la rama local **`fix/zip-rutas-historicas`**, sin commit, push ni publicación. La rama de Juan permanece intacta. Etiqueta **`v0.9-preproduccion`**: punto de vuelta atrás.
 > Las reglas están en [AGENTS.md](../AGENTS.md); el detalle de cada hallazgo, en [auditoria-final.md](auditoria-final.md) (IDs C-, A-, M-, B-) y en [revision-sesion-b.md](revision-sesion-b.md) (IDs R-). Actualiza este documento cada vez que cambie algo de lo que dice.
 
-## Continuación local: funcionalidad y ambientes (2026-10-13)
+## Correcciones de la auditoría del ZIP (2026-10-13)
 
-**Auditoría del ZIP original pendiente:** se ha solicitado su ruta local. [Informe provisional y matriz](auditoria-original-cierre.md). Por petición posterior del usuario se han retirado las leyendas visibles de los seis ambientes, conservando alts, imágenes y trazabilidad interna. La demostración no se declara contrastada con un ZIP todavía no recibido.
+Revisados los 3 críticos y 9 importantes sin repetir el inventario: **dos secretos distintos en tres ubicaciones**, ausentes del árbol actual y del índice; rotación pendiente del hosting/titular. Se recuperan cinco alias de mayúsculas, un catálogo histórico desde `/legacy` y una 301 del contacto antiguo de Oviedo. No cambian productos, imágenes ni datos comerciales. Vigencia de catálogos y verificación de Google pendientes del cliente.
 
-Corregidos el acordeón durante búsquedas y la recuperación tras rechazar adjuntos. Integrados los seis ambientes en las cuatro familias, fabricación y Oviedo, identificados como escenas genéricas; fotografías originales intactas. Se conserva la integración de los 96 archivos originales y se prepara junto con estos cambios para entrega. **Commit pendiente de autorización**; sin push ni publicación. Los informes Lighthouse completos se comprimen sin pérdida y los resúmenes permanecen legibles.
+`npm run test` y `build:preview` correctos; SEO **77 OK / 8 AVISO / 0 ERROR**. Apache nativo: **727/727** solicitudes con `All` y **727/727** con `FileInfo`; cinco mutaciones de pérdida de alias detectadas. Docker pendiente antes de publicar; no instalado en este equipo. [Informe saneado](auditoria-zip-original.md) · [12 hallazgos y acciones](diferencias-zip-original.csv). Informes originales conservados privadamente fuera de Git. Sin commit ni push en este bloque.
+
+**Cierre verificado el 2026-10-14:** recuperado el proceso Python pendiente con código 0; informes e índice saneados. Confirmadas las evidencias Apache y repetida únicamente la prueba de siete rutas históricas, correcta. Los 15 archivos quedan preparados, sin cambios fuera del índice ni archivos nuevos pendientes. No se repitieron inventario, Lighthouse ni baterías completas; no se hizo commit ni push. Detalle del antiguo fallo de caché ya corregido en el informe saneado.
+
+## Registro histórico de la integración: funcionalidad y ambientes (2026-10-13)
+
+**Registro previo a la recepción del ZIP:** el [informe provisional](auditoria-original-cierre.md) queda complementado por la auditoría enlazada arriba. Se retiraron las leyendas visibles de los seis ambientes, conservando alts, imágenes y trazabilidad interna.
+
+Corregidos el acordeón durante búsquedas y la recuperación tras rechazar adjuntos. Integrados los seis ambientes en las cuatro familias, fabricación y Oviedo, identificados como escenas genéricas; fotografías originales intactas. Se conservó la integración de los 96 archivos originales junto con esos cambios. **Integración ya guardada y fusionada mediante las PR #11 y #12**; sin publicación definitiva. Los informes Lighthouse completos se comprimen sin pérdida y los resúmenes permanecen legibles.
 
 Pruebas: `test`, `test:interfaz`, `validar`, `build` y `build:preview` correctos; 17 regresiones de interfaz, 35 combinaciones responsive antes y después y 28 capturas. Lighthouse local de las seis páginas con ambientes: 97–98 de rendimiento, accesibilidad 100 y CLS 0; LCP 2,252–2,477 s. Inicio: 95, accesibilidad 100, CLS 0, LCP 2,777 s; no se declara cumplido el objetivo de LCP del inicio.
 
-[Informe y riesgos](bloques-funcionales-ambientes.md) · [Comparaciones visuales](imagenes-antes-despues/integracion/index.html) · [Mediciones](imagenes-antes-despues/integracion/lighthouse/final-resumen.json). Sin commit, push, merge ni publicación.
+[Informe y riesgos](bloques-funcionales-ambientes.md) · [Comparaciones visuales](imagenes-antes-despues/integracion/index.html) · [Mediciones](imagenes-antes-despues/integracion/lighthouse/final-resumen.json). Evidencias históricas de la integración; no se repitieron en la corrección del ZIP.
 
 ## Avance de la PR #10 conservado en la integración
 
@@ -33,7 +41,7 @@ Pruebas: `test`, `test:interfaz`, `validar`, `build` y `build:preview` correctos
 
 **Comprobaciones del bloque:** `npm run test`, `npm run validar` y `npm run build` en verde; auditor 70 OK / 8 AVISO / 0 ERROR y 10/10 mutaciones; W3C 55 HTML + CSS sin mensajes. Chrome: 24 combinaciones por fase y ocho escenarios de adjunto, sin desbordes ni terceros; capturas a 390/1280 px.
 
-**Coordinación actual:** la PR #10 ya pertenece a main. Los cambios de Juan se prueban exclusivamente en `integracion/juan-pr10`, sin commit ni publicación. Se conservan servicios, adjunto, 42 variantes ambientales, contenido y alts de la PR #10, junto con el generador, preview, sectores, barra móvil y efectos de Juan. Las métricas anteriores no acreditan el resultado integrado; las nuevas están en la continuación local. Falta la URL pública de la demo para PageSpeed Insights. La aprobación humana de textos y retoques sigue pendiente.
+**Coordinación actual:** las PR #10, #11 y #12 pertenecen a main. Las correcciones posteriores del ZIP se revisan en `fix/zip-rutas-historicas`, sin commit ni publicación. Se conservan servicios, adjunto, 42 variantes ambientales, contenido y alts de la PR #10, junto con el generador, preview, sectores, barra móvil y efectos de Juan. Las métricas anteriores no acreditan el resultado integrado; las nuevas están en la continuación local. Falta la URL pública de la demo para PageSpeed Insights. La aprobación humana de textos y retoques sigue pendiente.
 
 ## Qué está hecho
 

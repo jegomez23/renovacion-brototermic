@@ -30,6 +30,7 @@ async function main() {
       servidor.close();
       return codigo;
     }],
+    ['3b. rutas históricas del ZIP', () => node(['tools/test-rutas-historicas.js'])],
     ['4. comprobar-publicable', () => node(['tools/comprobar-publicable.js'])],
   ];
   const resultados = [];

@@ -75,6 +75,19 @@ function evaluarCond(c, vars) {
   return { ok: negar ? !m : Boolean(m), grupos: m && !negar ? [...m] : [] };
 }
 
+// Verifica cada componente con su grafía exacta, incluso en macOS con disco insensible a mayúsculas.
+// Evita falsos 200 para URLs que fallarían en el hosting Linux.
+function archivoExacto(docroot, archivo) {
+  const relativa = path.relative(path.resolve(docroot), path.resolve(archivo));
+  if (relativa === '..' || relativa.startsWith('..' + path.sep) || path.isAbsolute(relativa)) return false;
+  let actual = path.resolve(docroot);
+  for (const parte of relativa.split(path.sep)) {
+    if (!fs.existsSync(actual) || !fs.statSync(actual).isDirectory() || !fs.readdirSync(actual).includes(parte)) return false;
+    actual = path.join(actual, parte);
+  }
+  return fs.existsSync(actual) && fs.statSync(actual).isFile();
+}
+
 // Simula UNA petición contra un .htaccess. url: URL absoluta tal como la pide el navegador (con %xx).
 // docroot: carpeta que sirve ese host. Devuelve { estado, location } o { estado: 200, archivo }.
 // opciones.env (variables de entorno) y opciones.theRequest: solo para simularErrorDocument.
@@ -125,14 +138,18 @@ function simular(textoHtaccess, url, docroot, opciones = {}) {
     const parar = r.flags.includes('L') || r.flags.includes('END');
     if (r.destino === '-') { if (parar) break; continue; }
     const destino = r.destino.replace(/\$(\d)/g, (_, n) => m[n] || '').replace(/%(\d)/g, (_, n) => grupos[n] || '');
-    if (codigo) return { estado: codigo, location: /^https?:/.test(destino) ? destino : `https://${u.host}/${destino.replace(/^\//, '')}` };
+    if (codigo) {
+      const location = /^https?:/.test(destino) ? destino : `https://${u.host}/${destino.replace(/^\//, '')}`;
+      // Apache conserva la consulta original cuando la sustitución no incluye otra consulta.
+      return { estado: codigo, location: location + (location.includes('?') ? '' : u.search) };
+    }
     // Reescritura interna: se sirve otro archivo, sin redirección
     ruta = destino.replace(/^\//, '');
     if (parar) break;
   }
   let archivo = path.join(docroot, ruta);
   if (ruta === '' || ruta.endsWith('/')) archivo = path.join(archivo, 'index.html');
-  return fs.existsSync(archivo) && fs.statSync(archivo).isFile() ? { estado: 200, archivo } : { estado: 404 };
+  return archivoExacto(docroot, archivo) ? { estado: 200, archivo } : { estado: 404 };
 }
 
 // Tras un 404, Apache sirve «ErrorDocument 404 /404.html» con una subpetición INTERNA que vuelve a pasar por el

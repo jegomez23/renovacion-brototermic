@@ -220,3 +220,17 @@
 - **Microinteracciones:** tarjetas que se elevan con la foto a 1,04 dentro del marco; flecha que avanza y brillo en los botones; subrayado cian que crece en los enlaces sueltos; tira de marcas de gris a color (dos imágenes y opacity; en táctil, siempre en color); megamenú con fundido y 4 px; cabecera que se compacta al bajar (la franja sale por arriba con transform, sin cambiar el flujo).
 - **Aparición al hacer scroll:** fundido y 12 px, una vez, escalonada 60 ms, con IntersectionObserver y sin leer medidas (una primera versión con `getBoundingClientRect` por elemento forzaba un recálculo del diseño en cada uno y disparaba el TBT). Nada en la primera pantalla ni en el hero.
 - `tools/capturas.js`: la espera de carga se hace desde Node; con el JS de la página desactivado, el `addEventListener` inyectado no se ejecutaba y la captura sin JS se colgaba.
+
+
+## D-020 · 2026-10-13 · Recuperación de rutas históricas verificadas en el ZIP
+
+**Origen:** auditoría del ZIP original y solicitud del cliente de resolver pérdidas comprobadas sin cambiar datos comerciales.
+
+- Se conservan cinco URL públicas con grafía distinta mediante reescrituras internas exactas (200), después de la normalización de host/HTTPS. Sus nombres originales y bytes permanecen intactos. No se amplía el conjunto de URL permitido en el `.es`.
+- Se recupera `/docs/catalogo-resistencias-calefactoras.pdf` desde el PDF idéntico ya versionado en `legacy/com/brototermic.com/oviedo/docs/`. El generador no importa el ZIP, no duplica el binario en el repositorio y no enlaza esa edición ni la incluye en el sitemap. El catálogo comercial enlazado no cambia.
+- `/oviedo/contacto-brototermic-oviedo.html` redirige con 301 directamente a `/oviedo/`, conservando la consulta. El inventario pasa a 84 filas y el listado de redirecciones, a 18 reglas 301 y una regla 404.
+- Ambos catálogos de resistencias examinados tienen metadatos de julio de 2017 y bytes distintos. Se retiran del motivo de una redirección las fechas interpretadas como ediciones 2024/2021; la vigencia sigue pendiente del cliente, sin cambiar el destino aprobado.
+- El auditor comprueba la grafía exacta de los archivos independientemente del sistema de archivos del equipo. Cinco pruebas de mutación garantizan que detecta la pérdida de los alias.
+- Los originales de los informes permanecen en una copia privada local fuera de Git. Los informes versionables omiten secretos, cuentas privadas y registros de tráfico. No se restauran PHP antiguos ni el archivo de verificación de Google sin confirmar necesidad y titularidad.
+
+**Documentos:** AGENTS.md, inventario-urls.csv, redirecciones.csv, auditoria-zip-original.md, diferencias-zip-original.csv y estado.md. No cambia ninguna decisión comercial ni las restricciones previas a publicar el `.htaccess`.
